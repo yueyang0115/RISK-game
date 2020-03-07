@@ -22,6 +22,18 @@ subprojects{
         clover 'org.openclover:clover:4.3.1'
         testCompile "org.mockito:mockito-core:2.+"
     }
+    
+    test {
+  testLogging {
+     showStandardStreams = true
+     exceptionFormat = 'full'
+  }
+}
+clover {
+compiler{
+additionalArgs = "-g:lines,source,vars"
+} }
+
     clover{
     compiler{
         additionalArgs = "-g:lines,source,vars"
