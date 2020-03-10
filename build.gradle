@@ -21,6 +21,7 @@ subprojects{
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
         clover 'org.openclover:clover:4.3.1'
         testCompile "org.mockito:mockito-core:2.+"
+        compile 'org.json:json:20180813'
     }
     
     test {
