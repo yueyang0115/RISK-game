@@ -1,15 +1,17 @@
 package edu.duke.ece651.server;
+import edu.duke.ece651.shared.*;
 import java.util.*;
 
 public class Server {
-  //private ArrayList<Action> allMoveActions;
-  //private ArrayList<Action> allAttackActions;
+  /*
+  // private ArrayList<Action> allMoveActions;
+  // private ArrayList<Action> allAttackActions;
   private HashMap<Integer, ArrayList<Territory>> territoryMap;
   private Communicator communicator;
 
   public Server() {
-    //this.allMoveActions = new ArrayList<>();
-    //this.allAttackActions = new ArrayList<>();
+    // this.allMoveActions = new ArrayList<>();
+    // this.allAttackActions = new ArrayList<>();
     this.territoryMap = new HashMap<>();
   }
 
@@ -21,7 +23,5 @@ public class Server {
   public static void main(String[] args) {
     Server server = new Server();
     server.initGame(1234);
-  }
-
-  
+    }*/
 }
