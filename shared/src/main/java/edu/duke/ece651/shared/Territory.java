@@ -7,8 +7,20 @@ public class Territory {
   private int soldiers;
   private ArrayList<String> neighbor;
   private String territoryName;
-  Territory(){
+  public Territory(){
     neighbor = new ArrayList<String>();
+  }
+  public String getOwner(){
+    return owner;
+  }
+  public int getSoliders(){
+    return soldiers;
+  }
+  public ArrayList<String> getNeighbor(){
+    return neighbor;
+  }
+  public String getTerritoryName(){
+    return territoryName;
   }
   public void setOwner(String Owner){
     owner = Owner;
