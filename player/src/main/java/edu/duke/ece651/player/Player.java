@@ -10,7 +10,7 @@ public class Player {
   private Pair<Integer, String> playerInfo;
   private ArrayList<Action> allAction;
   private Displayable displayer;
-
+  
   public Player() {
     this.territoryMap = new HashMap<>();
     //this.playerInfo = new Pair<>();
@@ -24,4 +24,5 @@ public class Player {
   public void display() {
     //displayer.show();
   }
+  
 }
