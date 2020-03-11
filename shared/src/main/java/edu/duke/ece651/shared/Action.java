@@ -21,4 +21,7 @@ public class Action {
   public void setType(String Type){
     type = Type;
   }
+  public String getType(){
+    return type;
+  }
 }
