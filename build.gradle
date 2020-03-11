@@ -7,7 +7,9 @@
 
 plugins {
     id 'com.bmuschko.clover' version '2.2.3'
+    
 }
+
 subprojects{
     apply plugin: "java"
     apply plugin: "com.bmuschko.clover"
@@ -77,3 +79,4 @@ tasks.register("run-player") {
     group = 'Run Player/Server'
     description = 'Run the Player'
 }
+
