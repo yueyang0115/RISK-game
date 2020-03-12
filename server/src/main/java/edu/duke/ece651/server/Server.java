@@ -24,4 +24,8 @@ public class Server {
     Server server = new Server();
     server.initGame(1234);
     }*/
+
+  public static void main(String[] args) {
+    System.out.println("hello");
+  }
 }

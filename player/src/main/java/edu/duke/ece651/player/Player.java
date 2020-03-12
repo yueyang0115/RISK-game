@@ -24,5 +24,9 @@ public class Player {
   public void display() {
     //displayer.show();
   }
+
+  public static void main(String[] args) {
+    System.out.println("hello");
+  }
   
 }
