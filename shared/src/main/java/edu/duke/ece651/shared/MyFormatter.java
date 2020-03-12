@@ -30,6 +30,7 @@ public class MyFormatter {
           Inner.setNeighbor(NeighName);
         }
         String TerritoryName = TerrTemp.optString("territoryName");
+        System.out.println("[DEBUG] TerritoryName = " + TerritoryName);
         Inner.setTerritoryName(TerritoryName);
         InnerTerr.add(Inner);
       }

@@ -6,6 +6,9 @@ public class Action {
   private int soldiers;
   private String owner;
   private String type;
+
+  public Action() {
+  }
   public void setSrc(Territory Src){
     src = Src;
   }
@@ -23,5 +26,17 @@ public class Action {
   }
   public String getType(){
     return type;
+  }
+  public Territory getSrc(){
+    return src;
+  }
+  public Territory getDst(){
+    return dst;
+  }
+  public String getOwner(){
+    return owner;
+  }
+  public int getSoliders(){
+    return soldiers;
   }
 }
