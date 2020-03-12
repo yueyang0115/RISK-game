@@ -15,8 +15,6 @@ public class OperateAction {
   
   public OperateAction(Pair<Integer, String> PlayerInfo, HashMap<Integer, ArrayList<Territory>> TerritoryMap ){
     allAction = new ArrayList<>();
-    MoveAction = new ArrayList<>();
-    AttackAction = new ArrayList<>();
     wholeTerritories = new ArrayList<>();
     ActionType = new HashMap<>();
     ActionType.put("M", "Move");
@@ -31,23 +29,13 @@ public class OperateAction {
         wholeTerritories.add(entry.getValue().get(i));
       }
     }
-    System.out.println("Own TerritoriesNum: " + ownTerritories.size());
+    
  }
-  public ArrayList<Action> getMoveActions(){
-    return MoveAction;
-  }
-  public ArrayList<Action> getAttackActions(){
-    return AttackAction;
-  }
+
   public void SeparateAction(){
     for(Action Current : allAction){
       String CurrType = Current.getType();
-      if(CurrType == "Move"){
-        MoveAction.add(Current);
-      }
-      else{
-        AttackAction.add(Current);
-      }
+      if(
     }
   }
   public void readAction(){
@@ -55,13 +43,10 @@ public class OperateAction {
     while(true){
       Action CurrentAction = new Action();
       String acttype = readActionType(s);
-      System.out.println("[DEBUG] ActionType = " + acttype);
-      if(acttype.equals("D")){
-        System.out.println("Finished Input Actions");
+      if(acttype == "D"){
         break;
       }
-      if(!acttype.equals("M") && !acttype.equals("A") ){
-        System.out.println("[Invalid] ActionType");
+      if(acttype != "M" && acttype != "A"){
         continue;
       }
       CurrentAction.setType(ActionType.get(acttype));
@@ -72,7 +57,6 @@ public class OperateAction {
       CurrentAction.setOwner(playerInfo.getValue());
       allAction.add(CurrentAction);
     }
-    SeparateAction();
   }
   
   public String readActionType(Scanner s){
@@ -87,36 +71,31 @@ public class OperateAction {
     System.out.println("Please input the source territory: ");
     String src = s.nextLine();
     for(Territory Temp : ownTerritories){
-      if(Temp.getTerritoryName().equals(src)){ 
+      if(Temp.getTerritoryName() == src){ 
         curAction.setSrc(Temp);
         return true;
       }
     }
-    System.out.println("[Invalid] The source territory is invalid!");
     return false;
   }
 
   public boolean readDst(Scanner s, Action curAction, String ActionType){
      System.out.println("Please input the destination territory: ");
      String dst = s.nextLine();
-     System.out.println("[DEBUG] Dst Territory: " + dst);
-     if(ActionType.equals("M")){
+     if(ActionType == "M"){
        for(Territory Temp : ownTerritories){
-         if(Temp.getTerritoryName().equals(dst)){  
-           curAction.setDst(Temp);
+         if(Temp.getTerritoryName() == dst){ 
+           curAction.setSrc(Temp);
            return true;
          }
        }
      }
-     else {
-       for (Territory Temp : wholeTerritories) {
-         if (Temp.getTerritoryName().equals(dst) && !ownTerritories.contains(Temp)) {
-           curAction.setDst(Temp);
-           return true;
-         }
+     for(Territory Temp : wholeTerritories){
+       if(Temp.getTerritoryName() == dst){ 
+         curAction.setSrc(Temp);
+         return true;
        }
      }
-     System.out.println("[Invalid] The destination territory is invalid!");
      return false;
   }
   
@@ -124,7 +103,6 @@ public class OperateAction {
      System.out.println("Please input the number of soldiers: ");
      int soldiersNum = Integer.valueOf(s.nextLine());
      if(soldiersNum < 0){
-       System.out.println("[Invalid] Soldiers Number needs greater than 0!");
        return false;
      }
      curAction.setSoldiers(soldiersNum);
