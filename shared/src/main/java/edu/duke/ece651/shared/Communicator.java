@@ -7,46 +7,41 @@ import org.json.*;
 
 public class Communicator {
 
-  public Socket getCommunicator(int port) {
+  private Socket socket;
+  private PrintWriter out;
+  private BufferedReader in;
+
+  public Communicator(ServerSocket serverSocket) {
     try {
-      ServerSocket serverSocket= new ServerSocket(port);
-      Socket socket = serverSocket.accept();
-      return socket;
+      this.socket = serverSocket.accept();
+      this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+      this.out = new PrintWriter(socket.getOutputStream(), true);
+    } catch (IOException e) {
+      System.out.println("Failed to accept player socket!");
+    }
+  }
+
+  public Communicator(String ip, int port) {
+    try {
+      this.socket = new Socket(ip, port);
+      this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+      this.out = new PrintWriter(socket.getOutputStream(), true);
     } catch (IOException e) {
       System.out.println("Failed to crete Communicator!");
     }
-    return null;
   }
 
-  public Socket getCommunicator(String ip, int port) {
-    try {
-      Socket socket = new Socket(ip, port);
-      return socket;
-    } catch (IOException e) {
-      System.out.println("Failed to crete Communicator!");
-    }
-    return null;
-  }
-
-  public void sendString(Socket socket, String str) {
-     try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
-      out.println(str);
-    } catch (IOException e) {
-      System.out.println("Failed to send String!");
-    }   
+  public void sendString(String str) {
+    out.println(str);  
   }
   
-  public void sendJSON(Socket socket, JSONObject json) {
-    try (OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8)) {
-      out.write(json.toString());
-    } catch (IOException e) {
-      System.out.println("Failed to send JSONObject!");
-    }
+  public void sendJSON(JSONObject json) {
+    sendString(json.toString());
   }
   
-  public String receive(Socket socket) {
+  public String receive() {
     String res = "";
-    try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+    try {
       res = in.readLine();
     } catch (IOException e) {
       System.out.println("Failed to receive data!");
@@ -54,8 +49,10 @@ public class Communicator {
     return res;
   }
 
-  public void close(Socket socket) {
+  public void close() {
     try {
+      in.close();
+      out.close();
       socket.close();
     } catch (IOException e) {
       System.out.println("Failed to close socket!");
