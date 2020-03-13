@@ -73,13 +73,14 @@ public class Server {
 
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
-    System.out.println("Please enter the number of players ([2:5])");
+    System.out.println("=======Please enter the number of players ([2:5])========");
     int playerNum = scanner.nextInt();
     while (playerNum < 2 || playerNum > 5) {
-      System.out.println("Invalid playerNumber, try again ([2:5])");
+      System.out.println("========Invalid playerNumber, try again ([2:5])========");
       playerNum = scanner.nextInt();
     }
     Server server = new Server(1234, playerNum);
+    System.out.println("========Now connect players!========");
     server.start();
   }
 }
