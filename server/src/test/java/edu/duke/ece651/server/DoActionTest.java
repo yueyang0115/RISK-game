@@ -36,10 +36,10 @@ public class DoActionTest {
     WorldInitter initter = new WorldInitter(2);
     HashMap<Integer, ArrayList<Territory>> myworld = initter.getWorld();
     Action action = new Action();
-    Territory territoryA = myworld.get(0).get(1); // player_0.B
-    Territory territoryB = myworld.get(1).get(0); // player_1.E
-    assertEquals(territoryA.getTerritoryName(), "B");
-    assertEquals(territoryB.getTerritoryName(), "E");
+    Territory territoryA = myworld.get(0).get(0); // player_0.A
+    Territory territoryB = myworld.get(1).get(0); // player_1.B
+    assertEquals(territoryA.getTerritoryName(), "A");
+    assertEquals(territoryB.getTerritoryName(), "B");
     assertEquals(territoryA.getSoliders(), 3);
     assertEquals(territoryB.getSoliders(), 3);
 
@@ -62,10 +62,10 @@ public class DoActionTest {
     WorldInitter initter = new WorldInitter(2);
     HashMap<Integer, ArrayList<Territory>> myworld = initter.getWorld();
     Action action = new Action();
-    Territory territoryA = myworld.get(0).get(1); // player_0.B
-    Territory territoryB = myworld.get(1).get(0); // player_1.E
-    assertEquals(territoryA.getTerritoryName(), "B");
-    assertEquals(territoryB.getTerritoryName(), "E");
+    Territory territoryA = myworld.get(0).get(0); // player_0.A
+    Territory territoryB = myworld.get(1).get(0); // player_1.B
+    assertEquals(territoryA.getTerritoryName(), "A");
+    assertEquals(territoryB.getTerritoryName(), "B");
     assertEquals(territoryA.getSoliders(), 3);
     assertEquals(territoryB.getSoliders(), 3);
 
