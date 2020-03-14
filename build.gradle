@@ -67,7 +67,12 @@ project (':player'){
         implementation project(':shared')
     } 
 }
-
+clover {
+  report { 
+   xml=true
+   html=true 
+   }
+ }
 tasks.register("run-server") {
     dependsOn project('server').getTasksByName('run',false)
     group = 'Run Player/Server'
