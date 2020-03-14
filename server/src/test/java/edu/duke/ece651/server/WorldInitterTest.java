@@ -1,7 +1,6 @@
-package edu.duke.ece651;
+package edu.duke.ece651.server;
 import static org.junit.jupiter.api.Assertions.*;
 
-import edu.duke.ece651.server.WorldInitter;
 import edu.duke.ece651.shared.*;
 import java.io.*;
 import java.util.*;
