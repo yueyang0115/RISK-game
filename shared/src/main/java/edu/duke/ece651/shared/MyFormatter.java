@@ -1,8 +1,6 @@
 package edu.duke.ece651.shared;
 import java.util.*;
-
 import javax.print.attribute.standard.Destination;
-
 import org.json.*;
 
 public class MyFormatter {
@@ -12,7 +10,9 @@ public class MyFormatter {
     NumPlayers = num;
   }
 
-  public void MapCompose() {
+  public JSONObject MapCompose(HashMap<Integer, ArrayList<Territory>> territoryMap) {
+    MaptoJson myMaptoJson = new MaptoJson();
+    return myMaptoJson.getJSON();
   }
 
   public void MapParse(HashMap<Integer, ArrayList<Territory>> Input, String MapJson) {
@@ -42,7 +42,7 @@ public class MyFormatter {
     for (int k = 0; k < NeighborArray.length(); k++) {
       JSONObject InnerNeigh = NeighborArray.optJSONObject(k);
       String NeighName = InnerNeigh.optString("neighbor_" + Integer.toString(k));
-      //System.out.println("[DEBUG] NeighborName_" + i + " = " + NeighName);
+      // System.out.println("[DEBUG] NeighborName_" + i + " = " + NeighName);
       Inner.setNeighbor(NeighName);
     }
     String TerritoryName = TerrTemp.optString("territoryName");
@@ -51,14 +51,14 @@ public class MyFormatter {
     return Inner;
   }
 
-  public String ActionCompose(ArrayList<Action> Input) {
-    
-    return "";
+  public JSONObject ActionCompose(ArrayList<Action> actionList) {
+    ActiontoJson myActiontoJson = new ActiontoJson(actionList);
+    return myActiontoJson.getJSON();
   }
 
   public void ActionParse(ArrayList<Action> Input, String ActionJson) {
     JSONObject InputAction = new JSONObject(ActionJson);
-    
+
     String ActionType;
     if (InputAction.has("Move")) {
       ActionType = "Move";
@@ -71,7 +71,7 @@ public class MyFormatter {
       InnerAction.setType(ActionType);
       JSONObject ActionTemp = ActionArray.optJSONObject(i);
       String ActionOwner = ActionTemp.optString("owner");
-      
+
       InnerAction.setOwner(ActionOwner);
       int ActionSoldierNum = ActionTemp.optInt("soldiers");
       InnerAction.setSoldiers(ActionSoldierNum);
@@ -81,15 +81,13 @@ public class MyFormatter {
     }
   }
 
-  public void setSrcDst(Action InnerAction, JSONObject Inner, String SrcDst){
+  public void setSrcDst(Action InnerAction, JSONObject Inner, String SrcDst) {
     JSONObject InnerTerr = Inner.optJSONObject(SrcDst);
     Territory SrcDstTerr = JsonToTerritory(InnerTerr);
-    if(SrcDst.equals("src")){
+    if (SrcDst.equals("src")) {
       InnerAction.setSrc(SrcDstTerr);
-    }
-    else{
+    } else {
       InnerAction.setDst(SrcDstTerr);
     }
   }
 }
-

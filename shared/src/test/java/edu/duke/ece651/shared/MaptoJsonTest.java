@@ -24,5 +24,8 @@ public class MaptoJsonTest {
     myterritoryMap.put(0, myTerritoryList);
     MaptoJson mytoJSON = new MaptoJson(myterritoryMap);
     System.out.println(mytoJSON.getJSON());
+
+    MyFormatter myformatter = new MyFormatter(0);
+    System.out.println(myformatter.MapCompose(myterritoryMap));
   }
 }
