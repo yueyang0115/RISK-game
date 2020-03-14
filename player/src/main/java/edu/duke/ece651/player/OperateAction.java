@@ -31,8 +31,9 @@ public class OperateAction {
         wholeTerritories.add(entry.getValue().get(i));
       }
     }
-    System.out.println("Own TerritoriesNum: " + ownTerritories.size());
+    System.out.println("[DEBUG] Own TerritoriesNum: " + ownTerritories.size());
  }
+ 
   public ArrayList<Action> getMoveActions(){
     return MoveAction;
   }
@@ -66,7 +67,7 @@ public class OperateAction {
       }
       CurrentAction.setType(ActionType.get(acttype));
       //Simple check src, dst, soldiersNum
-      if(!readSrc(s, CurrentAction) || !readDst(s, CurrentAction, acttype) || !readNum(s, CurrentAction)){
+      if(!readSrc(s, CurrentAction, acttype) || !readDst(s, CurrentAction, acttype) || !readNum(s, CurrentAction)){
         continue;
       }
       CurrentAction.setOwner(playerInfo.getValue());
@@ -83,13 +84,23 @@ public class OperateAction {
       return s.nextLine();
   }
   
-  public boolean readSrc(Scanner s, Action curAction){
+  public boolean readSrc(Scanner s, Action curAction,String ActionType){
     System.out.println("Please input the source territory: ");
     String src = s.nextLine();
-    for(Territory Temp : ownTerritories){
-      if(Temp.getTerritoryName().equals(src)){ 
-        curAction.setSrc(Temp);
-        return true;
+    if (ActionType.equals("M")) {
+      for (Territory Temp : ownTerritories) {
+        if (Temp.getTerritoryName().equals(src)) {
+          curAction.setSrc(Temp);
+          return true;
+        }
+      }
+    }
+    else{
+      for(Territory WholeTemp: wholeTerritories){
+        if (WholeTemp.getTerritoryName().equals(src)) {
+          curAction.setSrc(WholeTemp);
+          return true;
+        }
       }
     }
     System.out.println("[Invalid] The source territory is invalid!");
