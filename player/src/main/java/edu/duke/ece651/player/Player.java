@@ -4,6 +4,7 @@ import edu.duke.ece651.shared.*;
 import javafx.util.*;
 import java.net.*;
 import java.util.*;
+import java.util.Scanner;
 
 public class Player {
   private HashMap<Integer, ArrayList<Territory>> territoryMap;
@@ -22,14 +23,26 @@ public class Player {
 
   public void init() {
     int id = Integer.parseInt(receiveString());
-    //System.out.println("my id is " + id);
+    if (id == 0) {
+      Scanner scanner = new Scanner(System.in);
+      System.out.println("=======You're the first player, please enter the number of all players ([2:5])========");
+      int playerNum = scanner.nextInt();
+      while (playerNum < 2 || playerNum > 5) {
+        System.out.println("========Invalid playerNumber, try again ([2:5])========");
+        playerNum = scanner.nextInt();
+      }
+      sendString(String.valueOf(playerNum));
+    }
+    System.out.println("[DEBUG] my id is " + id);
     String color = new ColorID().getPlayerColor(id);
-    //System.out.println(color);
     this.playerInfo = new Pair<>(id, color);
     playerNum = Integer.parseInt(receiveString());
-    //System.out.println(playerNum);
     receiveMap();
     display();
+  }
+
+  public void sendString(String str) {
+    communicator.sendString(str);
   }
 
   public String receiveString() {
