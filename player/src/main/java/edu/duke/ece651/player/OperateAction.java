@@ -37,9 +37,11 @@ public class OperateAction {
   public ArrayList<Action> getMoveActions(){
     return MoveAction;
   }
+  
   public ArrayList<Action> getAttackActions(){
     return AttackAction;
   }
+  
   public void SeparateAction(){
     for(Action Current : allAction){
       String CurrType = Current.getType();

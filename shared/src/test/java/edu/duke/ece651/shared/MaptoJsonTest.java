@@ -20,10 +20,12 @@ public class MaptoJsonTest {
     territory_A.setSoldiers(3);
     territory_A.setTerritoryName("A");
     myTerritoryList.add(territory_A);
-
+    ArrayList<Territory> EmptyTerr = new ArrayList<>();
+    
     myterritoryMap.put(0, myTerritoryList);
-    MaptoJson mytoJSON = new MaptoJson(myterritoryMap);
-    System.out.println(mytoJSON.getJSON());
+    myterritoryMap.put(1, EmptyTerr);
+    //MaptoJson mytoJSON = new MaptoJson(myterritoryMap);
+    //System.out.println(mytoJSON.getJSON());
 
     MyFormatter myformatter = new MyFormatter(0);
     System.out.println(myformatter.MapCompose(myterritoryMap));
