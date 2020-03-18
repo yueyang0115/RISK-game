@@ -9,22 +9,23 @@ import java.util.Scanner;
 public class Player {
   private HashMap<Integer, ArrayList<Territory>> territoryMap;
   private Pair<Integer, String> playerInfo;
-  private ArrayList<Action> allAction;
+  private ArrayList<Action> MoveAction;
+  private ArrayList<Action> AttackAction;
   private Displayable displayer;
   private Communicator communicator;
   private int playerNum;
   
   public Player() {
     this.territoryMap = new HashMap<>();
-    this.allAction = new ArrayList<>();
+    this.MoveAction = new ArrayList<>();
+    this.AttackAction = new ArrayList<>();
     this.communicator = new Communicator("127.0.0.1", 1234);
     this.playerNum = 0;
   }
 
-  public void init() {
+  public void init(Scanner scanner) {
     int id = Integer.parseInt(receiveString());
     if (id == 0) {
-      Scanner scanner = new Scanner(System.in);
       System.out.println("=======You're the first player, please enter the number of all players ([2:5])========");
       int playerNum = scanner.nextInt();
       while (playerNum < 2 || playerNum > 5) {
@@ -37,10 +38,53 @@ public class Player {
     String color = new ColorID().getPlayerColor(id);
     this.playerInfo = new Pair<>(id, color);
     playerNum = Integer.parseInt(receiveString());
-    receiveMap();
-    display();
   }
-
+  
+  public void PlayGame(Scanner scanner){
+    String msg;
+    boolean Ask = false;
+    while(true){ 
+      msg = receiveString();
+      if(msg.contains("Game End!")){
+        System.out.println(msg);
+        break;
+      }
+      MyFormatter myformatter = new MyFormatter(playerNum);
+      myformatter.MapParse(territoryMap, msg);
+      boolean Lose = territoryMap.containsKey(playerInfo.getKey());
+      if(!Lose && !Ask){
+        Ask = true;
+        System.out.println("========You lose the game========\n" + "Do you want to still watch the game? Please choose Y/N");
+        while (true) {
+          String choice = scanner.nextLine().toUpperCase();
+          if (!choice.equals("Y") && !choice.equals("N")) {
+            System.out.println("====Your Input is invalid.========\n" + "Please choose Y/N");
+            continue;
+          }
+          if(choice.equals("Y")){
+            break;
+          }
+          return;  
+        }
+      }
+      display();
+      WaitAction(Lose, myformatter);    
+    }
+  }
+  
+  public void WaitAction(boolean Lose, MyFormatter myformatter){
+    if(Lose){
+      OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
+      PlayerAction.readAction();
+      MoveAction = PlayerAction.getMoveActions();
+      String MoveString = myformatter.ActionCompose(MoveAction).toString();
+      sendString(MoveString);
+      AttackAction = PlayerAction.getAttackActions();
+      String AttackString = myformatter.ActionCompose(AttackAction).toString();
+      sendString(AttackString);
+    }
+  }
+  
   public void sendString(String str) {
     communicator.sendString(str);
   }
@@ -51,7 +95,6 @@ public class Player {
 
   public void receiveMap() {
     String str = communicator.receive();
-    System.out.println(str);
     MyFormatter myformatter = new MyFormatter(playerNum);
     myformatter.MapParse(territoryMap, str);
   }
@@ -69,10 +112,12 @@ public class Player {
   }
 
   public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
     Player player = new Player();
     Displayable d = new Text();
     player.addDisplayable(d);
-    player.init();
+    player.init(scanner);
+    player.PlayGame(scanner);
     player.close();
   }
   

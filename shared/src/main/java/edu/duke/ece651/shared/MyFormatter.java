@@ -11,23 +11,29 @@ public class MyFormatter {
   }
 
   public JSONObject MapCompose(HashMap<Integer, ArrayList<Territory>> territoryMap) {
-    MaptoJson myMaptoJson = new MaptoJson();
+    MaptoJson myMaptoJson = new MaptoJson(territoryMap);
     return myMaptoJson.getJSON();
   }
 
   public void MapParse(HashMap<Integer, ArrayList<Territory>> Input, String MapJson) {
     JSONObject InputMap = new JSONObject(MapJson);
     for (int i = 0; i < NumPlayers; i++) {
-      JSONArray PlayerTemp = InputMap.getJSONArray("player_" + Integer.toString(i));
+      JSONArray PlayerTemp = InputMap.optJSONArray("player_" + Integer.toString(i));
       System.out.println("[DEBUG] Player = " + i);
       ArrayList<Territory> InnerTerr = new ArrayList<Territory>();
+      System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
       for (int j = 0; j < PlayerTemp.length(); j++) {
+        System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
         JSONObject TerrTemp = PlayerTemp.optJSONObject(j);
         Territory Inner = JsonToTerritory(TerrTemp);
         InnerTerr.add(Inner);
       }
-      Input.put(i, InnerTerr);
+      if (InnerTerr.size() != 0) {
+        Input.put(i, InnerTerr);
+        
+      }
     }
+    System.out.println("[DEBUG] HashMap Size = " + Input.size());
   }
 
   private Territory JsonToTerritory(JSONObject TerrTemp) {
