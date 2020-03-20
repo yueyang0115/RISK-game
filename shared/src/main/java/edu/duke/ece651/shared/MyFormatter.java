@@ -1,6 +1,6 @@
 package edu.duke.ece651.shared;
 import java.util.*;
-import javax.print.attribute.standard.Destination;
+
 import org.json.*;
 
 public class MyFormatter {
@@ -72,13 +72,17 @@ public class MyFormatter {
       ActionType = "Attack";
     }
     JSONArray ActionArray = InputAction.optJSONArray(ActionType);
+    ParseActionArray(Input, ActionArray);
+  }
+
+  private void ParseActionArray(ArrayList<Action> Input, JSONArray ActionArray) {
     for (int i = 0; i < ActionArray.length(); i++) {
       Action InnerAction = new Action();
-      InnerAction.setType(ActionType);
       JSONObject ActionTemp = ActionArray.optJSONObject(i);
       String ActionOwner = ActionTemp.optString("owner");
-
       InnerAction.setOwner(ActionOwner);
+      String ActionType = ActionTemp.optString("type");
+      InnerAction.setType(ActionType);
       int ActionSoldierNum = ActionTemp.optInt("soldiers");
       InnerAction.setSoldiers(ActionSoldierNum);
       setSrcDst(InnerAction, ActionTemp, "src");
@@ -95,5 +99,27 @@ public class MyFormatter {
     } else {
       InnerAction.setDst(SrcDstTerr);
     }
+  }
+
+  public void AllActionParse(HashMap<Integer, ArrayList<Action>> AllAction, String Input){
+    JSONObject InputAction = new JSONObject(Input);
+    
+    for (int i = 0; i < NumPlayers; i++) {
+      JSONArray PlayerTemp = new JSONArray();
+      PlayerTemp = InputAction.optJSONArray("player_" + Integer.toString(i));
+      
+      if (PlayerTemp != null) {
+        System.out.println("[DEBUG] player_" + Integer.toString(i));
+        ArrayList<Action> CurrAction = new ArrayList<>();
+        ParseActionArray(CurrAction, PlayerTemp);
+        AllAction.put(i, CurrAction);
+      }
+      
+    }
+  }
+  public JSONObject AllActionCompose(HashMap<Integer, ArrayList<Action>> AllAction){
+    ActiontoJson myAllAction = new ActiontoJson(AllAction);
+    myAllAction.ComposeAllAction();
+    return myAllAction.getAllAction();
   }
 }
