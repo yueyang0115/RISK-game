@@ -54,8 +54,16 @@ public class TextTest {
 
     Pair<Integer, String> playerInfo = new Pair<>(0,"Green");
     Text Test = new Text();
-    System.out.println("[DEBUG] TestText.show():\n");
-    Test.show(Map, playerInfo);
+    System.out.println("[DEBUG] TestText.showMap():\n");
+    Test.showMap(Map, playerInfo);
+
+
+    MyFormatter AllAct = new MyFormatter(3);
+    String Input = "{'player_0':[{'owner':'aaa','dst':{'owner':'aaa','territoryName':'aaaTerr2','soldiers':4,'neighbor':[{'neighbor_0':'aaa_neigh3'}]},'src':{'owner':'aaa','territoryName':'aaaTerr1','soldiers':3,'neighbor':[{'neighbor_0':'aaa_neigh1'},{'neighbor_1':'aaa_neigh2'}]},'soldiers':12},{'owner':'bbb','dst':{'owner':'bbb','territoryName':'bbbTerr2','soldiers':6,'neighbor':[{'neighbor_0':'bbb_neigh3'},{'neighbor_1':'bbb_neigh4'}]},'src':{'owner':'bbb','territoryName':'bbbTerr1','soldiers':5,'neighbor':[{'neighbor_0':'bbb_neigh1'},{'neighbor_1':'bbb_neigh2'}]},'soldiers':20}],'player_2':[{'owner':'aaa','dst':{'owner':'aaa','territoryName':'aaaTerr2','soldiers':4,'neighbor':[{'neighbor_0':'aaa_neigh3'},{'neighbor_1':'aaa_neigh4'}]},'src':{'owner':'aaa','territoryName':'aaaTerr1','soldiers':3,'neighbor':[{'neighbor_0':'aaa_neigh1'},{'neighbor_1':'aaa_neigh2'}]},'soldiers':12},{'owner':'bbb','dst':{'owner':'bbb','territoryName':'bbbTerr2','soldiers':6,'neighbor':[{'neighbor_0':'bbb_neigh3'},{'neighbor_1':'bbb_neigh4'}]},'src':{'owner':'bbb','territoryName':'bbbTerr1','soldiers':5,'neighbor':[{'neighbor_0':'bbb_neigh1'},{'neighbor_1':'bbb_neigh2'}]},'soldiers':20}]}";
+    HashMap<Integer, ArrayList<Action>> ParsedAction = new HashMap<>();
+    AllAct.AllActionParse(ParsedAction, Input);
+    System.out.println("[DEBUG] TestText.showAction():\n");
+    Test.showAction(ParsedAction, playerInfo);
 
   }
 

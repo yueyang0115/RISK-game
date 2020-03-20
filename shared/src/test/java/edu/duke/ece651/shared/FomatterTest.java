@@ -24,7 +24,7 @@ public class FomatterTest {
 
 
 
-    System.out.println("*****************TEST ACTION*****************");
+    System.out.println("*****************TEST ACTION****************");
     String InputMoveAction = "{'Move': [{'src':{'owner': 'aaa', 'soldiers': 3, 'neighbor': [{'neighbor_0': 'aaa_neigh1'}, {'neighbor_1': 'aaa_neigh2'}], 'territoryName': 'aaaTerr1'}, 'dst': {'owner': 'aaa', 'soldiers': 4, 'neighbor': [{'neighbor_0': 'aaa_neigh3'}, {'neighbor_1': 'aaa_neigh4'}], 'territoryName': 'aaaTerr2'}, 'soldiers': 12,'owner': 'aaa'}, {'src': {'owner': 'bbb', 'soldiers': 5, 'neighbor': [{'neighbor_0': 'bbb_neigh1'}, {'neighbor_1': 'bbb_neigh2'}], 'territoryName': 'bbbTerr1'}, 'dst':{'owner': 'bbb', 'soldiers': 6, 'neighbor': [{'neighbor_0': 'bbb_neigh3'}, {'neighbor_1': 'bbb_neigh4'}], 'territoryName': 'bbbTerr2'}, 'soldiers': 20, 'owner': 'bbb'}]}";
     ArrayList<Action> MoveActionArray = new ArrayList<>();
     Map.ActionParse(MoveActionArray, InputMoveAction);
