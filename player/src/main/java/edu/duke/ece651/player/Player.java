@@ -2,7 +2,6 @@ package edu.duke.ece651.player;
 
 import edu.duke.ece651.shared.*;
 import javafx.util.*;
-import java.net.*;
 import java.util.*;
 import java.util.Scanner;
 
@@ -11,6 +10,7 @@ public class Player {
   private Pair<Integer, String> playerInfo;
   private ArrayList<Action> MoveAction;
   private ArrayList<Action> AttackAction;
+  private HashMap<Integer, ArrayList<Action>> AllAction;
   private Displayable displayer;
   private Communicator communicator;
   private int playerNum;
@@ -58,7 +58,7 @@ public class Player {
         while (true) {
           String choice = scanner.nextLine().toUpperCase();
           if (!choice.equals("Y") && !choice.equals("N")) {
-            System.out.println("====Your Input is invalid.========\n" + "Please choose Y/N");
+            System.out.println("Your Input is invalid.\n" + "Please choose Y/N");
             continue;
           }
           if(choice.equals("Y")){
@@ -67,8 +67,8 @@ public class Player {
           return;  
         }
       }
-      display();
-      WaitAction(Lose, myformatter);    
+      displayMap();
+      WaitAction(Lose, myformatter); 
     }
   }
   
@@ -82,7 +82,11 @@ public class Player {
       AttackAction = PlayerAction.getAttackActions();
       String AttackString = myformatter.ActionCompose(AttackAction).toString();
       sendString(AttackString);
+      System.out.println("Validation result of your actions: " + receiveString());
     }
+    String OtherActions = receiveString();
+    myformatter.AllActionParse(AllAction, OtherActions);
+    displayAction();
   }
   
   public void sendString(String str) {
@@ -103,10 +107,12 @@ public class Player {
     this.displayer = d;
   }
 
-  public void display() {
-    displayer.show(territoryMap, playerInfo);
+  public void displayMap() {
+    displayer.showMap(territoryMap, playerInfo);
   }
-
+  public void displayAction(){
+    displayer.showAction(AllAction, playerInfo);
+  }
   public void close() {
     communicator.close();
   }
@@ -115,6 +121,7 @@ public class Player {
     Scanner scanner = new Scanner(System.in);
     Player player = new Player();
     Displayable d = new Text();
+    
     player.addDisplayable(d);
     player.init(scanner);
     player.PlayGame(scanner);
