@@ -36,7 +36,7 @@ public class PlayerHandler extends Thread {
       //receive actions twice, add to ActionHelper
       ArrayList<Action> moveList = new ArrayList<>();
       ArrayList<Action> attackList = new ArrayList<>();
-      MyFormatter myformatter = new MyFormatter(playerNum);
+      MyFormatter myformatter = new MyFormatter(playerNum[0]);
       String str = communicator.receive();
       myformatter.ActionParse(moveList, str);
       str = communicator.receive();

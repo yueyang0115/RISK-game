@@ -38,13 +38,8 @@ public class ActionHelper {
     }
     public synchronized void executeActions() {
         while(playerComplete.contains(false)) {
-            try {
-                this.wait();
-            }
-            catch (InterruptedException e) {
-                System.out.println("Error: wait failed in ActionHelper!");
-            }
-            
+          
+          this.wait();
         }
         DoAction d = new DoAction(worldMap);
         d.doMoveAction(moveList);
