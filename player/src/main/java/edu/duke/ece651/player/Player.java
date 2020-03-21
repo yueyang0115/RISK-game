@@ -19,6 +19,7 @@ public class Player {
     this.territoryMap = new HashMap<>();
     this.MoveAction = new ArrayList<>();
     this.AttackAction = new ArrayList<>();
+    this.AllAction = new HashMap<>();
     this.communicator = new Communicator("127.0.0.1", 1234);
     this.playerNum = 0;
   }
