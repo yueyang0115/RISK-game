@@ -60,21 +60,64 @@ public class DoAction {
           numDefence -= 1;
         }
       }
+
       if (numDefence == 0) {
         System.out.println("[DEBUG] attack success");
-        defenceTerritory.setOwner(attackTerritory.getOwner());
-        defenceTerritory.setSoldiers(numAttack);
+        changeOwner(defenceTerritory, attackTerritory, numAttack);
       } else { // numAttack = 0
         System.out.println("[DEBUG] defence success");
         defenceTerritory.setSoldiers(numDefence);
       }
+
       System.out.println("[DEBUG] after attack, attackTerritory's name is "
           + attackTerritory.getTerritoryName() + ", owner is " + attackTerritory.getOwner()
           + ", num of soldier is " + attackTerritory.getSoliders());
       System.out.println("[DEBUG] after attack, defenceTerritory's name is "
           + defenceTerritory.getTerritoryName() + ", owner is " + defenceTerritory.getOwner()
           + ", num of soldier is " + defenceTerritory.getSoliders());
+      MaptoJson myMaptoJson = new MaptoJson(myworld);
+      System.out.println("[DEBUG] after attack, new worldmap is " + myMaptoJson.getJSON());
     }
+  }
+
+  private void changeOwner(Territory defenceTerritory, Territory attackTerritory, int numAttack) {
+    ArrayList<Integer> ID = new ArrayList<>();
+    ArrayList<String> playerName = new ArrayList<>();
+    playerName.add(defenceTerritory.getOwner());
+    playerName.add(attackTerritory.getOwner());
+    for (int i = 0; i < 2; i++) {
+      String tempName = playerName.get(i);
+      int temp = Character.getNumericValue(tempName.charAt(tempName.length() - 1));
+      ID.add(temp);
+    }
+    System.out.println("[DEBUG] defence platerID is " + ID.get(0));
+    System.out.println("[DEBUG] attack platerID is " + ID.get(1));
+    Territory tempTerritory = new Territory();
+    tempTerritory = defenceTerritory;
+
+    ArrayList<Territory> defenceTerritories = myworld.get(ID.get(0));
+    System.out.println("[DEBUG] before change owner, defence player has "
+        + defenceTerritories.size() + " actions");
+    /*
+    for (int j = 0; j < defenceTerritories.size(); j++) {
+      if (defenceTerritories.get(j) == defenceTerritory) {
+        defenceTerritories.remove(defenceTerritory);
+        System.out.println("[DEBUG] find territory to change owner and erase");
+        break;
+      }
+      }*/
+    defenceTerritories.remove(defenceTerritory);
+    System.out.println(
+        "[DEBUG] after change owner, defence player has " + defenceTerritories.size() + " actions");
+
+    ArrayList<Territory> attackTerritories = myworld.get(ID.get(1));
+    System.out.println(
+        "[DEBUG] before change owner, attack player has " + attackTerritories.size() + " actions");
+    tempTerritory.setOwner(attackTerritory.getOwner());
+    tempTerritory.setSoldiers(numAttack);
+    attackTerritories.add(tempTerritory);
+    System.out.println(
+        "[DEBUG] after change owner, attack player has " + attackTerritories.size() + " actions");
   }
 
   public void doPlusOne() {
@@ -87,16 +130,17 @@ public class DoAction {
     }
   }
 
-  private Territory findTerritory(
+  public Territory findTerritory(
       HashMap<Integer, ArrayList<Territory>> myworld, String TerritoryName) {
     Territory ans = new Territory();
     for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
       ArrayList<Territory> territoryList = entry.getValue();
       for (int j = 0; j < territoryList.size(); j++) {
         Territory myterritory = territoryList.get(j);
-        if (myterritory.getTerritoryName() == TerritoryName) {
+        if (myterritory.getTerritoryName().equals(TerritoryName)) {
           System.out.println("[DEBUG] find ans");
           ans = myterritory;
+          return ans;
         }
       }
     }
