@@ -77,7 +77,7 @@ public class Player {
 
   
   public void WaitAction(boolean Lose, MyFormatter myformatter){
-    if(Lose){
+    if(!Lose){
       OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
       PlayerAction.readAction();
       this.MoveAction = PlayerAction.getMoveActions();
