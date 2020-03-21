@@ -25,7 +25,7 @@ public class ActionHelper {
             playerComplete.add(false);
         }
     }
-    public boolean getActionsMap(int id) {
+    public boolean checkActionValid(int id) {
         return playersActions.containsKey(id);
     }
     public synchronized void addActions(int playerId, ArrayList<Action> ml, ArrayList<Action> al) {

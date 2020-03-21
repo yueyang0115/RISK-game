@@ -62,7 +62,7 @@ public class PlayerHandler extends Thread {
 
     }
 
-    public void checkAction() {
+    public String checkAction() {
       return actionHelper.checkActionValid(id) ? "valid" : "invalid";
     }
 
