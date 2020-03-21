@@ -130,16 +130,17 @@ public class DoAction {
     }
   }
 
-  private Territory findTerritory(
+  public Territory findTerritory(
       HashMap<Integer, ArrayList<Territory>> myworld, String TerritoryName) {
     Territory ans = new Territory();
     for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
       ArrayList<Territory> territoryList = entry.getValue();
       for (int j = 0; j < territoryList.size(); j++) {
         Territory myterritory = territoryList.get(j);
-        if (myterritory.getTerritoryName() == TerritoryName) {
+        if (myterritory.getTerritoryName().equals(TerritoryName)) {
           System.out.println("[DEBUG] find ans");
           ans = myterritory;
+          return ans;
         }
       }
     }
