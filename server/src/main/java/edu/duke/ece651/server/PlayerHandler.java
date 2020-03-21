@@ -33,18 +33,47 @@ public class PlayerHandler extends Thread {
     }
 
     public void startPlay() {
-      //receive actions twice, add to ActionHelper
+      //TODO:big while loop: not loose/watch after lose      
+      //receive actions twice, add to ActionHelper and execute
       ArrayList<Action> moveList = new ArrayList<>();
       ArrayList<Action> attackList = new ArrayList<>();
       MyFormatter myformatter = new MyFormatter(playerNum[0]);
       String str = communicator.receive();
+      System.out.println("DEBUG: received moveList, " + str);
       myformatter.ActionParse(moveList, str);
       str = communicator.receive();
+      System.out.println("DEBUG: received attackList, " + str);
       myformatter.ActionParse(attackList, str);
       actionHelper.addActions(id, moveList, attackList);
-      //receive action string and send to playe
-      //send map to player
+      //
+      //Should not be here, should be in the main of server
+      // actionHelper.executeActions();
+      // //receive action string and send to playe
+      // String actionstr = actionHelper.getActionString();
+      // System.out.println("DEBUG: action string is , " + actionstr);
+      // communicator.sendString(actionstr);
+      // //send map to player
+      // MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
+      // communicator.sendJSON(myMaptoJson.getJSON());
+      // if (!territoryMap.containsKey(id)) {
+      //   communicator.sendString("Lose Game");
+      //   String ifWatch = communicator.receive();
+      // }
 
+    }
+
+    public void checkLose() {
+      if (!territoryMap.containsKey(id)) {
+        communicator.sendString("Lose Game");
+        String ifWatch = communicator.receive();
+        //TODO:have some global variable, 0:ingame, 1:loseandnowatch, 2:loseandwatch
+        //
+      }
+    }
+
+    public void sendPlayer(String input) {
+      //TODO:determine if need to send? change previous sendstring
+      communicator.sendString(input);
     }
 
     public HashMap<Integer, ArrayList<Territory>> getMap() {

@@ -59,21 +59,34 @@ public class Server {
   }
 
   public void startGame() {
+    //TODO:new a playerstatus to playerHandler, no need to know size first, first thread updates its value
     ActionHelper ah = new ActionHelper(playerNum[0], territoryMap);
     for (PlayerHandler cur : list) {
       cur.addActionHelper(ah);
     }
-    //while game not end
+    //TODO:while game not end, at leat one player "in game"
     for (PlayerHandler cur : list) {
       cur.startPlay();
     }
+    // for (PlayerHandler cur : list) {
+    //   try {
+    //     cur.join();
+    //   }
+    //   catch(Exception ex) { 
+    //     System.out.println("Exception:" + ex); 
+    //   }    
+    // }
+    ah.executeActions();
+    //receive action string and send to player
+    String actionstr = ah.getActionString();
+    System.out.println("DEBUG: action string is , " + actionstr);
+    MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
     for (PlayerHandler cur : list) {
-      try {
-        cur.join();
-      }
-      catch(Exception ex) { 
-        System.out.println("Exception:" + ex); 
-      }    
+      cur.sendPlayer(actionstr);
+      //send map to player
+      cur.sendPlayer(myMaptoJson.getJSON().toString());
+      cur.checkLose();
+      //TODO:add check win, only me "ingame"
     }
     //end while   
   }
