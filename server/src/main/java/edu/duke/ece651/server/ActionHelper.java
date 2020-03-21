@@ -12,7 +12,10 @@ public class ActionHelper {
     private String actionsStr;
     private int playerNum;
     public ActionHelper(int number, HashMap<Integer, ArrayList<Territory>> m) {
-        reset(playerNum, m);
+        reset(number, m);
+    }
+    public void reset() {
+        reset(playerNum, worldMap);
     }
     public void reset(int number, HashMap<Integer, ArrayList<Territory>> m) {
         this.playersActions = new HashMap<>();
@@ -21,7 +24,7 @@ public class ActionHelper {
         this.attackList = new ArrayList<>();
         this.playerNum = number;
         this.playerComplete = new ArrayList<>(playerNum);
-        for (int i = 0; i < playerNum; ++i) {
+        for (int i = 0; i < number; ++i) {
             playerComplete.add(false);
         }
     }
@@ -54,9 +57,7 @@ public class ActionHelper {
         d.doAttackAction(attackList);
         d.doPlusOne();
         MyFormatter formatter = new MyFormatter(playerNum); 
-        actionsStr = formatter.AllActionCompose(playersActions).toString();
-        reset(playerNum, worldMap);
-        
+        actionsStr = formatter.AllActionCompose(playersActions).toString();      
     }
     public String getActionString() {
         return actionsStr;

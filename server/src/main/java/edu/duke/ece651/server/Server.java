@@ -6,19 +6,14 @@ import java.util.Scanner;
 import java.io.*;
 
 public class Server {
-  
-  // private ArrayList<Action> allMoveActions;
-  // private ArrayList<Action> allAttackActions;
-
   private int port;
   private int[] playerNum;
   private ServerSocket serverSock;
   private ArrayList<PlayerHandler> list;
   private HashMap<Integer, ArrayList<Territory>> territoryMap;
+  private ArrayList<PlayerStatus> status;
 
   public Server(int port) {
-    // this.allMoveActions = new ArrayList<>();
-    // this.allAttackActions = new ArrayList<>();
     this.port = port;
     this.playerNum = new int[]{0};
     try {
@@ -27,12 +22,12 @@ public class Server {
       System.out.println("Failed to crete ServerSocket!");
     }
     this.list = new ArrayList<>();
-    this.territoryMap = new HashMap<>();  
+    this.territoryMap = new HashMap<>(); 
+    this.status = new ArrayList<>(); 
   }
 
-
   public void initGame() {
-    PlayerHandler first = new PlayerHandler(new Communicator(serverSock), 0, playerNum);
+    PlayerHandler first = new PlayerHandler(new Communicator(serverSock), 0, playerNum, status);
     first.start();
     list.add(first);
     try {
@@ -43,7 +38,7 @@ public class Server {
     } 
     territoryMap = first.getMap();
     for (int id = 1; id < playerNum[0]; id++) {
-      PlayerHandler ph = new PlayerHandler(new Communicator(serverSock), id, playerNum); 
+      PlayerHandler ph = new PlayerHandler(new Communicator(serverSock), id, playerNum, status); 
       list.add(ph);
       ph.start();
     }
@@ -64,30 +59,46 @@ public class Server {
     for (PlayerHandler cur : list) {
       cur.addActionHelper(ah);
     }
-    //TODO:while game not end, at leat one player "in game"
-    for (PlayerHandler cur : list) {
-      cur.startPlay();
-    }
-    // for (PlayerHandler cur : list) {
-    //   try {
-    //     cur.join();
-    //   }
-    //   catch(Exception ex) { 
-    //     System.out.println("Exception:" + ex); 
-    //   }    
-    // }
-    ah.executeActions();
-    //receive action string and send to player
-    String actionstr = ah.getActionString();
-    System.out.println("DEBUG: action string is , " + actionstr);
+    StringBuilder winMsg = new StringBuilder("Game End! Winner is ");
     MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
-    for (PlayerHandler cur : list) {
-      cur.sendPlayer(cur.checkAction());
-      cur.sendPlayer(actionstr);
-      //send map to player
-      cur.sendPlayer(myMaptoJson.getJSON().toString());
-      cur.checkLose();
-      //TODO:add check win, only me "ingame"
+    Boolean gameEnd = false;
+    while (!gameEnd) {
+      for (PlayerHandler cur : list) {
+        cur.startPlay();
+      }
+      ah.executeActions();
+      //Get action string, send to players later 
+      String actionstr = ah.getActionString();
+      ah.reset();
+      System.out.println("DEBUG: action string is , " + actionstr);
+      // MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
+
+      for (PlayerHandler cur : list) {
+        cur.checkLose();
+      }
+      for (int i = 0; i < list.size(); ++i) {
+        if (list.get(i).checkWin()) {
+          winMsg.append(new ColorID().getPlayerColor(i));
+          winMsg.append(" player.");
+          gameEnd = true;
+        }
+      }
+      for (int j = 0; j < list.size(); ++j) {     
+        PlayerHandler cur = list.get(j);
+        if (gameEnd) {
+          cur.sendPlayer(winMsg.toString(),false);
+          //TODO: close the server
+        }
+        else {
+          if (status.get(j) == PlayerStatus.INGAME) {
+            cur.sendPlayer(cur.checkAction(), false);
+          }
+          //Send actions of other players to every player   
+          cur.sendPlayer(actionstr, true);
+          //Send map to player
+          cur.sendPlayer(myMaptoJson.getJSON().toString(), true);
+        }       
+      }
     }
     //end while   
   }
