@@ -10,8 +10,8 @@
 	      {'owner':'player_2', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}],
 
  'player_3':[ {'owner':'player_3', 'soldiers':3, 'neighbor':[{'neighbor_0':'C'},{'neighbor_1':'E'},{'neighbor_2':'G'},{'neighbor_3':'K'}], 'territoryName':'F'}, 
-              {'owner':'player_2', 'soldiers':3, 'neighbor':[{'neighbor_0':'C'},{'neighbor_1':'F'},{'neighbor_2':'L'}], 'territoryName':'G'}],
+              {'owner':'player_3', 'soldiers':3, 'neighbor':[{'neighbor_0':'C'},{'neighbor_1':'F'},{'neighbor_2':'L'}], 'territoryName':'G'}],
 
- 'player_4':[ {'owner':'player_3', 'soldiers':3, 'neighbor':[{'neighbor_0':'F'},{'neighbor_1':'L'},{'neighbor_2':'J'}], 'territoryName':'K'}, 
-	      {'owner':'player_3', 'soldiers':3, 'neighbor':[{'neighbor_0':'G'},{'neighbor_1':'K'}], 'territoryName':'L'}]
-}o
+ 'player_4':[ {'owner':'player_4', 'soldiers':3, 'neighbor':[{'neighbor_0':'F'},{'neighbor_1':'L'},{'neighbor_2':'J'}], 'territoryName':'K'}, 
+	      {'owner':'player_4', 'soldiers':3, 'neighbor':[{'neighbor_0':'G'},{'neighbor_1':'K'}], 'territoryName':'L'}]
+}

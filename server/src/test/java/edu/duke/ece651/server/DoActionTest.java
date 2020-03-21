@@ -54,7 +54,7 @@ public class DoActionTest {
     DoAction actor = new DoAction(myworld);
     actor.doAttackAction(actionList);
 
-    assertEquals(territoryA.getSoliders(), 0); // b
+    assertEquals(myworld.get(0).get(0).getSoliders(), 0);
   }
 
   @Test
@@ -80,7 +80,7 @@ public class DoActionTest {
     DoAction actor = new DoAction(myworld);
     actor.doAttackAction(actionList);
 
-    assertEquals(territoryA.getSoliders(), 1); // b
+    assertEquals(myworld.get(0).get(0).getSoliders(), 1);
   }
 
   @Test
