@@ -82,6 +82,7 @@ public class Server {
     System.out.println("DEBUG: action string is , " + actionstr);
     MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
     for (PlayerHandler cur : list) {
+      cur.sendPlayer("valid"); //TODO: determine if valid
       cur.sendPlayer(actionstr);
       //send map to player
       cur.sendPlayer(myMaptoJson.getJSON().toString());
