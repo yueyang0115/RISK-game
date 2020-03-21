@@ -25,6 +25,9 @@ public class ActionHelper {
             playerComplete.add(false);
         }
     }
+    public boolean getActionsMap(int id) {
+        return playersActions.containsKey(id);
+    }
     public synchronized void addActions(int playerId, ArrayList<Action> ml, ArrayList<Action> al) {
         ArrayList<Action> curActions = new ArrayList<>();
         curActions.addAll(ml);
@@ -46,7 +49,7 @@ public class ActionHelper {
             }
             
         }
-        DoAction d = new DoAction(worldMap);
+        DoAction d = new DoAction(worldMap); //TODO: pass playersActions to contructor
         d.doMoveAction(moveList);
         d.doAttackAction(attackList);
         d.doPlusOne();

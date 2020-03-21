@@ -62,6 +62,10 @@ public class PlayerHandler extends Thread {
 
     }
 
+    public void checkAction() {
+      return actionHelper.checkActionValid(id) ? "valid" : "invalid";
+    }
+
     public void checkLose() {
       if (!territoryMap.containsKey(id)) {
         communicator.sendString("Lose Game");
