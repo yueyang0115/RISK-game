@@ -7,14 +7,18 @@ public class ActiontoJson {
   private JSONObject ans;
   private JSONObject ansAllAction;
   private ArrayList<Action> actionList;
-  private HashMap<Integer, ArrayList<Action>> AllAction; 
-  public ActiontoJson(ArrayList<Action> myactionList) {
+  private HashMap<Integer, ArrayList<Action>> AllAction;
+  private String ActionType;
+  public ActiontoJson(ArrayList<Action> myactionList, String Type) {
     this.ans = new JSONObject();
+    this.actionList = new ArrayList<>();
     this.actionList = myactionList;
+    ActionType = Type;
     getActionListObj();
   }
   public ActiontoJson(HashMap<Integer, ArrayList<Action>> Actions){
     this.ansAllAction = new JSONObject();
+    this.AllAction = new HashMap<>();
     this.AllAction = Actions;
   }
   
@@ -42,10 +46,11 @@ public class ActiontoJson {
   private void getActionListObj() {
     JSONArray actionArray = new JSONArray();
     getActionArray(actionArray);
-    ans.put(actionList.get(0).getType(), actionArray);
+    ans.put(ActionType, actionArray);
   }
 
   public void getActionArray(JSONArray actionArray) {
+    System.out.println("[DEBUG] actionList size is: " + actionList.size());
     for (int i = 0; i < actionList.size(); i++) {
       JSONObject actionObj = new JSONObject();
       Action action = actionList.get(i);

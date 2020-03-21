@@ -25,7 +25,7 @@ public class ActiontoJsonTest {
     actionList.add(action_A);
     actionList.add(action_A);
 
-    ActiontoJson myActiontoJson = new ActiontoJson(actionList);
+    ActiontoJson myActiontoJson = new ActiontoJson(actionList, "Move");
     System.out.println(myActiontoJson.getJSON());
 
     MyFormatter myformatter = new MyFormatter(0);

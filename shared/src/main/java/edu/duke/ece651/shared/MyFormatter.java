@@ -57,8 +57,9 @@ public class MyFormatter {
     return Inner;
   }
 
-  public JSONObject ActionCompose(ArrayList<Action> actionList) {
-    ActiontoJson myActiontoJson = new ActiontoJson(actionList);
+  public JSONObject ActionCompose(ArrayList<Action> actionList, String ActionType) {
+    ActiontoJson myActiontoJson = new ActiontoJson(actionList, ActionType);
+    System.out.println("The returned Action is: " + myActiontoJson.getJSON());
     return myActiontoJson.getJSON();
   }
 
@@ -102,6 +103,7 @@ public class MyFormatter {
   }
 
   public void AllActionParse(HashMap<Integer, ArrayList<Action>> AllAction, String Input){
+    System.out.println("The Received All Action String is (ready to AllActionParse): " + Input);
     JSONObject InputAction = new JSONObject(Input);
     
     for (int i = 0; i < NumPlayers; i++) {
@@ -120,6 +122,7 @@ public class MyFormatter {
   public JSONObject AllActionCompose(HashMap<Integer, ArrayList<Action>> AllAction){
     ActiontoJson myAllAction = new ActiontoJson(AllAction);
     myAllAction.ComposeAllAction();
+    
     return myAllAction.getAllAction();
   }
 }

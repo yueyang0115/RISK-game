@@ -76,11 +76,12 @@ public class Player {
     if(Lose){
       OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
       PlayerAction.readAction();
-      MoveAction = PlayerAction.getMoveActions();
-      String MoveString = myformatter.ActionCompose(MoveAction).toString();
+      this.MoveAction = PlayerAction.getMoveActions();
+      System.out.println("[DEBUG PLAYER] Size Move Action" + this.MoveAction.size());
+      String MoveString = myformatter.ActionCompose(this.MoveAction, "Move").toString();
       sendString(MoveString);
       AttackAction = PlayerAction.getAttackActions();
-      String AttackString = myformatter.ActionCompose(AttackAction).toString();
+      String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
       sendString(AttackString);
       System.out.println("Validation result of your actions: " + receiveString());
     }
