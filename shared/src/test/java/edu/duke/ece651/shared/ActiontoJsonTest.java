@@ -29,6 +29,6 @@ public class ActiontoJsonTest {
     System.out.println(myActiontoJson.getJSON());
 
     MyFormatter myformatter = new MyFormatter(0);
-    System.out.println(myformatter.ActionCompose(actionList));
+    System.out.println(myformatter.ActionCompose(actionList, "Attack"));
   }
 }

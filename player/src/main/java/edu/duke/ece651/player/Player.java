@@ -43,17 +43,17 @@ public class Player {
   public void PlayGame(Scanner scanner){
     String msg;
     boolean Ask = false;
+    boolean Lose = false;
+    OUT:
     while(true){ 
       msg = receiveString();
       if(msg.contains("Game End!")){
         System.out.println(msg);
         break;
       }
-      MyFormatter myformatter = new MyFormatter(playerNum);
-      myformatter.MapParse(territoryMap, msg);
-      boolean Lose = territoryMap.containsKey(playerInfo.getKey());
-      if(!Lose && !Ask){
+      if(msg.contains("Lose Game") && !Ask){
         Ask = true;
+        Lose = true;
         System.out.println("========You lose the game========\n" + "Do you want to still watch the game? Please choose Y/N");
         while (true) {
           String choice = scanner.nextLine().toUpperCase();
@@ -61,16 +61,20 @@ public class Player {
             System.out.println("Your Input is invalid.\n" + "Please choose Y/N");
             continue;
           }
-          if(choice.equals("Y")){
-            break;
+          sendString(choice);
+          if(choice.equals("Y")){ 
+            continue OUT;
           }
           return;  
         }
       }
+      MyFormatter myformatter = new MyFormatter(playerNum);
+      myformatter.MapParse(territoryMap, msg);
       displayMap();
       WaitAction(Lose, myformatter); 
     }
   }
+
   
   public void WaitAction(boolean Lose, MyFormatter myformatter){
     if(Lose){
