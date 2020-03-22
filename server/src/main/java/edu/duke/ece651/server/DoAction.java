@@ -9,6 +9,7 @@ public class DoAction {
   private HashSet<String> invalidPlayer;
   private MyFormatter myformatter;
   private String tempWorldStr;
+  private ArrayList<Action> mymoveList;
 
   public DoAction(HashMap<Integer, ArrayList<Territory>> world,
       HashMap<Integer, ArrayList<Action>> actionsMap) {
@@ -28,6 +29,7 @@ public class DoAction {
     myworld = new HashMap<>();
     myActionMap = new HashMap<>();
     invalidPlayer = new HashSet<>();
+    mymoveList = new ArrayList<>();
   }
 
   private void removePlayer(Action action) {
@@ -83,10 +85,13 @@ public class DoAction {
       System.out.println("[DEBUG] after move, dstTerritory's name is "
           + dstTerritory.getTerritoryName() + ", num of soldier is " + dstTerritory.getSoliders());
     }
-    tempWorldStr = myformatter.MapCompose(myworld).toString();
+    // tempWorldStr = myformatter.MapCompose(myworld).toString();
+    mymoveList = moveList;
   }
 
   public void doAttackAction(ArrayList<Action> attackList) {
+    myformatter.MapParse(myworld, tempWorldStr); // reset world
+
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
 
@@ -109,6 +114,8 @@ public class DoAction {
       Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
       attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
     }
+
+    doMoveAction(mymoveList);
 
     for (int i = 0; i < attackList.size(); i++) {
       Action action = attackList.get(i);
