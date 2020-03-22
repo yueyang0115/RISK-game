@@ -52,7 +52,7 @@ public class ActionHelper {
             }
             
         }
-        DoAction d = new DoAction(worldMap); //TODO: pass playersActions to contructor
+        DoAction d = new DoAction(worldMap, playersActions); //TODO: pass playersActions to contructor
         d.doMoveAction(moveList);
         d.doAttackAction(attackList);
         d.doPlusOne();
