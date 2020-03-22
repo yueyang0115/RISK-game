@@ -61,7 +61,7 @@ public class PlayerHandler extends Thread {
     }
 
     public void checkLose() {
-      if (!territoryMap.containsKey(id)) {
+      if (territoryMap.get(id).size() == 0) {
         sendPlayer("Lose Game", false);
         String ifWatch = communicator.receive();
         if (ifWatch.equals("Y")) {
