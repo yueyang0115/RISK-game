@@ -35,11 +35,13 @@ public class DoAction {
     System.out.println("[DEBUG] action inValid");
     String playerName = action.getOwner();
     int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
-    System.out.println(
-        "[DEBUG] before remove invalid player, actionMap.size is " + myActionMap.size());
-    myActionMap.remove(playerID);
-    System.out.println(
-        "[DEBUG] after remove invalid player, actionMap.size is " + myActionMap.size());
+    if (myActionMap.containsKey(playerID)) {
+      System.out.println(
+          "[DEBUG] before remove invalid player, actionMap.size is " + myActionMap.size());
+      myActionMap.remove(playerID);
+      System.out.println(
+          "[DEBUG] after remove invalid player, actionMap.size is " + myActionMap.size());
+    }
   }
 
   public void doMoveAction(ArrayList<Action> moveList) {
@@ -87,6 +89,13 @@ public class DoAction {
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
 
+      int numAttack = action.getSoliders();
+      Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
+      attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
+    }
+
+    for (int i = 0; i < attackList.size(); i++) {
+      Action action = attackList.get(i);
       if (invalidPlayer.contains(action.getOwner())) {
         continue;
       }
@@ -97,17 +106,10 @@ public class DoAction {
         attackList.remove(action);
         invalidPlayer.add(action.getOwner());
         myformatter.MapParse(myworld, tempWorldStr); // reset world
-        k = -1;
+        i = -1;
         continue;
       }
 
-      int numAttack = action.getSoliders();
-      Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
-      attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
-    }
-
-    for (int i = 0; i < attackList.size(); i++) {
-      Action action = attackList.get(i);
       int numAttack = action.getSoliders();
       Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
       Territory defenceTerritory = findTerritory(myworld, action.getDst().getTerritoryName());
