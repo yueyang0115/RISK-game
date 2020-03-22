@@ -34,21 +34,21 @@ public class DoAction {
   }
 
   private void removePlayer(Action action) {
-    //System.out.println("[DEBUG] action inValid");
+    // System.out.println("[DEBUG] action inValid");
     String playerName = action.getOwner();
     int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
     if (myActionMap.containsKey(playerID)) {
-      //System.out.println(
+      // System.out.println(
       //    "[DEBUG] before remove invalid player, actionMap.size is " + myActionMap.size());
       myActionMap.remove(playerID);
-      //System.out.println(
+      // System.out.println(
       //   "[DEBUG] after remove invalid player, actionMap.size is " + myActionMap.size());
     }
   }
 
   public void doMoveAction(ArrayList<Action> moveList) {
     for (int i = 0; i < moveList.size(); i++) {
-      //System.out.println("[DEBUG] i is " + i);
+      // System.out.println("[DEBUG] i is " + i);
       System.out.print("[DEBUG] invalidSet contains: ");
       for (String str : invalidPlayer) {
         System.out.print(str + ",");
@@ -91,13 +91,6 @@ public class DoAction {
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
 
-      int numAttack = action.getSoliders();
-      Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
-      attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
-    }
-
-    for (int i = 0; i < attackList.size(); i++) {
-      Action action = attackList.get(i);
       if (invalidPlayer.contains(action.getOwner())) {
         continue;
       }
@@ -108,7 +101,19 @@ public class DoAction {
         attackList.remove(action);
         invalidPlayer.add(action.getOwner());
         myformatter.MapParse(myworld, tempWorldStr); // reset world
-        i = -1;
+        k = -1;
+        continue;
+      }
+
+      int numAttack = action.getSoliders();
+      Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
+      attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
+    }
+
+    for (int i = 0; i < attackList.size(); i++) {
+      Action action = attackList.get(i);
+
+      if (invalidPlayer.contains(action.getOwner())) {
         continue;
       }
 
@@ -212,7 +217,7 @@ public class DoAction {
       for (int j = 0; j < territoryList.size(); j++) {
         Territory myterritory = territoryList.get(j);
         if (myterritory.getTerritoryName().equals(TerritoryName)) {
-          //System.out.println("[DEBUG] find ans");
+          // System.out.println("[DEBUG] find ans");
           ans = myterritory;
           return ans;
         }
