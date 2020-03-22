@@ -215,8 +215,4 @@ public class DoAction {
     }
     return ans;
   }
-
-  public HashMap<Integer, ArrayList<Territory>> getNewWorld() {
-    return this.myworld;
-  }
 }
