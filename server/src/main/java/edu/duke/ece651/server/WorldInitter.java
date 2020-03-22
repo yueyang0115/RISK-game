@@ -11,6 +11,11 @@ public class WorldInitter {
     createWorld(playerNum);
   }
 
+  public WorldInitter(int playerNum, HashMap<Integer, ArrayList<Territory>> w) {
+    myworld = w;
+    createWorld(playerNum);
+  }
+
   public HashMap<Integer, ArrayList<Territory>> getWorld() {
     return myworld;
   }

@@ -27,7 +27,7 @@ public class Server {
   }
 
   public void initGame() {
-    PlayerHandler first = new PlayerHandler(new Communicator(serverSock), 0, playerNum, status);
+    PlayerHandler first = new PlayerHandler(new Communicator(serverSock), 0, playerNum, territoryMap, status);
     first.start();
     list.add(first);
     try {
@@ -36,9 +36,9 @@ public class Server {
     catch(Exception ex) { 
       System.out.println("Exception:" + ex); 
     } 
-    territoryMap = first.getMap();
+    // territoryMap = first.getMap();
     for (int id = 1; id < playerNum[0]; id++) {
-      PlayerHandler ph = new PlayerHandler(new Communicator(serverSock), id, playerNum, status); 
+      PlayerHandler ph = new PlayerHandler(new Communicator(serverSock), id, playerNum, territoryMap, status); 
       list.add(ph);
       ph.start();
     }

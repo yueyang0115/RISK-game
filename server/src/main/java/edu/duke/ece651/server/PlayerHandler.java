@@ -9,10 +9,11 @@ public class PlayerHandler extends Thread {
     private ActionHelper actionHelper;
     private ArrayList<PlayerStatus> status;
 
-    public PlayerHandler(Communicator c, int id, int[] p, ArrayList<PlayerStatus> s) {
+    public PlayerHandler(Communicator c, int id, int[] p, HashMap<Integer, ArrayList<Territory>> t, ArrayList<PlayerStatus> s) {
       this.communicator = c;
       this.id = id;
       this.playerNum = p;
+      this.territoryMap = t;
       this.status = s;
     }
 
@@ -24,15 +25,16 @@ public class PlayerHandler extends Thread {
       sendPlayer(String.valueOf(id), false);
       if (id == 0) {
         playerNum[0] = Integer.parseInt(communicator.receive());
+        WorldInitter myworldinitter = new WorldInitter(playerNum[0], territoryMap);
         System.out.println("[DEBUG]received playerNum" + playerNum[0]);
         for (int i = 0; i < playerNum[0]; ++i) {
           status.add(PlayerStatus.INGAME);
         }
       }
       sendPlayer(String.valueOf(playerNum[0]), false);
-      WorldInitter myworldinitter = new WorldInitter(playerNum[0]);
-      this.territoryMap = myworldinitter.getWorld();
-      MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
+      // WorldInitter myworldinitter = new WorldInitter(playerNum[0], territoryMap);
+      // this.territoryMap = myworldinitter.getWorld();
+      MaptoJson myMaptoJson = new MaptoJson(territoryMap);
       sendPlayer(myMaptoJson.getJSON().toString(), false);
       System.out.println(myMaptoJson.getJSON().toString());
     }
@@ -97,8 +99,8 @@ public class PlayerHandler extends Thread {
         
     }
 
-    public HashMap<Integer, ArrayList<Territory>> getMap() {
-      return territoryMap;
-    }
+    // public HashMap<Integer, ArrayList<Territory>> getMap() {
+    //   return territoryMap;
+    // }
       
 }
