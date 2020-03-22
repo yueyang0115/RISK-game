@@ -24,6 +24,8 @@ public class DoAction {
   public DoAction(HashMap<Integer, ArrayList<Territory>> world) {
     init();
     myworld = world;
+    mychecker = new ServerChecker(myworld);
+    myformatter = new MyFormatter(myworld.size());
   }
   private void init() {
     myworld = new HashMap<>();

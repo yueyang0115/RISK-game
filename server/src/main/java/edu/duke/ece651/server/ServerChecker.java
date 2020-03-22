@@ -10,6 +10,7 @@ public class ServerChecker {
   public ServerChecker(HashMap<Integer, ArrayList<Territory>> myworld) {
     world = new HashMap<>();
     world = myworld;
+    action = new Action();
   }
 
   public boolean Check(Action myaction) {
