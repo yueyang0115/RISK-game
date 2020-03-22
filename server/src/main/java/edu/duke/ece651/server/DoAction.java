@@ -95,6 +95,7 @@ public class DoAction {
       if (!isValid) {
         removePlayer(action);
         attackList.remove(action);
+        invalidPlayer.add(action.getOwner());
         myformatter.MapParse(myworld, tempWorldStr); // reset world
         k = -1;
         continue;
@@ -166,7 +167,7 @@ public class DoAction {
 
     ArrayList<Territory> defenceTerritories = myworld.get(ID.get(0));
     System.out.println("[DEBUG] before change owner, defence player has "
-        + defenceTerritories.size() + " actions");
+        + defenceTerritories.size() + " territories");
     /*
     for (int j = 0; j < defenceTerritories.size(); j++) {
       if (defenceTerritories.get(j) == defenceTerritory) {
@@ -176,17 +177,17 @@ public class DoAction {
       }
       }*/
     defenceTerritories.remove(defenceTerritory);
-    System.out.println(
-        "[DEBUG] after change owner, defence player has " + defenceTerritories.size() + " actions");
+    System.out.println("[DEBUG] after change owner, defence player has " + defenceTerritories.size()
+        + " territories");
 
     ArrayList<Territory> attackTerritories = myworld.get(ID.get(1));
-    System.out.println(
-        "[DEBUG] before change owner, attack player has " + attackTerritories.size() + " actions");
+    System.out.println("[DEBUG] before change owner, attack player has " + attackTerritories.size()
+        + " territories");
     tempTerritory.setOwner(attackTerritory.getOwner());
     tempTerritory.setSoldiers(numAttack);
     attackTerritories.add(tempTerritory);
-    System.out.println(
-        "[DEBUG] after change owner, attack player has " + attackTerritories.size() + " actions");
+    System.out.println("[DEBUG] after change owner, attack player has " + attackTerritories.size()
+        + " territories");
   }
 
   public void doPlusOne() {

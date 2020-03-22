@@ -88,6 +88,30 @@ public class DoActionTest {
     myworld = actor.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoliders(), 6);
     assertEquals(myworld.get(0).get(1).getSoliders(), 0);
+
+    Action action2 = new Action();
+    Territory territoryC = myworld.get(1).get(0);
+    Territory territoryD = myworld.get(1).get(1);
+    assertEquals(territoryC.getSoliders(), 3);
+    assertEquals(territoryD.getSoliders(), 3);
+
+    action2.setDst(territoryC);
+    action2.setSrc(territoryD);
+    action2.setSoldiers(2);
+    action2.setOwner("player_1");
+    action2.setType("Move");
+    ArrayList<Action> actionList2 = new ArrayList<>();
+    actionList2.add(action2);
+    HashMap<Integer, ArrayList<Action>> myactionMap2 = new HashMap<>();
+    myactionMap2.put(1, actionList2);
+
+    DoAction actor2 = new DoAction(myworld, myactionMap2);
+    actor2.doMoveAction(actionList2);
+    myworld = actor2.getNewWorld();
+    assertEquals(myworld.get(0).get(0).getSoliders(), 6);
+    assertEquals(myworld.get(0).get(1).getSoliders(), 0);
+    assertEquals(myworld.get(1).get(0).getSoliders(), 5);
+    assertEquals(myworld.get(1).get(1).getSoliders(), 1);
   }
 
   @Test
@@ -102,19 +126,35 @@ public class DoActionTest {
     assertEquals(territoryA.getSoliders(), 3);
     assertEquals(territoryB.getSoliders(), 3);
 
-    action.setSrc(territoryA); // B
-    action.setDst(territoryB); // E
+    action.setSrc(territoryA); // A
+    action.setDst(territoryB); // B
     action.setSoldiers(3);
     action.setOwner("player_0");
     action.setType("Attack");
     ArrayList<Action> actionList = new ArrayList<>();
     actionList.add(action);
 
+    Action action2 = new Action();
+    Territory territoryC = myworld.get(1).get(1);
+    action2.setSrc(territoryA); // A
+    action2.setDst(territoryC); // C
+    action2.setSoldiers(3);
+    action2.setOwner("player_1");
+    action2.setType("Attack"); // invalid action.owner!=src.owner
+    ArrayList<Action> actionList2 = new ArrayList<>();
+    actionList2.add(action2);
+    // actionList2.add(action2);
+
     HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
     myactionMap.put(0, actionList);
+    myactionMap.put(1, actionList2);
 
+    ArrayList<Action> allAction = new ArrayList<>();
+    allAction.add(action);
+    allAction.add(action2);
+    // allAction.add(action2);
     DoAction actor = new DoAction(myworld, myactionMap);
-    actor.doAttackAction(actionList);
+    actor.doAttackAction(allAction);
 
     myworld = actor.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoliders(), 0);

@@ -47,6 +47,7 @@ public class ServerChecker {
   private boolean checkNum() {
     System.out.println("[DEBUG] checkOwner succeed");
     Territory srcTerritory = action.getSrc();
+    System.out.println("[DEBUG] srcTerritory.getSoldiers = " + srcTerritory.getSoliders());
     return ((srcTerritory.getSoliders() >= action.getSoliders()) && (action.getSoliders() >= 0));
   }
 
