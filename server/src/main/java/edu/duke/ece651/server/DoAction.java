@@ -34,21 +34,21 @@ public class DoAction {
   }
 
   private void removePlayer(Action action) {
-    System.out.println("[DEBUG] action inValid");
+    //System.out.println("[DEBUG] action inValid");
     String playerName = action.getOwner();
     int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
     if (myActionMap.containsKey(playerID)) {
-      System.out.println(
-          "[DEBUG] before remove invalid player, actionMap.size is " + myActionMap.size());
+      //System.out.println(
+      //    "[DEBUG] before remove invalid player, actionMap.size is " + myActionMap.size());
       myActionMap.remove(playerID);
-      System.out.println(
-          "[DEBUG] after remove invalid player, actionMap.size is " + myActionMap.size());
+      //System.out.println(
+      //   "[DEBUG] after remove invalid player, actionMap.size is " + myActionMap.size());
     }
   }
 
   public void doMoveAction(ArrayList<Action> moveList) {
     for (int i = 0; i < moveList.size(); i++) {
-      System.out.println("[DEBUG] i is " + i);
+      //System.out.println("[DEBUG] i is " + i);
       System.out.print("[DEBUG] invalidSet contains: ");
       for (String str : invalidPlayer) {
         System.out.print(str + ",");
@@ -212,7 +212,7 @@ public class DoAction {
       for (int j = 0; j < territoryList.size(); j++) {
         Territory myterritory = territoryList.get(j);
         if (myterritory.getTerritoryName().equals(TerritoryName)) {
-          System.out.println("[DEBUG] find ans");
+          //System.out.println("[DEBUG] find ans");
           ans = myterritory;
           return ans;
         }

@@ -31,7 +31,7 @@ public class OperateAction {
         wholeTerritories.add(entry.getValue().get(i));
       }
     }
-    System.out.println("[DEBUG] Own TerritoriesNum: " + ownTerritories.size());
+    //System.out.println("[DEBUG] Own TerritoriesNum: " + ownTerritories.size());
  }
  
   public ArrayList<Action> getMoveActions(){
@@ -58,7 +58,7 @@ public class OperateAction {
     while(true){
       Action CurrentAction = new Action();
       String acttype = readActionType(s);
-      System.out.println("[DEBUG] ActionType = " + acttype);
+      //System.out.println("[DEBUG] ActionType = " + acttype);
       if(acttype.equals("D")){
         System.out.println("Finished Input Actions");
         break;
@@ -113,7 +113,7 @@ public class OperateAction {
   public boolean readDst(Scanner s, Action curAction, String ActionType){
      System.out.println("Please input the destination territory: ");
      String dst = s.nextLine();
-     System.out.println("[DEBUG] Dst Territory: " + dst);
+     //System.out.println("[DEBUG] Dst Territory: " + dst);
      if(ActionType.equals("M")){
        for(Territory Temp : ownTerritories){
          if(Temp.getTerritoryName().equals(dst)){  

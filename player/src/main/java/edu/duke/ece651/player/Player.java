@@ -35,7 +35,7 @@ public class Player {
       }
       sendString(String.valueOf(playerNum));
     }
-    System.out.println("[DEBUG] my id is " + id);
+    //System.out.println("[DEBUG] my id is " + id);
     String color = new ColorID().getPlayerColor(id);
     this.playerInfo = new Pair<>(id, color);
     playerNum = Integer.parseInt(receiveString());
@@ -82,7 +82,7 @@ public class Player {
       OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
       PlayerAction.readAction();
       this.MoveAction = PlayerAction.getMoveActions();
-      System.out.println("[DEBUG PLAYER] Size Move Action" + this.MoveAction.size());
+      //System.out.println("[DEBUG PLAYER] Size Move Action" + this.MoveAction.size());
       String MoveString = myformatter.ActionCompose(this.MoveAction, "Move").toString();
       sendString(MoveString);
       AttackAction = PlayerAction.getAttackActions();

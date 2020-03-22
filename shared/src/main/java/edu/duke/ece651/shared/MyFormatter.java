@@ -19,11 +19,11 @@ public class MyFormatter {
     JSONObject InputMap = new JSONObject(MapJson);
     for (int i = 0; i < NumPlayers; i++) {
       JSONArray PlayerTemp = InputMap.optJSONArray("player_" + Integer.toString(i));
-      System.out.println("[DEBUG] Player = " + i);
+      //System.out.println("[DEBUG] Player = " + i);
       ArrayList<Territory> InnerTerr = new ArrayList<Territory>();
-      System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
+      //System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
       for (int j = 0; j < PlayerTemp.length(); j++) {
-        System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
+        //System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
         JSONObject TerrTemp = PlayerTemp.optJSONObject(j);
         Territory Inner = JsonToTerritory(TerrTemp);
         InnerTerr.add(Inner);
@@ -33,17 +33,17 @@ public class MyFormatter {
         
       }
     }
-    System.out.println("[DEBUG] HashMap Size = " + Input.size());
+    //System.out.println("[DEBUG] HashMap Size = " + Input.size());
   }
 
   private Territory JsonToTerritory(JSONObject TerrTemp) {
     Territory Inner = new Territory();
     String owner = TerrTemp.optString("owner");
-    System.out.println("[DEBUG] OwnerName = " + owner);
+    //System.out.println("[DEBUG] OwnerName = " + owner);
     Inner.setOwner(owner);
     int SoldierNum = TerrTemp.optInt("soldiers");
     Inner.setSoldiers(SoldierNum);
-    System.out.println("[DEBUG] SoldierNum = " + SoldierNum);
+    //System.out.println("[DEBUG] SoldierNum = " + SoldierNum);
     JSONArray NeighborArray = TerrTemp.optJSONArray("neighbor");
     for (int k = 0; k < NeighborArray.length(); k++) {
       JSONObject InnerNeigh = NeighborArray.optJSONObject(k);
@@ -52,14 +52,14 @@ public class MyFormatter {
       Inner.setNeighbor(NeighName);
     }
     String TerritoryName = TerrTemp.optString("territoryName");
-    System.out.println("[DEBUG] TerritoryName = " + TerritoryName);
+    //System.out.println("[DEBUG] TerritoryName = " + TerritoryName);
     Inner.setTerritoryName(TerritoryName);
     return Inner;
   }
 
   public JSONObject ActionCompose(ArrayList<Action> actionList, String ActionType) {
     ActiontoJson myActiontoJson = new ActiontoJson(actionList, ActionType);
-    System.out.println("The returned Action is: " + myActiontoJson.getJSON());
+    //System.out.println("The returned Action is: " + myActiontoJson.getJSON());
     return myActiontoJson.getJSON();
   }
 
@@ -83,7 +83,7 @@ public class MyFormatter {
       String ActionOwner = ActionTemp.optString("owner");
       InnerAction.setOwner(ActionOwner);
       String ActionType = ActionTemp.optString("type");
-      System.out.println("Action Type in Parse " + ActionType);
+      //System.out.println("Action Type in Parse " + ActionType);
       InnerAction.setType(ActionType);
       int ActionSoldierNum = ActionTemp.optInt("soldiers");
       InnerAction.setSoldiers(ActionSoldierNum);
@@ -104,7 +104,7 @@ public class MyFormatter {
   }
 
   public void AllActionParse(HashMap<Integer, ArrayList<Action>> AllAction, String Input){
-    System.out.println("The Received All Action String is (ready to AllActionParse): " + Input);
+    //System.out.println("The Received All Action String is (ready to AllActionParse): " + Input);
     JSONObject InputAction = new JSONObject(Input);
     
     for (int i = 0; i < NumPlayers; i++) {
@@ -112,7 +112,7 @@ public class MyFormatter {
       PlayerTemp = InputAction.optJSONArray("player_" + Integer.toString(i));
       
       if (PlayerTemp != null) {
-        System.out.println("[DEBUG] player_" + Integer.toString(i));
+        //System.out.println("[DEBUG] player_" + Integer.toString(i));
         ArrayList<Action> CurrAction = new ArrayList<>();
         ParseActionArray(CurrAction, PlayerTemp);
         AllAction.put(i, CurrAction);
