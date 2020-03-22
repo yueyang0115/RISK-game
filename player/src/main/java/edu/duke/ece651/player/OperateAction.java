@@ -72,7 +72,8 @@ public class OperateAction {
       if(!readSrc(s, CurrentAction, acttype) || !readDst(s, CurrentAction, acttype) || !readNum(s, CurrentAction)){
         continue;
       }
-      CurrentAction.setOwner(“player_” + playerInfo.getKey());
+      String OwnerName  = “player_” + playerInfo.getKey();
+      CurrentAction.setOwner(OwnerName);
       allAction.add(CurrentAction);
     }
     SeparateAction();
