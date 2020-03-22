@@ -79,7 +79,7 @@ public class OperateAction {
   }
   
   public String readActionType(Scanner s){
-     System.out.println("You are the " + playerInfo.getValue() + "player, what would you like to do?");
+     System.out.println("You are the " + playerInfo.getValue() + " player, what would you like to do?");
       System.out.println(" (M)ove");
       System.out.println(" (A)ttack");
       System.out.println(" (D)one");
