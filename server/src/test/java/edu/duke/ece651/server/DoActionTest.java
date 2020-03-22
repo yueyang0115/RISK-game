@@ -167,7 +167,7 @@ public class DoActionTest {
     allActionList.add(action);
     allActionList.add(action3);
 
-    actor.doMoveAction(allActionList);
+    actor.doAttackAction(allActionList);
     myworld = actor.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoliders(), 3); // A
     assertEquals(myworld.get(1).get(0).getSoliders(), 0); // B
