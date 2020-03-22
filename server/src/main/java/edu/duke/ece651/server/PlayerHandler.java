@@ -50,6 +50,7 @@ public class PlayerHandler extends Thread {
         System.out.println("DEBUG: received attackList, " + str);
         myformatter.ActionParse(attackList, str);
         actionHelper.addActions(id, moveList, attackList);
+        actionHelper.actionsCompleted(id);
       }
     }
 

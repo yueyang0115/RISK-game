@@ -39,7 +39,7 @@ public class ActionHelper {
         moveList.addAll(ml);
         attackList.addAll(al);
     }
-    public synchronized void ordersCompleted(int playerId) {
+    public synchronized void actionsCompleted(int playerId) {
         playerComplete.set(playerId, true);
     }
     public synchronized void executeActions() {
