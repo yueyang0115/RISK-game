@@ -91,6 +91,7 @@ public class Player {
       System.out.println("Validation result of your actions: " + receiveString());
     }
     String OtherActions = receiveString();
+    AllAction.clear();
     myformatter.AllActionParse(AllAction, OtherActions);
     displayAction();
   }
