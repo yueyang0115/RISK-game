@@ -40,7 +40,8 @@ public class Text implements Displayable{
         String ActionType = OneAction.getType();
         String Source = OneAction.getSrc().getTerritoryName();
         String Destination = OneAction.getDst().getTerritoryName();
-        System.out.println(" " + ActionType + " " + ActSoldiers + " units from " + Source + " to " + Destination);
+        System.out.println("ActionType = " + ActionType);
+        System.out.println(" " + ActionType + ": " + ActSoldiers + " units from " + Source + " to " + Destination);
       }
       System.out.print("\n");
     }

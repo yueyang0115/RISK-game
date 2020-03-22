@@ -74,5 +74,8 @@ public class ActiontoJson {
 
     String owner = action.getOwner();
     actionObj.put("owner", owner);
+
+    String type = action.getType();
+    actionObj.put("type", type);
   }
 }

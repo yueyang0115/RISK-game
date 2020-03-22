@@ -83,6 +83,7 @@ public class MyFormatter {
       String ActionOwner = ActionTemp.optString("owner");
       InnerAction.setOwner(ActionOwner);
       String ActionType = ActionTemp.optString("type");
+      System.out.println("Action Type in Parse " + ActionType);
       InnerAction.setType(ActionType);
       int ActionSoldierNum = ActionTemp.optInt("soldiers");
       InnerAction.setSoldiers(ActionSoldierNum);
@@ -122,7 +123,6 @@ public class MyFormatter {
   public JSONObject AllActionCompose(HashMap<Integer, ArrayList<Action>> AllAction){
     ActiontoJson myAllAction = new ActiontoJson(AllAction);
     myAllAction.ComposeAllAction();
-    
     return myAllAction.getAllAction();
   }
 }
