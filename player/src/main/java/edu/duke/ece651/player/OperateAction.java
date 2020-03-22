@@ -136,11 +136,14 @@ public class OperateAction {
   
   public boolean readNum(Scanner s, Action curAction){
      System.out.println("Please input the number of soldiers: ");
-     int soldiersNum = Integer.valueOf(s.nextLine());
-     if(soldiersNum < 0){
-       System.out.println("[Invalid] Soldiers Number needs greater than 0!");
-       return false;
+     String Num = s.nextLine();
+     for (int i = 0; i < Num.length(); i++){
+       if(!Character.isDigit(Num.charAt(i))){
+         System.out.println("[Invalid] Soldiers Number needs to be integer!");
+         return false; 
+       }
      }
+     int soldiersNum = Integer.valueOf(Num);
      curAction.setSoldiers(soldiersNum);
      return true;
   }
