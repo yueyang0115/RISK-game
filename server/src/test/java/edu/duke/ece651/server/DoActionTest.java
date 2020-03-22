@@ -157,7 +157,7 @@ public class DoActionTest {
     actor.doAttackAction(allAction);
 
     myworld = actor.getNewWorld();
-    assertEquals(myworld.get(0).get(0).getSoliders(), 0);
+    assertEquals(myworld.get(0).get(0).getSoliders(), 3);
   }
 
   @Test
