@@ -43,6 +43,7 @@ public class ActionHelper {
         playerComplete.set(playerId, true);
     }
     public synchronized void executeActions() {
+        // System.out.println("[DEBUG:ActionHelper] Before execute actions:" + new MaptoJson(worldMap).getJSON().toString());
         while(playerComplete.contains(false)) {
             try {
                 this.wait();
@@ -56,6 +57,8 @@ public class ActionHelper {
         d.doMoveAction(moveList);
         d.doAttackAction(attackList);
         d.doPlusOne();
+        worldMap = d.getNewWorld();
+        // System.out.println("[DEBUG:ActionHelper] After execute actions:" + (new MaptoJson(worldMap)).getJSON().toString());
         MyFormatter formatter = new MyFormatter(playerNum); 
         actionsStr = formatter.AllActionCompose(playersActions).toString();      
     }

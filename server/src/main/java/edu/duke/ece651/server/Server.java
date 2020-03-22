@@ -60,13 +60,15 @@ public class Server {
       cur.addActionHelper(ah);
     }
     StringBuilder winMsg = new StringBuilder("Game End! Winner is ");
-    MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
+    MyFormatter formatter = new MyFormatter(playerNum[0]);
     Boolean gameEnd = false;
     while (!gameEnd) {
       for (PlayerHandler cur : list) {
         cur.startPlay();
       }
+      System.out.println("[DEBUG:Server] Before execute actions:" + new MaptoJson(territoryMap).getJSON().toString());
       ah.executeActions();
+      System.out.println("[DEBUG:Server] Before execute actions:" + new MaptoJson(territoryMap).getJSON().toString());
       //Get action string, send to players later 
       String actionstr = ah.getActionString();
       ah.reset();
@@ -96,7 +98,7 @@ public class Server {
           //Send actions of other players to every player   
           cur.sendPlayer(actionstr, true);
           //Send map to player
-          cur.sendPlayer(myMaptoJson.getJSON().toString(), true);
+          cur.sendPlayer(formatter.MapCompose(territoryMap).toString(), true);
         }       
       }
     }
