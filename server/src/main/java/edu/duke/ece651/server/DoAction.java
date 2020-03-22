@@ -5,14 +5,67 @@ import java.util.*;
 
 public class DoAction {
   private HashMap<Integer, ArrayList<Territory>> myworld;
-  public DoAction(HashMap<Integer, ArrayList<Territory>> world) {
-    myworld = new HashMap<>();
+  private HashMap<Integer, ArrayList<Action>> myActionMap;
+  private HashSet<String> invalidPlayer;
+  private ServerChecker mychecker;
+  private MyFormatter myformatter;
+  private String tempWorldStr;
+
+  public DoAction(HashMap<Integer, ArrayList<Territory>> world,
+      HashMap<Integer, ArrayList<Action>> actionsMap) {
+    init();
     myworld = world;
+    myActionMap = actionsMap;
+    mychecker = new ServerChecker(myworld);
+    myformatter = new MyFormatter(myworld.size());
+    tempWorldStr = myformatter.MapCompose(myworld).toString();
+  }
+
+  public DoAction(HashMap<Integer, ArrayList<Territory>> world) {
+    init();
+    myworld = world;
+  }
+  private void init() {
+    myworld = new HashMap<>();
+    myActionMap = new HashMap<>();
+    invalidPlayer = new HashSet<>();
+  }
+
+  private void removePlayer(Action action) {
+    System.out.println("[DEBUG] action inValid");
+    String playerName = action.getOwner();
+    int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
+    System.out.println(
+        "[DEBUG] before remove invalid player, actionMap.size is " + myActionMap.size());
+    myActionMap.remove(playerID);
+    System.out.println(
+        "[DEBUG] after remove invalid player, actionMap.size is " + myActionMap.size());
   }
 
   public void doMoveAction(ArrayList<Action> moveList) {
     for (int i = 0; i < moveList.size(); i++) {
+      System.out.println("[DEBUG] i is " + i);
+      System.out.print("[DEBUG] invalidSet contains: ");
+      for (String str : invalidPlayer) {
+        System.out.print(str + ",");
+      }
+      System.out.print("\n");
       Action action = moveList.get(i);
+
+      if (invalidPlayer.contains(action.getOwner())) {
+        continue;
+      }
+
+      boolean isValid = mychecker.Check(action);
+      if (!isValid) {
+        removePlayer(action);
+        moveList.remove(action);
+        invalidPlayer.add(action.getOwner());
+        myformatter.MapParse(myworld, tempWorldStr); // reset world
+        i = -1;
+        continue;
+      }
+
       int numReduce = action.getSoliders();
       Territory srcTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
       Territory dstTerritory = findTerritory(myworld, action.getDst().getTerritoryName());
@@ -33,6 +86,21 @@ public class DoAction {
   public void doAttackAction(ArrayList<Action> attackList) {
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
+
+      if (invalidPlayer.contains(action.getOwner())) {
+        continue;
+      }
+
+      boolean isValid = mychecker.Check(action);
+      if (!isValid) {
+        removePlayer(action);
+        attackList.remove(action);
+        invalidPlayer.add(action.getOwner());
+        myformatter.MapParse(myworld, tempWorldStr); // reset world
+        k = -1;
+        continue;
+      }
+
       int numAttack = action.getSoliders();
       Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
       attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
@@ -78,6 +146,8 @@ public class DoAction {
       MaptoJson myMaptoJson = new MaptoJson(myworld);
       System.out.println("[DEBUG] after attack, new worldmap is " + myMaptoJson.getJSON());
     }
+
+    invalidPlayer.clear();
   }
 
   private void changeOwner(Territory defenceTerritory, Territory attackTerritory, int numAttack) {
@@ -97,7 +167,7 @@ public class DoAction {
 
     ArrayList<Territory> defenceTerritories = myworld.get(ID.get(0));
     System.out.println("[DEBUG] before change owner, defence player has "
-        + defenceTerritories.size() + " actions");
+        + defenceTerritories.size() + " territories");
     /*
     for (int j = 0; j < defenceTerritories.size(); j++) {
       if (defenceTerritories.get(j) == defenceTerritory) {
@@ -107,17 +177,17 @@ public class DoAction {
       }
       }*/
     defenceTerritories.remove(defenceTerritory);
-    System.out.println(
-        "[DEBUG] after change owner, defence player has " + defenceTerritories.size() + " actions");
+    System.out.println("[DEBUG] after change owner, defence player has " + defenceTerritories.size()
+        + " territories");
 
     ArrayList<Territory> attackTerritories = myworld.get(ID.get(1));
-    System.out.println(
-        "[DEBUG] before change owner, attack player has " + attackTerritories.size() + " actions");
+    System.out.println("[DEBUG] before change owner, attack player has " + attackTerritories.size()
+        + " territories");
     tempTerritory.setOwner(attackTerritory.getOwner());
     tempTerritory.setSoldiers(numAttack);
     attackTerritories.add(tempTerritory);
-    System.out.println(
-        "[DEBUG] after change owner, attack player has " + attackTerritories.size() + " actions");
+    System.out.println("[DEBUG] after change owner, attack player has " + attackTerritories.size()
+        + " territories");
   }
 
   public void doPlusOne() {
@@ -145,5 +215,9 @@ public class DoAction {
       }
     }
     return ans;
+  }
+
+  public HashMap<Integer, ArrayList<Territory>> getNewWorld() {
+    return this.myworld;
   }
 }
