@@ -6,12 +6,10 @@ import java.util.*;
 public class ServerChecker {
   private HashMap<Integer, ArrayList<Territory>> world;
   private Action action;
-  private DoAction myDoAction;
 
   public ServerChecker(HashMap<Integer, ArrayList<Territory>> myworld) {
     world = new HashMap<>();
     world = myworld;
-    myDoAction = new DoAction(myworld);
   }
 
   public boolean Check(Action myaction) {
@@ -28,6 +26,7 @@ public class ServerChecker {
   private boolean checkTerritory() {
     String srcName = action.getSrc().getTerritoryName();
     String dstName = action.getDst().getTerritoryName();
+    DoAction myDoAction = new DoAction(world);
     String findSrcName = myDoAction.findTerritory(world, srcName).getTerritoryName();
     String findDstName = myDoAction.findTerritory(world, dstName).getTerritoryName();
     return srcName.equals(findSrcName) && dstName.equals(findDstName);
@@ -48,6 +47,7 @@ public class ServerChecker {
   private boolean checkNum() {
     System.out.println("[DEBUG] checkOwner succeed");
     Territory srcTerritory = action.getSrc();
+    System.out.println("[DEBUG] srcTerritory.getSoldiers = " + srcTerritory.getSoliders());
     return ((srcTerritory.getSoliders() >= action.getSoliders()) && (action.getSoliders() >= 0));
   }
 
@@ -56,6 +56,7 @@ public class ServerChecker {
     HashSet<Territory> visitedSet = new HashSet<>();
     Territory dstTerritory = action.getDst();
     Territory srcTerritory = action.getSrc();
+    DoAction myDoAction = new DoAction(world);
 
     Stack<Territory> stack = new Stack<Territory>();
     stack.add(srcTerritory);
