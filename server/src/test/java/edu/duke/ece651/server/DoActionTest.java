@@ -9,6 +9,83 @@ import org.junit.jupiter.api.Test;
 
 public class DoActionTest {
   @Test
+  public void test_moveattack() {
+    WorldInitter initter = new WorldInitter(2);
+    HashMap<Integer, ArrayList<Territory>> myworld = initter.getWorld();
+
+    MyFormatter formatter = new MyFormatter(2);
+    String Astr =
+        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
+    Territory territoryA = new Territory();
+    JSONObject tempA = new JSONObject(Astr);
+    territoryA = formatter.JsonToTerritory(tempA);
+
+    String Dstr =
+        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
+    Territory territoryD = new Territory();
+    JSONObject tempD = new JSONObject(Dstr);
+    territoryD = formatter.JsonToTerritory(tempD);
+
+    String Estr =
+        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'B'},{'neighbor_2':'C'},{'neighbor_3':'D'},{'neighbor_4':'F'},{'neighbor_5':'H'},{'neighbor_6':'J'}], 'territoryName':'E'}";
+    Territory territoryE = new Territory();
+    JSONObject tempE = new JSONObject(Estr);
+    territoryE = formatter.JsonToTerritory(tempE);
+
+    String Fstr =
+        "{'owner':'player_1', 'soldiers':3, 'neighbor':[{'neighbor_0':'C'},{'neighbor_1':'E'},{'neighbor_2':'G'},{'neighbor_3':'K'}], 'territoryName':'F'}";
+    Territory territoryF = new Territory();
+    JSONObject tempF = new JSONObject(Fstr);
+    territoryF = formatter.JsonToTerritory(tempF);
+    ArrayList<Action> actionList = new ArrayList<>();
+
+    Action action = new Action();
+    action.setSrc(territoryA); // A
+    action.setDst(territoryE); // E
+    action.setSoldiers(3);
+    action.setOwner("player_0");
+    action.setType("Move");
+    actionList.add(action); // invalid action
+
+    Action action2 = new Action();
+    action2.setSrc(territoryD); // D
+    action2.setDst(territoryE); // E
+    action2.setSoldiers(3);
+    action2.setOwner("player_0");
+    action2.setType("Move");
+    actionList.add(action2); // invalid action
+
+    Action action3 = new Action();
+    action3.setSrc(territoryE); // E
+    action3.setDst(territoryF); // F
+    action3.setSoldiers(3);
+    action3.setOwner("player_0");
+    action3.setType("Attack");
+    actionList.add(action3); // invalid action
+
+    HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
+    myactionMap.put(0, actionList);
+
+    ArrayList<Action> moveList = new ArrayList<>();
+    moveList.add(action);
+    moveList.add(action2);
+
+    ArrayList<Action> attackList = new ArrayList<>();
+    attackList.add(action3);
+
+    DoAction actor = new DoAction(myworld, myactionMap);
+    actor.doMoveAction(moveList);
+    actor.doAttackAction(attackList);
+    myworld = actor.getNewWorld();
+
+    assertEquals(myworld.get(0).get(0).getSoliders(), 0); // A
+    assertEquals(myworld.get(0).get(1).getSoliders(), 0); // D
+    assertEquals(myworld.get(0).get(2).getSoliders(), 6); // E
+    MaptoJson myMaptoJson = new MaptoJson(myworld);
+    System.out.println("[DEBUG] outside doactionclass, new world is:" + myMaptoJson.getJSON());
+  }
+
+  @Test
   public void test_invalidMoveAction() {
     WorldInitter initter = new WorldInitter(2);
     HashMap<Integer, ArrayList<Territory>> myworld = initter.getWorld();
@@ -88,6 +165,9 @@ public class DoActionTest {
     assertEquals(myactionMap.containsKey(0), false);
     MaptoJson myMaptoJson = new MaptoJson(myworld);
     System.out.println("[DEBUG] outside doactionclass, new world is:" + myMaptoJson.getJSON());
+    MyFormatter formatter2 = new MyFormatter(2);
+    System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
+        + formatter2.AllActionCompose(myactionMap));
   }
 
   @Test
@@ -167,7 +247,7 @@ public class DoActionTest {
     allActionList.add(action);
     allActionList.add(action3);
 
-    actor.doMoveAction(allActionList);
+    actor.doAttackAction(allActionList);
     myworld = actor.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoliders(), 3); // A
     assertEquals(myworld.get(1).get(0).getSoliders(), 0); // B
@@ -175,6 +255,9 @@ public class DoActionTest {
     assertEquals(myactionMap.containsKey(0), false);
     MaptoJson myMaptoJson = new MaptoJson(myworld);
     System.out.println("[DEBUG] outside doactionclass, new world is:" + myMaptoJson.getJSON());
+    MyFormatter formatter2 = new MyFormatter(2);
+    System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
+        + formatter2.AllActionCompose(myactionMap));
   }
 
   @Test
@@ -228,6 +311,9 @@ public class DoActionTest {
     myworld = actor.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoliders(), 0);
     assertEquals(myworld.get(0).get(1).getSoliders(), 6);
+    MyFormatter formatter2 = new MyFormatter(2);
+    System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
+        + formatter2.AllActionCompose(myactionMap));
 
     Action action2 = new Action();
     action2.setSrc(territoryB);
@@ -247,6 +333,10 @@ public class DoActionTest {
     assertEquals(myworld.get(0).get(1).getSoliders(), 6);
     assertEquals(myworld.get(1).get(0).getSoliders(), 1);
     assertEquals(myworld.get(1).get(1).getSoliders(), 5);
+
+    MyFormatter formatter3 = new MyFormatter(2);
+    System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
+        + formatter3.AllActionCompose(myactionMap));
   }
 
   @Test
@@ -310,6 +400,10 @@ public class DoActionTest {
 
     myworld = actor.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoliders(), 0);
+
+    MyFormatter formatter2 = new MyFormatter(2);
+    System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
+        + formatter2.AllActionCompose(myactionMap));
   }
 
   @Test
@@ -352,6 +446,10 @@ public class DoActionTest {
 
     myworld = actor.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoliders(), 0);
+
+    MyFormatter formatter2 = new MyFormatter(2);
+    System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
+        + formatter2.AllActionCompose(myactionMap));
   }
 
   @Test

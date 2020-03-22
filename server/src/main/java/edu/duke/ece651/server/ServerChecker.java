@@ -15,7 +15,7 @@ public class ServerChecker {
 
   public boolean Check(Action myaction) {
     action = myaction;
-    //System.out.println("[DEBUG] checkall: srcTerritory is " + action.getSrc().getTerritoryName()
+    // System.out.println("[DEBUG] checkall: srcTerritory is " + action.getSrc().getTerritoryName()
     //    + ", dstTerritory is " + action.getDst().getTerritoryName());
     boolean temp = checkTerritory() && checkOwner() && checkNum() && checkNeighbor();
     if (temp == true) {
@@ -34,7 +34,7 @@ public class ServerChecker {
   }
 
   private boolean checkOwner() {
-    //System.out.println("[DEBUG] checkTerritory succeed");
+    // System.out.println("[DEBUG] checkTerritory succeed");
     String srcOwner = action.getSrc().getOwner();
     String dstOwner = action.getDst().getOwner();
     String actionOwner = action.getOwner();
@@ -46,17 +46,23 @@ public class ServerChecker {
   }
 
   private boolean checkNum() {
-    //System.out.println("[DEBUG] checkOwner succeed");
-    Territory srcTerritory = action.getSrc();
-    //System.out.println("[DEBUG] srcTerritory.getSoldiers = " + srcTerritory.getSoliders());
+    // System.out.println("[DEBUG] checkOwner succeed");
+    // Territory srcTerritory = action.getSrc();
+    DoAction myDoAction = new DoAction(world);
+    Territory srcTerritory = myDoAction.findTerritory(world, action.getSrc().getTerritoryName());
+    // System.out.println("[DEBUG] srcTerritory.getSoldiers = " + srcTerritory.getSoliders());
     return ((srcTerritory.getSoliders() >= action.getSoliders()) && (action.getSoliders() >= 0));
   }
 
   private boolean checkNeighbor() {
-    //System.out.println("[DEBUG] checkNum succeed");
+    // System.out.println("[DEBUG] checkNum succeed");
     HashSet<Territory> visitedSet = new HashSet<>();
-    Territory dstTerritory = action.getDst();
-    Territory srcTerritory = action.getSrc();
+    // Territory dstTerritory = action.getDst();
+    // Territory srcTerritory = action.getSrc();
+    DoAction myDoAction2 = new DoAction(world);
+    Territory dstTerritory = myDoAction2.findTerritory(world, action.getDst().getTerritoryName());
+    Territory srcTerritory = myDoAction2.findTerritory(world, action.getSrc().getTerritoryName());
+
     DoAction myDoAction = new DoAction(world);
 
     Stack<Territory> stack = new Stack<Territory>();
@@ -65,8 +71,8 @@ public class ServerChecker {
     while (!stack.isEmpty()) {
       Territory curr = stack.pop();
       if (curr.getTerritoryName().equals(dstTerritory.getTerritoryName())) {
-        //System.out.println(
-                           //    "[DEBUG] checkNeighbor succeed, find dstTerritory " + curr.getTerritoryName());
+        // System.out.println(
+        //    "[DEBUG] checkNeighbor succeed, find dstTerritory " + curr.getTerritoryName());
         return true;
       }
 
@@ -76,13 +82,14 @@ public class ServerChecker {
         Territory Neighbor = myDoAction.findTerritory(world, tempName);
         if (!visitedSet.contains(Neighbor)) {
           if (Neighbor.getTerritoryName().equals(dstTerritory.getTerritoryName())) {
-            //System.out.println(
-            //    "[DEBUG] checkNeighbor succeed, find dstTerritory " + Neighbor.getTerritoryName());
+            // System.out.println(
+            //    "[DEBUG] checkNeighbor succeed, find dstTerritory " +
+            //    Neighbor.getTerritoryName());
             return true;
           }
           if (Neighbor.getOwner().equals(srcTerritory.getOwner())) {
             stack.push(Neighbor);
-            //System.out.println("[DEBUG] check " + curr.getTerritoryName()
+            // System.out.println("[DEBUG] check " + curr.getTerritoryName()
             //    + "'s neighbor, put its neighbor " + Neighbor.getTerritoryName() + " in stack");
           }
           visitedSet.add(Neighbor);
@@ -90,12 +97,12 @@ public class ServerChecker {
       }
       printStack(stack);
     }
-    //System.out.println("[DEBUG] not find dstTerritory");
+    // System.out.println("[DEBUG] not find dstTerritory");
     return false;
   }
 
   private void printStack(Stack<Territory> stack) {
-    //System.out.print("[DEBUG] Stack contains: ");
+    // System.out.print("[DEBUG] Stack contains: ");
     for (Territory item : stack) {
       System.out.print(item.getTerritoryName() + ",");
     }

@@ -7,7 +7,6 @@ public class DoAction {
   private HashMap<Integer, ArrayList<Territory>> myworld;
   private HashMap<Integer, ArrayList<Action>> myActionMap;
   private HashSet<String> invalidPlayer;
-  private ServerChecker mychecker;
   private MyFormatter myformatter;
   private String tempWorldStr;
 
@@ -16,7 +15,6 @@ public class DoAction {
     init();
     myworld = world;
     myActionMap = actionsMap;
-    mychecker = new ServerChecker(myworld);
     myformatter = new MyFormatter(myworld.size());
     tempWorldStr = myformatter.MapCompose(myworld).toString();
   }
@@ -24,7 +22,6 @@ public class DoAction {
   public DoAction(HashMap<Integer, ArrayList<Territory>> world) {
     init();
     myworld = world;
-    mychecker = new ServerChecker(myworld);
     myformatter = new MyFormatter(myworld.size());
   }
   private void init() {
@@ -60,6 +57,7 @@ public class DoAction {
         continue;
       }
 
+      ServerChecker mychecker = new ServerChecker(myworld);
       boolean isValid = mychecker.Check(action);
       if (!isValid) {
         removePlayer(action);
@@ -85,6 +83,7 @@ public class DoAction {
       System.out.println("[DEBUG] after move, dstTerritory's name is "
           + dstTerritory.getTerritoryName() + ", num of soldier is " + dstTerritory.getSoliders());
     }
+    tempWorldStr = myformatter.MapCompose(myworld).toString();
   }
 
   public void doAttackAction(ArrayList<Action> attackList) {
@@ -95,6 +94,7 @@ public class DoAction {
         continue;
       }
 
+      ServerChecker mychecker = new ServerChecker(myworld);
       boolean isValid = mychecker.Check(action);
       if (!isValid) {
         removePlayer(action);
