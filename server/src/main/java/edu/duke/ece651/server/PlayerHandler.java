@@ -7,9 +7,9 @@ public class PlayerHandler extends Thread {
     private int id;
     private int[] playerNum;
     private ActionHelper actionHelper;
-    private ArrayList<PlayerStatus> status;
+    private ArrayList<String> status;
 
-    public PlayerHandler(Communicator c, int id, int[] p, HashMap<Integer, ArrayList<Territory>> t, ArrayList<PlayerStatus> s) {
+    public PlayerHandler(Communicator c, int id, int[] p, HashMap<Integer, ArrayList<Territory>> t, ArrayList<String> s) {
       this.communicator = c;
       this.id = id;
       this.playerNum = p;
@@ -28,7 +28,7 @@ public class PlayerHandler extends Thread {
         WorldInitter myworldinitter = new WorldInitter(playerNum[0], territoryMap);
         System.out.println("[DEBUG]received playerNum" + playerNum[0]);
         for (int i = 0; i < playerNum[0]; ++i) {
-          status.add(PlayerStatus.INGAME);
+          status.add("INGAME");
         }
       }
       sendPlayer(String.valueOf(playerNum[0]), false);
@@ -41,7 +41,7 @@ public class PlayerHandler extends Thread {
 
     public void startPlay() {    
       //If not lose, receive actions twice, add to ActionHelper
-      if (status.get(id) == PlayerStatus.INGAME) {
+      if (status.get(id).equals("INGAME")) {
         ArrayList<Action> moveList = new ArrayList<>();
         ArrayList<Action> attackList = new ArrayList<>();
         MyFormatter myformatter = new MyFormatter(playerNum[0]);
@@ -65,10 +65,10 @@ public class PlayerHandler extends Thread {
         sendPlayer("Lose Game", false);
         String ifWatch = communicator.receive();
         if (ifWatch.equals("Y")) {
-          status.set(id, PlayerStatus.OUTBUTWATCH);
+          status.set(id, "OUTBUTWATCH");
         } 
         else {
-          status.set(id, PlayerStatus.OUTNOWATCH);
+          status.set(id, "OUTNOWATCH");
         }
       }
     }
@@ -76,7 +76,7 @@ public class PlayerHandler extends Thread {
     public Boolean checkWin() {
       ArrayList<Integer> inGameList = new ArrayList<>();
       for (int i = 0; i < status.size(); ++i) {
-        if (status.get(i) == PlayerStatus.INGAME) {
+        if (status.get(i) == "INGAME") {
           inGameList.add(i);
         }
       }
@@ -88,8 +88,8 @@ public class PlayerHandler extends Thread {
 
     public void sendPlayer(String input, Boolean needCheck) {
       if (needCheck) {
-        PlayerStatus s = status.get(id);
-        if (s == PlayerStatus.INGAME || s == PlayerStatus.OUTBUTWATCH) {
+        String s = status.get(id);
+        if (s.equals("INGAME") || s.equals("OUTBUTWATCH")) {
           communicator.sendString(input);
         }  
       }

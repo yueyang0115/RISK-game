@@ -11,7 +11,7 @@ public class Server {
   private ServerSocket serverSock;
   private ArrayList<PlayerHandler> list;
   private HashMap<Integer, ArrayList<Territory>> territoryMap;
-  private ArrayList<PlayerStatus> status;
+  private ArrayList<String> status;
 
   public Server(int port) {
     this.port = port;
@@ -90,7 +90,7 @@ public class Server {
           //TODO: close the server
         }
         else {
-          if (status.get(j) == PlayerStatus.INGAME) {
+          if (status.get(j).equals("INGAME")) {
             cur.sendPlayer(cur.checkAction(), false);
           }
           //Send actions of other players to every player   
