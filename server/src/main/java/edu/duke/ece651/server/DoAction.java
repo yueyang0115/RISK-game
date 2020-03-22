@@ -82,6 +82,9 @@ public class DoAction {
       dstTerritory.setSoldiers(dstTerritory.getSoliders() + numReduce);
       System.out.println("[DEBUG] after move, dstTerritory's name is "
           + dstTerritory.getTerritoryName() + ", num of soldier is " + dstTerritory.getSoliders());
+
+      MaptoJson myMaptoJson = new MaptoJson(myworld);
+      System.out.println("[DEBUG] after move, new worldmap is " + myMaptoJson.getJSON());
     }
   }
 
@@ -89,13 +92,6 @@ public class DoAction {
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
 
-      int numAttack = action.getSoliders();
-      Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
-      attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
-    }
-
-    for (int i = 0; i < attackList.size(); i++) {
-      Action action = attackList.get(i);
       if (invalidPlayer.contains(action.getOwner())) {
         continue;
       }
@@ -106,7 +102,19 @@ public class DoAction {
         attackList.remove(action);
         invalidPlayer.add(action.getOwner());
         myformatter.MapParse(myworld, tempWorldStr); // reset world
-        i = -1;
+        k = -1;
+        continue;
+      }
+
+      int numAttack = action.getSoliders();
+      Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
+      attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
+    }
+
+    for (int i = 0; i < attackList.size(); i++) {
+      Action action = attackList.get(i);
+
+      if (invalidPlayer.contains(action.getOwner())) {
         continue;
       }
 

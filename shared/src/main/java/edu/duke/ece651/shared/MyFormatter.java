@@ -1,6 +1,5 @@
 package edu.duke.ece651.shared;
 import java.util.*;
-
 import org.json.*;
 
 public class MyFormatter {
@@ -30,13 +29,12 @@ public class MyFormatter {
       }
       if (InnerTerr.size() != 0) {
         Input.put(i, InnerTerr);
-        
       }
     }
     System.out.println("[DEBUG] HashMap Size = " + Input.size());
   }
 
-  private Territory JsonToTerritory(JSONObject TerrTemp) {
+  public Territory JsonToTerritory(JSONObject TerrTemp) {
     Territory Inner = new Territory();
     String owner = TerrTemp.optString("owner");
     System.out.println("[DEBUG] OwnerName = " + owner);
@@ -102,27 +100,26 @@ public class MyFormatter {
     }
   }
 
-  public void AllActionParse(HashMap<Integer, ArrayList<Action>> AllAction, String Input){
+  public void AllActionParse(HashMap<Integer, ArrayList<Action>> AllAction, String Input) {
     System.out.println("The Received All Action String is (ready to AllActionParse): " + Input);
     JSONObject InputAction = new JSONObject(Input);
-    
+
     for (int i = 0; i < NumPlayers; i++) {
       JSONArray PlayerTemp = new JSONArray();
       PlayerTemp = InputAction.optJSONArray("player_" + Integer.toString(i));
-      
+
       if (PlayerTemp != null) {
         System.out.println("[DEBUG] player_" + Integer.toString(i));
         ArrayList<Action> CurrAction = new ArrayList<>();
         ParseActionArray(CurrAction, PlayerTemp);
         AllAction.put(i, CurrAction);
       }
-      
     }
   }
-  public JSONObject AllActionCompose(HashMap<Integer, ArrayList<Action>> AllAction){
+  public JSONObject AllActionCompose(HashMap<Integer, ArrayList<Action>> AllAction) {
     ActiontoJson myAllAction = new ActiontoJson(AllAction);
     myAllAction.ComposeAllAction();
-    
+
     return myAllAction.getAllAction();
   }
 }
