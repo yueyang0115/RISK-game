@@ -15,12 +15,18 @@ public class MyFormatter {
   }
 
   public void MapParse(HashMap<Integer, ArrayList<Territory>> Input, String MapJson) {
+    System.out.println("**********************MapJson = " + MapJson );
     JSONObject InputMap = new JSONObject(MapJson);
     for (int i = 0; i < NumPlayers; i++) {
       JSONArray PlayerTemp = new JSONArray();
       PlayerTemp = InputMap.optJSONArray("player_" + Integer.toString(i));
-      // System.out.println("[DEBUG] Player = " + i);
-      if(!PlayerTemp.isEmpty()){
+      if(PlayerTemp == null){
+        System.out.println("player_" + i + "No Territory!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      }
+      
+      
+      if(PlayerTemp != null){
+        System.out.println("[DEBUG] PlayerTemp = " + PlayerTemp.toString());
         ArrayList<Territory> InnerTerr = new ArrayList<Territory>();
         // System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
         for (int j = 0; j < PlayerTemp.length(); j++) {
@@ -108,13 +114,14 @@ public class MyFormatter {
   public void AllActionParse(HashMap<Integer, ArrayList<Action>> AllAction, String Input) {
     // System.out.println("The Received All Action String is (ready to AllActionParse): " + Input);
     JSONObject InputAction = new JSONObject(Input);
-
+    System.out.println( "Input  = " + Input);
     for (int i = 0; i < NumPlayers; i++) {
       JSONArray PlayerTemp = new JSONArray();
       PlayerTemp = InputAction.optJSONArray("player_" + Integer.toString(i));
 
-      if (PlayerTemp != null) {
+      if (PlayerTemp != null && PlayerTemp.length() != 0) {
         // System.out.println("[DEBUG] player_" + Integer.toString(i));
+        System.out.println("Current Player_" + i + "isNotEmpty");
         ArrayList<Action> CurrAction = new ArrayList<>();
         ParseActionArray(CurrAction, PlayerTemp);
         AllAction.put(i, CurrAction);
