@@ -120,7 +120,7 @@ public class Server {
             System.out.println("Success Send ActionStr to Player" + k);
             // Send map to player
             cur.sendPlayer(formatter.MapCompose(territoryMap).toString(), true);
-            System.out.println("Success Send Map to Player" + k);
+            System.out.println("Success Send Map to Player" + k + formatter.MapCompose(territoryMap).toString());
           }                   
         }
       }
