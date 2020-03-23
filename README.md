@@ -7,7 +7,7 @@
 2. `gradle run-player`. The first player will be asked to input the number of all players. Then just follow the printed instructions.
 
 ## Code Review
-Most of our code reviews can be found in the comment sections of [merge requests](https://gitlab.oit.duke.edu/yy258/ece651-spr20-g9/-/merge_requests?scope=all&utf8=%E2%9C%93&state=merged) / ["comments" tab in activity](https://gitlab.oit.duke.edu/yy258/ece651-spr20-g9/activity). 
+Most of our code reviews can be found in ["comments" tab in activity](https://gitlab.oit.duke.edu/yy258/ece651-spr20-g9/activity) / [merge requests](https://gitlab.oit.duke.edu/yy258/ece651-spr20-g9/-/merge_requests?scope=all&utf8=%E2%9C%93&state=merged). 
 
 ## Final UML
 ![](./final_uml.png)
