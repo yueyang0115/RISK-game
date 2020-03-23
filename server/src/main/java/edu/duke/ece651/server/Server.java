@@ -80,21 +80,26 @@ public class Server {
       int justLose = -1;
       for (int i = 0; i < list.size(); ++i) {
         if (list.get(i).checkWin()) {
+          System.out.println("\nPlayer" + i +"Win Game!!!!!!!!!!!!!!!!");
           winMsg.append(new ColorID().getPlayerColor(i));
           winMsg.append(" player.");
           gameEnd = true;
         }
       }
+      
       for (int j = 0; j < list.size(); ++j) {
         PlayerHandler cur = list.get(j);
+        System.out.println("Current Status " + j + status.get(j));
         if (status.get(j).equals("INGAME") && territoryMap.get(j).size() == 0 && !gameEnd) {
           cur.sendPlayer(cur.checkAction(), false);
           cur.sendPlayer(actionstr, false);
           cur.sendPlayer("Lose Game", false);
+          System.out.println("\nPlayer" + j + "Lose Game!!!!!!!");
           cur.updateLose();
           justLose = j;
         }
-      }   
+      }
+      System.out.println("\n\nFinish CheckLose for All");
       for (int k = 0; k < list.size(); ++k) {
         PlayerHandler cur = list.get(k);
         if (gameEnd) {
@@ -108,9 +113,12 @@ public class Server {
           }         
           if (justLose != k ) {
             // Send actions of other players to every player
+            
             cur.sendPlayer(actionstr, true);
+            System.out.println("Success Send ActionStr to Player" + k);
             // Send map to player
             cur.sendPlayer(formatter.MapCompose(territoryMap).toString(), true);
+            System.out.println("Success Send Map to Player" + k);
           }                   
         }
       }

@@ -62,8 +62,10 @@ public class PlayerHandler extends Thread {
 
     public void updateLose() {
       //sendPlayer("Lose Game", false);
+      System.out.println("=================Ready to Receive========================");
       String ifWatch = communicator.receive();
       if (ifWatch.equals("Y")) {
+        System.out.println("\n\n*********Set Still Watch******");
         status.set(id, "OUTBUTWATCH");
       } 
       else {

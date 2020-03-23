@@ -65,6 +65,7 @@ public class Player {
           }
           sendString(choice);
           if(choice.equals("Y")){
+            System.out.println("Choose Y");
             continue OUT;
           }
           else {
@@ -92,6 +93,7 @@ public class Player {
       AttackAction = PlayerAction.getAttackActions();
       String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
       sendString(AttackString);
+      
       System.out.println("Validation result of your actions: " + receiveString());
     }
     String OtherActions = receiveString();
