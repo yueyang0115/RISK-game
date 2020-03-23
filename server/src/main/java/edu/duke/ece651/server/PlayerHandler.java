@@ -60,9 +60,9 @@ public class PlayerHandler extends Thread {
       return actionHelper.checkActionValid(id) ? "valid" : "invalid";
     }
 
-    public void checkLose() {
+    public Boolean checkLose() {
       if (territoryMap.get(id).size() == 0) {
-        sendPlayer("Lose Game", false);
+        //sendPlayer("Lose Game", false);
         String ifWatch = communicator.receive();
         if (ifWatch.equals("Y")) {
           status.set(id, "OUTBUTWATCH");
@@ -70,7 +70,9 @@ public class PlayerHandler extends Thread {
         else {
           status.set(id, "OUTNOWATCH");
         }
+        return true;
       }
+      return false;
     }
 
     public Boolean checkWin() {

@@ -79,7 +79,10 @@ public class Server {
       // MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
 
       for (PlayerHandler cur : list) {
-        cur.checkLose();
+        if (cur.checkLose()) {
+          cur.sendPlayer(cur.checkAction(), false);
+          cur.sendPlayer("Lose Game", false);
+        }
       }
       for (int i = 0; i < list.size(); ++i) {
         if (list.get(i).checkWin()) {
