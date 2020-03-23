@@ -82,14 +82,13 @@ public class Player {
         displayMap();
       }
       LoseButWatch = false;
-      if(WaitAction(Lose, myformatter)){
-        return;
-      }
+      WaitAction(Lose, myformatter);
+        
     }
   }
 
   
-  public boolean WaitAction(boolean Lose, MyFormatter myformatter){
+  public void WaitAction(boolean Lose, MyFormatter myformatter){
     if(!Lose){
       OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
       PlayerAction.readAction();
@@ -104,15 +103,13 @@ public class Player {
       System.out.println("Action Validate : " + receiveString());
     }
     String OtherActions = receiveString();
-    if (OtherActions.contains("Game End!")) {
-      System.out.println(OtherActions);
-      return true;
+    System.out.println(OtherActions);
+    if (OtherActions.contains("valid")) {
+      OtherActions = receiveString();
     }
     AllAction.clear();
     myformatter.AllActionParse(AllAction, OtherActions);
     displayAction();
-    return false;
-    
   }
   
   public void sendString(String str) {
