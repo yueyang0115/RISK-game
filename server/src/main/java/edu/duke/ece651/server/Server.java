@@ -27,6 +27,7 @@ public class Server {
   }
 
   public void initGame() {
+    //First thread to handle the first player, where it needs to input player number to setup
     PlayerHandler first =
         new PlayerHandler(new Communicator(serverSock), 0, playerNum, territoryMap, status);
     first.start();
@@ -36,7 +37,7 @@ public class Server {
     } catch (Exception ex) {
       System.out.println("Exception:" + ex);
     }
-    // territoryMap = first.getMap();
+    //The other threads to handle the rest players
     for (int id = 1; id < playerNum[0]; id++) {
       PlayerHandler ph =
           new PlayerHandler(new Communicator(serverSock), id, playerNum, territoryMap, status);
@@ -54,8 +55,6 @@ public class Server {
   }
 
   public void startGame() {
-    // TODO:new a playerstatus to playerHandler, no need to know size first, first thread updates
-    // its value
     ActionHelper ah = new ActionHelper(playerNum[0], territoryMap);
     for (PlayerHandler cur : list) {
       cur.addActionHelper(ah);
@@ -67,20 +66,20 @@ public class Server {
       for (PlayerHandler cur : list) {
         cur.startPlay();
       }
-      System.out.println("[DEBUG:Server] Before execute actions:"
+      System.out.println("[DEBUG] Before execute actions:"
           + new MaptoJson(territoryMap).getJSON().toString());
       ah.executeActions();
-      System.out.println("[DEBUG:Server] After execute actions:"
+      System.out.println("[DEBUG] After execute actions:"
           + new MaptoJson(territoryMap).getJSON().toString());
       // Get action string, send to players later
       String actionstr = ah.getActionString();
-
-      System.out.println("DEBUG: action string is , " + actionstr);
-      // MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
+      System.out.println("[DEBUG] action string is , " + actionstr);
       int justLose = -1;
       for (int i = 0; i < list.size(); ++i) {
+        //Check all the players if it wein.
+        //If so, update the "Game End" message.
         if (list.get(i).checkWin()) {
-          System.out.println("\nPlayer" + i +"Win Game!!!!!!!!!!!!!!!!");
+          System.out.println("[DEBUG] Player" + i +"Win Game!");
           winMsg.append(new ColorID().getPlayerColor(i));
           winMsg.append(" player.");
           gameEnd = true;
@@ -88,39 +87,39 @@ public class Server {
       }
       
       for (int j = 0; j < list.size(); ++j) {
+        //Check all the players if it loses.
         PlayerHandler cur = list.get(j);
-        System.out.println("Before Current Status " + j + status.get(j));
+        System.out.println("[DEBUG] Before Current Status " + j + status.get(j));
         if (status.get(j).equals("INGAME") && territoryMap.get(j).size() == 0 && !gameEnd) {
           cur.sendPlayer(cur.checkAction(), false);
           cur.sendPlayer(actionstr, false);
           cur.sendPlayer("Lose Game", false);
-          System.out.println("\nPlayer" + j + "Lose Game!!!!!!!");
+          System.out.println("[DEBUG] Player" + j + "Lose Game!");
           cur.updateLose();
           justLose = j;
         }
         System.out.println("After Current Status " + j + status.get(j));
       }
-      System.out.println("\n\nFinish CheckLose for All");
+      System.out.println("[DEBUG] Finish CheckLose for All");
       for (int k = 0; k < list.size(); ++k) {
+        //Send the action valiation, all actions and map to every player
         PlayerHandler cur = list.get(k);
         if (gameEnd) {
           cur.sendPlayer(cur.checkAction(), false);
           cur.sendPlayer(actionstr, false);
           cur.sendPlayer(winMsg.toString(), false);
-          // TODO: close the server
         } else {
           if (status.get(k).equals("INGAME")) {
-            System.out.println("Not End send Validation Resultk" + status.get(k).equals("INGAME"));
+            System.out.println("[DEBUG] Not lose, send Validation Result" + status.get(k).equals("INGAME"));
             cur.sendPlayer(cur.checkAction(), false);
           }         
           if (justLose != k ) {
-            // Send actions of other players to every player
-            
+            // Send actions of other players to every player        
             cur.sendPlayer(actionstr, true);
-            System.out.println("Success Send ActionStr to Player" + k);
+            System.out.println("[DEBUG] Success Send ActionStr to Player" + k);
             // Send map to player
             cur.sendPlayer(formatter.MapCompose(territoryMap).toString(), true);
-            System.out.println("Success Send Map to Player" + k + formatter.MapCompose(territoryMap).toString());
+            System.out.println("[DEBUG] Success Send Map to Player" + k + formatter.MapCompose(territoryMap).toString());
           }                   
         }
       }
@@ -130,7 +129,11 @@ public class Server {
   }
 
   public static void main(String[] args) {
+    //================================
+    //Set port number of server!!
     Server server = new Server(1234);
+    //================================
+
     System.out.println("========Now connect players!========");
     server.initGame();
     server.startGame();

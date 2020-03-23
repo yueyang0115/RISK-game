@@ -7,6 +7,7 @@ public class PlayerHandler extends Thread {
     private int id;
     private int[] playerNum;
     private ActionHelper actionHelper;
+    //ArrayList to record the status of every player" INGAME, OUTBUTWATCH, OUTNOWATCH
     private ArrayList<String> status;
 
     public PlayerHandler(Communicator c, int id, int[] p, HashMap<Integer, ArrayList<Territory>> t, ArrayList<String> s) {
@@ -22,21 +23,23 @@ public class PlayerHandler extends Thread {
     }
 
     public void run() {
+      //Send player id to every player
       sendPlayer(String.valueOf(id), false);
+      //If first player, no to receive the player number
       if (id == 0) {
         playerNum[0] = Integer.parseInt(communicator.receive());
         WorldInitter myworldinitter = new WorldInitter(playerNum[0], territoryMap);
-        //System.out.println("[DEBUG]received playerNum" + playerNum[0]);
+        System.out.println("[DEBUG]received playerNum" + playerNum[0]);
         for (int i = 0; i < playerNum[0]; ++i) {
           status.add("INGAME");
         }
       }
+      //Send all player number to every player
       sendPlayer(String.valueOf(playerNum[0]), false);
-      // WorldInitter myworldinitter = new WorldInitter(playerNum[0], territoryMap);
-      // this.territoryMap = myworldinitter.getWorld();
+      //Send the map to player
       MaptoJson myMaptoJson = new MaptoJson(territoryMap);
       sendPlayer(myMaptoJson.getJSON().toString(), false);
-      System.out.println(myMaptoJson.getJSON().toString());
+      System.out.println("[DEBUG] initial map" + myMaptoJson.getJSON().toString());
     }
 
     public void startPlay() {    
@@ -46,17 +49,18 @@ public class PlayerHandler extends Thread {
         ArrayList<Action> attackList = new ArrayList<>();
         MyFormatter myformatter = new MyFormatter(playerNum[0]);
         String str = communicator.receive();
-        //System.out.println("DEBUG: received moveList, " + str);
+        System.out.println("[DEBUG]: received moveList, " + str);
         myformatter.ActionParse(moveList, str);
         str = communicator.receive();
-        //System.out.println("DEBUG: received attackList, " + str);
+        System.out.println("[DEBUG]: received attackList, " + str);
         myformatter.ActionParse(attackList, str);
         actionHelper.addActions(id, moveList, attackList);
+        //Commit the actions of current player
         actionHelper.actionsCompleted(id);
       }
       else {
         actionHelper.actionsCompleted(id);
-        System.out.println("[DEBUG] lose, but set complete");
+        System.out.println("[DEBUG] lose, but also commit actions as empty");
       }
     }
 
@@ -65,11 +69,8 @@ public class PlayerHandler extends Thread {
     }
 
     public void updateLose() {
-      //sendPlayer("Lose Game", false);
-      System.out.println("=================Ready to Receive========================");
       String ifWatch = communicator.receive();
       if (ifWatch.equals("Y")) {
-        System.out.println("\n\n*********Set Still Watch******");
         status.set(id, "OUTBUTWATCH");
       } 
       else {
@@ -80,6 +81,7 @@ public class PlayerHandler extends Thread {
     public Boolean checkWin() {
       ArrayList<Integer> inGameList = new ArrayList<>();
       for (int i = 0; i < status.size(); ++i) {
+        //Check every player if it wins
         if (territoryMap.get(i).size() != 0) {
           inGameList.add(i);
         }
@@ -102,9 +104,5 @@ public class PlayerHandler extends Thread {
       }
         
     }
-
-    // public HashMap<Integer, ArrayList<Territory>> getMap() {
-    //   return territoryMap;
-    // }
       
 }

@@ -8,6 +8,7 @@ public class ActionHelper {
     private HashMap<Integer, ArrayList<Territory>> worldMap;
     private ArrayList<Action> moveList;
     private ArrayList<Action> attackList;
+    //ArrayList to record if the players have committed the actions
     private ArrayList<Boolean> playerComplete;
     private String actionsStr;
     private int playerNum;
@@ -43,7 +44,8 @@ public class ActionHelper {
         playerComplete.set(playerId, true);
     }
     public synchronized void executeActions() {
-        // System.out.println("[DEBUG:ActionHelper] Before execute actions:" + new MaptoJson(worldMap).getJSON().toString());
+        //Reference to Piazza post.
+        //Wait until all players hace committed the actions to execute all the actions
         while(playerComplete.contains(false)) {
             try {
                 this.wait();
@@ -53,12 +55,12 @@ public class ActionHelper {
             }
             
         }
-        DoAction d = new DoAction(worldMap, playersActions); //TODO: pass playersActions to contructor
+        DoAction d = new DoAction(worldMap, playersActions);
+        //First do the move actions, then attack actions, then add 1 to all territory.
         d.doMoveAction(moveList);
         d.doAttackAction(attackList);
         d.doPlusOne();
         worldMap = d.getNewWorld();
-        // System.out.println("[DEBUG:ActionHelper] After execute actions:" + (new MaptoJson(worldMap)).getJSON().toString());
         MyFormatter formatter = new MyFormatter(playerNum); 
         actionsStr = formatter.AllActionCompose(playersActions).toString();      
     }
