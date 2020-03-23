@@ -73,6 +73,7 @@ public class Player {
         }
       }
       MyFormatter myformatter = new MyFormatter(playerNum);
+      territoryMap.clear();
       myformatter.MapParse(territoryMap, msg);
       displayMap();
       WaitAction(Lose, myformatter); 
