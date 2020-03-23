@@ -79,21 +79,21 @@ public class Server {
       // MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
       int justLose = -1;
       for (int i = 0; i < list.size(); ++i) {
-        PlayerHandler cur = list.get(i);
-        if (cur.checkLose()) {
-          cur.sendPlayer(cur.checkAction(), false);
-          cur.sendPlayer(actionstr, true);
-          cur.sendPlayer("Lose Game", false);
-          justLose = i;
-        }
-      }
-      for (int j = 0; j < list.size(); ++j) {
-        if (list.get(j).checkWin()) {
-          winMsg.append(new ColorID().getPlayerColor(j));
+        if (list.get(i).checkWin()) {
+          winMsg.append(new ColorID().getPlayerColor(i));
           winMsg.append(" player.");
           gameEnd = true;
         }
       }
+      for (int j = 0; j < list.size(); ++j) {
+        PlayerHandler cur = list.get(j);
+        if (cur.checkLose() && !gameEnd) {
+          cur.sendPlayer(cur.checkAction(), false);
+          cur.sendPlayer(actionstr, true);
+          cur.sendPlayer("Lose Game", false);
+          justLose = j;
+        }
+      }   
       for (int k = 0; k < list.size(); ++k) {
         PlayerHandler cur = list.get(k);
         if (gameEnd) {
