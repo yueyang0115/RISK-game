@@ -45,7 +45,8 @@ public class Player {
     String msg;
     boolean Ask = false;
     boolean Lose = false;
-   
+    
+    OUT:
     while(true){ 
       msg = receiveString();
       if(msg.contains("Game End!")){
@@ -63,8 +64,8 @@ public class Player {
             continue;
           }
           sendString(choice);
-          if(choice.equals("Y")){ 
-            break;
+          if(choice.equals("Y")){
+            continue OUT;
           }
           else {
             return;
