@@ -90,8 +90,6 @@ public class DoAction {
   }
 
   public void doAttackAction(ArrayList<Action> attackList) {
-    myformatter.MapParse(myworld, tempWorldStr); // reset world
-
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
 
@@ -115,7 +113,20 @@ public class DoAction {
       attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
     }
 
+    myformatter.MapParse(myworld, tempWorldStr); // reset world
     doMoveAction(mymoveList);
+
+    for (int k = 0; k < attackList.size(); k++) {
+      Action action = attackList.get(k);
+
+      if (invalidPlayer.contains(action.getOwner())) {
+        continue;
+      }
+
+      int numAttack = action.getSoliders();
+      Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
+      attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
+    }
 
     for (int i = 0; i < attackList.size(); i++) {
       Action action = attackList.get(i);
