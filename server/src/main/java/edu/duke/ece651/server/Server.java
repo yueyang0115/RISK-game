@@ -87,10 +87,11 @@ public class Server {
       }
       for (int j = 0; j < list.size(); ++j) {
         PlayerHandler cur = list.get(j);
-        if (cur.checkLose() && !gameEnd) {
+        if (status.get(j).equals("INGAME") && territoryMap.get(j).size() == 0 && !gameEnd) {
           cur.sendPlayer(cur.checkAction(), false);
-          cur.sendPlayer(actionstr, true);
+          cur.sendPlayer(actionstr, false);
           cur.sendPlayer("Lose Game", false);
+          cur.updateLose();
           justLose = j;
         }
       }   

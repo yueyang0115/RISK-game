@@ -60,19 +60,15 @@ public class PlayerHandler extends Thread {
       return actionHelper.checkActionValid(id) ? "valid" : "invalid";
     }
 
-    public Boolean checkLose() {
-      if (status.get(id).equals("INGAME") && territoryMap.get(id).size() == 0) {
-        //sendPlayer("Lose Game", false);
-        String ifWatch = communicator.receive();
-        if (ifWatch.equals("Y")) {
-          status.set(id, "OUTBUTWATCH");
-        } 
-        else {
-          status.set(id, "OUTNOWATCH");
-        }
-        return true;
-      }
-      return false;
+    public void updateLose() {
+      //sendPlayer("Lose Game", false);
+      String ifWatch = communicator.receive();
+      if (ifWatch.equals("Y")) {
+        status.set(id, "OUTBUTWATCH");
+      } 
+      else {
+        status.set(id, "OUTNOWATCH");
+      }   
     }
 
     public Boolean checkWin() {
