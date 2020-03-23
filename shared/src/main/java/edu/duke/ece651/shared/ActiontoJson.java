@@ -16,21 +16,20 @@ public class ActiontoJson {
     ActionType = Type;
     getActionListObj();
   }
-  public ActiontoJson(HashMap<Integer, ArrayList<Action>> Actions){
+  public ActiontoJson(HashMap<Integer, ArrayList<Action>> Actions) {
     this.ansAllAction = new JSONObject();
     this.AllAction = new HashMap<>();
     this.AllAction = Actions;
   }
-  
-  
+
   public JSONObject getJSON() {
     return this.ans;
   }
-  
-  public void ComposeAllAction(){
-    for (HashMap.Entry<Integer, ArrayList<Action>> entry : AllAction.entrySet()){
+
+  public void ComposeAllAction() {
+    for (HashMap.Entry<Integer, ArrayList<Action>> entry : AllAction.entrySet()) {
       JSONArray currActionArray = new JSONArray();
-      for(int i = 0; i < entry.getValue().size(); i++) {
+      for (int i = 0; i < entry.getValue().size(); i++) {
         JSONObject actionObj = new JSONObject();
         Action action = entry.getValue().get(i);
         getActionObj(actionObj, action);
@@ -40,7 +39,7 @@ public class ActiontoJson {
       ansAllAction.put(insertKey, currActionArray);
     }
   }
-  public JSONObject getAllAction(){
+  public JSONObject getAllAction() {
     return this.ansAllAction;
   }
   private void getActionListObj() {
@@ -50,7 +49,7 @@ public class ActiontoJson {
   }
 
   public void getActionArray(JSONArray actionArray) {
-    System.out.println("[DEBUG] actionList size is: " + actionList.size());
+    // System.out.println("[DEBUG] actionList size is: " + actionList.size());
     for (int i = 0; i < actionList.size(); i++) {
       JSONObject actionObj = new JSONObject();
       Action action = actionList.get(i);

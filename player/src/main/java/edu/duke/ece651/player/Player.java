@@ -1,9 +1,9 @@
 package edu.duke.ece651.player;
 
 import edu.duke.ece651.shared.*;
-import javafx.util.*;
 import java.util.*;
 import java.util.Scanner;
+import javafx.util.*;
 
 public class Player {
   private HashMap<Integer, ArrayList<Territory>> territoryMap;
@@ -14,7 +14,7 @@ public class Player {
   private Displayable displayer;
   private Communicator communicator;
   private int playerNum;
-  
+
   public Player() {
     this.territoryMap = new HashMap<>();
     this.MoveAction = new ArrayList<>();
@@ -27,7 +27,8 @@ public class Player {
   public void init(Scanner scanner) {
     int id = Integer.parseInt(receiveString());
     if (id == 0) {
-      System.out.println("=======You're the first player, please enter the number of all players ([2:5])========");
+      System.out.println(
+          "=======You're the first player, please enter the number of all players ([2:5])========");
       int playerNum = scanner.nextInt();
       while (playerNum < 2 || playerNum > 5) {
         System.out.println("========Invalid playerNumber, try again ([2:5])========");
@@ -35,41 +36,42 @@ public class Player {
       }
       sendString(String.valueOf(playerNum));
     }
-    //System.out.println("[DEBUG] my id is " + id);
+    // System.out.println("[DEBUG] my id is " + id);
     String color = new ColorID().getPlayerColor(id);
     this.playerInfo = new Pair<>(id, color);
     playerNum = Integer.parseInt(receiveString());
   }
-  
-  public void PlayGame(Scanner scanner){
+
+  public void PlayGame(Scanner scanner) {
     String msg;
     boolean Ask = false;
     boolean Lose = false;
     boolean LoseButWatch = false;
-    
-    while(true){
+
+    while (true) {
       msg = receiveString();
-      if(msg.contains("Game End!")){
+      if (msg.contains("Game End!")) {
         System.out.println(msg);
         break;
       }
-      if(msg.contains("Lose Game") && !Ask){
+      if (msg.contains("Lose Game") && !Ask) {
         Ask = true;
         Lose = true;
-        System.out.println("========You lose the game========\n" + "Do you want to still watch the game? Please choose Y/N");
+        System.out.println("========You lose the game========\n"
+            + "Do you want to still watch the game? Please choose Y/N");
         while (true) {
           String choice = scanner.nextLine().toUpperCase();
           if (!choice.equals("Y") && !choice.equals("N")) {
-            System.out.println("Your Input is invalid.\n" + "Please choose Y/N");
+            System.out.println("Your Input is invalid.\n"
+                + "Please choose Y/N");
             continue;
           }
           sendString(choice);
-          if(choice.equals("Y")){
+          if (choice.equals("Y")) {
             LoseButWatch = true;
             System.out.println("Choose Y");
             break;
-          }
-          else {
+          } else {
             return;
           }
         }
@@ -77,33 +79,31 @@ public class Player {
       MyFormatter myformatter = new MyFormatter(playerNum);
       if (!LoseButWatch) {
         territoryMap.clear();
-        System.out.println("Received Map = " + msg);
+        // System.out.println("Received Map = " + msg);
         myformatter.MapParse(territoryMap, msg);
         displayMap();
       }
       LoseButWatch = false;
       WaitAction(Lose, myformatter);
-        
     }
   }
 
-  
-  public void WaitAction(boolean Lose, MyFormatter myformatter){
-    if(!Lose){
+  public void WaitAction(boolean Lose, MyFormatter myformatter) {
+    if (!Lose) {
       OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
       PlayerAction.readAction();
       this.MoveAction = PlayerAction.getMoveActions();
-      //System.out.println("[DEBUG PLAYER] Size Move Action" + this.MoveAction.size());
+      // System.out.println("[DEBUG PLAYER] Size Move Action" + this.MoveAction.size());
       String MoveString = myformatter.ActionCompose(this.MoveAction, "Move").toString();
       sendString(MoveString);
       AttackAction = PlayerAction.getAttackActions();
       String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
       sendString(AttackString);
-      
+
       System.out.println("Action Validate : " + receiveString());
     }
     String OtherActions = receiveString();
-    System.out.println(OtherActions);
+    // System.out.println(OtherActions);
     if (OtherActions.contains("valid")) {
       OtherActions = receiveString();
     }
@@ -111,7 +111,7 @@ public class Player {
     myformatter.AllActionParse(AllAction, OtherActions);
     displayAction();
   }
-  
+
   public void sendString(String str) {
     communicator.sendString(str);
   }
@@ -133,7 +133,7 @@ public class Player {
   public void displayMap() {
     displayer.showMap(territoryMap, playerInfo);
   }
-  public void displayAction(){
+  public void displayAction() {
     displayer.showAction(AllAction, playerInfo);
   }
   public void close() {
@@ -144,11 +144,10 @@ public class Player {
     Scanner scanner = new Scanner(System.in);
     Player player = new Player();
     Displayable d = new Text();
-    
+
     player.addDisplayable(d);
     player.init(scanner);
     player.PlayGame(scanner);
     player.close();
   }
-  
 }
