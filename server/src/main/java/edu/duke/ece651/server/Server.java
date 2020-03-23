@@ -97,6 +97,8 @@ public class Server {
       for (int k = 0; k < list.size(); ++k) {
         PlayerHandler cur = list.get(k);
         if (gameEnd) {
+          cur.sendPlayer(cur.checkAction(), false);
+          cur.sendPlayer(actionstr, false);
           cur.sendPlayer(winMsg.toString(), false);
           // TODO: close the server
         } else {
