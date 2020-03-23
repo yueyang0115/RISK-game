@@ -45,9 +45,9 @@ public class Player {
     String msg;
     boolean Ask = false;
     boolean Lose = false;
+    boolean LoseButWatch = false;
     
-    OUT:
-    while(true){ 
+    while(true){
       msg = receiveString();
       if(msg.contains("Game End!")){
         System.out.println(msg);
@@ -65,8 +65,9 @@ public class Player {
           }
           sendString(choice);
           if(choice.equals("Y")){
+            LoseButWatch = true;
             System.out.println("Choose Y");
-            continue OUT;
+            break;
           }
           else {
             return;
@@ -74,15 +75,21 @@ public class Player {
         }
       }
       MyFormatter myformatter = new MyFormatter(playerNum);
-      territoryMap.clear();
-      myformatter.MapParse(territoryMap, msg);
-      displayMap();
-      WaitAction(Lose, myformatter); 
+      if (!LoseButWatch) {
+        territoryMap.clear();
+        System.out.println("Received Map = " + msg);
+        myformatter.MapParse(territoryMap, msg);
+        displayMap();
+      }
+      LoseButWatch = false;
+      if(WaitAction(Lose, myformatter)){
+        return;
+      }
     }
   }
 
   
-  public void WaitAction(boolean Lose, MyFormatter myformatter){
+  public boolean WaitAction(boolean Lose, MyFormatter myformatter){
     if(!Lose){
       OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
       PlayerAction.readAction();
@@ -94,12 +101,18 @@ public class Player {
       String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
       sendString(AttackString);
       
-      System.out.println("Validation result of your actions: " + receiveString());
+      System.out.println("Action Validate : " + receiveString());
     }
     String OtherActions = receiveString();
+    if (OtherActions.contains("Game End!")) {
+      System.out.println(OtherActions);
+      return true;
+    }
     AllAction.clear();
     myformatter.AllActionParse(AllAction, OtherActions);
     displayAction();
+    return false;
+    
   }
   
   public void sendString(String str) {
