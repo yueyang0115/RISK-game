@@ -17,19 +17,23 @@ public class MyFormatter {
   public void MapParse(HashMap<Integer, ArrayList<Territory>> Input, String MapJson) {
     JSONObject InputMap = new JSONObject(MapJson);
     for (int i = 0; i < NumPlayers; i++) {
-      JSONArray PlayerTemp = InputMap.optJSONArray("player_" + Integer.toString(i));
+      JSONArray PlayerTemp = new JSONArray();
+      PlayerTemp = InputMap.optJSONArray("player_" + Integer.toString(i));
       // System.out.println("[DEBUG] Player = " + i);
-      ArrayList<Territory> InnerTerr = new ArrayList<Territory>();
-      // System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
-      for (int j = 0; j < PlayerTemp.length(); j++) {
+      if(!PlayerTemp.isEmpty()){
+        ArrayList<Territory> InnerTerr = new ArrayList<Territory>();
         // System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
-        JSONObject TerrTemp = PlayerTemp.optJSONObject(j);
-        Territory Inner = JsonToTerritory(TerrTemp);
-        InnerTerr.add(Inner);
+        for (int j = 0; j < PlayerTemp.length(); j++) {
+          // System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
+          JSONObject TerrTemp = PlayerTemp.optJSONObject(j);
+          Territory Inner = JsonToTerritory(TerrTemp);
+          InnerTerr.add(Inner);
+        }
+        if (InnerTerr.size() != 0) {
+          Input.put(i, InnerTerr);
+        }
       }
-      if (InnerTerr.size() != 0) {
-        Input.put(i, InnerTerr);
-      }
+      
     }
     // System.out.println("[DEBUG] HashMap Size = " + Input.size());
   }
