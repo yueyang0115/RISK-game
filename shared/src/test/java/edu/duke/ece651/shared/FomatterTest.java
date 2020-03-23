@@ -22,6 +22,12 @@ public class FomatterTest {
     HashMap<Integer, ArrayList<Territory>> TerritoryMapEmpty = new HashMap<>();
     MapEmpty.MapParse(TerritoryMapEmpty, EmptyInput);
 
+    System.out.println("================Null================");
+    String NullInput =  "{'player_1':[],'player_0':[{'owner':'player_0','territoryName':'A','soldiers':3,'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'}]}]}";
+    MyFormatter MapNull = new MyFormatter(3);
+    HashMap<Integer, ArrayList<Territory>> TerritoryMapNull = new HashMap<>();
+    MapNull.MapParse(TerritoryMapNull, NullInput);
+
 
 
     System.out.println("*****************TEST ACTION****************");

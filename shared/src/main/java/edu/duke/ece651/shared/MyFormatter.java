@@ -21,14 +21,7 @@ public class MyFormatter {
       JSONArray PlayerTemp = new JSONArray();
       PlayerTemp = InputMap.optJSONArray("player_" + Integer.toString(i));
 
-      if (PlayerTemp == null) {
-        // System.out.println("player_" + i + "No Territory!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      }
       if (PlayerTemp != null) {
-        // System.out.println("[DEBUG] PlayerTemp = " + PlayerTemp.toString());
-
-        // System.out.println("[DEBUG] Player = " + i);
-
         ArrayList<Territory> InnerTerr = new ArrayList<Territory>();
         // System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
         for (int j = 0; j < PlayerTemp.length(); j++) {
@@ -42,6 +35,7 @@ public class MyFormatter {
         }
       }
     }
+    
     // System.out.println("[DEBUG] HashMap Size = " + Input.size());
   }
 

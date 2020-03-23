@@ -9,6 +9,10 @@ import org.junit.jupiter.api.Test;
 public class WorldInitterTest {
   @Test
   public void test_world3initter() {
+    HashMap<Integer, ArrayList<Territory>> myworld2 = new HashMap<>();
+    WorldInitter myworldinitter2 = new WorldInitter(3, myworld2);
+    
+    
     WorldInitter myworldinitter = new WorldInitter(3);
     HashMap<Integer, ArrayList<Territory>> myworld;
     myworld = myworldinitter.getWorld();

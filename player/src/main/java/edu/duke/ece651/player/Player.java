@@ -139,7 +139,15 @@ public class Player {
   public void close() {
     communicator.close();
   }
-
+  public void setTerritoryMap(HashMap<Integer, ArrayList<Territory>> TestMap){
+    this.territoryMap = TestMap;
+  }
+  public void setAllAction(HashMap<Integer, ArrayList<Action>> TestAllAction){
+    this.AllAction = TestAllAction;
+  }
+  public void setPlayerInfo(Pair<Integer, String> TestPlayerInfo){
+    this.playerInfo = TestPlayerInfo;
+  }
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     Player player = new Player();

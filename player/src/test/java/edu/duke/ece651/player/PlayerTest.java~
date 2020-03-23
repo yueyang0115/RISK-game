@@ -1,0 +1,24 @@
+package edu.duke.ece651.player;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.junit.jupiter.api.Test;
+
+import edu.duke.ece651.shared.Action;
+import edu.duke.ece651.shared.Territory;
+import javafx.util.Pair;
+
+public class PlayerTest {
+  @Test
+  public void test_Player() {
+    Player TestPlayer = new Player();
+    Text T = new Text();
+    TestPlayer.addDisplayable(T);
+    TestPlayer.displayMap();
+    TestPlayer.displayAction();
+  }
+
+}
