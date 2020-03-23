@@ -78,7 +78,7 @@ public class PlayerHandler extends Thread {
     public Boolean checkWin() {
       ArrayList<Integer> inGameList = new ArrayList<>();
       for (int i = 0; i < status.size(); ++i) {
-        if (status.get(i) == "INGAME") {
+        if (territoryMap.get(i).size() != 0) {
           inGameList.add(i);
         }
       }
