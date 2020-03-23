@@ -89,7 +89,7 @@ public class Server {
       
       for (int j = 0; j < list.size(); ++j) {
         PlayerHandler cur = list.get(j);
-        System.out.println("Current Status " + j + status.get(j));
+        System.out.println("Before Current Status " + j + status.get(j));
         if (status.get(j).equals("INGAME") && territoryMap.get(j).size() == 0 && !gameEnd) {
           cur.sendPlayer(cur.checkAction(), false);
           cur.sendPlayer(actionstr, false);
@@ -98,6 +98,7 @@ public class Server {
           cur.updateLose();
           justLose = j;
         }
+        System.out.println("After Current Status " + j + status.get(j));
       }
       System.out.println("\n\nFinish CheckLose for All");
       for (int k = 0; k < list.size(); ++k) {
@@ -109,6 +110,7 @@ public class Server {
           // TODO: close the server
         } else {
           if (status.get(k).equals("INGAME")) {
+            System.out.println("Not End send Validation Resultk" + status.get(k).equals("INGAME"));
             cur.sendPlayer(cur.checkAction(), false);
           }         
           if (justLose != k ) {
