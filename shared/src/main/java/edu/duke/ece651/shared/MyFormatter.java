@@ -20,21 +20,15 @@ public class MyFormatter {
     for (int i = 0; i < NumPlayers; i++) {
       JSONArray PlayerTemp = new JSONArray();
       PlayerTemp = InputMap.optJSONArray("player_" + Integer.toString(i));
-<<<<<<< HEAD
+
       if(PlayerTemp == null){
         System.out.println("player_" + i + "No Territory!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       }
-      
-      
       if(PlayerTemp != null){
         System.out.println("[DEBUG] PlayerTemp = " + PlayerTemp.toString());
-=======
-      // System.out.println("[DEBUG] Player = " + i);
-      if (PlayerTemp == null) {
-        System.out.println("[DEBUG] in MapParse, PlayerTemp == null");
-      }
-      if (PlayerTemp != null) {
->>>>>>> 77ae11cc1ee84add47519e90d37e5149cfdd7995
+
+        System.out.println("[DEBUG] Player = " + i);
+        
         ArrayList<Territory> InnerTerr = new ArrayList<Territory>();
         // System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
         for (int j = 0; j < PlayerTemp.length(); j++) {
