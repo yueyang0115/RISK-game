@@ -77,11 +77,13 @@ public class Server {
 
       System.out.println("DEBUG: action string is , " + actionstr);
       // MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
-
+      Boolean justLose = false;
       for (PlayerHandler cur : list) {
         if (cur.checkLose()) {
           cur.sendPlayer(cur.checkAction(), false);
+          cur.sendPlayer(actionstr, true);
           cur.sendPlayer("Lose Game", false);
+          justLose = true;
         }
       }
       for (int i = 0; i < list.size(); ++i) {
@@ -101,7 +103,9 @@ public class Server {
             cur.sendPlayer(cur.checkAction(), false);
           }
           // Send actions of other players to every player
-          cur.sendPlayer(actionstr, true);
+          if (!justLose) {
+            cur.sendPlayer(actionstr, true);
+          }          
           // Send map to player
           cur.sendPlayer(formatter.MapCompose(territoryMap).toString(), true);
         }
