@@ -77,37 +77,38 @@ public class Server {
 
       System.out.println("DEBUG: action string is , " + actionstr);
       // MaptoJson myMaptoJson = new MaptoJson(this.territoryMap);
-      Boolean justLose = false;
-      for (PlayerHandler cur : list) {
+      int justLose = -1;
+      for (int i = 0; i < list.size(); ++i) {
+        PlayerHandler cur = list.get(i);
         if (cur.checkLose()) {
           cur.sendPlayer(cur.checkAction(), false);
           cur.sendPlayer(actionstr, true);
           cur.sendPlayer("Lose Game", false);
-          justLose = true;
+          justLose = i;
         }
       }
-      for (int i = 0; i < list.size(); ++i) {
-        if (list.get(i).checkWin()) {
-          winMsg.append(new ColorID().getPlayerColor(i));
+      for (int j = 0; j < list.size(); ++j) {
+        if (list.get(j).checkWin()) {
+          winMsg.append(new ColorID().getPlayerColor(j));
           winMsg.append(" player.");
           gameEnd = true;
         }
       }
-      for (int j = 0; j < list.size(); ++j) {
-        PlayerHandler cur = list.get(j);
+      for (int k = 0; k < list.size(); ++k) {
+        PlayerHandler cur = list.get(k);
         if (gameEnd) {
           cur.sendPlayer(winMsg.toString(), false);
           // TODO: close the server
         } else {
-          if (status.get(j).equals("INGAME")) {
+          if (status.get(k).equals("INGAME")) {
             cur.sendPlayer(cur.checkAction(), false);
-          }
-          // Send actions of other players to every player
-          if (!justLose) {
+          }         
+          if (justLose != k ) {
+            // Send actions of other players to every player
             cur.sendPlayer(actionstr, true);
-          }          
-          // Send map to player
-          cur.sendPlayer(formatter.MapCompose(territoryMap).toString(), true);
+            // Send map to player
+            cur.sendPlayer(formatter.MapCompose(territoryMap).toString(), true);
+          }                   
         }
       }
       ah.reset();
