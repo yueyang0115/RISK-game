@@ -70,7 +70,7 @@ public class Server {
       System.out.println("[DEBUG:Server] Before execute actions:"
           + new MaptoJson(territoryMap).getJSON().toString());
       ah.executeActions();
-      System.out.println("[DEBUG:Server] Before execute actions:"
+      System.out.println("[DEBUG:Server] After execute actions:"
           + new MaptoJson(territoryMap).getJSON().toString());
       // Get action string, send to players later
       String actionstr = ah.getActionString();

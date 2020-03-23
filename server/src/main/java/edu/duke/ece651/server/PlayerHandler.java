@@ -54,6 +54,10 @@ public class PlayerHandler extends Thread {
         actionHelper.addActions(id, moveList, attackList);
         actionHelper.actionsCompleted(id);
       }
+      else {
+        actionHelper.actionsCompleted(id);
+        System.out.println("[DEBUG] lose, but set complete");
+      }
     }
 
     public String checkAction() {
