@@ -15,10 +15,12 @@ public class MyFormatter {
   }
 
   public void MapParse(HashMap<Integer, ArrayList<Territory>> Input, String MapJson) {
-    // System.out.println("**********************MapJson = " + MapJson );
+    // receive the json string Map and parse into a territoryMap
     JSONObject InputMap = new JSONObject(MapJson);
+    //search through all player to set their corresponding territory
     for (int i = 0; i < NumPlayers; i++) {
       JSONArray PlayerTemp = new JSONArray();
+      
       PlayerTemp = InputMap.optJSONArray("player_" + Integer.toString(i));
 
       if (PlayerTemp != null) {
@@ -36,10 +38,10 @@ public class MyFormatter {
       }
     }
     
-    // System.out.println("[DEBUG] HashMap Size = " + Input.size());
   }
 
   public Territory JsonToTerritory(JSONObject TerrTemp) {
+    //parse One JsonObject which is one territory
     Territory Inner = new Territory();
     String owner = TerrTemp.optString("owner");
     // System.out.println("[DEBUG] OwnerName = " + owner);
@@ -47,6 +49,7 @@ public class MyFormatter {
     int SoldierNum = TerrTemp.optInt("soldiers");
     Inner.setSoldiers(SoldierNum);
     // System.out.println("[DEBUG] SoldierNum = " + SoldierNum);
+    //neighbor is stored in JsonArray Format
     JSONArray NeighborArray = TerrTemp.optJSONArray("neighbor");
     for (int k = 0; k < NeighborArray.length(); k++) {
       JSONObject InnerNeigh = NeighborArray.optJSONObject(k);
@@ -61,14 +64,16 @@ public class MyFormatter {
   }
 
   public JSONObject ActionCompose(ArrayList<Action> actionList, String ActionType) {
+    //based on Action type to compose the arraylist action into JsonObject
     ActiontoJson myActiontoJson = new ActiontoJson(actionList, ActionType);
     // System.out.println("The returned Action is: " + myActiontoJson.getJSON());
     return myActiontoJson.getJSON();
   }
 
   public void ActionParse(ArrayList<Action> Input, String ActionJson) {
+    //parse action json string into an arraylist
     JSONObject InputAction = new JSONObject(ActionJson);
-
+    //get the entire jsonArray
     String ActionType;
     if (InputAction.has("Move")) {
       ActionType = "Move";
@@ -80,6 +85,7 @@ public class MyFormatter {
   }
 
   private void ParseActionArray(ArrayList<Action> Input, JSONArray ActionArray) {
+    //parse each territory in the jsonarray
     for (int i = 0; i < ActionArray.length(); i++) {
       Action InnerAction = new Action();
       JSONObject ActionTemp = ActionArray.optJSONObject(i);
@@ -107,6 +113,7 @@ public class MyFormatter {
   }
 
   public void AllActionParse(HashMap<Integer, ArrayList<Action>> AllAction, String Input) {
+    //get a jsonstring of all players actions and parse that into a hashmap
     // System.out.println("The Received All Action String is (ready to AllActionParse): " + Input);
     JSONObject InputAction = new JSONObject(Input);
     // System.out.println("Input  = " + Input);
@@ -124,6 +131,7 @@ public class MyFormatter {
     }
   }
   public JSONObject AllActionCompose(HashMap<Integer, ArrayList<Action>> AllAction) {
+    //compose the jsonstring based on the hashMap AllAction
     ActiontoJson myAllAction = new ActiontoJson(AllAction);
     myAllAction.ComposeAllAction();
     return myAllAction.getAllAction();

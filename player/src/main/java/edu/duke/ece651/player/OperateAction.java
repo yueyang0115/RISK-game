@@ -22,6 +22,7 @@ public class OperateAction {
     ActionType.put("M", "Move");
     ActionType.put("A", "Attack");
     playerInfo = PlayerInfo;
+    //stored territorymap by players own territory and whole territories
     for(HashMap.Entry<Integer, ArrayList<Territory>> entry : TerritoryMap.entrySet()){
       int PlayerID = PlayerInfo.getKey();
       if(entry.getKey() == PlayerID){
@@ -43,6 +44,7 @@ public class OperateAction {
   }
   
   public void SeparateAction(){
+    //stored move and attack action separately
     for(Action Current : allAction){
       String CurrType = Current.getType();
       if(CurrType == "Move"){
@@ -54,6 +56,7 @@ public class OperateAction {
     }
   }
   public void readAction(){
+    //wait for player to input their action
     Scanner s = new Scanner(System.in);
     while(true){
       Action CurrentAction = new Action();
@@ -74,12 +77,15 @@ public class OperateAction {
       }
       String OwnerName  = "player_" + playerInfo.getKey();
       CurrentAction.setOwner(OwnerName);
+      //store the input action into list
       allAction.add(CurrentAction);
     }
+    
     SeparateAction();
   }
   
   public String readActionType(Scanner s){
+    //print prompt + read Action Type
      System.out.println("You are the " + playerInfo.getValue() + " player, what would you like to do?");
       System.out.println(" (M)ove");
       System.out.println(" (A)ttack");
@@ -91,6 +97,7 @@ public class OperateAction {
     System.out.println("Please input the source territory: ");
     String src = s.nextLine();
     if (ActionType.equals("M")) {
+      //check if that src for move action is valid
       for (Territory Temp : ownTerritories) {
         if (Temp.getTerritoryName().equals(src)) {
           curAction.setSrc(Temp);
@@ -99,6 +106,7 @@ public class OperateAction {
       }
     }
     else{
+      //for attack actions
       for(Territory WholeTemp: wholeTerritories){
         if (WholeTemp.getTerritoryName().equals(src)) {
           curAction.setSrc(WholeTemp);
@@ -137,6 +145,7 @@ public class OperateAction {
   public boolean readNum(Scanner s, Action curAction){
      System.out.println("Please input the number of soldiers: ");
      String Num = s.nextLine();
+     //make sure the player only input numbers
      for (int i = 0; i < Num.length(); i++){
        if(!Character.isDigit(Num.charAt(i))){
          System.out.println("[Invalid] Soldiers Number needs to be integer!");
