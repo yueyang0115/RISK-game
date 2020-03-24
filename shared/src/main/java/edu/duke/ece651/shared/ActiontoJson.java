@@ -22,10 +22,12 @@ public class ActiontoJson {
     this.AllAction = Actions;
   }
 
+  // transfer ArrayList<Action> to string
   public JSONObject getJSON() {
     return this.ans;
   }
 
+  // transfer HashMap<Integer, ArrayList<Action>> to string
   public void ComposeAllAction() {
     for (HashMap.Entry<Integer, ArrayList<Action>> entry : AllAction.entrySet()) {
       JSONArray currActionArray = new JSONArray();

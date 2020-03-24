@@ -24,6 +24,7 @@ public class ServerChecker {
     return temp;
   }
 
+  // check if action's srcTerrotory and dstTerritory are in terrirory Map
   private boolean checkTerritory() {
     String srcName = action.getSrc().getTerritoryName();
     String dstName = action.getDst().getTerritoryName();
@@ -33,6 +34,7 @@ public class ServerChecker {
     return srcName.equals(findSrcName) && dstName.equals(findDstName);
   }
 
+  // check if action's owner and scrTerritory's and dstTerritory is legal
   private boolean checkOwner() {
     // System.out.println("[DEBUG] checkTerritory succeed");
     String srcOwner = action.getSrc().getOwner();
@@ -45,6 +47,7 @@ public class ServerChecker {
     }
   }
 
+  // check if srcTerritory can provide action enough soldier
   private boolean checkNum() {
     // System.out.println("[DEBUG] checkOwner succeed");
     // Territory srcTerritory = action.getSrc();
@@ -54,6 +57,7 @@ public class ServerChecker {
     return ((srcTerritory.getSoliders() >= action.getSoliders()) && (action.getSoliders() >= 0));
   }
 
+  // check if there is a valid path from srcTerritory to dstTerritory
   private boolean checkNeighbor() {
     // System.out.println("[DEBUG] checkNum succeed");
     HashSet<Territory> visitedSet = new HashSet<>();

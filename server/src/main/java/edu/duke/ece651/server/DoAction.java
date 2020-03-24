@@ -32,6 +32,7 @@ public class DoAction {
     mymoveList = new ArrayList<>();
   }
 
+  // remove player that contains invalid action from actionsmap
   private void removePlayer(Action action) {
     // System.out.println("[DEBUG] action inValid");
     String playerName = action.getOwner();
@@ -45,6 +46,7 @@ public class DoAction {
     }
   }
 
+  // domove action
   public void doMoveAction(ArrayList<Action> moveList) {
     for (int i = 0; i < moveList.size(); i++) {
       // System.out.println("[DEBUG] i is " + i);
@@ -55,10 +57,12 @@ public class DoAction {
       System.out.print("\n");
       Action action = moveList.get(i);
 
+      // if player has previous invalid action, ignore all its actions
       if (invalidPlayer.contains(action.getOwner())) {
         continue;
       }
 
+      // check if action is valid
       ServerChecker mychecker = new ServerChecker(myworld);
       boolean isValid = mychecker.Check(action);
       if (!isValid) {
@@ -93,10 +97,12 @@ public class DoAction {
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
 
+      // if player has previous invalid action, ignore all its actions
       if (invalidPlayer.contains(action.getOwner())) {
         continue;
       }
 
+      // based on moveActions result, check if attackaction is valid
       ServerChecker mychecker = new ServerChecker(myworld);
       boolean isValid = mychecker.Check(action);
       if (!isValid) {
@@ -108,14 +114,19 @@ public class DoAction {
         continue;
       }
 
+      // if valid, remove soldiers from srcTerritory
       int numAttack = action.getSoliders();
       Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
       attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
     }
 
-    myformatter.MapParse(myworld, tempWorldStr); // reset world
+    // reset map back to no action performed status, do move actions first
+    myformatter.MapParse(myworld, tempWorldStr);
     doMoveAction(mymoveList);
 
+    // then do attack actions, ignore all invalid action
+
+    // move soldiers out of srcTerritory
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
 
@@ -128,6 +139,7 @@ public class DoAction {
       attackTerritory.setSoldiers(attackTerritory.getSoliders() - numAttack);
     }
 
+    // perform attack actions
     for (int i = 0; i < attackList.size(); i++) {
       Action action = attackList.get(i);
 
@@ -177,6 +189,7 @@ public class DoAction {
     invalidPlayer.clear();
   }
 
+  // if defence lose, move specfic territory from defence player to attack player in actionsmap
   private void changeOwner(Territory defenceTerritory, Territory attackTerritory, int numAttack) {
     ArrayList<Integer> ID = new ArrayList<>();
     ArrayList<String> playerName = new ArrayList<>();
@@ -217,6 +230,7 @@ public class DoAction {
         + " territories");
   }
 
+  // add one soldier to all territory
   public void doPlusOne() {
     for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
       ArrayList<Territory> territoryList = entry.getValue();
@@ -227,6 +241,7 @@ public class DoAction {
     }
   }
 
+  // find specific territory in worldmap
   public Territory findTerritory(
       HashMap<Integer, ArrayList<Territory>> myworld, String TerritoryName) {
     Territory ans = new Territory();

@@ -20,6 +20,7 @@ public class WorldInitter {
     return myworld;
   }
 
+  // according to player num, init worldmap
   private void createWorld(int playerNum) {
     StringBuilder fileName = new StringBuilder();
     fileName.append("/world").append(playerNum).append(".json");

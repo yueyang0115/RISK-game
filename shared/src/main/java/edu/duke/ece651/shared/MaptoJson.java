@@ -16,6 +16,7 @@ public class MaptoJson {
     getPlayerObj();
   }
 
+  // transfer HashMap<Integer, ArrayList<Territory>> to JSONObject
   public JSONObject getJSON() {
     return this.ans;
   }
