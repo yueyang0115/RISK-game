@@ -25,7 +25,9 @@ public class Player {
   }
 
   public void init(Scanner scanner) {
+    
     int id = Integer.parseInt(receiveString());
+    //the first player input the total number of players
     if (id == 0) {
       System.out.println(
           "=======You're the first player, please enter the number of all players ([2:5])========");
@@ -35,6 +37,7 @@ public class Player {
         playerNum = scanner.nextInt();
       }
       sendString(String.valueOf(playerNum));
+      //send it to server
     }
     // System.out.println("[DEBUG] my id is " + id);
     String color = new ColorID().getPlayerColor(id);
@@ -50,6 +53,7 @@ public class Player {
 
     while (true) {
       msg = receiveString();
+      //if the msg is game end, end the game
       if (msg.contains("Game End!")) {
         System.out.println(msg);
         break;
@@ -59,13 +63,16 @@ public class Player {
         Lose = true;
         System.out.println("========You lose the game========\n"
             + "Do you want to still watch the game? Please choose Y/N");
+        //wait for player to input their choice
         while (true) {
           String choice = scanner.nextLine().toUpperCase();
+          //make sure they only input Y/N
           if (!choice.equals("Y") && !choice.equals("N")) {
             System.out.println("Your Input is invalid.\n"
                 + "Please choose Y/N");
             continue;
           }
+          //send the choice to server
           sendString(choice);
           if (choice.equals("Y")) {
             LoseButWatch = true;
@@ -78,18 +85,21 @@ public class Player {
       }
       MyFormatter myformatter = new MyFormatter(playerNum);
       if (!LoseButWatch) {
+        //if it is lose but watch this turn will not display the current world map
         territoryMap.clear();
         // System.out.println("Received Map = " + msg);
         myformatter.MapParse(territoryMap, msg);
         displayMap();
       }
       LoseButWatch = false;
+      
       WaitAction(Lose, myformatter);
     }
   }
 
   public void WaitAction(boolean Lose, MyFormatter myformatter) {
     if (!Lose) {
+      //send player input actions to server: move actions and attack actions
       OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
       PlayerAction.readAction();
       this.MoveAction = PlayerAction.getMoveActions();
@@ -99,12 +109,15 @@ public class Player {
       AttackAction = PlayerAction.getAttackActions();
       String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
       sendString(AttackString);
-
+      //receive the result of these actions from server
       System.out.println("Action Validate : " + receiveString());
     }
+    //receive all players' actions
     String OtherActions = receiveString();
     // System.out.println(OtherActions);
     if (OtherActions.contains("valid")) {
+      //if it is the trun game end and if received validation of the actions
+      //receive another time to all actions
       OtherActions = receiveString();
     }
     AllAction.clear();
@@ -120,12 +133,6 @@ public class Player {
     return communicator.receive();
   }
 
-  public void receiveMap() {
-    String str = communicator.receive();
-    MyFormatter myformatter = new MyFormatter(playerNum);
-    myformatter.MapParse(territoryMap, str);
-  }
-
   public void addDisplayable(Displayable d) {
     this.displayer = d;
   }
@@ -139,6 +146,7 @@ public class Player {
   public void close() {
     communicator.close();
   }
+  //for testcases
   public void setTerritoryMap(HashMap<Integer, ArrayList<Territory>> TestMap){
     this.territoryMap = TestMap;
   }
@@ -156,6 +164,7 @@ public class Player {
     player.addDisplayable(d);
     player.init(scanner);
     player.PlayGame(scanner);
+    //close the socket
     player.close();
   }
 }
