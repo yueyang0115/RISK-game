@@ -45,7 +45,7 @@ public class ActionHelper {
     }
     public synchronized void executeActions() {
         //Reference to Piazza post.
-        //Wait until all players hace committed the actions to execute all the actions
+        //Wait until all players have committed the actions to execute all the actions
         while(playerComplete.contains(false)) {
             try {
                 this.wait();
