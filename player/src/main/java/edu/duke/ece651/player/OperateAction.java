@@ -3,6 +3,7 @@ package edu.duke.ece651.player;
 import java.util.*;
 import edu.duke.ece651.shared.*;
 import javafx.util.Pair;
+import org.apache.commons.math3.analysis.function.Add;
 
 public class OperateAction {
   private ArrayList<Territory> ownTerritories;
@@ -40,7 +41,7 @@ public class OperateAction {
   }
   
   public ArrayList<Action> getAttackActions(){
-    return AttackAction;
+      return AttackAction;
   }
   
   public void SeparateAction(){

@@ -62,20 +62,20 @@ public class Player {
         Ask = true;
         Lose = true;
         System.out.println("========You lose the game========\n"
-            + "Do you want to still watch the game? Please choose Y/N");
-        //wait for player to input their choice
-        while (true) {
-          String choice = scanner.nextLine().toUpperCase();
-          //make sure they only input Y/N
-          if (!choice.equals("Y") && !choice.equals("N")) {
-            System.out.println("Your Input is invalid.\n"
-                + "Please choose Y/N");
-            continue;
-          }
-          //send the choice to server
-          sendString(choice);
-          if (choice.equals("Y")) {
-            LoseButWatch = true;
+                    + "Do you want to still watch the game? Please choose Y/N");
+            //wait for player to input their choice
+            while (true) {
+              String choice = scanner.nextLine().toUpperCase();
+              //make sure they only input Y/N
+              if (!choice.equals("Y") && !choice.equals("N")) {
+                System.out.println("Your Input is invalid.\n"
+                        + "Please choose Y/N");
+                continue;
+              }
+              //send the choice to server
+              sendString(choice);
+              if (choice.equals("Y")) {
+                LoseButWatch = true;
             System.out.println("Choose Y");
             break;
           } else {

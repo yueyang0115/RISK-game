@@ -42,7 +42,7 @@ public class OperateActionTest {
       System.out.println("Number of Soliders = " + Temp.getSoliders());
       System.out.print("\n");
     }
-    
+
   }
 
 }

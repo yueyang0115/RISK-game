@@ -14,6 +14,7 @@ import javafx.util.Pair;
 public class PlayerTest {
   @Test
   public void test_Player() {
+
     Player TestPlayer = new Player();
     Text T = new Text();
     TestPlayer.addDisplayable(T);
