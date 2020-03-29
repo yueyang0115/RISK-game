@@ -81,7 +81,6 @@ public class OperateAction {
       //store the input action into list
       allAction.add(CurrentAction);
     }
-    
     SeparateAction();
   }
   
