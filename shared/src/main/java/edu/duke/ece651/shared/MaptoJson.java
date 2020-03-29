@@ -46,8 +46,10 @@ public class MaptoJson {
     String owner = myterritory.getOwner();
     territoryObj.put("owner", owner);
 
-    int soldiers = myterritory.getSoliders();
-    territoryObj.put("soldiers", soldiers);
+    HashMap<Integer, Integer> soldierMap = myterritory.getSoldiers();
+    JSONArray soldierArray = new JSONArray();
+    getSoldierArray(soldierArray, soldierMap);
+    territoryObj.put("soldiers", soldierArray);
 
     ArrayList<String> neighborList = myterritory.getNeighbor();
     JSONArray neighborArray = new JSONArray();
@@ -56,6 +58,18 @@ public class MaptoJson {
 
     String name = myterritory.getTerritoryName();
     territoryObj.put("territoryName", name);
+  }
+
+  public void getSoldierArray(JSONArray soldierArray, HashMap<Integer, Integer> soldierMap) {
+    for (HashMap.Entry<Integer, Integer> entry : soldierMap.entrySet()) {
+      int i = entry.getKey();
+      StringBuilder level = new StringBuilder();
+      level.append("level_").append(i);
+
+      JSONObject soldierObj = new JSONObject();
+      soldierObj.put(level.toString(), entry.getValue());
+      soldierArray.put(soldierObj);
+    }
   }
 
   public void getNeighborArray(JSONArray neighborArray, ArrayList<String> neighborList) {
