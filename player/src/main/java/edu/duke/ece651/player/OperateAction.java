@@ -19,6 +19,7 @@ public class OperateAction {
     allAction = new ArrayList<>();
     MoveAction = new ArrayList<>();
     AttackAction = new ArrayList<>();
+    UpgradeAction = new ArrayList<>();
     wholeTerritories = new ArrayList<>();
     ActionType = new HashMap<>();
     ActionType.put("M", "Move");
