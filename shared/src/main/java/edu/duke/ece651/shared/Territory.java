@@ -4,39 +4,59 @@ import java.util.*;
 
 public class Territory {
   private String owner;
-  //TODO: change its type into HashMap<Integer, Integer>
-  private int soldiers;
+  // TODO: change its type into HashMap<Integer, Integer>
+  private HashMap<Integer, Integer> soldiers;
   private ArrayList<String> neighbor;
   private String territoryName;
-  public Territory(){
+  public Territory() {
     neighbor = new ArrayList<String>();
+    soldiers = new HashMap<>();
+    soldiers.put(0, 0);
+    soldiers.put(1, 0);
+    soldiers.put(2, 0);
+    soldiers.put(3, 0);
+    soldiers.put(4, 0);
+    soldiers.put(5, 0);
+    soldiers.put(6, 0);
   }
-  public String getOwner(){
+  public String getOwner() {
     return owner;
   }
 
-  //TODO: update get and set functions
-  public int getSoliders(){
+  // TODO: update get and set functions
+  public HashMap<Integer, Integer> getSoldiers() {
     return soldiers;
   }
-  public void setSoldiers(int SoldierNum){
-    soldiers = SoldierNum;
+  public int getSoldierLevel(int level) {
+    return soldiers.get(level);
   }
 
-  public ArrayList<String> getNeighbor(){
+  public void setSoldiers(HashMap<Integer, Integer> soldierMap) {
+    for (HashMap.Entry<Integer, Integer> entry : soldierMap.entrySet()) {
+      soldiers.put(entry.getKey(), entry.getValue());
+    }
+  }
+
+  public void setSoldierLevel(int level, int num) {
+    soldiers.put(level, num);
+  }
+
+  public void setSoldiers() {}
+
+  public ArrayList<String> getNeighbor() {
     return neighbor;
   }
-  public String getTerritoryName(){
+  public String getTerritoryName() {
     return territoryName;
   }
-  public void setOwner(String Owner){
+  public void setOwner(String Owner) {
     owner = Owner;
   }
 
-  public void setNeighbor(String neigh){
+  public void setNeighbor(String neigh) {
     neighbor.add(neigh);
   }
-  public void setTerritoryName(String Name){
+  public void setTerritoryName(String Name) {
     territoryName = Name;
   }
 }
