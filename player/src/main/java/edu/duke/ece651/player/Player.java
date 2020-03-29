@@ -11,6 +11,7 @@ public class Player {
   private ArrayList<Action> MoveAction;
   private ArrayList<Action> AttackAction;
   private HashMap<Integer, ArrayList<Action>> AllAction;
+  private ArrayList<Upgrade> UpgradeAction;
   private Displayable displayer;
   private Communicator communicator;
   private int playerNum;
@@ -109,7 +110,10 @@ public class Player {
       AttackAction = PlayerAction.getAttackActions();
       String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
       sendString(AttackString);
-      //receive the result of these actions from server
+
+      UpgradeAction = PlayerAction.getUpgradeActions();
+
+    //receive the result of these actions from server
       System.out.println("Action Validate : " + receiveString());
     }
     //receive all players' actions
