@@ -110,8 +110,9 @@ public class Player {
       AttackAction = PlayerAction.getAttackActions();
       String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
       sendString(AttackString);
-
       UpgradeAction = PlayerAction.getUpgradeActions();
+      String UpgradeString = myformatter.UpgradeCompose(UpgradeAction).toString();
+      sendString(UpgradeString);
 
     //receive the result of these actions from server
       System.out.println("Action Validate : " + receiveString());
