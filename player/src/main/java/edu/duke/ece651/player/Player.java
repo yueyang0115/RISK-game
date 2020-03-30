@@ -104,13 +104,14 @@ public class Player {
       OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
       PlayerAction.readAction();
 
+      //Send upgrades first
       UpgradeAction = PlayerAction.getUpgradeActions();
       String UpgradeString = myformatter.UpgradeCompose(UpgradeAction).toString();
       sendString(UpgradeString);
 
-      this.MoveAction = PlayerAction.getMoveActions();
+      MoveAction = PlayerAction.getMoveActions();
       // System.out.println("[DEBUG PLAYER] Size Move Action" + this.MoveAction.size());
-      String MoveString = myformatter.ActionCompose(this.MoveAction, "Move").toString();
+      String MoveString = myformatter.ActionCompose(MoveAction, "Move").toString();
       sendString(MoveString);
       AttackAction = PlayerAction.getAttackActions();
       String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();

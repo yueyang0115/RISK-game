@@ -8,10 +8,12 @@ public class ActionHelper {
     private HashMap<Integer, ArrayList<Territory>> worldMap;
     private ArrayList<Action> moveList;
     private ArrayList<Action> attackList;
+    private ArrayList<Upgrade> upgradeList;
     //ArrayList to record if the players have committed the actions
     private ArrayList<Boolean> playerComplete;
     private String actionsStr;
     private int playerNum;
+
     public ActionHelper(int number, HashMap<Integer, ArrayList<Territory>> m) {
         reset(number, m);
     }
@@ -23,6 +25,7 @@ public class ActionHelper {
         this.worldMap = m;
         this.moveList = new ArrayList<>();
         this.attackList = new ArrayList<>();
+        this.upgradeList = new ArrayList<>();
         this.playerNum = number;
         this.playerComplete = new ArrayList<>(playerNum);
         for (int i = 0; i < number; ++i) {
@@ -32,13 +35,14 @@ public class ActionHelper {
     public boolean checkActionValid(int id) {
         return playersActions.containsKey(id);
     }
-    public synchronized void addActions(int playerId, ArrayList<Action> ml, ArrayList<Action> al) {
+    public synchronized void addActions(int playerId, ArrayList<Action> ml, ArrayList<Action> al, ArrayList<Upgrade> ul) {
         ArrayList<Action> curActions = new ArrayList<>();
         curActions.addAll(ml);
         curActions.addAll(al);
         playersActions.put(playerId, curActions);
         moveList.addAll(ml);
         attackList.addAll(al);
+        upgradeList.addAll(ul);
     }
     public synchronized void actionsCompleted(int playerId) {
         playerComplete.set(playerId, true);
