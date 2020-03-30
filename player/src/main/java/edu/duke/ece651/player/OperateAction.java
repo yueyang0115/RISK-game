@@ -98,9 +98,9 @@ public class OperateAction {
   public String readActionType(Scanner s){
     //print prompt + read Action Type
      System.out.println("You are the " + playerInfo.getValue() + " player, what would you like to do?");
+      System.out.println(" (U)pgrade");
       System.out.println(" (M)ove");
       System.out.println(" (A)ttack");
-      System.out.println(" (U)pgrade");
       System.out.println(" (D)one");
       return s.nextLine();
   }
