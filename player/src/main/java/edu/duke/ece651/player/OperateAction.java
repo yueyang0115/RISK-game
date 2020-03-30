@@ -182,6 +182,8 @@ public class OperateAction {
       System.out.println("Please input the number of soldiers to upgrade: ");
       String num = s.nextLine();
       cur.setNumber(Integer.parseInt(num));
+      String OwnerName  = "player_" + playerInfo.getKey();
+      cur.setOwner(OwnerName);
       //TODO: add simple check
       return true;
   }

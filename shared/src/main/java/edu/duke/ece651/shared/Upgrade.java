@@ -2,6 +2,7 @@ package edu.duke.ece651.shared;
 
 public class Upgrade {
     private String territoryName;
+    private String owner;
     private int prevLevel;
     private int nextLevel;
     private int number;
@@ -10,6 +11,9 @@ public class Upgrade {
     }
     public void setTerritoryName(String n){
         territoryName = n;
+    }
+    public void setOwner(String Owner) {
+        owner = Owner;
     }
     public void setPrevLevel(int p){
         prevLevel = p;
@@ -22,6 +26,9 @@ public class Upgrade {
     }
     public String getTerritoryName(){
         return territoryName;
+    }
+    public String getOwner() {
+        return owner;
     }
     public int getPrevLevel(){
         return prevLevel;
