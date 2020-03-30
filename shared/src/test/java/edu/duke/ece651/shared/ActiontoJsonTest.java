@@ -13,13 +13,13 @@ public class ActiontoJsonTest {
     territory_A.setNeighbor("B");
     territory_A.setNeighbor("D");
     territory_A.setOwner("player_0");
-    territory_A.setSoldiers(3);
+    territory_A.setSoldierLevel(0, 3);
     territory_A.setTerritoryName("A");
 
     Action action_A = new Action();
     action_A.setSrc(territory_A);
     action_A.setDst(territory_A);
-    action_A.setSoldiers(3);
+    action_A.setSoldierLevel(0, 3);
     action_A.setOwner("player_0");
     action_A.setType("Move");
     actionList.add(action_A);

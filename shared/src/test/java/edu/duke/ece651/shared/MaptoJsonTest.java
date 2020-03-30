@@ -17,15 +17,15 @@ public class MaptoJsonTest {
     territory_A.setNeighbor("B");
     territory_A.setNeighbor("D");
     territory_A.setOwner("player_0");
-    territory_A.setSoldiers(3);
+    territory_A.setSoldierLevel(0, 3);
     territory_A.setTerritoryName("A");
     myTerritoryList.add(territory_A);
     ArrayList<Territory> EmptyTerr = new ArrayList<>();
-    
+
     myterritoryMap.put(0, myTerritoryList);
     myterritoryMap.put(1, EmptyTerr);
-    //MaptoJson mytoJSON = new MaptoJson(myterritoryMap);
-    //System.out.println(mytoJSON.getJSON());
+    // MaptoJson mytoJSON = new MaptoJson(myterritoryMap);
+    // System.out.println(mytoJSON.getJSON());
 
     MyFormatter myformatter = new MyFormatter(0);
     System.out.println(myformatter.MapCompose(myterritoryMap));

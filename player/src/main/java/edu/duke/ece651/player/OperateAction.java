@@ -12,12 +12,14 @@ public class OperateAction {
   private ArrayList<Action> allAction;
   private ArrayList<Action> MoveAction;
   private ArrayList<Action> AttackAction;
+  private ArrayList<Upgrade> UpgradeAction;
   private HashMap<String, String> ActionType;
   
   public OperateAction(Pair<Integer, String> PlayerInfo, HashMap<Integer, ArrayList<Territory>> TerritoryMap ){
     allAction = new ArrayList<>();
     MoveAction = new ArrayList<>();
     AttackAction = new ArrayList<>();
+    UpgradeAction = new ArrayList<>();
     wholeTerritories = new ArrayList<>();
     ActionType = new HashMap<>();
     ActionType.put("M", "Move");
@@ -43,7 +45,9 @@ public class OperateAction {
   public ArrayList<Action> getAttackActions(){
       return AttackAction;
   }
-  
+
+  public ArrayList<Upgrade> getUpgradeActions() { return UpgradeAction; }
+
   public void SeparateAction(){
     //stored move and attack action separately
     for(Action Current : allAction){
@@ -60,17 +64,24 @@ public class OperateAction {
     //wait for player to input their action
     Scanner s = new Scanner(System.in);
     while(true){
-      Action CurrentAction = new Action();
       String acttype = readActionType(s);
       //System.out.println("[DEBUG] ActionType = " + acttype);
       if(acttype.equals("D")){
         System.out.println("Finished Input Actions");
         break;
       }
-      if(!acttype.equals("M") && !acttype.equals("A") ){
+      if(!acttype.equals("M") && !acttype.equals("A") && !acttype.equals("U")){
         System.out.println("[Invalid] ActionType");
         continue;
       }
+      if (acttype.equals("U")) {
+          Upgrade curUpgrade = new Upgrade();
+          if (readUpgrade(s, curUpgrade)) {
+              UpgradeAction.add(curUpgrade);
+          }
+          continue;
+      }
+      Action CurrentAction = new Action();
       CurrentAction.setType(ActionType.get(acttype));
       //Simple check src, dst, soldiersNum
       if(!readSrc(s, CurrentAction, acttype) || !readDst(s, CurrentAction, acttype) || !readNum(s, CurrentAction)){
@@ -87,6 +98,7 @@ public class OperateAction {
   public String readActionType(Scanner s){
     //print prompt + read Action Type
      System.out.println("You are the " + playerInfo.getValue() + " player, what would you like to do?");
+      System.out.println(" (U)pgrade");
       System.out.println(" (M)ove");
       System.out.println(" (A)ttack");
       System.out.println(" (D)one");
@@ -155,6 +167,25 @@ public class OperateAction {
      int soldiersNum = Integer.valueOf(Num);
      curAction.setSoldiers(soldiersNum);
      return true;
+  }
+
+  public boolean readUpgrade(Scanner s, Upgrade cur) {
+      System.out.println("Please input the name of territory: ");
+      String name = s.nextLine();
+      cur.setTerritoryName(name);
+      System.out.println("Please input the level before upgrade: ");
+      String preL = s.nextLine();
+      cur.setPrevLevel(Integer.parseInt(preL));
+      System.out.println("Please input the level after upgrade: ");
+      String afterL = s.nextLine();
+      cur.setNextLevel(Integer.parseInt(afterL));
+      System.out.println("Please input the number of soldiers to upgrade: ");
+      String num = s.nextLine();
+      cur.setNumber(Integer.parseInt(num));
+      String OwnerName  = "player_" + playerInfo.getKey();
+      cur.setOwner(OwnerName);
+      //TODO: add simple check
+      return true;
   }
   
 }

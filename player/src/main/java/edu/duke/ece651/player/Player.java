@@ -11,6 +11,7 @@ public class Player {
   private ArrayList<Action> MoveAction;
   private ArrayList<Action> AttackAction;
   private HashMap<Integer, ArrayList<Action>> AllAction;
+  private ArrayList<Upgrade> UpgradeAction;
   private Displayable displayer;
   private Communicator communicator;
   private int playerNum;
@@ -102,9 +103,15 @@ public class Player {
       //send player input actions to server: move actions and attack actions
       OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
       PlayerAction.readAction();
-      this.MoveAction = PlayerAction.getMoveActions();
+
+      //Send upgrades first
+      UpgradeAction = PlayerAction.getUpgradeActions();
+      String UpgradeString = myformatter.UpgradeCompose(UpgradeAction).toString();
+      sendString(UpgradeString);
+
+      MoveAction = PlayerAction.getMoveActions();
       // System.out.println("[DEBUG PLAYER] Size Move Action" + this.MoveAction.size());
-      String MoveString = myformatter.ActionCompose(this.MoveAction, "Move").toString();
+      String MoveString = myformatter.ActionCompose(MoveAction, "Move").toString();
       sendString(MoveString);
       AttackAction = PlayerAction.getAttackActions();
       String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();

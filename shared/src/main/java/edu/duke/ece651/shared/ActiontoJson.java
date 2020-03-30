@@ -70,8 +70,10 @@ public class ActiontoJson {
     myMaptoJson.getTerritoryObj(dstTerritoryObj, action.getDst());
     actionObj.put("dst", dstTerritoryObj);
 
-    int soldiers = action.getSoliders();
-    actionObj.put("soldiers", soldiers);
+    HashMap<Integer, Integer> soldierMap = action.getSoldiers();
+    JSONArray soldierArray = new JSONArray();
+    myMaptoJson.getSoldierArray(soldierArray, soldierMap);
+    actionObj.put("soldiers", soldierArray);
 
     String owner = action.getOwner();
     actionObj.put("owner", owner);
