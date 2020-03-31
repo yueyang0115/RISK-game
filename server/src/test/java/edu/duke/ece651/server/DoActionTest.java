@@ -15,25 +15,25 @@ public class DoActionTest {
 
     MyFormatter formatter = new MyFormatter(2);
     String Astr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
     Territory territoryA = new Territory();
     JSONObject tempA = new JSONObject(Astr);
     territoryA = formatter.JsonToTerritory(tempA);
 
     String Dstr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
     Territory territoryD = new Territory();
     JSONObject tempD = new JSONObject(Dstr);
     territoryD = formatter.JsonToTerritory(tempD);
 
     String Estr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'B'},{'neighbor_2':'C'},{'neighbor_3':'D'},{'neighbor_4':'F'},{'neighbor_5':'H'},{'neighbor_6':'J'}], 'territoryName':'E'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'B'},{'neighbor_2':'C'},{'neighbor_3':'D'},{'neighbor_4':'F'},{'neighbor_5':'H'},{'neighbor_6':'J'}], 'territoryName':'E'}";
     Territory territoryE = new Territory();
     JSONObject tempE = new JSONObject(Estr);
     territoryE = formatter.JsonToTerritory(tempE);
 
     String Fstr =
-        "{'owner':'player_1', 'soldiers':3, 'neighbor':[{'neighbor_0':'C'},{'neighbor_1':'E'},{'neighbor_2':'G'},{'neighbor_3':'K'}], 'territoryName':'F'}";
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'C'},{'neighbor_1':'E'},{'neighbor_2':'G'},{'neighbor_3':'K'}], 'territoryName':'F'}";
     Territory territoryF = new Territory();
     JSONObject tempF = new JSONObject(Fstr);
     territoryF = formatter.JsonToTerritory(tempF);
@@ -42,7 +42,7 @@ public class DoActionTest {
     Action action = new Action();
     action.setSrc(territoryA); // A
     action.setDst(territoryE); // E
-    action.setSoldiers(3);
+    action.setSoldierLevel(0, 3);
     action.setOwner("player_0");
     action.setType("Move");
     actionList.add(action); // invalid action
@@ -50,7 +50,7 @@ public class DoActionTest {
     Action action2 = new Action();
     action2.setSrc(territoryD); // D
     action2.setDst(territoryE); // E
-    action2.setSoldiers(3);
+    action2.setSoldierLevel(0, 3);
     action2.setOwner("player_0");
     action2.setType("Move");
     actionList.add(action2); // invalid action
@@ -58,7 +58,7 @@ public class DoActionTest {
     Action action3 = new Action();
     action3.setSrc(territoryE); // E
     action3.setDst(territoryF); // F
-    action3.setSoldiers(3);
+    action3.setSoldierLevel(0, 3);
     action3.setOwner("player_0");
     action3.setType("Attack");
     actionList.add(action3); // invalid action
@@ -78,9 +78,9 @@ public class DoActionTest {
     actor.doAttackAction(attackList);
     myworld = actor.getNewWorld();
 
-    assertEquals(myworld.get(0).get(0).getSoliders(), 0); // A
-    assertEquals(myworld.get(0).get(1).getSoliders(), 0); // D
-    assertEquals(myworld.get(0).get(2).getSoliders(), 6); // E
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 0); // A
+    assertEquals(myworld.get(0).get(1).getSoldierLevel(0), 0); // D
+    assertEquals(myworld.get(0).get(2).getSoldierLevel(0), 6); // E
     MaptoJson myMaptoJson = new MaptoJson(myworld);
     System.out.println("[DEBUG] outside doactionclass, new world is:" + myMaptoJson.getJSON());
   }
@@ -92,39 +92,39 @@ public class DoActionTest {
 
     MyFormatter formatter = new MyFormatter(2);
     String Astr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
     Territory territoryA = new Territory();
     JSONObject tempA = new JSONObject(Astr);
     territoryA = formatter.JsonToTerritory(tempA);
 
     String Bstr =
-        "{'owner':'player_1', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
     Territory territoryB = new Territory();
     JSONObject tempB = new JSONObject(Bstr);
     territoryB = formatter.JsonToTerritory(tempB);
 
     String Cstr =
-        "{'owner':'player_1', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
     Territory territoryC = new Territory();
     JSONObject tempC = new JSONObject(Cstr);
     territoryC = formatter.JsonToTerritory(tempC);
 
     String Dstr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
     Territory territoryD = new Territory();
     JSONObject tempD = new JSONObject(Dstr);
     territoryD = formatter.JsonToTerritory(tempD);
 
-    assertEquals(territoryA.getSoliders(), 3);
-    assertEquals(territoryB.getSoliders(), 3);
-    assertEquals(territoryC.getSoliders(), 3);
-    assertEquals(territoryD.getSoliders(), 3);
+    assertEquals(territoryA.getSoldierLevel(0), 3);
+    assertEquals(territoryB.getSoldierLevel(0), 3);
+    assertEquals(territoryC.getSoldierLevel(0), 3);
+    assertEquals(territoryD.getSoldierLevel(0), 3);
     ArrayList<Action> actionList = new ArrayList<>();
 
     Action action2 = new Action();
     action2.setSrc(territoryA); // A
     action2.setDst(territoryD); // D
-    action2.setSoldiers(3);
+    action2.setSoldierLevel(0, 3);
     action2.setOwner("player_0");
     action2.setType("Move");
     actionList.add(action2); // valid action, but is deleted
@@ -132,7 +132,7 @@ public class DoActionTest {
     Action action = new Action();
     action.setSrc(territoryA); // A
     action.setDst(territoryB); // B
-    action.setSoldiers(3);
+    action.setSoldierLevel(0, 3);
     action.setOwner("player_0");
     action.setType("Move");
     actionList.add(action); // invalid action
@@ -140,7 +140,7 @@ public class DoActionTest {
     Action action3 = new Action();
     action3.setSrc(territoryB);
     action3.setDst(territoryC);
-    action3.setSoldiers(3);
+    action3.setSoldierLevel(0, 3);
     action3.setOwner("player_1");
     action3.setType("Move");
     ArrayList<Action> actionList2 = new ArrayList<>();
@@ -158,10 +158,10 @@ public class DoActionTest {
 
     actor.doMoveAction(allActionList);
     myworld = actor.getNewWorld();
-    assertEquals(myworld.get(0).get(0).getSoliders(), 3);
-    assertEquals(myworld.get(1).get(0).getSoliders(), 0);
-    assertEquals(myworld.get(1).get(1).getSoliders(), 6);
-    assertEquals(myworld.get(0).get(1).getSoliders(), 3);
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 3);
+    assertEquals(myworld.get(1).get(0).getSoldierLevel(0), 0);
+    assertEquals(myworld.get(1).get(1).getSoldierLevel(0), 6);
+    assertEquals(myworld.get(0).get(1).getSoldierLevel(0), 3);
     assertEquals(myactionMap.containsKey(0), false);
     MaptoJson myMaptoJson = new MaptoJson(myworld);
     System.out.println("[DEBUG] outside doactionclass, new world is:" + myMaptoJson.getJSON());
@@ -177,45 +177,45 @@ public class DoActionTest {
 
     MyFormatter formatter = new MyFormatter(2);
     String Astr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
     Territory territoryA = new Territory();
     JSONObject tempA = new JSONObject(Astr);
     territoryA = formatter.JsonToTerritory(tempA);
 
     String Bstr =
-        "{'owner':'player_1', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
     Territory territoryB = new Territory();
     JSONObject tempB = new JSONObject(Bstr);
     territoryB = formatter.JsonToTerritory(tempB);
 
     String Cstr =
-        "{'owner':'player_1', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
     Territory territoryC = new Territory();
     JSONObject tempC = new JSONObject(Cstr);
     territoryC = formatter.JsonToTerritory(tempC);
 
     String Dstr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
     Territory territoryD = new Territory();
     JSONObject tempD = new JSONObject(Dstr);
     territoryD = formatter.JsonToTerritory(tempD);
 
     String Estr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'B'},{'neighbor_2':'C'},{'neighbor_3':'D'},{'neighbor_4':'F'},{'neighbor_5':'H'},{'neighbor_6':'J'}], 'territoryName':'E'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'B'},{'neighbor_2':'C'},{'neighbor_3':'D'},{'neighbor_4':'F'},{'neighbor_5':'H'},{'neighbor_6':'J'}], 'territoryName':'E'}";
     Territory territoryE = new Territory();
     JSONObject tempE = new JSONObject(Estr);
     territoryE = formatter.JsonToTerritory(tempE);
 
-    assertEquals(territoryA.getSoliders(), 3);
-    assertEquals(territoryB.getSoliders(), 3);
-    assertEquals(territoryC.getSoliders(), 3);
-    assertEquals(territoryD.getSoliders(), 3);
+    assertEquals(territoryA.getSoldierLevel(0), 3);
+    assertEquals(territoryB.getSoldierLevel(0), 3);
+    assertEquals(territoryC.getSoldierLevel(0), 3);
+    assertEquals(territoryD.getSoldierLevel(0), 3);
     ArrayList<Action> actionList = new ArrayList<>();
 
     Action action2 = new Action();
     action2.setSrc(territoryA); // A
     action2.setDst(territoryB); // B
-    action2.setSoldiers(3);
+    action2.setSoldierLevel(0, 3);
     action2.setOwner("player_0");
     action2.setType("Attack");
     actionList.add(action2); // valid action, but is deleted
@@ -223,7 +223,7 @@ public class DoActionTest {
     Action action = new Action();
     action.setSrc(territoryA); // A
     action.setDst(territoryD); // D
-    action.setSoldiers(3);
+    action.setSoldierLevel(0, 3);
     action.setOwner("player_0");
     action.setType("Attack");
     actionList.add(action); // invalid action
@@ -231,7 +231,7 @@ public class DoActionTest {
     Action action3 = new Action();
     action3.setSrc(territoryB); // B
     action3.setDst(territoryE); // E
-    action3.setSoldiers(3);
+    action3.setSoldierLevel(0, 3);
     action3.setOwner("player_1");
     action3.setType("Attack");
     ArrayList<Action> actionList2 = new ArrayList<>();
@@ -249,9 +249,9 @@ public class DoActionTest {
 
     actor.doAttackAction(allActionList);
     myworld = actor.getNewWorld();
-    assertEquals(myworld.get(0).get(0).getSoliders(), 3); // A
-    assertEquals(myworld.get(1).get(0).getSoliders(), 0); // B
-    assertEquals(myworld.get(1).get(1).getSoliders(), 3); // C
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 3); // A
+    assertEquals(myworld.get(1).get(0).getSoldierLevel(0), 0); // B
+    assertEquals(myworld.get(1).get(1).getSoldierLevel(0), 3); // C
     assertEquals(myactionMap.containsKey(0), false);
     MaptoJson myMaptoJson = new MaptoJson(myworld);
     System.out.println("[DEBUG] outside doactionclass, new world is:" + myMaptoJson.getJSON());
@@ -267,38 +267,38 @@ public class DoActionTest {
 
     MyFormatter formatter = new MyFormatter(2);
     String Astr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
     Territory territoryA = new Territory();
     JSONObject tempA = new JSONObject(Astr);
     territoryA = formatter.JsonToTerritory(tempA);
 
     String Bstr =
-        "{'owner':'player_1', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
     Territory territoryB = new Territory();
     JSONObject tempB = new JSONObject(Bstr);
     territoryB = formatter.JsonToTerritory(tempB);
 
     String Cstr =
-        "{'owner':'player_1', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
     Territory territoryC = new Territory();
     JSONObject tempC = new JSONObject(Cstr);
     territoryC = formatter.JsonToTerritory(tempC);
 
     String Dstr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
     Territory territoryD = new Territory();
     JSONObject tempD = new JSONObject(Dstr);
     territoryD = formatter.JsonToTerritory(tempD);
 
-    assertEquals(territoryA.getSoliders(), 3);
-    assertEquals(territoryB.getSoliders(), 3);
-    assertEquals(territoryC.getSoliders(), 3);
-    assertEquals(territoryD.getSoliders(), 3);
+    assertEquals(territoryA.getSoldierLevel(0), 3);
+    assertEquals(territoryB.getSoldierLevel(0), 3);
+    assertEquals(territoryC.getSoldierLevel(0), 3);
+    assertEquals(territoryD.getSoldierLevel(0), 3);
 
     Action action = new Action();
     action.setSrc(territoryA);
     action.setDst(territoryD);
-    action.setSoldiers(3);
+    action.setSoldierLevel(0, 3);
     action.setOwner("player_0");
     action.setType("Move");
     ArrayList<Action> actionList = new ArrayList<>();
@@ -309,8 +309,8 @@ public class DoActionTest {
     DoAction actor = new DoAction(myworld, myactionMap);
     actor.doMoveAction(actionList);
     myworld = actor.getNewWorld();
-    assertEquals(myworld.get(0).get(0).getSoliders(), 0);
-    assertEquals(myworld.get(0).get(1).getSoliders(), 6);
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 0);
+    assertEquals(myworld.get(0).get(1).getSoldierLevel(0), 6);
     MyFormatter formatter2 = new MyFormatter(2);
     System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
         + formatter2.AllActionCompose(myactionMap));
@@ -318,7 +318,7 @@ public class DoActionTest {
     Action action2 = new Action();
     action2.setSrc(territoryB);
     action2.setDst(territoryC);
-    action2.setSoldiers(2);
+    action2.setSoldierLevel(0, 2);
     action2.setOwner("player_1");
     action2.setType("Move");
     ArrayList<Action> actionList2 = new ArrayList<>();
@@ -329,10 +329,10 @@ public class DoActionTest {
     DoAction actor2 = new DoAction(myworld, myactionMap2);
     actor2.doMoveAction(actionList2);
     myworld = actor2.getNewWorld();
-    assertEquals(myworld.get(0).get(0).getSoliders(), 0);
-    assertEquals(myworld.get(0).get(1).getSoliders(), 6);
-    assertEquals(myworld.get(1).get(0).getSoliders(), 1);
-    assertEquals(myworld.get(1).get(1).getSoliders(), 5);
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 0);
+    assertEquals(myworld.get(0).get(1).getSoldierLevel(0), 6);
+    assertEquals(myworld.get(1).get(0).getSoldierLevel(0), 1);
+    assertEquals(myworld.get(1).get(1).getSoldierLevel(0), 5);
 
     MyFormatter formatter3 = new MyFormatter(2);
     System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
@@ -346,32 +346,32 @@ public class DoActionTest {
     MyFormatter formatter = new MyFormatter(2);
 
     String Astr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
     Territory territoryA = new Territory();
     JSONObject tempA = new JSONObject(Astr);
     territoryA = formatter.JsonToTerritory(tempA);
 
     String Bstr =
-        "{'owner':'player_1', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
     Territory territoryB = new Territory();
     JSONObject tempB = new JSONObject(Bstr);
     territoryB = formatter.JsonToTerritory(tempB);
 
     String Cstr =
-        "{'owner':'player_1', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
     Territory territoryC = new Territory();
     JSONObject tempC = new JSONObject(Cstr);
     territoryC = formatter.JsonToTerritory(tempC);
 
     assertEquals(territoryA.getTerritoryName(), "A");
     assertEquals(territoryB.getTerritoryName(), "B");
-    assertEquals(territoryA.getSoliders(), 3);
-    assertEquals(territoryB.getSoliders(), 3);
+    assertEquals(territoryA.getSoldierLevel(0), 3);
+    assertEquals(territoryB.getSoldierLevel(0), 3);
 
     Action action = new Action();
     action.setSrc(territoryA); // A
     action.setDst(territoryB); // B
-    action.setSoldiers(3);
+    action.setSoldierLevel(0, 3);
     action.setOwner("player_0");
     action.setType("Attack");
     ArrayList<Action> actionList = new ArrayList<>();
@@ -380,7 +380,7 @@ public class DoActionTest {
     Action action2 = new Action();
     action2.setSrc(territoryA); // A
     action2.setDst(territoryC); // C
-    action2.setSoldiers(3);
+    action2.setSoldierLevel(0, 3);
     action2.setOwner("player_1");
     action2.setType("Attack"); // invalid action.owner!=src.owner
     ArrayList<Action> actionList2 = new ArrayList<>();
@@ -399,7 +399,7 @@ public class DoActionTest {
     actor.doAttackAction(allAction);
 
     myworld = actor.getNewWorld();
-    assertEquals(myworld.get(0).get(0).getSoliders(), 0);
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 0);
 
     MyFormatter formatter2 = new MyFormatter(2);
     System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
@@ -413,13 +413,13 @@ public class DoActionTest {
 
     MyFormatter formatter = new MyFormatter(2);
     String Astr =
-        "{'owner':'player_0', 'soldiers':3, 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
     Territory territoryA = new Territory();
     JSONObject tempA = new JSONObject(Astr);
     territoryA = formatter.JsonToTerritory(tempA);
 
     String Bstr =
-        "{'owner':'player_1', 'soldiers':3, 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
     Territory territoryB = new Territory();
     JSONObject tempB = new JSONObject(Bstr);
     territoryB = formatter.JsonToTerritory(tempB);
@@ -427,12 +427,12 @@ public class DoActionTest {
     Action action = new Action();
     assertEquals(territoryA.getTerritoryName(), "A");
     assertEquals(territoryB.getTerritoryName(), "B");
-    assertEquals(territoryA.getSoliders(), 3);
-    assertEquals(territoryB.getSoliders(), 3);
+    assertEquals(territoryA.getSoldierLevel(0), 3);
+    assertEquals(territoryB.getSoldierLevel(0), 3);
 
     action.setSrc(territoryA); // B
     action.setDst(territoryB); // E
-    action.setSoldiers(3);
+    action.setSoldierLevel(0, 3);
     action.setOwner("player_0");
     action.setType("Attack");
     ArrayList<Action> actionList = new ArrayList<>();
@@ -445,7 +445,7 @@ public class DoActionTest {
     actor.doAttackAction(actionList);
 
     myworld = actor.getNewWorld();
-    assertEquals(myworld.get(0).get(0).getSoliders(), 0);
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 0);
 
     MyFormatter formatter2 = new MyFormatter(2);
     System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
@@ -460,7 +460,7 @@ public class DoActionTest {
       ArrayList<Territory> territoryList = entry.getValue();
       for (int j = 0; j < territoryList.size(); j++) {
         Territory myterritory = territoryList.get(j);
-        assertEquals(myterritory.getSoliders(), 3);
+        assertEquals(myterritory.getSoldierLevel(0), 3);
       }
     }
 
@@ -475,7 +475,7 @@ public class DoActionTest {
       ArrayList<Territory> territoryList = entry.getValue();
       for (int j = 0; j < territoryList.size(); j++) {
         Territory myterritory = territoryList.get(j);
-        assertEquals(myterritory.getSoliders(), 4);
+        assertEquals(myterritory.getSoldierLevel(0), 4);
       }
     }
   }
