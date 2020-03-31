@@ -103,18 +103,20 @@ public class Player {
       //send player input actions to server: move actions and attack actions
       OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
       PlayerAction.readAction();
-      this.MoveAction = PlayerAction.getMoveActions();
-      // System.out.println("[DEBUG PLAYER] Size Move Action" + this.MoveAction.size());
-      String MoveString = myformatter.ActionCompose(this.MoveAction, "Move").toString();
-      sendString(MoveString);
-      AttackAction = PlayerAction.getAttackActions();
-      String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
-      sendString(AttackString);
+
+      //Send upgrades first
       UpgradeAction = PlayerAction.getUpgradeActions();
       String UpgradeString = myformatter.UpgradeCompose(UpgradeAction).toString();
       sendString(UpgradeString);
 
-    //receive the result of these actions from server
+      MoveAction = PlayerAction.getMoveActions();
+      // System.out.println("[DEBUG PLAYER] Size Move Action" + this.MoveAction.size());
+      String MoveString = myformatter.ActionCompose(MoveAction, "Move").toString();
+      sendString(MoveString);
+      AttackAction = PlayerAction.getAttackActions();
+      String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
+      sendString(AttackString);
+      //receive the result of these actions from server
       System.out.println("Action Validate : " + receiveString());
     }
     //receive all players' actions

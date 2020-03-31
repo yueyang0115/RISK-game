@@ -45,16 +45,20 @@ public class PlayerHandler extends Thread {
     public void startPlay() {    
       //If not lose, receive actions twice, add to ActionHelper
       if (status.get(id).equals("INGAME")) {
+        ArrayList<Upgrade> upgradeList = new ArrayList<>();
         ArrayList<Action> moveList = new ArrayList<>();
         ArrayList<Action> attackList = new ArrayList<>();
         MyFormatter myformatter = new MyFormatter(playerNum[0]);
         String str = communicator.receive();
+        System.out.println("[DEBUG]: received upgradeList, " + str);
+        myformatter.UpgradeParse(upgradeList, str);
+        str = communicator.receive();
         System.out.println("[DEBUG]: received moveList, " + str);
         myformatter.ActionParse(moveList, str);
         str = communicator.receive();
         System.out.println("[DEBUG]: received attackList, " + str);
         myformatter.ActionParse(attackList, str);
-        actionHelper.addActions(id, moveList, attackList);
+        actionHelper.addActions(id, moveList, attackList, upgradeList);
         //Commit the actions of current player
         actionHelper.actionsCompleted(id);
       }

@@ -143,4 +143,33 @@ public class MyFormatter {
     myAllAction.ComposeAllAction();
     return myAllAction.getAllAction();
   }
+
+  public JSONObject UpgradeCompose(ArrayList<Upgrade> upgradeList) {
+    UpgradetoJson myUpgradetoJson = new UpgradetoJson(upgradeList);
+    return myUpgradetoJson.getJSON();
+  }
+
+  public void UpgradeParse(ArrayList<Upgrade> Input, String UpgradeJson) {
+    JSONObject InputUpgrade = new JSONObject(UpgradeJson);
+    JSONArray UpgradeArray = InputUpgrade.optJSONArray("Upgrade");
+    ParseUpgradeArray(Input, UpgradeArray);
+  }
+
+  private void ParseUpgradeArray(ArrayList<Upgrade> Input, JSONArray UpgradeArray) {
+    for (int i = 0; i < UpgradeArray.length(); i++) {
+      Upgrade InnerUpgrade = new Upgrade();
+      JSONObject UpgradeTemp = UpgradeArray.optJSONObject(i);
+      String territoryName = UpgradeTemp.optString("territoryName");
+      InnerUpgrade.setTerritoryName(territoryName);
+      String owner = UpgradeTemp.optString("owner");
+      InnerUpgrade.setOwner(owner);
+      int prevLevel = UpgradeTemp.optInt("prevLevel");
+      InnerUpgrade.setPrevLevel(prevLevel);
+      int nextLevel = UpgradeTemp.optInt("nextLevel");
+      InnerUpgrade.setNextLevel(nextLevel);
+      int number = UpgradeTemp.optInt("number");
+      InnerUpgrade.setNumber(number);
+      Input.add(InnerUpgrade);
+    }
+  }
 }
