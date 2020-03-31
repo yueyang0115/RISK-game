@@ -17,13 +17,13 @@ public class TextTest {
     
     Territory TestTerr_a1 = new Territory();
     TestTerr_a1.setOwner("aaa");
-    TestTerr_a1.setSoldiers(3);
+    TestTerr_a1.setSoldierLevel(0,3);
     TestTerr_a1.setNeighbor("aaa1_neigh1");
     TestTerr_a1.setNeighbor("aaa1_neigh2");
     TestTerr_a1.setTerritoryName("aaa1_terr1");
     Territory TestTerr_a2 = new Territory();
     TestTerr_a2.setOwner("aaa");
-    TestTerr_a2.setSoldiers(13);
+    TestTerr_a2.setSoldierLevel(0, 13);
     TestTerr_a2.setNeighbor("aaa2_neigh1");
     TestTerr_a2.setNeighbor("aaa2_neigh2");
     TestTerr_a2.setTerritoryName("aaa2_terr2");
@@ -35,14 +35,14 @@ public class TextTest {
     
     Territory TestTerr_b1 = new Territory();
     TestTerr_b1.setOwner("bbb");
-    TestTerr_b1.setSoldiers(5);
+    TestTerr_b1.setSoldierLevel(0,5);
     TestTerr_b1.setNeighbor("bbb1_neigh1");
     TestTerr_b1.setNeighbor("bbb1_neigh2");
     TestTerr_b1.setNeighbor("bbb1_neigh3");
     TestTerr_b1.setTerritoryName("bbb1_terr1");
     Territory TestTerr_b2 = new Territory();
     TestTerr_b2.setOwner("bbb");
-    TestTerr_b2.setSoldiers(15);
+    TestTerr_b2.setSoldierLevel(0,15);
     TestTerr_b2.setNeighbor("bbb2_neigh1");
     TestTerr_b2.setNeighbor("bbb2_neigh2");
     TestTerr_b2.setNeighbor("bbb2_neigh3");
