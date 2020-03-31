@@ -16,7 +16,8 @@ public class ActionHelperTest {
     assert(testActionHelper.checkActionValid(3) == false);
     ArrayList<Action> ml = new ArrayList<>();
     ArrayList<Action> al = new ArrayList<>();
-    testActionHelper.addActions(1, ml, al);
+    ArrayList<Upgrade> ul = new ArrayList<>();
+    testActionHelper.addActions(1, ml, al, ul);
     testActionHelper.actionsCompleted(0);
   }
 

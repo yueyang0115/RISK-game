@@ -29,7 +29,7 @@ public class OperateActionTest {
       System.out.println("ActionType = " + Temp.getType());
       System.out.println("Source = " + Temp.getSrc().getTerritoryName());
       System.out.println("Destination = " + Temp.getDst().getTerritoryName());
-      System.out.println("Number of Soliders = " + Temp.getSoliders());
+      System.out.println("Number of Soldiers = " + Temp.getSoldierLevel(0));
       System.out.print("\n");
     }
     System.out.print("\n");
@@ -39,7 +39,7 @@ public class OperateActionTest {
       System.out.println("ActionType = " + Temp.getType());
       System.out.println("Source = " + Temp.getSrc().getTerritoryName());
       System.out.println("Destination = " + Temp.getDst().getTerritoryName() );
-      System.out.println("Number of Soliders = " + Temp.getSoliders());
+      System.out.println("Number of Soliders = " + Temp.getSoldierLevel(0));
       System.out.print("\n");
     }
 
