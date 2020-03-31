@@ -1,6 +1,8 @@
 package edu.duke.ece651.player;
 
 import edu.duke.ece651.shared.*;
+
+import java.io.IOException;
 import java.util.*;
 import java.util.Scanner;
 import javafx.util.*;
@@ -15,6 +17,8 @@ public class Player {
   private Displayable displayer;
   private Communicator communicator;
   private int playerNum;
+  private int FoodResource;
+  private int TechResource;
 
   public Player() {
     this.territoryMap = new HashMap<>();
@@ -46,7 +50,7 @@ public class Player {
     playerNum = Integer.parseInt(receiveString());
   }
 
-  public void PlayGame(Scanner scanner) {
+  public void PlayGame(Scanner scanner) throws IOException {
     String msg;
     boolean Ask = false;
     boolean Lose = false;
@@ -98,7 +102,7 @@ public class Player {
     }
   }
 
-  public void WaitAction(boolean Lose, MyFormatter myformatter) {
+  public void WaitAction(boolean Lose, MyFormatter myformatter) throws IOException {
     if (!Lose) {
       //send player input actions to server: move actions and attack actions
       OperateAction PlayerAction = new OperateAction(playerInfo, territoryMap);
@@ -106,6 +110,8 @@ public class Player {
 
       //Send upgrades first
       UpgradeAction = PlayerAction.getUpgradeActions();
+      CheckUpgrade();
+
       String UpgradeString = myformatter.UpgradeCompose(UpgradeAction).toString();
       sendString(UpgradeString);
 
@@ -123,7 +129,7 @@ public class Player {
     String OtherActions = receiveString();
     // System.out.println(OtherActions);
     if (OtherActions.contains("valid")) {
-      //if it is the trun game end and if received validation of the actions
+      //if it is the turn game end and if received validation of the actions
       //receive another time to all actions
       OtherActions = receiveString();
     }
@@ -131,6 +137,23 @@ public class Player {
     myformatter.AllActionParse(AllAction, OtherActions);
     displayAction();
   }
+
+  public void CheckUpgrade() throws IOException {
+      Cost Cal = new Cost();
+      int TotalCost = 0;
+      //calculate the total cost to do the upgrade actions
+      for(Upgrade Current: UpgradeAction){
+        TotalCost = TotalCost + Current.getNumber() * Cal.getCosts(Current.getPrevLevel(), Current.getNextLevel());
+      }
+      //if the Actual cost to do the upgrade is already higher than the technology resources, clear UpgradeAction
+      if(TotalCost > TechResource){
+        UpgradeAction.clear();
+        return;
+      }
+      TechResource -= TotalCost;
+  }
+
+
 
   public void sendString(String str) {
     communicator.sendString(str);
@@ -163,7 +186,8 @@ public class Player {
   public void setPlayerInfo(Pair<Integer, String> TestPlayerInfo){
     this.playerInfo = TestPlayerInfo;
   }
-  public static void main(String[] args) {
+
+  public static void main(String[] args) throws IOException {
     Scanner scanner = new Scanner(System.in);
     Player player = new Player();
     Displayable d = new Text();

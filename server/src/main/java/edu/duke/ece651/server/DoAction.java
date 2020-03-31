@@ -189,6 +189,10 @@ public class DoAction {
     invalidPlayer.clear();
   }
 
+
+
+
+
   // if defence lose, move specfic territory from defence player to attack player in actionsmap
   private void changeOwner(Territory defenceTerritory, Territory attackTerritory, int numAttack) {
     ArrayList<Integer> ID = new ArrayList<>();
