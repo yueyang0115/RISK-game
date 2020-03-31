@@ -12,7 +12,7 @@ public class Text implements Displayable{
       ArrayList<Territory> TerrList = entry.getValue();
       for(int i = 0; i < TerrList.size(); i++){
         Territory OneTerr = TerrList.get(i);
-        int Soldiers = OneTerr.getSoliders();
+        int Soldiers = OneTerr.getSoldierLevel(0);
         String TerrName = OneTerr.getTerritoryName();
         ArrayList<String> Neigh = OneTerr.getNeighbor();
         String NeighName = "";
@@ -36,7 +36,7 @@ public class Text implements Displayable{
       ArrayList<Action> ActionList = entry.getValue();
       for(int i = 0; i < ActionList.size(); i++){
         Action OneAction = ActionList.get(i);
-        int ActSoldiers = OneAction.getSoliders();
+        int ActSoldiers = OneAction.getSoldierLevel(0);
         String ActionType = OneAction.getType();
         String Source = OneAction.getSrc().getTerritoryName();
         String Destination = OneAction.getDst().getTerritoryName();
