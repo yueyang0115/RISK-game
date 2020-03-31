@@ -284,6 +284,10 @@ public class DoAction {
     return -1;
   }
 
+
+
+
+
   // if defence lose, move specfic territory from defence player to attack player in actionsmap
   private void changeOwner(
       Territory defenceTerritory, Territory attackTerritory, HashMap<Integer, Integer> soldierMap) {
