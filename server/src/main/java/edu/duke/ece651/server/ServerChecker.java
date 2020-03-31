@@ -54,7 +54,17 @@ public class ServerChecker {
     DoAction myDoAction = new DoAction(world);
     Territory srcTerritory = myDoAction.findTerritory(world, action.getSrc().getTerritoryName());
     // System.out.println("[DEBUG] srcTerritory.getSoldiers = " + srcTerritory.getSoliders());
-    return ((srcTerritory.getSoliders() >= action.getSoliders()) && (action.getSoliders() >= 0));
+    HashMap<Integer, Integer> srcSoldiers = srcTerritory.getSoldiers();
+    HashMap<Integer, Integer> actionSoldiers = action.getSoldiers();
+    for (HashMap.Entry<Integer, Integer> entry : srcSoldiers.entrySet()) {
+      int soldierLevel = entry.getKey();
+      int numSrc = entry.getValue();
+      int numCheck = actionSoldiers.get(soldierLevel);
+      if (numSrc < numCheck || numCheck < 0) {
+        return false;
+      }
+    }
+    return true;
   }
 
   // check if there is a valid path from srcTerritory to dstTerritory

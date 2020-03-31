@@ -14,12 +14,12 @@ public class ServerCheckerTest {
     Territory srcTerritory = myworld.get(0).get(0); // player_0.A
     Territory dstTerritory = new Territory();
     dstTerritory.setOwner("player_0");
-    dstTerritory.setSoldiers(3);
+    dstTerritory.setSoldierLevel(0, 3);
     dstTerritory.setTerritoryName("Z");
     myaction.setSrc(srcTerritory);
     myaction.setDst(dstTerritory);
     myaction.setOwner("player_0");
-    myaction.setSoldiers(2);
+    myaction.setSoldierLevel(0, 2);
     myaction.setType("Move");
 
     ServerChecker mychecker = new ServerChecker(myworld);
@@ -37,7 +37,7 @@ public class ServerCheckerTest {
     myaction.setSrc(srcTerritory);
     myaction.setDst(dstTerritory);
     myaction.setOwner("player_1");
-    myaction.setSoldiers(2);
+    myaction.setSoldierLevel(0, 2);
     myaction.setType("Attack");
 
     ServerChecker mychecker = new ServerChecker(myworld);
@@ -69,14 +69,14 @@ public class ServerCheckerTest {
     myaction.setSrc(srcTerritory);
     myaction.setDst(dstTerritory);
     myaction.setOwner("player_0");
-    myaction.setSoldiers(4);
+    myaction.setSoldierLevel(0, 4);
     myaction.setType("Attack");
 
     ServerChecker mychecker = new ServerChecker(myworld);
     boolean ans = mychecker.Check(myaction);
     assertEquals(ans, false);
 
-    myaction.setSoldiers(-1);
+    myaction.setSoldierLevel(0, -1);
     boolean ans2 = mychecker.Check(myaction);
     assertEquals(ans2, false);
   }
@@ -91,7 +91,7 @@ public class ServerCheckerTest {
     myaction.setSrc(srcTerritory);
     myaction.setDst(dstTerritory);
     myaction.setOwner("player_0");
-    myaction.setSoldiers(2);
+    myaction.setSoldierLevel(0, 2);
     myaction.setType("Attack");
 
     ServerChecker mychecker = new ServerChecker(myworld);
