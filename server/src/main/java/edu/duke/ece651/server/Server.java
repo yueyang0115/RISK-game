@@ -132,7 +132,7 @@ public class Server {
   public static void main(String[] args) {
     //================================
     //Set port number of server!!
-    Server server = new Server(1234);
+    Server server = new Server(12345);
     //================================
 
     System.out.println("========Now connect players!========");

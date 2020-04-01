@@ -11,7 +11,6 @@ import java.util.Scanner;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.*;
 
@@ -35,13 +34,12 @@ public class Player extends Application {
     this.MoveAction = new ArrayList<>();
     this.AttackAction = new ArrayList<>();
     this.AllAction = new HashMap<>();
-    this.communicator = new Communicator("127.0.0.1", 1234);
+
     this.playerNum = 0;
   }
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    Scanner s = new Scanner(System.in);
     Window = primaryStage;
     Button BtnStart = new Button("Start Game");
     Label GameName = new Label("Strategic Conquest Game (RISC)");
@@ -53,30 +51,75 @@ public class Player extends Application {
     layout.add(BtnStart, 0,2);
     Scene Start = new Scene(layout, 300, 250);
     Window.setScene(Start);
-    BtnStart.setOnAction(e->init(s));
-    Window.show();
 
+    BtnStart.setOnAction(e-> {
+      try {
+        Init();
+      } catch (IOException ex) {
+        ex.printStackTrace();
+      }
+    });
+    Window.show();
+    this.communicator = new Communicator("127.0.0.1", 12345);
   }
 
+  private void Init() throws IOException {
+    GridPane layout2 = new GridPane();
+    layout2.setVgap(30);
+    layout2.setHgap(30);
+    layout2.setAlignment(Pos.CENTER);
+    Label Choose = new Label("Please choose the player number");
+    Button OKNum = new Button("OK");
 
-  public void init(Scanner scanner) {
+    //choice box
+    ChoiceBox<Integer> TotalPlayerNum = new ChoiceBox<>();
+    TotalPlayerNum.getItems().addAll(2,3,4,5);
+    //default value
+    TotalPlayerNum.setValue(2);
 
-    //the first player input the total number of players
-    if (id == 0) {
-      System.out.println(
-          "=======You're the first player, please enter the number of all players ([2:5])========");
-      int playerNum = scanner.nextInt();
-      while (playerNum < 2 || playerNum > 5) {
-        System.out.println("========Invalid playerNumber, try again ([2:5])========");
-        playerNum = scanner.nextInt();
-      }
-      sendString(String.valueOf(playerNum));
-      //send it to server
+    layout2.add(Choose, 0, 0);
+    layout2.add(OKNum, 1,2);
+    layout2.add(TotalPlayerNum, 0,2);
+
+    Scene ChooseNum = new Scene(layout2, 300, 300);
+
+    System.out.println("Waiting for id");
+    setID(Integer.parseInt(receiveString()));
+    System.out.println("Get id" + this.id);
+    if(id == 0){
+      System.out.println("My ID is 0");
+      Window.setScene(ChooseNum);
     }
-    // System.out.println("[DEBUG] my id is " + id);
+    else{
+      System.out.println("My ID is 1");
+      InitValue();
+
+    }
+    OKNum.setOnAction(e-> {
+      try {
+        getChoice(TotalPlayerNum);
+      } catch (IOException ex) {
+        ex.printStackTrace();
+      }
+    });
+  }
+
+  private void StartGame(){
+
+  }
+  private void getChoice(ChoiceBox<Integer> TotalPlayerNum) throws IOException {
+    sendString(String.valueOf(TotalPlayerNum.getValue()));
+    System.out.println("Clicked OK, Send " + TotalPlayerNum.getValue());
+    InitValue();
+  }
+
+  public void InitValue() throws IOException {
     String color = new ColorID().getPlayerColor(id);
     this.playerInfo = new Pair<>(id, color);
-    playerNum = Integer.parseInt(receiveString());
+    this.playerNum = Integer.parseInt(receiveString());
+    System.out.println("Received playerNum = " + this.playerNum);
+    //Scanner scanner = new Scanner(System.in);
+    //PlayGame(scanner);
   }
 
   public void PlayGame(Scanner scanner) throws IOException {
@@ -217,15 +260,13 @@ public class Player extends Application {
   }
   public void setID(int ID){this.id = ID;}
   public static void main(String[] args) throws IOException {
-    Scanner scanner = new Scanner(System.in);
+    //Scanner scanner = new Scanner(System.in);
     Player player = new Player();
     Displayable d = new Text();
 
     player.addDisplayable(d);
 
-    System.out.println("Waiting for id");
-    player.setID(Integer.parseInt(player.receiveString()));
-    System.out.println("Get id");
+
 
     launch(args);
 

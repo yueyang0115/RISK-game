@@ -27,7 +27,7 @@ public class Communicator {
       this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       this.out = new PrintWriter(socket.getOutputStream(), true);
     } catch (IOException e) {
-      System.out.println("Failed to crete Communicator!");
+      System.out.println("Failed to create Communicator!");
     }
   }
 

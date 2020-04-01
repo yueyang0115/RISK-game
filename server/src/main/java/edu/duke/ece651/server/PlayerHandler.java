@@ -25,15 +25,15 @@ public class PlayerHandler extends Thread {
     public void run() {
       //System.out.println("In server, " + receiveString() + id);
       //Send player id to every player
-      for(int i = 0; i < 1000000; i++) {
-        sendPlayer(String.valueOf(id), false);
-      }
+
+      sendPlayer(String.valueOf(id), false);
       System.out.println("In server, Already send the id" + id);
       //If first player, no to receive the player number
       if (id == 0) {
-        playerNum[0] = Integer.parseInt(communicator.receive());
-        WorldInitter myworldinitter = new WorldInitter(playerNum[0], territoryMap);
+        System.out.println(id + ": Waiting for total number");
+        playerNum[0] = Integer.parseInt(this.communicator.receive());
         System.out.println("[DEBUG]received playerNum" + playerNum[0]);
+        WorldInitter myworldinitter = new WorldInitter(playerNum[0], territoryMap);
         for (int i = 0; i < playerNum[0]; ++i) {
           status.add("INGAME");
         }
