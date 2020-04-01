@@ -194,7 +194,6 @@ public class DoAction {
     int i = 0;
 
     Bonus bonus = new Bonus();
-    System.out.println("after creating bonus");
     while (countSoldier(defenceSoldierMap) != 0 && countSoldier(attackSoldierMap) != 0) {
       if (i % 2 == 0) {
         attackLevel = findMaxSoldier(attackSoldierMap);
@@ -265,8 +264,9 @@ public class DoAction {
 
   private int findMaxSoldier(HashMap<Integer, Integer> soldierMap) {
     int size = soldierMap.size();
-    for (int i = size - 1; i >= 0; i++) {
+    for (int i = size - 1; i >= 0; i--) {
       if (soldierMap.get(i) != 0) {
+        System.out.println("find max soldierLevel is :" + i);
         return i;
       }
     }
@@ -276,6 +276,7 @@ public class DoAction {
   private int findMinSoldier(HashMap<Integer, Integer> soldierMap) {
     int size = soldierMap.size();
     for (int i = 0; i < size; i++) {
+      System.out.println("find min soldierLevel is :" + i);
       if (soldierMap.get(i) != 0) {
         return i;
       }

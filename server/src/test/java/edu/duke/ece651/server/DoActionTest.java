@@ -336,10 +336,18 @@ public class DoActionTest {
     assertEquals(territoryC.getSoldierLevel(0), 3);
     assertEquals(territoryD.getSoldierLevel(0), 3);
 
+    territoryA.setSoldierLevel(2, 2);
+    myworld.get(0).get(0).setSoldierLevel(2, 2);
+    assertEquals(territoryA.getSoldierLevel(2), 2);
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(2), 2);
+
     Action action = new Action();
     action.setSrc(territoryA);
     action.setDst(territoryD);
     action.setSoldierLevel(0, 3);
+    action.setSoldierLevel(2, 1);
+    assertEquals(action.getSoldierLevel(0), 3);
+    assertEquals(action.getSoldierLevel(2), 1);
     action.setOwner("player_0");
     action.setType("Move");
     ArrayList<Action> actionList = new ArrayList<>();
@@ -351,7 +359,10 @@ public class DoActionTest {
     actor.doMoveAction(actionList);
     myworld = actor.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 0);
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(2), 1);
     assertEquals(myworld.get(0).get(1).getSoldierLevel(0), 6);
+    assertEquals(myworld.get(0).get(1).getSoldierLevel(2), 1);
+
     MyFormatter formatter2 = new MyFormatter(2);
     System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
         + formatter2.AllActionCompose(myactionMap));
@@ -486,15 +497,33 @@ public class DoActionTest {
     JSONObject tempB = new JSONObject(Bstr);
     territoryB = formatter.JsonToTerritory(tempB);
 
+    territoryA.setSoldierLevel(0, 3);
+    territoryA.setSoldierLevel(2, 10);
+    territoryA.setSoldierLevel(4, 3);
+    myworld.get(0).get(0).setSoldierLevel(0, 3);
+    myworld.get(0).get(0).setSoldierLevel(2, 10);
+    myworld.get(0).get(0).setSoldierLevel(4, 3);
+
+    territoryB.setSoldierLevel(0, 0);
+    territoryB.setSoldierLevel(1, 2);
+    territoryB.setSoldierLevel(3, 2);
+    territoryB.setSoldierLevel(5, 2);
+    myworld.get(1).get(0).setSoldierLevel(0, 0);
+    myworld.get(1).get(0).setSoldierLevel(1, 2);
+    myworld.get(1).get(0).setSoldierLevel(3, 2);
+    myworld.get(1).get(0).setSoldierLevel(5, 2);
+
     Action action = new Action();
     assertEquals(territoryA.getTerritoryName(), "A");
     assertEquals(territoryB.getTerritoryName(), "B");
     assertEquals(territoryA.getSoldierLevel(0), 3);
-    assertEquals(territoryB.getSoldierLevel(0), 3);
+    assertEquals(territoryB.getSoldierLevel(0), 0);
 
     action.setSrc(territoryA); // B
     action.setDst(territoryB); // E
-    action.setSoldierLevel(0, 3);
+    action.setSoldierLevel(0, 2);
+    action.setSoldierLevel(2, 9);
+    action.setSoldierLevel(4, 2);
     action.setOwner("player_0");
     action.setType("Attack");
     ArrayList<Action> actionList = new ArrayList<>();
@@ -507,7 +536,9 @@ public class DoActionTest {
     actor.doAttackAction(actionList);
 
     myworld = actor.getNewWorld();
-    assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 0);
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 1);
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(2), 1);
+    assertEquals(myworld.get(0).get(0).getSoldierLevel(4), 1);
 
     MyFormatter formatter2 = new MyFormatter(2);
     System.out.println("[DEBUG] outside doactionclass, new actionmap is:"
@@ -552,4 +583,7 @@ public class DoActionTest {
       }
     }
   }
+
+  @Test
+  public void test_soldier_level() {}
 }
