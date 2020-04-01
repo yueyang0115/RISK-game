@@ -3,6 +3,7 @@ package edu.duke.ece651.server;
 import static org.junit.jupiter.api.Assertions.*;
 
 import edu.duke.ece651.shared.*;
+import java.io.*;
 import java.util.*;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,18 @@ import org.junit.jupiter.api.Test;
 public class DoActionTest {
   @Test
   public void test_moveattack() {
-    WorldInitter initter = new WorldInitter(2);
-    HashMap<Integer, ArrayList<Territory>> myworld = initter.getWorld();
+    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
+    StringBuilder fileName = new StringBuilder();
+    fileName.append("/old/world2.json");
+    InputStream input = getClass().getResourceAsStream(fileName.toString());
+
+    Scanner scanner = new Scanner(input);
+    StringBuilder worldInfo = new StringBuilder();
+    while (scanner.hasNext()) {
+      worldInfo.append(scanner.next());
+    }
+    MyFormatter tempformatter = new MyFormatter(2);
+    tempformatter.MapParse(myworld, worldInfo.toString());
 
     MyFormatter formatter = new MyFormatter(2);
     String Astr =
@@ -87,8 +98,18 @@ public class DoActionTest {
 
   @Test
   public void test_invalidMoveAction() {
-    WorldInitter initter = new WorldInitter(2);
-    HashMap<Integer, ArrayList<Territory>> myworld = initter.getWorld();
+    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
+    StringBuilder fileName = new StringBuilder();
+    fileName.append("/old/world2.json");
+    InputStream input = getClass().getResourceAsStream(fileName.toString());
+
+    Scanner scanner = new Scanner(input);
+    StringBuilder worldInfo = new StringBuilder();
+    while (scanner.hasNext()) {
+      worldInfo.append(scanner.next());
+    }
+    MyFormatter tempformatter = new MyFormatter(2);
+    tempformatter.MapParse(myworld, worldInfo.toString());
 
     MyFormatter formatter = new MyFormatter(2);
     String Astr =
@@ -172,8 +193,18 @@ public class DoActionTest {
 
   @Test
   public void test_invalidAttackAction() {
-    WorldInitter initter = new WorldInitter(2);
-    HashMap<Integer, ArrayList<Territory>> myworld = initter.getWorld();
+    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
+    StringBuilder fileName = new StringBuilder();
+    fileName.append("/old/world2.json");
+    InputStream input = getClass().getResourceAsStream(fileName.toString());
+
+    Scanner scanner = new Scanner(input);
+    StringBuilder worldInfo = new StringBuilder();
+    while (scanner.hasNext()) {
+      worldInfo.append(scanner.next());
+    }
+    MyFormatter tempformatter = new MyFormatter(2);
+    tempformatter.MapParse(myworld, worldInfo.toString());
 
     MyFormatter formatter = new MyFormatter(2);
     String Astr =
@@ -262,8 +293,18 @@ public class DoActionTest {
 
   @Test
   public void test_DoMoveAction() {
-    WorldInitter initter = new WorldInitter(2);
-    HashMap<Integer, ArrayList<Territory>> myworld = initter.getWorld();
+    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
+    StringBuilder fileName = new StringBuilder();
+    fileName.append("/old/world2.json");
+    InputStream input = getClass().getResourceAsStream(fileName.toString());
+
+    Scanner scanner = new Scanner(input);
+    StringBuilder worldInfo = new StringBuilder();
+    while (scanner.hasNext()) {
+      worldInfo.append(scanner.next());
+    }
+    MyFormatter tempformatter = new MyFormatter(2);
+    tempformatter.MapParse(myworld, worldInfo.toString());
 
     MyFormatter formatter = new MyFormatter(2);
     String Astr =
@@ -341,8 +382,19 @@ public class DoActionTest {
 
   @Test
   public void test_DoAttackAtion2() {
-    WorldInitter initter = new WorldInitter(2);
-    HashMap<Integer, ArrayList<Territory>> myworld = initter.getWorld();
+    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
+    StringBuilder fileName = new StringBuilder();
+    fileName.append("/old/world2.json");
+    InputStream input = getClass().getResourceAsStream(fileName.toString());
+
+    Scanner scanner = new Scanner(input);
+    StringBuilder worldInfo = new StringBuilder();
+    while (scanner.hasNext()) {
+      worldInfo.append(scanner.next());
+    }
+    MyFormatter tempformatter = new MyFormatter(2);
+    tempformatter.MapParse(myworld, worldInfo.toString());
+
     MyFormatter formatter = new MyFormatter(2);
 
     String Astr =
@@ -408,8 +460,18 @@ public class DoActionTest {
 
   @Test
   public void test_DoAttackAtion() {
-    WorldInitter initter = new WorldInitter(2);
-    HashMap<Integer, ArrayList<Territory>> myworld = initter.getWorld();
+    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
+    StringBuilder fileName = new StringBuilder();
+    fileName.append("/old/world2.json");
+    InputStream input = getClass().getResourceAsStream(fileName.toString());
+
+    Scanner scanner = new Scanner(input);
+    StringBuilder worldInfo = new StringBuilder();
+    while (scanner.hasNext()) {
+      worldInfo.append(scanner.next());
+    }
+    MyFormatter tempformatter = new MyFormatter(2);
+    tempformatter.MapParse(myworld, worldInfo.toString());
 
     MyFormatter formatter = new MyFormatter(2);
     String Astr =
@@ -454,8 +516,19 @@ public class DoActionTest {
 
   @Test
   public void test_DoPlusOne() {
-    WorldInitter initter = new WorldInitter(2);
-    HashMap<Integer, ArrayList<Territory>> myworld = initter.getWorld();
+    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
+    StringBuilder fileName = new StringBuilder();
+    fileName.append("/old/world2.json");
+    InputStream input = getClass().getResourceAsStream(fileName.toString());
+
+    Scanner scanner = new Scanner(input);
+    StringBuilder worldInfo = new StringBuilder();
+    while (scanner.hasNext()) {
+      worldInfo.append(scanner.next());
+    }
+    MyFormatter tempformatter = new MyFormatter(2);
+    tempformatter.MapParse(myworld, worldInfo.toString());
+
     for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
       ArrayList<Territory> territoryList = entry.getValue();
       for (int j = 0; j < territoryList.size(); j++) {

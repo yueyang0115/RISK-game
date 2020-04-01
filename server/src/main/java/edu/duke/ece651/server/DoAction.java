@@ -192,67 +192,66 @@ public class DoAction {
     int attackLevel;
     int defenceLevel;
     int i = 0;
-    try {
-      Bonus bonus = new Bonus();
-      while (countSoldier(defenceSoldierMap) != 0 && countSoldier(attackSoldierMap) != 0) {
-        if (i % 2 == 0) {
-          attackLevel = findMaxSoldier(attackSoldierMap);
-          defenceLevel = findMinSoldier(defenceSoldierMap);
-        } else {
-          attackLevel = findMinSoldier(attackSoldierMap);
-          defenceLevel = findMinSoldier(defenceSoldierMap);
-        }
-        int randAttack = rand.nextInt(20) + 0;
-        int randDefence = rand.nextInt(20) + 0;
-        int attackBonus = bonus.getBonus(attackLevel);
-        int defenceBonus = bonus.getBonus(defenceLevel);
-        if (randAttack + attackBonus < randDefence + defenceBonus) {
-          System.out.println("[DEBUG] randDefence is bigger");
-          attackSoldierMap.put(attackLevel, attackSoldierMap.get(attackLevel) - 1);
-        } else if (randDefence + defenceBonus < randAttack + attackBonus) {
-          System.out.println("[DEBUG] randAttack is bigger");
-          defenceSoldierMap.put(defenceLevel, defenceSoldierMap.get(defenceLevel) - 1);
-        }
-      }
 
-      if (countSoldier(defenceSoldierMap) == 0) {
-        System.out.println("[DEBUG] attack success");
-        changeOwner(defenceTerritory, attackTerritory, attackSoldierMap);
-      } else { // numAttack = 0
-        System.out.println("[DEBUG] defence success");
-        defenceTerritory.setSoldiers(defenceSoldierMap);
+    Bonus bonus = new Bonus();
+    System.out.println("after creating bonus");
+    while (countSoldier(defenceSoldierMap) != 0 && countSoldier(attackSoldierMap) != 0) {
+      if (i % 2 == 0) {
+        attackLevel = findMaxSoldier(attackSoldierMap);
+        defenceLevel = findMinSoldier(defenceSoldierMap);
+      } else {
+        attackLevel = findMinSoldier(attackSoldierMap);
+        defenceLevel = findMaxSoldier(defenceSoldierMap);
       }
-
-      // DEBUG
-      System.out.println("[DEBUG] after attack, attackTerritory's name is "
-          + attackTerritory.getTerritoryName() + ", owner is " + attackTerritory.getOwner());
-      System.out.println("[DEBUG] after attack, defenceTerritory's name is "
-          + defenceTerritory.getTerritoryName() + ", owner is " + defenceTerritory.getOwner());
-      for (HashMap.Entry<Integer, Integer> entry : attackTerritory.getSoldiers().entrySet()) {
-        int soldierLevel = entry.getKey();
-        int numAttack = entry.getValue();
-        if (numAttack == 0) {
-          continue;
-        }
-        System.out.println("[DEBUG] after attack, attack_level_" + soldierLevel + " has "
-            + attackTerritory.getSoldierLevel(soldierLevel));
+      int randAttack = rand.nextInt(20) + 0;
+      int randDefence = rand.nextInt(20) + 0;
+      int attackBonus = bonus.getBonus(attackLevel);
+      int defenceBonus = bonus.getBonus(defenceLevel);
+      if (randAttack + attackBonus < randDefence + defenceBonus) {
+        System.out.println("[DEBUG] randDefence is bigger");
+        attackSoldierMap.put(attackLevel, attackSoldierMap.get(attackLevel) - 1);
+      } else if (randDefence + defenceBonus < randAttack + attackBonus) {
+        System.out.println("[DEBUG] randAttack is bigger");
+        defenceSoldierMap.put(defenceLevel, defenceSoldierMap.get(defenceLevel) - 1);
       }
-
-      for (HashMap.Entry<Integer, Integer> entry : defenceTerritory.getSoldiers().entrySet()) {
-        int soldierLevel = entry.getKey();
-        int numAttack = entry.getValue();
-        if (numAttack == 0) {
-          continue;
-        }
-        System.out.println("[DEBUG] after attack, defence_level_" + soldierLevel + " has "
-            + defenceTerritory.getSoldierLevel(soldierLevel));
-      }
-
-      MaptoJson myMaptoJson = new MaptoJson(myworld);
-      System.out.println("[DEBUG] after attack, new worldmap is " + myMaptoJson.getJSON());
-    } catch (IOException e) {
-      System.out.println("failed to create Bonus class");
+      i++;
     }
+
+    if (countSoldier(defenceSoldierMap) == 0) {
+      System.out.println("[DEBUG] attack success");
+      changeOwner(defenceTerritory, attackTerritory, attackSoldierMap);
+    } else { // numAttack = 0
+      System.out.println("[DEBUG] defence success");
+      defenceTerritory.setSoldiers(defenceSoldierMap);
+    }
+
+    // DEBUG
+    System.out.println("[DEBUG] after attack, attackTerritory's name is "
+        + attackTerritory.getTerritoryName() + ", owner is " + attackTerritory.getOwner());
+    System.out.println("[DEBUG] after attack, defenceTerritory's name is "
+        + defenceTerritory.getTerritoryName() + ", owner is " + defenceTerritory.getOwner());
+    for (HashMap.Entry<Integer, Integer> entry : attackTerritory.getSoldiers().entrySet()) {
+      int soldierLevel = entry.getKey();
+      int numAttack = entry.getValue();
+      if (numAttack == 0) {
+        continue;
+      }
+      System.out.println("[DEBUG] after attack, attack_level_" + soldierLevel + " has "
+          + attackTerritory.getSoldierLevel(soldierLevel));
+    }
+
+    for (HashMap.Entry<Integer, Integer> entry : defenceTerritory.getSoldiers().entrySet()) {
+      int soldierLevel = entry.getKey();
+      int numAttack = entry.getValue();
+      if (numAttack == 0) {
+        continue;
+      }
+      System.out.println("[DEBUG] after attack, defence_level_" + soldierLevel + " has "
+          + defenceTerritory.getSoldierLevel(soldierLevel));
+    }
+
+    MaptoJson myMaptoJson = new MaptoJson(myworld);
+    System.out.println("[DEBUG] after attack, new worldmap is " + myMaptoJson.getJSON());
   }
 
   private int countSoldier(HashMap<Integer, Integer> soldierMap) {
@@ -283,10 +282,6 @@ public class DoAction {
     }
     return -1;
   }
-
-
-
-
 
   // if defence lose, move specfic territory from defence player to attack player in actionsmap
   private void changeOwner(
