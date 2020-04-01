@@ -1,23 +1,22 @@
 package edu.duke.ece651.shared;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Bonus {
     private HashMap<Integer, Integer> bonus;
 
-    public Bonus() throws IOException {//construct a map to store all the bonus of each level soldiers
+    public Bonus(){//construct a map to store all the bonus of each level soldiers
         this.bonus = new HashMap<>();
-        FileInputStream inputStream = new FileInputStream("src/main/resources/Bonus.txt");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String str;
+        String fileName = "/Bonus.txt";
+        InputStream input = getClass().getResourceAsStream(fileName);
+        Scanner scanner = new Scanner(input);
         String[] Split;
-        while((str = bufferedReader.readLine()) != null) {
+        while (scanner.hasNext()) {
+            String str = scanner.nextLine();
             Split = str.split("\\s+");
-            this.bonus.put(Integer.parseInt(Split[0]), Integer.parseInt(Split[1]));
+            this.bonus.put(Integer.parseInt(Split[0]),Integer.parseInt(Split[1]));
         }
     }
 

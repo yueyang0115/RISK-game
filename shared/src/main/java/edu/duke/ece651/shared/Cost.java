@@ -2,21 +2,23 @@ package edu.duke.ece651.shared;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Cost {
     private HashMap<Integer, Integer> cost;
     //key is soldier level
     // value is how much need to cost to upgrade to this level
 
-    public Cost() throws IOException {//constructor to build a map for the costs of upgrade
+    public Cost(){//constructor to build a map for the costs of upgrade
         this.cost = new HashMap<>();
-        FileInputStream inputStream = new FileInputStream("src/main/resources/Cost.txt");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String str;
+        String fileName = "/Cost.txt";
+        InputStream input = getClass().getResourceAsStream(fileName);
+        Scanner scanner = new Scanner(input);
         String[] Split;
-        while ((str = bufferedReader.readLine()) != null) {
+        while (scanner.hasNext()) {
+            String str = scanner.nextLine();
             Split = str.split("\\s+");
-            this.cost.put(Integer.parseInt(Split[0]), Integer.parseInt(Split[1]));
+            this.cost.put(Integer.parseInt(Split[0]),Integer.parseInt(Split[1]));
         }
     }
 

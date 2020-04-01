@@ -1,4 +1,5 @@
 package edu.duke.ece651.shared;
+import java.io.InputStream;
 import java.util.*;
 public class Action {
   private Territory src;
@@ -58,3 +59,4 @@ public class Action {
     return soldiers.get(level);
   }
 }
+

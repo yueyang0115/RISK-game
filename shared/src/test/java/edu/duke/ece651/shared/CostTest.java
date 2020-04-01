@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class CostTest {
     @Test
-    public void Test_cost() throws IOException {
+    public void Test_cost()  {
         Cost test = new Cost();
         for(int i = 0; i < 7; i++){
             for(int j = i + 1; j < 7; j++){

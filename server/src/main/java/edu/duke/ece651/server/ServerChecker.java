@@ -1,6 +1,8 @@
 package edu.duke.ece651.server;
 
 import edu.duke.ece651.shared.*;
+import org.apache.commons.math3.analysis.function.Cos;
+
 import java.util.*;
 
 public class ServerChecker {
@@ -66,13 +68,31 @@ public class ServerChecker {
     }
     return true;
   }
+  private void Dijkstra() {
+    boolean[] flag = new boolean[12];
+    int[] Distance = new int[12];
 
+    TerritorySize TerrSize = new TerritorySize();
+
+    String Start = this.action.getSrc().getTerritoryName();
+
+    int StartIndex = Integer.valueOf(Start) - Integer.valueOf("A");
+    Distance[StartIndex] = 0;
+    flag[StartIndex] = true;
+
+    String End = this.action.getDst().getTerritoryName();
+    DoAction FindTerr = new DoAction(world);
+    Territory StartTerr = FindTerr.findTerritory(world,Start);
+    Territory EndTerr = FindTerr.findTerritory(world, End);
+
+
+
+  }
   // check if there is a valid path from srcTerritory to dstTerritory
   private boolean checkNeighbor() {
     // System.out.println("[DEBUG] checkNum succeed");
     HashSet<Territory> visitedSet = new HashSet<>();
-    // Territory dstTerritory = action.getDst();
-    // Territory srcTerritory = action.getSrc();
+
     DoAction myDoAction2 = new DoAction(world);
     Territory dstTerritory = myDoAction2.findTerritory(world, action.getDst().getTerritoryName());
     Territory srcTerritory = myDoAction2.findTerritory(world, action.getSrc().getTerritoryName());
