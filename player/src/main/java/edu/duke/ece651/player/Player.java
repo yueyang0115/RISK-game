@@ -2,12 +2,20 @@ package edu.duke.ece651.player;
 
 import edu.duke.ece651.shared.*;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import java.io.IOException;
 import java.util.*;
 import java.util.Scanner;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.*;
 
-public class Player {
+public class Player extends Application {
   private HashMap<Integer, ArrayList<Territory>> territoryMap;
   private Pair<Integer, String> playerInfo;
   private ArrayList<Action> MoveAction;
@@ -19,6 +27,8 @@ public class Player {
   private int playerNum;
   private int FoodResource;
   private int TechResource;
+  private Stage Window;
+  private int id;
 
   public Player() {
     this.territoryMap = new HashMap<>();
@@ -29,9 +39,28 @@ public class Player {
     this.playerNum = 0;
   }
 
+  @Override
+  public void start(Stage primaryStage) throws Exception {
+    Scanner s = new Scanner(System.in);
+    Window = primaryStage;
+    Button BtnStart = new Button("Start Game");
+    Label GameName = new Label("Strategic Conquest Game (RISC)");
+    GridPane layout = new GridPane();
+    layout.setVgap(30);
+    layout.setHgap(30);
+    layout.setAlignment(Pos.CENTER);
+    layout.add(GameName, 0, 0);
+    layout.add(BtnStart, 0,2);
+    Scene Start = new Scene(layout, 300, 250);
+    Window.setScene(Start);
+    BtnStart.setOnAction(e->init(s));
+    Window.show();
+
+  }
+
+
   public void init(Scanner scanner) {
-    
-    int id = Integer.parseInt(receiveString());
+
     //the first player input the total number of players
     if (id == 0) {
       System.out.println(
@@ -186,16 +215,23 @@ public class Player {
   public void setPlayerInfo(Pair<Integer, String> TestPlayerInfo){
     this.playerInfo = TestPlayerInfo;
   }
-
+  public void setID(int ID){this.id = ID;}
   public static void main(String[] args) throws IOException {
     Scanner scanner = new Scanner(System.in);
     Player player = new Player();
     Displayable d = new Text();
 
     player.addDisplayable(d);
-    player.init(scanner);
-    player.PlayGame(scanner);
+
+    System.out.println("Waiting for id");
+    player.setID(Integer.parseInt(player.receiveString()));
+    System.out.println("Get id");
+
+    launch(args);
+
+    //player.init(scanner);
+    //player.PlayGame(scanner);
     //close the socket
-    player.close();
+    //player.close();
   }
 }

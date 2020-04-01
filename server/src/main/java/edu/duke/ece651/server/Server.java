@@ -27,6 +27,7 @@ public class Server {
   }
 
   public void initGame() {
+
     //First thread to handle the first player, where it needs to input player number to setup
     PlayerHandler first =
         new PlayerHandler(new Communicator(serverSock), 0, playerNum, territoryMap, status);

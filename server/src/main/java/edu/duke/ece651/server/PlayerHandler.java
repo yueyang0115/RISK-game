@@ -23,8 +23,12 @@ public class PlayerHandler extends Thread {
     }
 
     public void run() {
+      //System.out.println("In server, " + receiveString() + id);
       //Send player id to every player
-      sendPlayer(String.valueOf(id), false);
+      for(int i = 0; i < 1000000; i++) {
+        sendPlayer(String.valueOf(id), false);
+      }
+      System.out.println("In server, Already send the id" + id);
       //If first player, no to receive the player number
       if (id == 0) {
         playerNum[0] = Integer.parseInt(communicator.receive());
