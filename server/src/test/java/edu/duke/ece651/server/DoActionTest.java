@@ -9,6 +9,15 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 public class DoActionTest {
+  private HashMap<Integer, Integer> resource;
+
+  public DoActionTest() {
+    resource = new HashMap<>();
+    resource.put(0, 100);
+    resource.put(1, 100);
+    resource.put(2, 100);
+    resource.put(3, 100);
+  }
   @Test
   public void test_moveattack() {
     HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
@@ -84,7 +93,12 @@ public class DoActionTest {
     ArrayList<Action> attackList = new ArrayList<>();
     attackList.add(action3);
 
-    DoAction actor = new DoAction(myworld, myactionMap);
+    HashMap<Integer, Integer> resource = new HashMap<>();
+    resource.put(0, 100);
+    resource.put(1, 100);
+    resource.put(2, 100);
+    resource.put(3, 100);
+    DoAction actor = new DoAction(myworld, myactionMap, resource);
     actor.doMoveAction(moveList);
     actor.doAttackAction(attackList);
     myworld = actor.getNewWorld();
@@ -171,7 +185,7 @@ public class DoActionTest {
     myactionMap.put(0, actionList);
     myactionMap.put(1, actionList2);
 
-    DoAction actor = new DoAction(myworld, myactionMap);
+    DoAction actor = new DoAction(myworld, myactionMap, resource);
     ArrayList<Action> allActionList = new ArrayList<>();
     allActionList.add(action2);
     allActionList.add(action);
@@ -272,7 +286,7 @@ public class DoActionTest {
     myactionMap.put(0, actionList);
     myactionMap.put(1, actionList2);
 
-    DoAction actor = new DoAction(myworld, myactionMap);
+    DoAction actor = new DoAction(myworld, myactionMap, resource);
     ArrayList<Action> allActionList = new ArrayList<>();
     allActionList.add(action2);
     allActionList.add(action);
@@ -355,7 +369,7 @@ public class DoActionTest {
     HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
     myactionMap.put(0, actionList);
 
-    DoAction actor = new DoAction(myworld, myactionMap);
+    DoAction actor = new DoAction(myworld, myactionMap, resource);
     actor.doMoveAction(actionList);
     myworld = actor.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 0);
@@ -378,7 +392,7 @@ public class DoActionTest {
     HashMap<Integer, ArrayList<Action>> myactionMap2 = new HashMap<>();
     myactionMap2.put(1, actionList2);
 
-    DoAction actor2 = new DoAction(myworld, myactionMap2);
+    DoAction actor2 = new DoAction(myworld, myactionMap2, resource);
     actor2.doMoveAction(actionList2);
     myworld = actor2.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 0);
@@ -458,7 +472,7 @@ public class DoActionTest {
     allAction.add(action);
     allAction.add(action2);
     // allAction.add(action2);
-    DoAction actor = new DoAction(myworld, myactionMap);
+    DoAction actor = new DoAction(myworld, myactionMap, resource);
     actor.doAttackAction(allAction);
 
     myworld = actor.getNewWorld();
@@ -532,7 +546,7 @@ public class DoActionTest {
     HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
     myactionMap.put(0, actionList);
 
-    DoAction actor = new DoAction(myworld, myactionMap);
+    DoAction actor = new DoAction(myworld, myactionMap, resource);
     actor.doAttackAction(actionList);
 
     myworld = actor.getNewWorld();
@@ -572,7 +586,7 @@ public class DoActionTest {
     HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
     myactionMap.put(0, actionList);
 
-    DoAction actor = new DoAction(myworld, myactionMap);
+    DoAction actor = new DoAction(myworld, myactionMap, resource);
 
     actor.doPlusOne();
     for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
@@ -583,7 +597,4 @@ public class DoActionTest {
       }
     }
   }
-
-  @Test
-  public void test_soldier_level() {}
 }
