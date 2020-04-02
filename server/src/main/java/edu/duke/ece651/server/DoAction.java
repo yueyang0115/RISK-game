@@ -6,19 +6,23 @@ import java.util.*;
 
 public class DoAction {
   private HashMap<Integer, ArrayList<Territory>> myworld;
+  private String tempWorldStr;
   private HashMap<Integer, ArrayList<Action>> myActionMap;
   private HashSet<String> invalidPlayer;
   private MyFormatter myformatter;
-  private String tempWorldStr;
   private ArrayList<Action> mymoveList;
+  private HashMap<Integer, Integer> myResource;
+  private HashMap<Integer, Integer> rawResource;
 
   public DoAction(HashMap<Integer, ArrayList<Territory>> world,
-      HashMap<Integer, ArrayList<Action>> actionsMap) {
+      HashMap<Integer, ArrayList<Action>> actionsMap, HashMap<Integer, Integer> resource) {
     init();
     myworld = world;
     myActionMap = actionsMap;
     myformatter = new MyFormatter(myworld.size());
     tempWorldStr = myformatter.MapCompose(myworld).toString();
+    myResource = resource;
+    copyMap(rawResource, resource);
   }
 
   public DoAction(HashMap<Integer, ArrayList<Territory>> world) {
@@ -31,19 +35,22 @@ public class DoAction {
     myActionMap = new HashMap<>();
     invalidPlayer = new HashSet<>();
     mymoveList = new ArrayList<>();
+    myResource = new HashMap<>();
+    rawResource = new HashMap<>();
   }
 
-  // remove player that contains invalid action from actionsmap
-  private void removePlayer(Action action) {
-    // System.out.println("[DEBUG] action inValid");
-    String playerName = action.getOwner();
-    int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
-    if (myActionMap.containsKey(playerID)) {
-      // System.out.println(
-      //    "[DEBUG] before remove invalid player, actionMap.size is " + myActionMap.size());
-      myActionMap.remove(playerID);
-      // System.out.println(
-      //   "[DEBUG] after remove invalid player, actionMap.size is " + myActionMap.size());
+  // do upgrade action
+  public void doUpgradeAction(ArrayList<Upgrade> upgradeList) {
+    for (Upgrade CurrentAction : upgradeList) {
+      Territory UpgradeTerr = findTerritory(myworld, CurrentAction.getTerritoryName());
+
+      int preLevel = CurrentAction.getPrevLevel();
+      int nextLevel = CurrentAction.getNextLevel();
+      int CurrPreLevelNum = UpgradeTerr.getSoldierLevel(preLevel);
+      int CurrNextLevelNum = UpgradeTerr.getSoldierLevel(nextLevel);
+
+      UpgradeTerr.setSoldierLevel(preLevel, CurrPreLevelNum - CurrentAction.getNumber());
+      UpgradeTerr.setSoldierLevel(nextLevel, CurrNextLevelNum + CurrentAction.getNumber());
     }
   }
 
@@ -60,17 +67,20 @@ public class DoAction {
 
       // check if action is valid
       ServerChecker mychecker = new ServerChecker(myworld);
-      boolean isValid = mychecker.Check(action);
+      ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
+      boolean isValid = mychecker.Check(action) && rschecker.CheckResource(action);
       if (!isValid) {
         removePlayer(action);
         moveList.remove(action);
         invalidPlayer.add(action.getOwner());
         myformatter.MapParse(myworld, tempWorldStr); // reset world
+        copyMap(myResource, rawResource); // reset resource
         i = -1;
         continue;
       }
 
       // do move action
+      rschecker.reduceCost(myResource, action);
       moveHelper(action);
     }
     // tempWorldStr = myformatter.MapCompose(myworld).toString();
@@ -107,6 +117,7 @@ public class DoAction {
     }
   }
 
+  // do moveAction once
   private void removeHelper(Action action) {
     HashMap<Integer, Integer> movedSoldierMap = action.getSoldiers();
     for (HashMap.Entry<Integer, Integer> entry : movedSoldierMap.entrySet()) {
@@ -121,6 +132,26 @@ public class DoAction {
     }
   }
 
+  // remove player that contains invalid action from actionsmap
+  private void removePlayer(Action action) {
+    // System.out.println("[DEBUG] action inValid");
+    String playerName = action.getOwner();
+    int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
+    if (myActionMap.containsKey(playerID)) {
+      // System.out.println(
+      //    "[DEBUG] before remove invalid player, actionMap.size is " + myActionMap.size());
+      myActionMap.remove(playerID);
+      // System.out.println(
+      //   "[DEBUG] after remove invalid player, actionMap.size is " + myActionMap.size());
+    }
+  }
+
+  private void copyMap(HashMap<Integer, Integer> rscMap, HashMap<Integer, Integer> dstMap) {
+    for (HashMap.Entry<Integer, Integer> entry : dstMap.entrySet()) {
+      rscMap.put(entry.getKey(), entry.getValue());
+    }
+  }
+
   public void doAttackAction(ArrayList<Action> attackList) {
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
@@ -131,21 +162,25 @@ public class DoAction {
 
       // based on moveActions result, check if attackaction is valid
       ServerChecker mychecker = new ServerChecker(myworld);
-      boolean isValid = mychecker.Check(action);
+      ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
+      boolean isValid = mychecker.Check(action) && rschecker.CheckResource(action);
       if (!isValid) {
         removePlayer(action);
         attackList.remove(action);
         invalidPlayer.add(action.getOwner());
         myformatter.MapParse(myworld, tempWorldStr); // reset world
+        copyMap(myResource, rawResource); // reset resource
         k = -1;
         continue;
       }
       // if valid, remove soldiers from attackTerritory
+      rschecker.reduceCost(myResource, action);
       removeHelper(action);
     }
 
     // reset map back to no action performed status, do move actions first
-    myformatter.MapParse(myworld, tempWorldStr);
+    myformatter.MapParse(myworld, tempWorldStr); // reset world
+    copyMap(myResource, rawResource); // reset resource
     doMoveAction(mymoveList);
 
     // move soldiers out of srcTerritory
@@ -163,12 +198,14 @@ public class DoAction {
       if (invalidPlayer.contains(action.getOwner())) {
         continue;
       }
+      ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
+      rschecker.reduceCost(myResource, action);
       attackHelper(action);
     }
     invalidPlayer.clear();
   }
 
-  // do atatck action
+  // do atatckAction once
   private void attackHelper(Action action) {
     HashMap<Integer, Integer> attackSoldierMap = action.getSoldiers();
     Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
@@ -192,70 +229,68 @@ public class DoAction {
     int attackLevel;
     int defenceLevel;
     int i = 0;
-    try {
-      Bonus bonus = new Bonus();
-      while (countSoldier(defenceSoldierMap) != 0 && countSoldier(attackSoldierMap) != 0) {
-        if (i % 2 == 0) {
-          attackLevel = findMaxSoldier(attackSoldierMap);
-          defenceLevel = findMinSoldier(defenceSoldierMap);
-        } else {
-          attackLevel = findMinSoldier(attackSoldierMap);
-          defenceLevel = findMinSoldier(defenceSoldierMap);
-        }
-        int randAttack = rand.nextInt(20) + 0;
-        int randDefence = rand.nextInt(20) + 0;
-        int attackBonus = bonus.getBonus(attackLevel);
-        int defenceBonus = bonus.getBonus(defenceLevel);
-        if (randAttack + attackBonus < randDefence + defenceBonus) {
-          System.out.println("[DEBUG] randDefence is bigger");
-          attackSoldierMap.put(attackLevel, attackSoldierMap.get(attackLevel) - 1);
-        } else if (randDefence + defenceBonus < randAttack + attackBonus) {
-          System.out.println("[DEBUG] randAttack is bigger");
-          defenceSoldierMap.put(defenceLevel, defenceSoldierMap.get(defenceLevel) - 1);
-        }
-      }
 
-      if (countSoldier(defenceSoldierMap) == 0) {
-        System.out.println("[DEBUG] attack success");
-        changeOwner(defenceTerritory, attackTerritory, attackSoldierMap);
-      } else { // numAttack = 0
-        System.out.println("[DEBUG] defence success");
-        defenceTerritory.setSoldiers(defenceSoldierMap);
+    Bonus bonus = new Bonus();
+    while (countSoldier(defenceSoldierMap) != 0 && countSoldier(attackSoldierMap) != 0) {
+      if (i % 2 == 0) {
+        attackLevel = findMaxSoldier(attackSoldierMap);
+        defenceLevel = findMinSoldier(defenceSoldierMap);
+      } else {
+        attackLevel = findMinSoldier(attackSoldierMap);
+        defenceLevel = findMaxSoldier(defenceSoldierMap);
       }
-
-      // DEBUG
-      System.out.println("[DEBUG] after attack, attackTerritory's name is "
-          + attackTerritory.getTerritoryName() + ", owner is " + attackTerritory.getOwner());
-      System.out.println("[DEBUG] after attack, defenceTerritory's name is "
-          + defenceTerritory.getTerritoryName() + ", owner is " + defenceTerritory.getOwner());
-      for (HashMap.Entry<Integer, Integer> entry : attackTerritory.getSoldiers().entrySet()) {
-        int soldierLevel = entry.getKey();
-        int numAttack = entry.getValue();
-        if (numAttack == 0) {
-          continue;
-        }
-        System.out.println("[DEBUG] after attack, attack_level_" + soldierLevel + " has "
-            + attackTerritory.getSoldierLevel(soldierLevel));
+      int randAttack = rand.nextInt(20) + 0;
+      int randDefence = rand.nextInt(20) + 0;
+      int attackBonus = bonus.getBonus(attackLevel);
+      int defenceBonus = bonus.getBonus(defenceLevel);
+      if (randAttack + attackBonus < randDefence + defenceBonus) {
+        System.out.println("[DEBUG] randDefence is bigger");
+        attackSoldierMap.put(attackLevel, attackSoldierMap.get(attackLevel) - 1);
+      } else if (randDefence + defenceBonus < randAttack + attackBonus) {
+        System.out.println("[DEBUG] randAttack is bigger");
+        defenceSoldierMap.put(defenceLevel, defenceSoldierMap.get(defenceLevel) - 1);
       }
-
-      for (HashMap.Entry<Integer, Integer> entry : defenceTerritory.getSoldiers().entrySet()) {
-        int soldierLevel = entry.getKey();
-        int numAttack = entry.getValue();
-        if (numAttack == 0) {
-          continue;
-        }
-        System.out.println("[DEBUG] after attack, defence_level_" + soldierLevel + " has "
-            + defenceTerritory.getSoldierLevel(soldierLevel));
-      }
-
-      MaptoJson myMaptoJson = new MaptoJson(myworld);
-      System.out.println("[DEBUG] after attack, new worldmap is " + myMaptoJson.getJSON());
-    } catch (IOException e) {
-      System.out.println("failed to create Bonus class");
+      i++;
     }
+
+    if (countSoldier(defenceSoldierMap) == 0) {
+      System.out.println("[DEBUG] attack success");
+      changeOwner(defenceTerritory, attackTerritory, attackSoldierMap);
+    } else { // numAttack = 0
+      System.out.println("[DEBUG] defence success");
+      defenceTerritory.setSoldiers(defenceSoldierMap);
+    }
+
+    // DEBUG
+    System.out.println("[DEBUG] after attack, attackTerritory's name is "
+        + attackTerritory.getTerritoryName() + ", owner is " + attackTerritory.getOwner());
+    System.out.println("[DEBUG] after attack, defenceTerritory's name is "
+        + defenceTerritory.getTerritoryName() + ", owner is " + defenceTerritory.getOwner());
+    for (HashMap.Entry<Integer, Integer> entry : attackTerritory.getSoldiers().entrySet()) {
+      int soldierLevel = entry.getKey();
+      int numAttack = entry.getValue();
+      if (numAttack == 0) {
+        continue;
+      }
+      System.out.println("[DEBUG] after attack, attack_level_" + soldierLevel + " has "
+          + attackTerritory.getSoldierLevel(soldierLevel));
+    }
+
+    for (HashMap.Entry<Integer, Integer> entry : defenceTerritory.getSoldiers().entrySet()) {
+      int soldierLevel = entry.getKey();
+      int numAttack = entry.getValue();
+      if (numAttack == 0) {
+        continue;
+      }
+      System.out.println("[DEBUG] after attack, defence_level_" + soldierLevel + " has "
+          + defenceTerritory.getSoldierLevel(soldierLevel));
+    }
+
+    MaptoJson myMaptoJson = new MaptoJson(myworld);
+    System.out.println("[DEBUG] after attack, new worldmap is " + myMaptoJson.getJSON());
   }
 
-  private int countSoldier(HashMap<Integer, Integer> soldierMap) {
+  public int countSoldier(HashMap<Integer, Integer> soldierMap) {
     int size = soldierMap.size();
     int count = 0;
     for (int i = 0; i < size; i++) {
@@ -266,8 +301,9 @@ public class DoAction {
 
   private int findMaxSoldier(HashMap<Integer, Integer> soldierMap) {
     int size = soldierMap.size();
-    for (int i = size - 1; i >= 0; i++) {
+    for (int i = size - 1; i >= 0; i--) {
       if (soldierMap.get(i) != 0) {
+        System.out.println("find max soldierLevel is :" + i);
         return i;
       }
     }
@@ -277,16 +313,13 @@ public class DoAction {
   private int findMinSoldier(HashMap<Integer, Integer> soldierMap) {
     int size = soldierMap.size();
     for (int i = 0; i < size; i++) {
+      System.out.println("find min soldierLevel is :" + i);
       if (soldierMap.get(i) != 0) {
         return i;
       }
     }
     return -1;
   }
-
-
-
-
 
   // if defence lose, move specfic territory from defence player to attack player in actionsmap
   private void changeOwner(
@@ -308,14 +341,7 @@ public class DoAction {
     ArrayList<Territory> defenceTerritories = myworld.get(ID.get(0));
     System.out.println("[DEBUG] before change owner, defence player has "
         + defenceTerritories.size() + " territories");
-    /*
-    for (int j = 0; j < defenceTerritories.size(); j++) {
-      if (defenceTerritories.get(j) == defenceTerritory) {
-        defenceTerritories.remove(defenceTerritory);
-        System.out.println("[DEBUG] find territory to change owner and erase");
-        break;
-      }
-      }*/
+
     defenceTerritories.remove(defenceTerritory);
     System.out.println("[DEBUG] after change owner, defence player has " + defenceTerritories.size()
         + " territories");
@@ -361,5 +387,8 @@ public class DoAction {
 
   public HashMap<Integer, ArrayList<Territory>> getNewWorld() {
     return this.myworld;
+  }
+  public HashMap<Integer, Integer> getNewResource() {
+    return this.myResource;
   }
 }
