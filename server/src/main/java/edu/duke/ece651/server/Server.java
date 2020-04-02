@@ -3,7 +3,6 @@ import edu.duke.ece651.shared.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.util.Scanner;
 
 public class Server {
   private int port;
@@ -11,6 +10,7 @@ public class Server {
   private ServerSocket serverSock;
   private ArrayList<PlayerHandler> list;
   private HashMap<Integer, ArrayList<Territory>> territoryMap;
+  private HashMap<Integer, Integer> food;
   private ArrayList<String> status;
 
   public Server(int port) {
@@ -23,13 +23,14 @@ public class Server {
     }
     this.list = new ArrayList<>();
     this.territoryMap = new HashMap<>();
+    this.food = new HashMap<>();
     this.status = new ArrayList<>();
   }
 
   public void initGame() {
     // First thread to handle the first player, where it needs to input player number to setup
     PlayerHandler first =
-        new PlayerHandler(new Communicator(serverSock), 0, playerNum, territoryMap, status);
+        new PlayerHandler(new Communicator(serverSock), 0, playerNum, territoryMap, food, status);
     first.start();
     list.add(first);
     try {
@@ -40,7 +41,7 @@ public class Server {
     // The other threads to handle the rest players
     for (int id = 1; id < playerNum[0]; id++) {
       PlayerHandler ph =
-          new PlayerHandler(new Communicator(serverSock), id, playerNum, territoryMap, status);
+          new PlayerHandler(new Communicator(serverSock), id, playerNum, territoryMap, food, status);
       list.add(ph);
       ph.start();
     }
@@ -68,7 +69,7 @@ public class Server {
       }
       System.out.println(
           "[DEBUG] Before execute actions:" + new MaptoJson(territoryMap).getJSON().toString());
-      ah.executeActions();
+      ah.executeActions(food);
       System.out.println(
           "[DEBUG] After execute actions:" + new MaptoJson(territoryMap).getJSON().toString());
       // Get action string, send to players later
@@ -122,6 +123,9 @@ public class Server {
             cur.sendPlayer(formatter.MapCompose(territoryMap).toString(), true);
             System.out.println("[DEBUG] Success Send Map to Player" + k
                 + formatter.MapCompose(territoryMap).toString());
+            //Send the food resource
+            cur.sendPlayer(food.get(k).toString(), false);
+            System.out.println("[DEBUG] send food resource to player_" + k + ": " + food.get(k));
           }
         }
       }
