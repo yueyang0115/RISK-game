@@ -49,7 +49,7 @@ public class ActionHelper {
   public synchronized void actionsCompleted(int playerId) {
     playerComplete.set(playerId, true);
   }
-  public synchronized void executeActions() {
+  public synchronized void executeActions(HashMap<Integer, Integer> food) {
     // Reference to Piazza post.
     // Wait until all players have committed the actions to execute all the actions
     while (playerComplete.contains(false)) {
@@ -59,7 +59,7 @@ public class ActionHelper {
         System.out.println("Error: wait failed in ActionHelper!");
       }
     }
-    DoAction d = new DoAction(worldMap, playersActions);
+    DoAction d = new DoAction(worldMap, playersActions, food);
     // First do the move actions, then attack actions, then add 1 to all territory.
     d.doMoveAction(moveList);
     d.doAttackAction(attackList);

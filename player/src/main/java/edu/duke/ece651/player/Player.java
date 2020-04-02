@@ -35,7 +35,7 @@ public class Player {
     //the first player input the total number of players
     if (id == 0) {
       System.out.println(
-          "=======You're the first player, please enter the number of all players ([2:5])========");
+          "===You're the first player, please enter the number of all players ([2:5])===");
       int playerNum = scanner.nextInt();
       while (playerNum < 2 || playerNum > 5) {
         System.out.println("========Invalid playerNumber, try again ([2:5])========");
@@ -95,6 +95,9 @@ public class Player {
         // System.out.println("Received Map = " + msg);
         myformatter.MapParse(territoryMap, msg);
         displayMap();
+        //Receive food resource
+        FoodResource = Integer.parseInt(receiveString());
+        System.out.println("Your food resource: " + FoodResource);
       }
       LoseButWatch = false;
       
