@@ -65,7 +65,7 @@ public class ActionHelper {
     d.doMoveAction(moveList);
     d.doAttackAction(attackList);
     d.doPlusOne();
-    //TODO: upgrade food resource!!
+    food = d.getNewResource();
     worldMap = d.getNewWorld();
     MyFormatter formatter = new MyFormatter(playerNum);
     actionsStr = formatter.AllActionCompose(playersActions).toString();
