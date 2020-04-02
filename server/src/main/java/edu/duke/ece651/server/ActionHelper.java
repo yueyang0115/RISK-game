@@ -60,10 +60,12 @@ public class ActionHelper {
       }
     }
     DoAction d = new DoAction(worldMap, playersActions, food);
-    // First do the move actions, then attack actions, then add 1 to all territory.
+    // First do the upgrade actions, then move and attack actions, then add 1 to all territory.
+    d.doUpgradeAction(upgradeList);
     d.doMoveAction(moveList);
     d.doAttackAction(attackList);
     d.doPlusOne();
+    //TODO: upgrade food resource!!
     worldMap = d.getNewWorld();
     MyFormatter formatter = new MyFormatter(playerNum);
     actionsStr = formatter.AllActionCompose(playersActions).toString();
