@@ -2,11 +2,13 @@ package edu.duke.ece651.shared;
 
 import java.util.*;
 
-public class Territory {
+public class Territory implements Comparable<Territory> {
   private String owner;
   private HashMap<Integer, Integer> soldiers;
   private ArrayList<String> neighbor;
   private String territoryName;
+  private int totalSize; // for ResourceChecker use
+
   public Territory() {
     neighbor = new ArrayList<String>();
     soldiers = new HashMap<>();
@@ -17,6 +19,7 @@ public class Territory {
     soldiers.put(4, 0);
     soldiers.put(5, 0);
     soldiers.put(6, 0);
+    this.totalSize = Integer.MAX_VALUE;
   }
   public String getOwner() {
     return owner;
@@ -56,5 +59,20 @@ public class Territory {
   }
   public void setTerritoryName(String Name) {
     territoryName = Name;
+  }
+
+  public void setTotalSize(int size) {
+    this.totalSize = size;
+  }
+
+  public int getTotalSize() {
+    return this.totalSize;
+  }
+
+  @Override
+  public int compareTo(Territory t2) {
+    int size1 = this.totalSize;
+    int size2 = t2.getTotalSize();
+    return Integer.compare(size1, size2);
   }
 }
