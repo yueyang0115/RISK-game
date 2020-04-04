@@ -28,7 +28,9 @@ public class PlayerHandler extends Thread {
 
     public void run() {
       //Send player id to every player
+
       sendPlayer(String.valueOf(id), false);
+      System.out.println("Already send the id " + id);
       //If first player, no to receive the player number
       if (id == 0) {
         playerNum[0] = Integer.parseInt(communicator.receive());

@@ -5,33 +5,55 @@ import edu.duke.ece651.shared.*;
 import java.io.IOException;
 import java.util.*;
 import java.util.Scanner;
+
+import javafx.application.Application;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.util.*;
+import javafx.fxml.*;
 
-public class Player {
-  private HashMap<Integer, ArrayList<Territory>> territoryMap;
-  private Pair<Integer, String> playerInfo;
-  private ArrayList<Action> MoveAction;
-  private ArrayList<Action> AttackAction;
-  private HashMap<Integer, ArrayList<Action>> AllAction;
-  private ArrayList<Upgrade> UpgradeAction;
-  private Displayable displayer;
-  private Communicator communicator;
-  private int playerNum;
-  private int FoodResource;
-  private int TechResource;
+public class Player extends Application {
+  private Stage Window;
+  //private Communicator communicator;
 
-  public Player() {
-    this.territoryMap = new HashMap<>();
-    this.MoveAction = new ArrayList<>();
-    this.AttackAction = new ArrayList<>();
-    this.AllAction = new HashMap<>();
-    this.communicator = new Communicator("127.0.0.1", 1234);
-    this.playerNum = 0;
+  public void showStartView(PlayerHelper player) throws IOException {
+    FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/StartGame.fxml"));
+    loaderStart.setControllerFactory(c->{
+      return new StartController(player, this.Window);
+    });
+    Scene scene = new Scene(loaderStart.load());
+    this.Window.setScene(scene);
+    this.Window.show();
   }
 
+
+  @Override
+  public void start(Stage primaryStage) throws Exception {
+    this.Window = primaryStage;
+    PlayerHelper player = new PlayerHelper();
+    Displayable d = new Text();
+    player.addDisplayable(d);
+
+    ReceiveID(player, player.getCommunicator());
+    showStartView(player);
+  }
+
+
+
+  public void ReceiveID(PlayerHelper player, Communicator communicator){
+    System.out.println("Waiting for id");
+    int id = Integer.parseInt(receiveString(communicator));
+    player.setID(id);
+    System.out.println("Received! MY ID is " + id);
+  }
+  public void SendTotalNumber(int PlayerNum, Communicator communicator){
+    sendString(String.valueOf(PlayerNum), communicator);
+  }
+/*
   public void init(Scanner scanner) {
     
-    int id = Integer.parseInt(receiveString());
+    int id = this.playerInfo.getKey();
     //the first player input the total number of players
     if (id == 0) {
       System.out.println(
@@ -157,48 +179,28 @@ public class Player {
   }
 
 
-
-  public void sendString(String str) {
+*/
+  public void sendString(String str, Communicator communicator) {
     communicator.sendString(str);
   }
 
-  public String receiveString() {
+  public String receiveString(Communicator communicator) {
     return communicator.receive();
   }
 
-  public void addDisplayable(Displayable d) {
-    this.displayer = d;
-  }
 
-  public void displayMap() {
-    displayer.showMap(territoryMap, playerInfo);
-  }
-  public void displayAction() {
-    displayer.showAction(AllAction, playerInfo);
-  }
-  public void close() {
-    communicator.close();
-  }
-  //for testcases
-  public void setTerritoryMap(HashMap<Integer, ArrayList<Territory>> TestMap){
-    this.territoryMap = TestMap;
-  }
-  public void setAllAction(HashMap<Integer, ArrayList<Action>> TestAllAction){
-    this.AllAction = TestAllAction;
-  }
-  public void setPlayerInfo(Pair<Integer, String> TestPlayerInfo){
-    this.playerInfo = TestPlayerInfo;
-  }
 
   public static void main(String[] args) throws IOException {
     Scanner scanner = new Scanner(System.in);
     Player player = new Player();
-    Displayable d = new Text();
 
-    player.addDisplayable(d);
-    player.init(scanner);
-    player.PlayGame(scanner);
-    //close the socket
-    player.close();
+
+
+    launch(args);
+
+//    player.init(scanner);
+//    player.PlayGame(scanner);
+//    //close the socket
+//    player.close();
   }
 }
