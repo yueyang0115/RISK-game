@@ -2,7 +2,7 @@ package edu.duke.ece651.shared;
 
 import java.util.*;
 
-public class Territory implements Comparator<Territory> {
+public class Territory {
   private String owner;
   private HashMap<Integer, Integer> soldiers;
   private ArrayList<String> neighbor;
@@ -56,19 +56,5 @@ public class Territory implements Comparator<Territory> {
   }
   public void setTerritoryName(String Name) {
     territoryName = Name;
-  }
-
-  @Override
-  public int compare(Territory t1, Territory t2) {
-    TerritorySize sizegetter = new TerritorySize();
-    int size1 = sizegetter.getTerritorySize(t1.getTerritoryName());
-    int size2 = sizegetter.getTerritorySize(t2.getTerritoryName());
-    if (size1 < size2) {
-      return -1;
-    } else if (size1 > size2) {
-      return 1;
-    } else {
-      return 0;
-    }
   }
 }
