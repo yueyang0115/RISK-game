@@ -26,11 +26,11 @@ public class ResourceChecker {
   }
 
   private int countResource(Action action) {
+    int numSoldiers = myDoAction.countSoldier(action.getSoldiers());
     if (action.getType().equals("Attack")) {
-      int numSoldiers = myDoAction.countSoldier(action.getSoldiers());
       return numSoldiers;
     } else {
-      return 0;
+      return countMove(action) * numSoldiers;
     }
   }
 
@@ -44,51 +44,78 @@ public class ResourceChecker {
 
   // use Dijkstra’s Algorithm to find the path with samllest total size and count needed resources
   public int countMove(Action action) {
+    TerritorySize sizegetter = new TerritorySize();
+    PriorityQueue<Territory> pq = new PriorityQueue<>(); // pq.size()?
+    HashSet<String> settled = new HashSet<String>();
     String srcName = action.getSrc().getTerritoryName();
     String dstName = action.getDst().getTerritoryName();
-    TerritorySize sizegetter = new TerritorySize();
-    PriorityQueue<Node> pq = new PriorityQueue<>();
-    pq.add(new Node(srcName, sizegetter.getTerritorySize(srcName)));
-    HashSet<String> settled = new HashSet<String>();
-    settled.add(srcName);
-    HashMap<String, Integer> totalSize = new HashMap<>();
+    Territory srcTerritory = myDoAction.findTerritory(myworld, srcName);
 
-    // init all dist to infinity
-    for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
-      ArrayList<Territory> territoryList = entry.getValue();
-      for (int j = 0; j < territoryList.size(); j++) {
-        Territory myterritory = territoryList.get(j);
-        totalSize.put(myterritory.getTerritoryName(), Integer.MAX_VALUE);
-      }
-    }
-    totalSize.put(srcName, sizegetter.getTerritorySize(srcName));
+    srcTerritory.setTotalSize(sizegetter.getTerritorySize(srcName));
+    pq.add(srcTerritory);
+    System.out.println("[DEBUG] add srcTerritory in pq");
+    printPriorityQueue(pq);
+    settled.add(srcName);
 
     while (pq.size() != 0) {
-      Node currNode = pq.poll();
-      String currName = currNode.getTerritoryName();
-      Territory currTerritory = myDoAction.findTerritory(myworld, currName);
-      int currSize = sizegetter.getTerritorySize(currName);
+      Territory currTerritory = pq.poll();
+      String currName = currTerritory.getTerritoryName();
+      int currSize = currTerritory.getTotalSize();
+      System.out.println(
+          "[DEBUG] Take " + currName + " out of queue, its total Size of path is: " + currSize);
+      printPriorityQueue(pq);
       settled.add(currName);
+
       if (currName.equals(dstName)) {
-        return totalSize.get(currName);
+        System.out.println("[DEBUG] Find dst, total Size of path is: " + currSize);
+        return currSize;
       }
 
       ArrayList<String> neighborList = currTerritory.getNeighbor();
       for (int i = 0; i < neighborList.size(); i++) {
         String neighborName = neighborList.get(i);
-        Territory neighbor = myDoAction.findTerritory(myworld, neighborName);
+        Territory neighborTerritory = myDoAction.findTerritory(myworld, neighborName);
+        if (neighborTerritory.getOwner().equals(srcTerritory.getOwner())) {
+          System.out.println("[DEBUG] find " + currName + "'s neighbor " + neighborName);
+          if (!settled.contains(neighborName)) {
+            int edgeSize = sizegetter.getTerritorySize(neighborName);
+            int newTotalSize = edgeSize + currSize;
+            if ((newTotalSize < neighborTerritory.getTotalSize())) {
+              System.out.println("[DEBUG] " + neighborName + "'s totalsize can be updated");
+              neighborTerritory.setTotalSize(newTotalSize);
+            }
 
-        if (!settled.contains(neighborName)) {
-          int edgeSize = totalSize.get(neighborName);
-          int newTotalSize = edgeSize + currSize;
-          if ((newTotalSize < totalSize.get(neighborName))) {
-            totalSize.put(neighborName, edgeSize + currSize);
+            if (containsTerrotory(pq, neighborTerritory)) {
+              System.out.println("[DEBUG] pq already contains " + neighborName + ", move it out");
+              pq.remove(neighborTerritory);
+              printPriorityQueue(pq);
+            }
+            pq.add(neighborTerritory);
+            System.out.println("[DEBUG] add " + neighborName + " in pq");
+            printPriorityQueue(pq);
           }
-          pq.add(new Node(neighborName, totalSize.get(neighborName)));
         }
       }
     }
 
-    return 10000;
+    return Integer.MAX_VALUE;
+  }
+
+  private void printPriorityQueue(PriorityQueue<Territory> pq) {
+    System.out.print("[DEBUG] pq contains: ");
+    for (Territory t : pq) {
+      System.out.print(t.getTerritoryName() + "(" + t.getTotalSize() + "), ");
+    }
+
+    System.out.print("\n");
+  }
+
+  private boolean containsTerrotory(PriorityQueue<Territory> pq, Territory territory) {
+    for (Territory t : pq) {
+      if (t.getTerritoryName().equals(territory.getTerritoryName())) {
+        return true;
+      }
+    }
+    return false;
   }
 }

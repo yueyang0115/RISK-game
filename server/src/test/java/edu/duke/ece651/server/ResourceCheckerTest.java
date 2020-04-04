@@ -13,8 +13,6 @@ public class ResourceCheckerTest {
   private HashMap<Integer, ArrayList<Territory>> myworld;
   private Territory territoryA;
   private Territory territoryB;
-  private Territory territoryC;
-  private Territory territoryD;
 
   public ResourceCheckerTest() {
     resource = new HashMap<>();
@@ -46,16 +44,6 @@ public class ResourceCheckerTest {
         "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
     JSONObject tempB = new JSONObject(Bstr);
     territoryB = formatter.JsonToTerritory(tempB);
-
-    String Cstr =
-        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
-    JSONObject tempC = new JSONObject(Cstr);
-    territoryC = formatter.JsonToTerritory(tempC);
-
-    String Dstr =
-        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
-    JSONObject tempD = new JSONObject(Dstr);
-    territoryD = formatter.JsonToTerritory(tempD);
   }
 
   @Test
@@ -142,5 +130,49 @@ public class ResourceCheckerTest {
     resource = actor.getNewResource();
     int numResource = resource.get(0);
     assertEquals(numResource, 89);
+  }
+
+  @Test
+  public void test_Dijkstra_MoveCount() {
+    WorldInitter myinitter = new WorldInitter(2);
+    HashMap<Integer, ArrayList<Territory>> Dworld = myinitter.getWorld();
+    MyFormatter formatter2 = new MyFormatter(2);
+    String B2str =
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'L'}], 'territoryName':'B'}";
+
+    JSONObject tempB2 = new JSONObject(B2str);
+    Territory territoryB2 = formatter2.JsonToTerritory(tempB2);
+
+    String E2str =
+        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'D'},{'neighbor_1':'F'}, {'neighbor_2':'G'}], 'territoryName':'E'}";
+    JSONObject tempE2 = new JSONObject(E2str);
+    Territory territoryE2 = formatter2.JsonToTerritory(tempE2);
+
+    Action action2 = new Action();
+
+    action2.setSrc(territoryB2); // B
+    assertEquals(territoryB2.getTerritoryName(), "B");
+    action2.setDst(territoryE2); // E
+    action2.setSoldierLevel(0, 2);
+    action2.setOwner("player_0");
+    action2.setType("Move");
+    ArrayList<Action> actionList = new ArrayList<>();
+    actionList.add(action2);
+
+    HashMap<Integer, ArrayList<Action>> myactionMap2 = new HashMap<>();
+    myactionMap2.put(0, actionList);
+
+    DoAction actor = new DoAction(Dworld, myactionMap2, resource);
+    assertEquals(resource.get(0), 100);
+    actor.doMoveAction(actionList);
+
+    Dworld = actor.getNewWorld();
+    resource = actor.getNewResource();
+    int numResource = resource.get(0);
+    assertEquals(numResource, 62); // 100-19*2
+    assertEquals(Dworld.get(0).get(1).getTerritoryName(), "B");
+    assertEquals(Dworld.get(0).get(1).getSoldierLevel(0), 1);
+    assertEquals(Dworld.get(0).get(4).getTerritoryName(), "E");
+    assertEquals(Dworld.get(0).get(4).getSoldierLevel(0), 5);
   }
 }
