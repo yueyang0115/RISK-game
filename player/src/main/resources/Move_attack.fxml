@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity"
+            maxWidth="-Infinity"
+            minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="800.0"
+            prefWidth="1280.0"
+            style="-fx-background-color: azure;
+            -fx-border-color: cornflowerblue;
+            -fx-border-width: 5;"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="MoveAttack">
+    <top>
+        <VBox spacing="2.0">
+            <children>
+                <Label text="Strategic Conquest Game (RISK)" textFill="MIDNIGHTBLUE" underline="true">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                    </VBox.margin>
+                </Label>
+            </children>
+            <opaqueInsets>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            </opaqueInsets>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </BorderPane.margin>
+        </VBox>
+    </top>
+    <bottom>
+        <VBox prefHeight="206.0" prefWidth="1270.0" spacing="20.0">
+            <children>
+                <Label text="You are Yellow Player, please Move action detail" textFill="MIDNIGHTBLUE">
+                    <VBox.margin>
+                        <Insets bottom="8.0" left="30.0" right="8.0" top="8.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Label>
+                <HBox prefHeight="27.0" prefWidth="423.0" spacing="50.0" BorderPane.alignment="CENTER">
+                    <opaqueInsets>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </opaqueInsets>
+                    <padding>
+                        <Insets left="15.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets bottom="15.0" left="30.0" />
+                    </VBox.margin>
+                    <children>
+                        <Label text="Choose Territories">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <ComboBox prefWidth="150.0" promptText="Source" />
+                        <ComboBox prefWidth="150.0" promptText="Destination " />
+                    </children>
+                </HBox>
+                <HBox layoutX="40.0" layoutY="66.0" prefHeight="27.0" prefWidth="423.0" spacing="25.0">
+                    <children>
+                        <Label text="Choose Soldiers">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <ComboBox prefWidth="150.0" promptText="Level 0" />
+                        <ComboBox layoutX="187.0" layoutY="10.0" prefWidth="150.0" promptText="Level 1" />
+                        <ComboBox layoutX="362.0" layoutY="10.0" prefWidth="150.0" promptText="Level 2" />
+                        <ComboBox layoutX="362.0" layoutY="10.0" prefWidth="150.0" promptText="Level 3" />
+                        <ComboBox layoutX="362.0" layoutY="10.0" prefWidth="150.0" promptText="Level 4" />
+                        <ComboBox layoutX="887.0" layoutY="10.0" prefWidth="150.0" promptText="Level 5" />
+                    </children>
+                    <opaqueInsets>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </opaqueInsets>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets left="30.0" />
+                    </VBox.margin>
+                </HBox>
+                <Button mnemonicParsing="false" text="OK">
+                    <VBox.margin>
+                        <Insets bottom="30.0" left="55.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+            </children>
+            <opaqueInsets>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            </opaqueInsets>
+        </VBox>
+    </bottom>
+    <right>
+        <VBox prefHeight="480.0" prefWidth="415.0" spacing="5.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label prefHeight="30.0" prefWidth="203.0" text="Territory Detail" textFill="MIDNIGHTBLUE">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Label>
+                <TreeView prefHeight="455.0" prefWidth="395.0">
+                    <VBox.margin>
+                        <Insets right="20.0" />
+                    </VBox.margin>
+                </TreeView>
+            </children>
+            <opaqueInsets>
+                <Insets right="8.0" top="8.0" />
+            </opaqueInsets>
+        </VBox>
+    </right>
+    <center>
+        <Pane BorderPane.alignment="CENTER">
+            <children>
+                <Button layoutX="424.0" layoutY="273.0" mnemonicParsing="false" prefHeight="118.0" prefWidth="184.0" style="-fx-shape: &quot;M 350 450 C 500 400 550 425 700 400 Q 650 250 700 100 L 350 100 Q 300 250 350 450&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="I">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+                <Button layoutX="284.0" layoutY="303.0" mnemonicParsing="false" prefHeight="107.0" prefWidth="201.0" style="-fx-shape: &quot;M 350 350 C 500 350 550 450 700 400 Q 800 300 700 150 C 450 200 500 200 350 200 Q 300 250 350 350 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="K">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+                <Button layoutX="284.0" layoutY="273.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="185.0" style="-fx-shape: &quot;M 350 400 Q 500 450 700 400 Q 800 300 800 200 C 450 200 500 200 350 200 Q 300 250 350 400&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="J">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+                <Button layoutX="540.0" layoutY="191.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="180.0" style="-fx-shape: &quot;M 350 350 C 450 350 450 350 600 350 Q 650 250 600 150 Q 500 150 350 200 Q 350 200 350 350 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="G">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+                <Button layoutX="392.0" layoutY="152.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="197.0" style="-fx-shape: &quot;M 350 350 C 450 350 450 350 550 350 Q 600 200 600 100 Q 450 0 350 100 Q 350 200 350 350 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="F">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+                <Button layoutX="281.0" layoutY="163.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="162.0" style="-fx-shape: &quot;M 350 300 C 425 300 475 300 550 300 Q 650 200 600 50 L 350 50 Q 350 200 350 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="C">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+                <Button layoutX="490.0" layoutY="56.0" mnemonicParsing="false" prefHeight="166.0" prefWidth="201.0" style="-fx-shape: &quot;M 400 200 Q 450 300 550 300 Q 650 300 750 250 Q 750 0 450 50 Q 450 100 400 200 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="E">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+                <Button layoutX="330.0" layoutY="61.0" mnemonicParsing="false" prefHeight="118.0" prefWidth="224.0" style="-fx-shape: &quot;M 350 300 C 425 300 475 300 600 300 Q 650 200 600 100 Q 450 50 350 150 Q 350 200 350 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="D">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+                <Button layoutX="146.0" layoutY="194.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="135.0" style="-fx-shape: &quot;M 400 300 Q 450 300 600 300 L 600 100 L 400 100 Q 350 200 400 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="B">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+                <Button layoutX="172.0" layoutY="102.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="191.0" style="-fx-shape: &quot;M 400 150 Q 450 400 350 400 Q 200 400 50 400 Q 50 200 250 200 Q 350 200 400 150 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="A">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+                <Button layoutX="72.0" layoutY="273.0" mnemonicParsing="false" prefHeight="123.0" prefWidth="275.0" style="-fx-shape: &quot;M 350 450 C 450 500 450 450 550 450 Q 500 300 600 200 C 450 200 500 200 350 200 C 400 300 200 350 350 450 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="L">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+                <Button layoutX="579.0" layoutY="273.0" mnemonicParsing="false" prefHeight="126.0" prefWidth="134.0" style="-fx-shape: &quot;M 550 350 Q 600 400 700 400 Q 800 250 750 100 L 550 100 Q 500 200 550 350&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="H">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Button>
+            </children></Pane>
+    </center>
+</BorderPane>
+
