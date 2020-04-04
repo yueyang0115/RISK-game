@@ -67,6 +67,7 @@ public class ResourceCheckerTest {
     territoryA.setSoldierLevel(4, 3);
     myworld.get(0).get(0).setSoldierLevel(0, 3);
     myworld.get(0).get(0).setSoldierLevel(2, 10);
+    myworld.get(0).get(0).setSoldierLevel(4, 3);
 
     territoryB.setSoldierLevel(0, 0);
     territoryB.setSoldierLevel(1, 2);
@@ -75,6 +76,7 @@ public class ResourceCheckerTest {
     myworld.get(1).get(0).setSoldierLevel(0, 0);
     myworld.get(1).get(0).setSoldierLevel(1, 2);
     myworld.get(1).get(0).setSoldierLevel(3, 2);
+    myworld.get(1).get(0).setSoldierLevel(5, 2);
 
     Action action = new Action();
 

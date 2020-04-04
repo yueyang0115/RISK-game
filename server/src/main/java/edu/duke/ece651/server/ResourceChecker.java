@@ -29,8 +29,6 @@ public class ResourceChecker {
     if (action.getType().equals("Attack")) {
       int numSoldiers = myDoAction.countSoldier(action.getSoldiers());
       return numSoldiers;
-    } else if (action.getType().equals("Move")) {
-      return 0;
     } else {
       return 0;
     }

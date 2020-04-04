@@ -10,6 +10,13 @@ import org.junit.jupiter.api.Test;
 
 public class DoActionTest {
   private HashMap<Integer, Integer> resource;
+  private HashMap<Integer, ArrayList<Territory>> myworld;
+  private Territory territoryA;
+  private Territory territoryB;
+  private Territory territoryC;
+  private Territory territoryD;
+  private Territory territoryE;
+  private Territory territoryF;
 
   public DoActionTest() {
     resource = new HashMap<>();
@@ -17,10 +24,8 @@ public class DoActionTest {
     resource.put(1, 100);
     resource.put(2, 100);
     resource.put(3, 100);
-  }
-  @Test
-  public void test_moveattack() {
-    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
+
+    myworld = new HashMap<>();
     StringBuilder fileName = new StringBuilder();
     fileName.append("/old/world2.json");
     InputStream input = getClass().getResourceAsStream(fileName.toString());
@@ -36,27 +41,68 @@ public class DoActionTest {
     MyFormatter formatter = new MyFormatter(2);
     String Astr =
         "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
-    Territory territoryA = new Territory();
+    territoryA = new Territory();
     JSONObject tempA = new JSONObject(Astr);
     territoryA = formatter.JsonToTerritory(tempA);
 
+    String Bstr =
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
+    territoryB = new Territory();
+    JSONObject tempB = new JSONObject(Bstr);
+    territoryB = formatter.JsonToTerritory(tempB);
+
+    String Cstr =
+        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
+    territoryC = new Territory();
+    JSONObject tempC = new JSONObject(Cstr);
+    territoryC = formatter.JsonToTerritory(tempC);
+
     String Dstr =
         "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
-    Territory territoryD = new Territory();
+    territoryD = new Territory();
     JSONObject tempD = new JSONObject(Dstr);
     territoryD = formatter.JsonToTerritory(tempD);
 
     String Estr =
         "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'B'},{'neighbor_2':'C'},{'neighbor_3':'D'},{'neighbor_4':'F'},{'neighbor_5':'H'},{'neighbor_6':'J'}], 'territoryName':'E'}";
-    Territory territoryE = new Territory();
+    territoryE = new Territory();
     JSONObject tempE = new JSONObject(Estr);
     territoryE = formatter.JsonToTerritory(tempE);
 
     String Fstr =
         "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'C'},{'neighbor_1':'E'},{'neighbor_2':'G'},{'neighbor_3':'K'}], 'territoryName':'F'}";
-    Territory territoryF = new Territory();
+    territoryF = new Territory();
     JSONObject tempF = new JSONObject(Fstr);
     territoryF = formatter.JsonToTerritory(tempF);
+  }
+
+  @Test
+  public void test_upgradeaction() {
+    Upgrade upgrade = new Upgrade();
+    upgrade.setPrevLevel(0);
+    upgrade.setNextLevel(3);
+    upgrade.setNumber(2);
+    upgrade.setOwner("player_0");
+    upgrade.setTerritoryName("D");
+
+    ArrayList<Upgrade> upgradeList = new ArrayList<>();
+    upgradeList.add(upgrade);
+    HashMap<Integer, Integer> resource = new HashMap<>();
+    resource.put(0, 100);
+    resource.put(1, 100);
+    resource.put(2, 100);
+    resource.put(3, 100);
+    HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
+    DoAction actor = new DoAction(myworld, myactionMap, resource);
+    actor.doUpgradeAction(upgradeList);
+
+    myworld = actor.getNewWorld();
+    assertEquals(myworld.get(0).get(1).getSoldierLevel(0), 1);
+    assertEquals(myworld.get(0).get(1).getSoldierLevel(3), 2);
+  }
+
+  @Test
+  public void test_moveattack() {
     ArrayList<Action> actionList = new ArrayList<>();
 
     Action action = new Action();
@@ -112,44 +158,6 @@ public class DoActionTest {
 
   @Test
   public void test_invalidMoveAction() {
-    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
-    StringBuilder fileName = new StringBuilder();
-    fileName.append("/old/world2.json");
-    InputStream input = getClass().getResourceAsStream(fileName.toString());
-
-    Scanner scanner = new Scanner(input);
-    StringBuilder worldInfo = new StringBuilder();
-    while (scanner.hasNext()) {
-      worldInfo.append(scanner.next());
-    }
-    MyFormatter tempformatter = new MyFormatter(2);
-    tempformatter.MapParse(myworld, worldInfo.toString());
-
-    MyFormatter formatter = new MyFormatter(2);
-    String Astr =
-        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
-    Territory territoryA = new Territory();
-    JSONObject tempA = new JSONObject(Astr);
-    territoryA = formatter.JsonToTerritory(tempA);
-
-    String Bstr =
-        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
-    Territory territoryB = new Territory();
-    JSONObject tempB = new JSONObject(Bstr);
-    territoryB = formatter.JsonToTerritory(tempB);
-
-    String Cstr =
-        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
-    Territory territoryC = new Territory();
-    JSONObject tempC = new JSONObject(Cstr);
-    territoryC = formatter.JsonToTerritory(tempC);
-
-    String Dstr =
-        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
-    Territory territoryD = new Territory();
-    JSONObject tempD = new JSONObject(Dstr);
-    territoryD = formatter.JsonToTerritory(tempD);
-
     assertEquals(territoryA.getSoldierLevel(0), 3);
     assertEquals(territoryB.getSoldierLevel(0), 3);
     assertEquals(territoryC.getSoldierLevel(0), 3);
@@ -207,50 +215,6 @@ public class DoActionTest {
 
   @Test
   public void test_invalidAttackAction() {
-    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
-    StringBuilder fileName = new StringBuilder();
-    fileName.append("/old/world2.json");
-    InputStream input = getClass().getResourceAsStream(fileName.toString());
-
-    Scanner scanner = new Scanner(input);
-    StringBuilder worldInfo = new StringBuilder();
-    while (scanner.hasNext()) {
-      worldInfo.append(scanner.next());
-    }
-    MyFormatter tempformatter = new MyFormatter(2);
-    tempformatter.MapParse(myworld, worldInfo.toString());
-
-    MyFormatter formatter = new MyFormatter(2);
-    String Astr =
-        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
-    Territory territoryA = new Territory();
-    JSONObject tempA = new JSONObject(Astr);
-    territoryA = formatter.JsonToTerritory(tempA);
-
-    String Bstr =
-        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
-    Territory territoryB = new Territory();
-    JSONObject tempB = new JSONObject(Bstr);
-    territoryB = formatter.JsonToTerritory(tempB);
-
-    String Cstr =
-        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
-    Territory territoryC = new Territory();
-    JSONObject tempC = new JSONObject(Cstr);
-    territoryC = formatter.JsonToTerritory(tempC);
-
-    String Dstr =
-        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
-    Territory territoryD = new Territory();
-    JSONObject tempD = new JSONObject(Dstr);
-    territoryD = formatter.JsonToTerritory(tempD);
-
-    String Estr =
-        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'B'},{'neighbor_2':'C'},{'neighbor_3':'D'},{'neighbor_4':'F'},{'neighbor_5':'H'},{'neighbor_6':'J'}], 'territoryName':'E'}";
-    Territory territoryE = new Territory();
-    JSONObject tempE = new JSONObject(Estr);
-    territoryE = formatter.JsonToTerritory(tempE);
-
     assertEquals(territoryA.getSoldierLevel(0), 3);
     assertEquals(territoryB.getSoldierLevel(0), 3);
     assertEquals(territoryC.getSoldierLevel(0), 3);
@@ -307,49 +271,6 @@ public class DoActionTest {
 
   @Test
   public void test_DoMoveAction() {
-    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
-    StringBuilder fileName = new StringBuilder();
-    fileName.append("/old/world2.json");
-    InputStream input = getClass().getResourceAsStream(fileName.toString());
-
-    Scanner scanner = new Scanner(input);
-    StringBuilder worldInfo = new StringBuilder();
-    while (scanner.hasNext()) {
-      worldInfo.append(scanner.next());
-    }
-    MyFormatter tempformatter = new MyFormatter(2);
-    tempformatter.MapParse(myworld, worldInfo.toString());
-
-    MyFormatter formatter = new MyFormatter(2);
-    String Astr =
-        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
-    Territory territoryA = new Territory();
-    JSONObject tempA = new JSONObject(Astr);
-    territoryA = formatter.JsonToTerritory(tempA);
-
-    String Bstr =
-        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
-    Territory territoryB = new Territory();
-    JSONObject tempB = new JSONObject(Bstr);
-    territoryB = formatter.JsonToTerritory(tempB);
-
-    String Cstr =
-        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
-    Territory territoryC = new Territory();
-    JSONObject tempC = new JSONObject(Cstr);
-    territoryC = formatter.JsonToTerritory(tempC);
-
-    String Dstr =
-        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'E'},{'neighbor_2':'H'}], 'territoryName':'D'}";
-    Territory territoryD = new Territory();
-    JSONObject tempD = new JSONObject(Dstr);
-    territoryD = formatter.JsonToTerritory(tempD);
-
-    assertEquals(territoryA.getSoldierLevel(0), 3);
-    assertEquals(territoryB.getSoldierLevel(0), 3);
-    assertEquals(territoryC.getSoldierLevel(0), 3);
-    assertEquals(territoryD.getSoldierLevel(0), 3);
-
     territoryA.setSoldierLevel(2, 2);
     myworld.get(0).get(0).setSoldierLevel(2, 2);
     assertEquals(territoryA.getSoldierLevel(2), 2);
@@ -407,39 +328,6 @@ public class DoActionTest {
 
   @Test
   public void test_DoAttackAtion2() {
-    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
-    StringBuilder fileName = new StringBuilder();
-    fileName.append("/old/world2.json");
-    InputStream input = getClass().getResourceAsStream(fileName.toString());
-
-    Scanner scanner = new Scanner(input);
-    StringBuilder worldInfo = new StringBuilder();
-    while (scanner.hasNext()) {
-      worldInfo.append(scanner.next());
-    }
-    MyFormatter tempformatter = new MyFormatter(2);
-    tempformatter.MapParse(myworld, worldInfo.toString());
-
-    MyFormatter formatter = new MyFormatter(2);
-
-    String Astr =
-        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
-    Territory territoryA = new Territory();
-    JSONObject tempA = new JSONObject(Astr);
-    territoryA = formatter.JsonToTerritory(tempA);
-
-    String Bstr =
-        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
-    Territory territoryB = new Territory();
-    JSONObject tempB = new JSONObject(Bstr);
-    territoryB = formatter.JsonToTerritory(tempB);
-
-    String Cstr =
-        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'E'},{'neighbor_2':'F'},{'neighbor_3':'G'}], 'territoryName':'C'}";
-    Territory territoryC = new Territory();
-    JSONObject tempC = new JSONObject(Cstr);
-    territoryC = formatter.JsonToTerritory(tempC);
-
     assertEquals(territoryA.getTerritoryName(), "A");
     assertEquals(territoryB.getTerritoryName(), "B");
     assertEquals(territoryA.getSoldierLevel(0), 3);
@@ -485,32 +373,6 @@ public class DoActionTest {
 
   @Test
   public void test_DoAttackAtion() {
-    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
-    StringBuilder fileName = new StringBuilder();
-    fileName.append("/old/world2.json");
-    InputStream input = getClass().getResourceAsStream(fileName.toString());
-
-    Scanner scanner = new Scanner(input);
-    StringBuilder worldInfo = new StringBuilder();
-    while (scanner.hasNext()) {
-      worldInfo.append(scanner.next());
-    }
-    MyFormatter tempformatter = new MyFormatter(2);
-    tempformatter.MapParse(myworld, worldInfo.toString());
-
-    MyFormatter formatter = new MyFormatter(2);
-    String Astr =
-        "{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'D'},{'neighbor_2':'E'}], 'territoryName':'A'}";
-    Territory territoryA = new Territory();
-    JSONObject tempA = new JSONObject(Astr);
-    territoryA = formatter.JsonToTerritory(tempA);
-
-    String Bstr =
-        "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'E'}], 'territoryName':'B'}";
-    Territory territoryB = new Territory();
-    JSONObject tempB = new JSONObject(Bstr);
-    territoryB = formatter.JsonToTerritory(tempB);
-
     territoryA.setSoldierLevel(0, 3);
     territoryA.setSoldierLevel(2, 10);
     territoryA.setSoldierLevel(4, 3);
@@ -561,19 +423,6 @@ public class DoActionTest {
 
   @Test
   public void test_DoPlusOne() {
-    HashMap<Integer, ArrayList<Territory>> myworld = new HashMap<>();
-    StringBuilder fileName = new StringBuilder();
-    fileName.append("/old/world2.json");
-    InputStream input = getClass().getResourceAsStream(fileName.toString());
-
-    Scanner scanner = new Scanner(input);
-    StringBuilder worldInfo = new StringBuilder();
-    while (scanner.hasNext()) {
-      worldInfo.append(scanner.next());
-    }
-    MyFormatter tempformatter = new MyFormatter(2);
-    tempformatter.MapParse(myworld, worldInfo.toString());
-
     for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
       ArrayList<Territory> territoryList = entry.getValue();
       for (int j = 0; j < territoryList.size(); j++) {
