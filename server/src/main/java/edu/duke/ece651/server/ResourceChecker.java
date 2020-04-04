@@ -41,4 +41,43 @@ public class ResourceChecker {
     int cost = countResource(action);
     resource.put(playerID, srcResource - cost);
   }
+
+  // use Dijkstra’s Algorithm to find the path with samllest total size and count needed resources
+  public int countMove(Action action) {
+    String srcName = action.getSrc().getTerritoryName();
+    String dstName = action.getDst().getTerritoryName();
+    TerritorySize sizegetter = new TerritorySize();
+    PriorityQueue<Territory> pq = new PriorityQueue<>();
+    pq.add(action.getSrc());
+    HashSet<String> settled = new HashSet<String>();
+    settled.add(srcName);
+    HashMap<String, Integer> totalSize = new HashMap<>();
+    totalSize.put(srcName, sizegetter.getTerritorySize(srcName));
+
+    while (pq.size() != 0) {
+      Territory curr = pq.poll();
+      String currName = curr.getTerritoryName();
+      int currSize = sizegetter.getTerritorySize(currName);
+      settled.add(currName);
+      if (currName.equals(dstName)) {
+        return totalSize.get(currName);
+      }
+
+      ArrayList<String> neighborList = curr.getNeighbor();
+      for (int i = 0; i < neighborList.size(); i++) {
+        String neighborName = neighborList.get(i);
+        Territory Neighbor = myDoAction.findTerritory(myworld, neighborName);
+
+        if (!settled.contains(neighborName)) {
+          int edgeSize = totalSize.get(neighborName);
+          if ((edgeSize + currSize < sizegetter.getTerritorySize(neighborName))) {
+            totalSize.put(neighborName, edgeSize + currSize);
+          }
+          pq.add(Neighbor);
+        }
+      }
+    }
+
+    return 10000;
+  }
 }
