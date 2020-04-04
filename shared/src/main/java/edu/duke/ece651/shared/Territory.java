@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Territory {
   private String owner;
-  // TODO: change its type into HashMap<Integer, Integer>
   private HashMap<Integer, Integer> soldiers;
   private ArrayList<String> neighbor;
   private String territoryName;
@@ -23,7 +22,6 @@ public class Territory {
     return owner;
   }
 
-  // TODO: update get and set functions
   public HashMap<Integer, Integer> getSoldiers() {
     return soldiers;
   }
