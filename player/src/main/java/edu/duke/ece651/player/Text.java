@@ -1,9 +1,11 @@
 package edu.duke.ece651.player;
 import edu.duke.ece651.shared.*;
 import java.util.*;
+
+import javafx.stage.Stage;
 import javafx.util.*;
 public class Text implements Displayable{
-  public void showMap(HashMap<Integer, ArrayList<Territory>> CurrentMap, Pair<Integer, String> playerInfo){
+  public void showMap(HashMap<Integer, ArrayList<Territory>> CurrentMap, Pair<Integer, String> playerInfo, Stage MainWindow){
     ColorID PlayerColor = new ColorID();
     for (HashMap.Entry<Integer, ArrayList<Territory>> entry : CurrentMap.entrySet()){
       String color = PlayerColor.getPlayerColor(entry.getKey());
@@ -27,9 +29,10 @@ public class Text implements Displayable{
       System.out.print("\n");
     }
   }
-  public void showAction(HashMap<Integer, ArrayList<Action>> RecvAction, Pair<Integer, String> playerInfo){
+  
+  public void showAction(HashMap<Integer, ArrayList<Action>> RecvAction, Pair<Integer, String> playerInfo, Stage MainWindow){
     ColorID PlayerColor = new ColorID();
-     for (HashMap.Entry<Integer, ArrayList<Action>> entry : RecvAction.entrySet()){
+    for (HashMap.Entry<Integer, ArrayList<Action>> entry : RecvAction.entrySet()){
       String color = PlayerColor.getPlayerColor(entry.getKey());
       System.out.println(color + " Player:");
       System.out.println("---------------");

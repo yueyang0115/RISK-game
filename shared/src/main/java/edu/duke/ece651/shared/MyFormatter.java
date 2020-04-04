@@ -25,9 +25,9 @@ public class MyFormatter {
 
       if (PlayerTemp != null) {
         ArrayList<Territory> InnerTerr = new ArrayList<Territory>();
-        // System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
+        System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
         for (int j = 0; j < PlayerTemp.length(); j++) {
-          // System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
+          System.out.println("[DEBUG] ArraySize = " + PlayerTemp.length());
           JSONObject TerrTemp = PlayerTemp.optJSONObject(j);
           Territory Inner = JsonToTerritory(TerrTemp);
           InnerTerr.add(Inner);
@@ -43,7 +43,7 @@ public class MyFormatter {
     // parse One JsonObject which is one territory
     Territory Inner = new Territory();
     String owner = TerrTemp.optString("owner");
-    // System.out.println("[DEBUG] OwnerName = " + owner);
+    System.out.println("[DEBUG] OwnerName = " + owner);
     Inner.setOwner(owner);
     JSONArray SoldierArray = TerrTemp.optJSONArray("soldiers");
     for (int i = 0; i < SoldierArray.length(); i++) {
@@ -51,17 +51,17 @@ public class MyFormatter {
       int num = InnerSoldier.optInt("level_" + Integer.toString(i));
       Inner.setSoldierLevel(i, num);
     }
-    // System.out.println("[DEBUG] SoldierNum = " + SoldierNum);
+    //System.out.println("[DEBUG] SoldierNum = " + SoldierNum);
     // neighbor is stored in JsonArray Format
     JSONArray NeighborArray = TerrTemp.optJSONArray("neighbor");
     for (int k = 0; k < NeighborArray.length(); k++) {
       JSONObject InnerNeigh = NeighborArray.optJSONObject(k);
       String NeighName = InnerNeigh.optString("neighbor_" + Integer.toString(k));
-      // System.out.println("[DEBUG] NeighborName_" + i + " = " + NeighName);
+      //System.out.println("[DEBUG] NeighborName_" + i + " = " + NeighName);
       Inner.setNeighbor(NeighName);
     }
     String TerritoryName = TerrTemp.optString("territoryName");
-    // System.out.println("[DEBUG] TerritoryName = " + TerritoryName);
+    System.out.println("[DEBUG] TerritoryName = " + TerritoryName);
     Inner.setTerritoryName(TerritoryName);
     return Inner;
   }

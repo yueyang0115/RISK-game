@@ -11,6 +11,7 @@ import java.util.Scanner;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.*;
 
@@ -40,6 +41,7 @@ public class Player extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception {
+    Window = new Stage();
     Window = primaryStage;
     Button BtnStart = new Button("Start Game");
     Label GameName = new Label("Strategic Conquest Game (RISC)");
@@ -59,8 +61,13 @@ public class Player extends Application {
         ex.printStackTrace();
       }
     });
-    Window.show();
     this.communicator = new Communicator("127.0.0.1", 12345);
+
+    Displayable d = new Graph();
+
+    addDisplayable(d);
+
+    Window.show();
   }
 
   private void Init() throws IOException {
@@ -104,9 +111,6 @@ public class Player extends Application {
     });
   }
 
-  private void StartGame(){
-
-  }
   private void getChoice(ChoiceBox<Integer> TotalPlayerNum) throws IOException {
     sendString(String.valueOf(TotalPlayerNum.getValue()));
     System.out.println("Clicked OK, Send " + TotalPlayerNum.getValue());
@@ -118,8 +122,8 @@ public class Player extends Application {
     this.playerInfo = new Pair<>(id, color);
     this.playerNum = Integer.parseInt(receiveString());
     System.out.println("Received playerNum = " + this.playerNum);
-    //Scanner scanner = new Scanner(System.in);
-    //PlayGame(scanner);
+    Scanner scanner = new Scanner(System.in);
+    PlayGame(scanner);
   }
 
   public void PlayGame(Scanner scanner) throws IOException {
@@ -129,48 +133,59 @@ public class Player extends Application {
     boolean LoseButWatch = false;
 
     while (true) {
+      System.out.println("Waiting for msg map");
       msg = receiveString();
       //if the msg is game end, end the game
-      if (msg.contains("Game End!")) {
-        System.out.println(msg);
-        break;
-      }
-      if (msg.contains("Lose Game") && !Ask) {
-        Ask = true;
-        Lose = true;
-        System.out.println("========You lose the game========\n"
-                    + "Do you want to still watch the game? Please choose Y/N");
-            //wait for player to input their choice
-            while (true) {
-              String choice = scanner.nextLine().toUpperCase();
-              //make sure they only input Y/N
-              if (!choice.equals("Y") && !choice.equals("N")) {
-                System.out.println("Your Input is invalid.\n"
-                        + "Please choose Y/N");
-                continue;
-              }
-              //send the choice to server
-              sendString(choice);
-              if (choice.equals("Y")) {
-                LoseButWatch = true;
-            System.out.println("Choose Y");
-            break;
-          } else {
-            return;
-          }
-        }
-      }
+//      if (msg.contains("Game End!")) {
+//        System.out.println(msg);
+//        break;
+//      }
+//      if (msg.contains("Lose Game") && !Ask) {
+//        Ask = true;
+//        Lose = true;
+//        System.out.println("========You lose the game========\n"
+//                    + "Do you want to still watch the game? Please choose Y/N");
+//            //wait for player to input their choice
+//            while (true) {
+//              String choice = scanner.nextLine().toUpperCase();
+//              //make sure they only input Y/N
+//              if (!choice.equals("Y") && !choice.equals("N")) {
+//                System.out.println("Your Input is invalid.\n"
+//                        + "Please choose Y/N");
+//                continue;
+//              }
+//              //send the choice to server
+//              sendString(choice);
+//              if (choice.equals("Y")) {
+//                LoseButWatch = true;
+//            System.out.println("Choose Y");
+//            break;
+//          } else {
+//            return;
+//          }
+//        }
+//      }
       MyFormatter myformatter = new MyFormatter(playerNum);
-      if (!LoseButWatch) {
-        //if it is lose but watch this turn will not display the current world map
-        territoryMap.clear();
-        // System.out.println("Received Map = " + msg);
+//      if (!LoseButWatch) {
+//        //if it is lose but watch this turn will not display the current world map
+//        territoryMap.clear();
+//        // System.out.println("Received Map = " + msg);
         myformatter.MapParse(territoryMap, msg);
-        displayMap();
-      }
-      LoseButWatch = false;
+        Stage newWindow = new Stage();
+        System.out.println("Finish Parse Map");
+        Label GameName = new Label("(RISC)");
+        VBox layout = new VBox();
+        layout.getChildren().add(GameName);
+        Scene Start = new Scene(layout, 300, 250);
+        System.out.println("Already add to Scene");
+        newWindow.setScene(Start);
+        newWindow.show();
+        //displayMap();
+        System.out.println("Finish show the map");
+//      }
+//      LoseButWatch = false;
       
-      WaitAction(Lose, myformatter);
+//      WaitAction(Lose, myformatter);
     }
   }
 
@@ -240,10 +255,16 @@ public class Player extends Application {
   }
 
   public void displayMap() {
-    displayer.showMap(territoryMap, playerInfo);
+    if(Window == null) {
+      System.out.println("[DEBUG] Window is null");
+    }
+    if(displayer == null) {
+      System.out.println("[DEBUG] Displayer is null");
+    }
+    displayer.showMap(territoryMap, playerInfo, Window);
   }
   public void displayAction() {
-    displayer.showAction(AllAction, playerInfo);
+    displayer.showAction(AllAction, playerInfo, Window);
   }
   public void close() {
     communicator.close();
@@ -262,11 +283,6 @@ public class Player extends Application {
   public static void main(String[] args) throws IOException {
     //Scanner scanner = new Scanner(System.in);
     Player player = new Player();
-    Displayable d = new Text();
-
-    player.addDisplayable(d);
-
-
 
     launch(args);
 
