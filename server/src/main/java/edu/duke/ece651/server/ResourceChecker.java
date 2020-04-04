@@ -47,33 +47,44 @@ public class ResourceChecker {
     String srcName = action.getSrc().getTerritoryName();
     String dstName = action.getDst().getTerritoryName();
     TerritorySize sizegetter = new TerritorySize();
-    PriorityQueue<Territory> pq = new PriorityQueue<>();
-    pq.add(action.getSrc());
+    PriorityQueue<Node> pq = new PriorityQueue<>();
+    pq.add(new Node(srcName, sizegetter.getTerritorySize(srcName)));
     HashSet<String> settled = new HashSet<String>();
     settled.add(srcName);
     HashMap<String, Integer> totalSize = new HashMap<>();
+
+    // init all dist to infinity
+    for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
+      ArrayList<Territory> territoryList = entry.getValue();
+      for (int j = 0; j < territoryList.size(); j++) {
+        Territory myterritory = territoryList.get(j);
+        totalSize.put(myterritory.getTerritoryName(), Integer.MAX_VALUE);
+      }
+    }
     totalSize.put(srcName, sizegetter.getTerritorySize(srcName));
 
     while (pq.size() != 0) {
-      Territory curr = pq.poll();
-      String currName = curr.getTerritoryName();
+      Node currNode = pq.poll();
+      String currName = currNode.getTerritoryName();
+      Territory currTerritory = myDoAction.findTerritory(myworld, currName);
       int currSize = sizegetter.getTerritorySize(currName);
       settled.add(currName);
       if (currName.equals(dstName)) {
         return totalSize.get(currName);
       }
 
-      ArrayList<String> neighborList = curr.getNeighbor();
+      ArrayList<String> neighborList = currTerritory.getNeighbor();
       for (int i = 0; i < neighborList.size(); i++) {
         String neighborName = neighborList.get(i);
-        Territory Neighbor = myDoAction.findTerritory(myworld, neighborName);
+        Territory neighbor = myDoAction.findTerritory(myworld, neighborName);
 
         if (!settled.contains(neighborName)) {
           int edgeSize = totalSize.get(neighborName);
-          if ((edgeSize + currSize < sizegetter.getTerritorySize(neighborName))) {
+          int newTotalSize = edgeSize + currSize;
+          if ((newTotalSize < totalSize.get(neighborName))) {
             totalSize.put(neighborName, edgeSize + currSize);
           }
-          pq.add(Neighbor);
+          pq.add(new Node(neighborName, totalSize.get(neighborName)));
         }
       }
     }
