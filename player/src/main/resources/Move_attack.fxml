@@ -32,7 +32,7 @@
     <bottom>
         <VBox prefHeight="206.0" prefWidth="1270.0" spacing="20.0">
             <children>
-                <Label text="You are Yellow Player, please Move action detail" textFill="MIDNIGHTBLUE">
+                <Label fx:id="Prompt" text="You are Yellow Player, please Move action detail" textFill="MIDNIGHTBLUE">
                     <VBox.margin>
                         <Insets bottom="8.0" left="30.0" right="8.0" top="8.0" />
                     </VBox.margin>
