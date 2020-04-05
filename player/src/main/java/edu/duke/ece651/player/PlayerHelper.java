@@ -68,6 +68,12 @@ public class PlayerHelper {
     public void setAttackAction(Action Current){
         MoveAction.add(Current);
     }
+
+    public int getFoodResource() { return FoodResource; }
+    public void setFoodResource(int f) { FoodResource = f; }
+    public int getTechResource() { return TechResource; }
+    public void setTechResource(int t) { TechResource = t;}
+
     /*public void displayMap() {
         displayer.showMap(territoryMap, playerInfo);
     }*/
