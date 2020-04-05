@@ -390,6 +390,14 @@ public class DoAction {
     return this.myworld;
   }
   public HashMap<Integer, Integer> getNewResource() {
+    TerritoryProduce tp = new TerritoryProduce();
+    for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
+      for (Territory cur : entry.getValue()) {
+        int newFood = tp.getFood(cur.getTerritoryName());
+        int playerid = entry.getKey();
+        myResource.put(playerid, myResource.get(playerid) + newFood);
+      }
+    }
     return this.myResource;
   }
 }
