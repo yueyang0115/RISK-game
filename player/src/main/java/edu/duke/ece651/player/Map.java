@@ -184,8 +184,6 @@ public class Map{
     @FXML
     public void ChooseDone() throws IOException {
         System.out.println("Click on Done in Map");
-        this.Detail.setText("Finished Input. Please waiting for other players!");
-        this.Detail.setFont(new Font("Arial", 20));
 
         this.CurrPlayer.SendAction();
         String Validation = this.CurrPlayer.ReceiveActionRes();
