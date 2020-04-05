@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -85,13 +86,16 @@
                         <Insets left="30.0" />
                     </VBox.margin>
                 </HBox>
-                <Button fx:id="OKButton" mnemonicParsing="false" onAction="#OKBtn" text="OK">
+                <Button fx:id="OKButton" mnemonicParsing="false" onAction="#OKBtn" style="-fx-background-color: lavender; -fx-border-color: black;" text="OK">
                     <VBox.margin>
                         <Insets bottom="30.0" left="55.0" />
                     </VBox.margin>
                     <font>
                         <Font size="15.0" />
                     </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </Button>
             </children>
             <opaqueInsets>

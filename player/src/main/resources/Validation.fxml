@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -107,25 +108,37 @@
             </Label>
             <HBox prefHeight="27.0" prefWidth="423.0" spacing="50.0" BorderPane.alignment="CENTER">
                 <children>
-                    <Button fx:id="UpgradeBtn" mnemonicParsing="false" onAction="#Upgrading" text="Upgrade">
+                    <Button fx:id="UpgradeBtn" mnemonicParsing="false" onAction="#Upgrading" style="-fx-background-color: lavender; -fx-border-color: black;" text="Upgrade">
                         <font>
                             <Font size="20.0" />
                         </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                     </Button>
-                    <Button fx:id="MoveBtn" mnemonicParsing="false" onAction="#ChooseMove" text="Move">
+                    <Button fx:id="MoveBtn" mnemonicParsing="false" onAction="#ChooseMove" style="-fx-background-color: lavender; -fx-border-color: black;" text="Move">
                         <font>
                             <Font size="20.0" />
                         </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                     </Button>
-                    <Button fx:id="AttackBtn" mnemonicParsing="false" onAction="#ChooseAttack" text="Attack">
+                    <Button fx:id="AttackBtn" mnemonicParsing="false" onAction="#ChooseAttack" style="-fx-background-color: lavender; -fx-border-color: black;" text="Attack">
                         <font>
                             <Font size="20.0" />
                         </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                     </Button>
-                    <Button fx:id="DoneBtn" mnemonicParsing="false" onAction="#ChooseDone" text="Done">
+                    <Button fx:id="DoneBtn" mnemonicParsing="false" onAction="#ChooseDone" style="-fx-background-color: plum; -fx-border-color: black;" text="Done">
                         <font>
                             <Font size="20.0" />
                         </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                     </Button>
                 </children>
                 <opaqueInsets>

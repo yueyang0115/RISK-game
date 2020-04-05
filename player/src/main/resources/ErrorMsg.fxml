@@ -9,10 +9,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.player.ErrorMsgController">
    <children>
-      <Button fx:id="OKBtn" layoutX="138.0" layoutY="147.0" mnemonicParsing="false" onAction="#OK" text="OK">
+      <Button fx:id="OKBtn" layoutX="138.0" layoutY="147.0" mnemonicParsing="false" onAction="#OK" style="-fx-background-color: plum; -fx-border-color: black;" text="OK">
          <font>
             <Font size="15.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Label fx:id="labelmsg" alignment="CENTER" layoutX="84.0" layoutY="61.0" text="message" textFill="RED" AnchorPane.leftAnchor="84.0">
          <font>
             <Font name="System Bold" size="25.0" />

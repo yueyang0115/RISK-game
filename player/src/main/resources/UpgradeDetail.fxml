@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -218,18 +219,24 @@
                </VBox.margin></ComboBox>
             <HBox spacing="30.0">
                <children>
-                  <Button fx:id="addBtn" mnemonicParsing="false" onAction="#AddClick" text="Add">
+                  <Button fx:id="addBtn" mnemonicParsing="false" onAction="#AddClick" style="-fx-background-color: lavender; -fx-border-color: black;" text="Add">
                      <font>
                         <Font size="18.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="45.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
-                  <Button fx:id="OKBtn" mnemonicParsing="false" onAction="#OKClick" text="Back" textFill="RED">
+                  <Button fx:id="OKBtn" mnemonicParsing="false" onAction="#OKClick" style="-fx-background-color: plum; -fx-border-color: black;" text="Back">
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </HBox>
