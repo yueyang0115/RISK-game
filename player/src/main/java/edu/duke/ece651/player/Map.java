@@ -186,14 +186,37 @@ public class Map{
         System.out.println("Click on Done");
         this.CurrPlayer.SendAction();
         String Validation = this.CurrPlayer.ReceiveActionRes();
+        System.out.println("Validation " + Validation);
         this.CurrPlayer.ReceiveAllAction();
-        this.CurrPlayer.ReceiveMapANDShow();
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Validation.fxml"));
-        loaderStart.setControllerFactory(c->{
-            return new DoneAction(this.CurrPlayer, Validation);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        this.Window.setScene(scene);
-        this.Window.show();
+        //the answer could be map or lose game and game end
+        String Answer = this.CurrPlayer.ReceiveFromServer();
+        if(Answer.contains("Game End!")){
+            System.out.println("Received Game End");
+            this.Window.close();
+            this.CurrPlayer.close();
+        }
+        else if(Answer.contains("Lose Game")){
+            System.out.println("Received Lose Game");
+            this.CurrPlayer.setAsk(true);
+            this.CurrPlayer.setLose(true);
+            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Lose.fxml"));
+            loaderStart.setControllerFactory(c->{
+                return new Lose(this.CurrPlayer, this.Window);
+            });
+            Scene scene = new Scene(loaderStart.load());
+            this.Window.setScene(scene);
+            this.Window.show();
+        }
+        else {
+            System.out.println("Normal Received Map");
+            this.CurrPlayer.ContinueReceive(Answer);
+            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Validation.fxml"));
+            loaderStart.setControllerFactory(c -> {
+                return new DoneAction(this.CurrPlayer, Validation);
+            });
+            Scene scene = new Scene(loaderStart.load());
+            this.Window.setScene(scene);
+            this.Window.show();
+        }
     }
 }
