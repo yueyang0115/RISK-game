@@ -52,6 +52,7 @@ public class DoAction {
       UpgradeTerr.setSoldierLevel(preLevel, CurrPreLevelNum - CurrentAction.getNumber());
       UpgradeTerr.setSoldierLevel(nextLevel, CurrNextLevelNum + CurrentAction.getNumber());
     }
+    tempWorldStr = myformatter.MapCompose(myworld).toString();
   }
 
   // domove action
@@ -178,7 +179,7 @@ public class DoAction {
       removeHelper(action);
     }
 
-    // reset map back to no action performed status, do move actions first
+    // reset map back to after upgrade performed status, do move actions first
     myformatter.MapParse(myworld, tempWorldStr); // reset world
     copyMap(myResource, rawResource); // reset resource
     doMoveAction(mymoveList);

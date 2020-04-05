@@ -189,11 +189,11 @@ public class MoveOrAttack {
             }
             Current.setSoldiers(Soldiers);
             if(this.ActionType.equals("Move")){
-                Current.setType("M");
+                Current.setType("Move");
                 this.CurrPlayer.setMoveAction(Current);
             }
             else{
-                Current.setType("A");
+                Current.setType("Attack");
                 this.CurrPlayer.setAttackAction(Current);
             }
             MainPageView(this.CurrPlayer);
