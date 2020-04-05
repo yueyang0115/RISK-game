@@ -1,9 +1,11 @@
 package edu.duke.ece651.player;
 import edu.duke.ece651.shared.*;
 import java.util.*;
+
+import javafx.scene.control.Button;
 import javafx.util.*;
 public class Text implements Displayable{
-  public void showMap(HashMap<Integer, ArrayList<Territory>> CurrentMap, Pair<Integer, String> playerInfo){
+  public void showMap(HashMap<Integer, ArrayList<Territory>> CurrentMap, Pair<Integer, String> playerInfo, HashMap<String,Button> ButtonMap){
     ColorID PlayerColor = new ColorID();
     for (HashMap.Entry<Integer, ArrayList<Territory>> entry : CurrentMap.entrySet()){
       String color = PlayerColor.getPlayerColor(entry.getKey());

@@ -7,10 +7,8 @@ import java.util.*;
 import java.util.Scanner;
 
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.util.*;
 import javafx.fxml.*;
 
 public class Player extends Application {
@@ -34,7 +32,6 @@ public class Player extends Application {
     PlayerHelper player = new PlayerHelper();
     Displayable d = new Text();
     player.addDisplayable(d);
-
     ReceiveID(player, player.getCommunicator());
     showStartView(player);
   }
