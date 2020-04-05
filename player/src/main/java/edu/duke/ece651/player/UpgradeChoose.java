@@ -65,65 +65,86 @@ public class UpgradeChoose {
     @FXML
     public void BtnA(){
         System.out.println("Click on A");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "A");
+        if (CurrentClicked.)
+
 
     }
 
     @FXML
     public void BtnB(){
         System.out.println("Click on B");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "B");
+
 
     }
     @FXML
     public void BtnC(){
         System.out.println("Click on C");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "C");
+
 
     }
     @FXML
     public void BtnD(){
         System.out.println("Click on D");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "D");
+
 
     }
     @FXML
     public void BtnE(){
         System.out.println("Click on E");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "E");
+
 
     }
     @FXML
     public void BtnF(){
         System.out.println("Click on F");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "F");
+
 
     }
     @FXML
     public void BtnG(){
         System.out.println("Click on G");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "G");
+
 
     }
     @FXML
     public void BtnH(){
         System.out.println("Click on H");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "H");
+
 
     }
     @FXML
     public void BtnI(){
         System.out.println("Click on I");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "I");
+
 
     }
     @FXML
     public void BtnJ(){
         System.out.println("Click on J");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "J");
+
 
     }
     @FXML
     public void BtnK(){
         System.out.println("Click on K");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "K");
+
 
     }
     @FXML
     public void BtnL(){
         System.out.println("Click on L");
-//        Territory CurrentClicked =  FindTerritory(this.TerrMap, "L");
-//        String ShowLabel = ComposeString(CurrentClicked);
-//        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "L");
     }
 
     public Territory FindTerritory(HashMap<Integer, ArrayList<Territory>> World, String TerritoryName) {
