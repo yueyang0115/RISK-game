@@ -23,6 +23,9 @@ public class DoAction {
     tempWorldStr = myformatter.MapCompose(myworld).toString();
     myResource = resource;
     copyMap(rawResource, resource);
+
+
+
   }
 
   public DoAction(HashMap<Integer, ArrayList<Territory>> world) {
@@ -57,6 +60,16 @@ public class DoAction {
 
   // domove action
   public void doMoveAction(ArrayList<Action> moveList) {
+    System.out.println("[DEBUG] moveList.size() is "+moveList.size());
+    for(int k = 0 ; k < moveList.size(); k++){
+      System.out.println("[DEBUG] action's src is " + moveList.get(k).getSrc().getTerritoryName());
+            System.out.println("[DEBUG] action's dst is " + moveList.get(k).getDst().getTerritoryName());
+      System.out.println("[DEBUG] action's soldoerLevel0 has " + moveList.get(k).getSoldierLevel(0));
+    }
+    if(moveList.size() == 0) {
+      return;
+    }
+
     for (int i = 0; i < moveList.size(); i++) {
       // System.out.println("[DEBUG] i is " + i);
       Action action = moveList.get(i);
@@ -135,7 +148,7 @@ public class DoAction {
 
   // remove player that contains invalid action from actionsmap
   private void removePlayer(Action action) {
-    // System.out.println("[DEBUG] action inValid");
+    System.out.println("[DEBUG] action inValid");
     String playerName = action.getOwner();
     int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
     if (myActionMap.containsKey(playerID)) {
@@ -154,6 +167,10 @@ public class DoAction {
   }
 
   public void doAttackAction(ArrayList<Action> attackList) {
+    if(attackList.size() == 0) {
+      return;
+    }
+
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
       // if player has previous invalid action, ignore all its actions

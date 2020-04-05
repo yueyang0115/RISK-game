@@ -6,6 +6,7 @@ import edu.duke.ece651.shared.Territory;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class Graph implements Displayable{
             }
         }
         ShowLabel.setText(Text.toString());
+        ShowLabel.setFont(new Font("Arial", 24));
     }
 
     public String getStyle(String color, String territoryName) {

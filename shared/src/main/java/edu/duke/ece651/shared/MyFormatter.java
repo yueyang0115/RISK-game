@@ -99,9 +99,9 @@ public class MyFormatter {
       InnerAction.setType(ActionType);
       JSONArray SoldierArray = ActionTemp.optJSONArray("soldiers");
       for (int j = 0; j < SoldierArray.length(); j++) {
-        JSONObject InnerSoldier = SoldierArray.optJSONObject(i);
-        int num = InnerSoldier.optInt("level_" + Integer.toString(i));
-        InnerAction.setSoldierLevel(i, num);
+        JSONObject InnerSoldier = SoldierArray.optJSONObject(j);
+        int num = InnerSoldier.optInt("level_" + Integer.toString(j));
+        InnerAction.setSoldierLevel(j, num);
       }
       setSrcDst(InnerAction, ActionTemp, "src");
       setSrcDst(InnerAction, ActionTemp, "dst");

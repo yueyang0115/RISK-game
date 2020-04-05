@@ -53,7 +53,7 @@ public class ResourceChecker {
 
     srcTerritory.setTotalSize(sizegetter.getTerritorySize(srcName));
     pq.add(srcTerritory);
-    System.out.println("[DEBUG] add srcTerritory in pq");
+    //System.out.println("[DEBUG] add srcTerritory in pq");
     printPriorityQueue(pq);
     settled.add(srcName);
 
@@ -61,8 +61,8 @@ public class ResourceChecker {
       Territory currTerritory = pq.poll();
       String currName = currTerritory.getTerritoryName();
       int currSize = currTerritory.getTotalSize();
-      System.out.println(
-          "[DEBUG] Take " + currName + " out of queue, its total Size of path is: " + currSize);
+      /*System.out.println(
+          "[DEBUG] Take " + currName + " out of queue, its total Size of path is: " + currSize);*/
       printPriorityQueue(pq);
       settled.add(currName);
 
@@ -76,22 +76,22 @@ public class ResourceChecker {
         String neighborName = neighborList.get(i);
         Territory neighborTerritory = myDoAction.findTerritory(myworld, neighborName);
         if (neighborTerritory.getOwner().equals(srcTerritory.getOwner())) {
-          System.out.println("[DEBUG] find " + currName + "'s neighbor " + neighborName);
+          //System.out.println("[DEBUG] find " + currName + "'s neighbor " + neighborName);
           if (!settled.contains(neighborName)) {
             int edgeSize = sizegetter.getTerritorySize(neighborName);
             int newTotalSize = edgeSize + currSize;
             if ((newTotalSize < neighborTerritory.getTotalSize())) {
-              System.out.println("[DEBUG] " + neighborName + "'s totalsize can be updated");
+              //System.out.println("[DEBUG] " + neighborName + "'s totalsize can be updated");
               neighborTerritory.setTotalSize(newTotalSize);
             }
 
             if (containsTerrotory(pq, neighborTerritory)) {
-              System.out.println("[DEBUG] pq already contains " + neighborName + ", move it out");
+              //System.out.println("[DEBUG] pq already contains " + neighborName + ", move it out");
               pq.remove(neighborTerritory);
               printPriorityQueue(pq);
             }
             pq.add(neighborTerritory);
-            System.out.println("[DEBUG] add " + neighborName + " in pq");
+            //System.out.println("[DEBUG] add " + neighborName + " in pq");
             printPriorityQueue(pq);
           }
         }
@@ -102,12 +102,12 @@ public class ResourceChecker {
   }
 
   private void printPriorityQueue(PriorityQueue<Territory> pq) {
-    System.out.print("[DEBUG] pq contains: ");
+    /*System.out.print("[DEBUG] pq contains: ");
     for (Territory t : pq) {
       System.out.print(t.getTerritoryName() + "(" + t.getTotalSize() + "), ");
     }
 
-    System.out.print("\n");
+    System.out.print("\n");*/
   }
 
   private boolean containsTerrotory(PriorityQueue<Territory> pq, Territory territory) {
