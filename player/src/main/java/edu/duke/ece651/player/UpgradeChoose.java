@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -179,7 +180,7 @@ public class UpgradeChoose {
 
     private void promptSuccess(String territoryName) throws IOException {
         System.out.println("owner match");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/UpdateDetail.fxml"));
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/UpgradeDetail.fxml"));
         loaderStart.setControllerFactory(c->{
             return new UpgradeDetail(this.CurrPlayer, territoryName, Window);
         });
@@ -192,7 +193,7 @@ public class UpgradeChoose {
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/ErrorMsg.fxml"));
         Stage newWindow = new Stage();
         loaderStart.setControllerFactory(c->{
-            return new ErrorMsgController("message", newWindow);
+            return new ErrorMsgController("Invalid Territory", newWindow);
         });
         Scene scene = new Scene(loaderStart.load());
         newWindow.setScene(scene);

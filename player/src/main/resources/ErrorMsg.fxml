@@ -13,7 +13,7 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Label fx:id="labelmsg" alignment="CENTER" layoutX="84.0" layoutY="61.0" text="Invalid Upgrade" textFill="RED" AnchorPane.leftAnchor="84.0">
+      <Label fx:id="labelmsg" alignment="CENTER" layoutX="84.0" layoutY="61.0" text="message" textFill="RED" AnchorPane.leftAnchor="84.0">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
