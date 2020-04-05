@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UpgradeChoose implements Displayable {
+public class UpgradeChoose {
     @FXML private Button ButtonA;
     @FXML private Button ButtonB;
     @FXML private Button ButtonC;
@@ -55,37 +55,11 @@ public class UpgradeChoose implements Displayable {
     }
 
     public void initialize(){
-        System.out.println("aaaa========");
-        showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo());
-    }
-
-    @Override
-    public void showMap(HashMap<Integer, ArrayList<Territory>> CurrentMap, Pair<Integer, String> playerInfo) {
         InitButtonMap();
+        new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         ColorID PlayerColor = new ColorID();
-        String PlayerName = PlayerColor.getPlayerColor(playerInfo.getKey());
+        String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("You are " + PlayerName + " Player.");
-        for (HashMap.Entry<Integer, ArrayList<Territory>> entry : CurrentMap.entrySet()){
-            //iterate each player color to set the button territory to its color
-            String color = PlayerColor.getPlayerColor(entry.getKey());
-            String background = color.toLowerCase();
-            ArrayList<Territory> TerrList = entry.getValue();
-            for(int i = 0; i < TerrList.size(); i++){
-                Territory OneTerr = TerrList.get(i);
-                String TerrName = OneTerr.getTerritoryName();
-                System.out.println("Territory Name: " + TerrName);
-                String setBack = "-fx-background-color: " + background + ";";
-                System.out.println("Set Style" + setBack);
-                Button Btn = this.ButtonMap.get(TerrName);
-                Btn.setStyle(setBack);
-            }
-        }
-        System.out.println("Already paint color");
-    }
-
-    @Override
-    public void showAction(HashMap<Integer, ArrayList<Action>> RecvAction, Pair<Integer, String> playerInfo) {
-
     }
 
     @FXML
