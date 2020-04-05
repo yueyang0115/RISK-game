@@ -63,6 +63,11 @@ public class Graph implements Displayable{
 
     public String getStyle(String color, String territoryName) {
         StringBuilder sb = new StringBuilder();
+        if (color.equals(("green"))) { color = "lightgreen"; }
+        else if (color.equals(("blue"))) { color = "lightskyblue"; }
+        else if (color.equals(("red"))) { color = "lightcoral"; }
+        else if (color.equals(("yellow"))) { color = "lemonchiffon"; }
+        else if (color.equals(("white"))) { color = "whitesmoke"; }
         sb.append("-fx-background-color: " + color + ";");
         if (territoryName.equals("A")) { sb.append("-fx-shape: \"M 400 150 Q 450 400 350 400 Q 200 400 50 400 Q 50 200 250 200 Q 350 200 400 150\""); }
         else if (territoryName.equals("B")) { sb.append("-fx-shape: \"M 400 300 Q 450 300 600 300 L 600 100 L 400 100 Q 350 200 400 300\""); }
