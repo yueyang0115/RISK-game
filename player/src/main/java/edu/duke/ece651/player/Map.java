@@ -4,15 +4,22 @@ import edu.duke.ece651.shared.Action;
 import edu.duke.ece651.shared.ColorID;
 import edu.duke.ece651.shared.Territory;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Pair;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,7 +44,7 @@ public class Map implements Displayable{
 
     @FXML private TreeView<String> Detail;
 
-
+    private Stage Window;
 
     private PlayerHelper CurrPlayer;
     private HashMap<String, Button> ButtonMap;
@@ -57,7 +64,8 @@ public class Map implements Displayable{
         ButtonMap.put("K", ButtonK);
         ButtonMap.put("L", ButtonL);
     }
-    public Map(PlayerHelper player){
+    public Map(PlayerHelper player, Stage Window){
+        this.Window = Window;
         this.Detail = new TreeView<>();
         this.CurrPlayer = player;
         this.TerrMap = player.getTerritoryMap();
@@ -65,6 +73,7 @@ public class Map implements Displayable{
 
     public void initialize(){
         showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo());
+        //setTree();
     }
     @Override
     public void showMap(HashMap<Integer, ArrayList<Territory>> CurrentMap, Pair<Integer, String> playerInfo) {
@@ -95,22 +104,28 @@ public class Map implements Displayable{
     public void setTree(){
 
         TreeItem<String> TerrName, Soldier, Neighbor, Owner;
-        TerrName = new TreeItem<>();
+        TerrName = new TreeItem<>("TerritoryName");
+        TerrName.setExpanded(true);
+
         Owner = makeBranch("OwnerName", TerrName);
+        makeBranch("A", Owner);
         Soldier = makeBranch("Soldiers", TerrName);
         Neighbor = makeBranch("Neighbors", TerrName);
+
         ArrayList<TreeItem<String>> Level = new ArrayList<TreeItem<String>>();
 
         for(int i = 0; i < 7; i++){
-            TreeItem<String> TempLevel = Level.get(0);
+            TreeItem<String> TempLevel = new TreeItem<>();
             TempLevel = makeBranch("Level " + i, Soldier);
+            Level.add(TempLevel);
         }
-
+        
         this.Detail = new TreeView<>(TerrName);
     }
 
     public TreeItem<String> makeBranch(String title, TreeItem<String> parent){
         TreeItem<String> item = new TreeItem<>(title);
+        item.setExpanded(true);
         parent.getChildren().add(item);
         return item;//return the branch
     }
@@ -119,6 +134,22 @@ public class Map implements Displayable{
     public void BtnA(){
         setTree();
         System.out.println("Click on A");
+        /*this.Detail.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+            if(newValue != null){
+                System.out.println(newValue);
+            }
+        });*/
+    }
+    @FXML
+    public void Upgrading() throws IOException {
+        System.out.println("Click on Upgrade");
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_Attack.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new Move();
+        });
+        Scene scene = new Scene(loaderStart.load());
+        this.Window.setScene(scene);
+        this.Window.show();
     }
 
 }

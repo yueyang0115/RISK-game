@@ -19,7 +19,7 @@
             -fx-border-width: 5;"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="MoveAttack">
+            fx:controller="edu.duke.ece651.player.Move">
     <top>
         <VBox spacing="2.0">
             <children>
