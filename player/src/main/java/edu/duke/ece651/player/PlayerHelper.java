@@ -62,9 +62,9 @@ public class PlayerHelper {
         this.displayer = d;
     }
 
-    public void displayMap() {
+    /*public void displayMap() {
         displayer.showMap(territoryMap, playerInfo);
-    }
+    }*/
     public void displayAction() {
         displayer.showAction(AllAction, playerInfo);
     }
@@ -96,7 +96,7 @@ public class PlayerHelper {
         territoryMap.clear();
         myformatter.MapParse(territoryMap, msg);
         //TODO: show map use controller
-        displayMap();
+        //displayMap();
     }
 
 
@@ -144,7 +144,7 @@ public class PlayerHelper {
                 territoryMap.clear();
                 // System.out.println("Received Map = " + msg);
                 myformatter.MapParse(territoryMap, msg);
-                displayMap();
+                //displayMap();
                 //Receive food resource
                 FoodResource = Integer.parseInt(receiveString());
                 System.out.println("Your food resource: " + FoodResource);
