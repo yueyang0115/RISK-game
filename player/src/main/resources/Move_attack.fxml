@@ -108,7 +108,10 @@
                     </font>
                 </Label>
             <Label fx:id="Resource" prefHeight="124.0" prefWidth="415.0" text="Label" />
-            <Label fx:id="Detail" prefHeight="438.0" prefWidth="392.0" text="Label" />
+            <Label fx:id="Detail" prefHeight="438.0" prefWidth="392.0" text="Click a territory to view its detail!">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
             </children>
             <opaqueInsets>
                 <Insets right="8.0" top="8.0" />
