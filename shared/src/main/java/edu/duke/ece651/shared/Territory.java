@@ -31,7 +31,6 @@ public class Territory implements Comparable<Territory> {
   public int getSoldierLevel(int level) {
     return soldiers.get(level);
   }
-
   public void setSoldiers(HashMap<Integer, Integer> soldierMap) {
     for (HashMap.Entry<Integer, Integer> entry : soldierMap.entrySet()) {
       soldiers.put(entry.getKey(), entry.getValue());

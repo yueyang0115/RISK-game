@@ -14,15 +14,21 @@ import java.io.IOException;
 public class ErrorMsgController {
     @FXML private Button OKBtn;
     @FXML private Label labelmsg;
+    private String message;
 
     private Stage Window;
     public ErrorMsgController(String content, Stage W){
         Window = W;
         Window.initModality(Modality.APPLICATION_MODAL);
+        message = content;
         labelmsg = new Label(content);
+    }
+    public void initialize(){
+        labelmsg.setText(message);
     }
     @FXML
     public void OK() throws IOException {
         Window.close();
     }
+
 }
