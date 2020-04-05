@@ -35,6 +35,7 @@ public class MoveOrAttack {
 
     @FXML private Button OKButton;
     @FXML private Label Detail;
+    @FXML private Label Prompt;
 
     @FXML private Button ButtonA;
     @FXML private Button ButtonB;
@@ -49,6 +50,22 @@ public class MoveOrAttack {
     @FXML private Button ButtonK;
     @FXML private Button ButtonL;
 
+    private HashMap<String, Button> ButtonMap;
+    private void InitButtonMap(){
+        ButtonMap = new HashMap<>();
+        ButtonMap.put("A", ButtonA);
+        ButtonMap.put("B", ButtonB);
+        ButtonMap.put("C", ButtonC);
+        ButtonMap.put("D", ButtonD);
+        ButtonMap.put("E", ButtonE);
+        ButtonMap.put("F", ButtonF);
+        ButtonMap.put("G", ButtonG);
+        ButtonMap.put("H", ButtonH);
+        ButtonMap.put("I", ButtonI);
+        ButtonMap.put("J", ButtonJ);
+        ButtonMap.put("K", ButtonK);
+        ButtonMap.put("L", ButtonL);
+    }
     private void LevelMap(){
         MapLevel = new HashMap<>();
         MapLevel.put(0,this.Level0);
@@ -67,6 +84,15 @@ public class MoveOrAttack {
         this.ActionType = Type;
         this.Window = Window;
 
+    }
+    public void initialize(){
+        /*InitButtonMap();
+        new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
+        ColorID PlayerColor = new ColorID();
+        String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
+        this.Prompt.setText("You are " + PlayerName + " Player, please choose action");
+        this.Prompt.setFont(new Font("Arial", 28));*/
+        InitTerr();
     }
     public void InitTerr(){
         int ID = this.CurrPlayer.getPlayerInfo().getKey();
@@ -128,9 +154,6 @@ public class MoveOrAttack {
         }
     }
 
-    public void initialize(){
-        InitTerr();
-    }
 
     private boolean CheckAction(){
         if(this.SourceTerr.getValue() == this.DstTerr.getValue()){

@@ -17,8 +17,8 @@ public class Lose{
     @FXML private Button buttonYes;
     @FXML private Button buttonNo;
 
-    @FXML
-    public void LoseButWatch() throws IOException {
+    //@FXML
+    /*public void LoseButWatch() throws IOException {
         System.out.println("Lose But Watch");
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
         loaderStart.setControllerFactory(c->{
@@ -38,5 +38,5 @@ public class Lose{
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);
         this.Window.show();
-    }
+    }*/
 }

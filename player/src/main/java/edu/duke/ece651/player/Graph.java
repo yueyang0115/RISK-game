@@ -4,6 +4,7 @@ import edu.duke.ece651.shared.Action;
 import edu.duke.ece651.shared.ColorID;
 import edu.duke.ece651.shared.Territory;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -31,8 +32,24 @@ public class Graph implements Displayable{
         System.out.println("Already paint color");
     }
     @Override
-    public void showAction(HashMap<Integer, ArrayList<Action>> RecvAction, Pair<Integer, String> playerInfo) {
-
+    public void showAction(HashMap<Integer, ArrayList<Action>> RecvAction, Pair<Integer, String> playerInfo, Label ShowLabel) {
+        ColorID PlayerColor = new ColorID();
+        StringBuilder Text = new StringBuilder();
+        for (HashMap.Entry<Integer, ArrayList<Action>> entry : RecvAction.entrySet()){
+            String color = PlayerColor.getPlayerColor(entry.getKey());
+            Text.append(color + " Player:\n");
+            Text.append("---------------\n");
+            ArrayList<Action> ActionList = entry.getValue();
+            for(int i = 0; i < ActionList.size(); i++){
+                Action OneAction = ActionList.get(i);
+                int ActSoldiers = OneAction.getSoldierLevel(0);
+                String ActionType = OneAction.getType();
+                String Source = OneAction.getSrc().getTerritoryName();
+                String Destination = OneAction.getDst().getTerritoryName();
+                Text.append(" " + ActionType + ": " + ActSoldiers + " units from " + Source + " to " + Destination + "\n");
+            }
+        }
+        ShowLabel.setText(Text.toString());
     }
 
 }
