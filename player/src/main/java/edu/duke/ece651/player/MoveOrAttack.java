@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -24,7 +25,7 @@ public class MoveOrAttack {
     private Stage Window;
     @FXML private ComboBox<String> SourceTerr;
     @FXML private ComboBox<String> DstTerr;
-
+    @FXML private Label Resource;
     @FXML private ComboBox<Integer> Level0;
     @FXML private ComboBox<Integer> Level1;
     @FXML private ComboBox<Integer> Level2;
@@ -93,6 +94,9 @@ public class MoveOrAttack {
         this.Prompt.setText("You are " + PlayerName + " Player, please choose action");
         this.Prompt.setFont(new Font("Arial", 28));
         InitTerr();
+        this.Resource.setText("Food Resources: " + this.CurrPlayer.getFoodResource());
+        this.Resource.setTextFill(Color.web("#ff0000"));
+        this.Resource.setFont(new Font("Arial", 20));
     }
     public void InitTerr(){
         int ID = this.CurrPlayer.getPlayerInfo().getKey();

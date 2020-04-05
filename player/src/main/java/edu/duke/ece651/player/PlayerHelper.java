@@ -152,6 +152,15 @@ public class PlayerHelper {
             myformatter.MapParse(territoryMap, msg);
         }
     }
+    public void AddTechResource(HashMap<Integer, ArrayList<Territory>> TerrMap, Pair<Integer, String> PlayerInfo){
+        TerritoryProduce AddResource = new TerritoryProduce();
+        ArrayList<Territory> MyTerr = new ArrayList<>();
+        MyTerr = TerrMap.get(PlayerInfo.getKey());
+        for(int i = 0; i < MyTerr.size(); i++){
+            int CurrAdd = AddResource.getTech(MyTerr.get(i).getTerritoryName());
+            this.TechResource += CurrAdd;
+        }
+    }
     /*
     public void PlayGame(Scanner scanner) throws IOException {
         String msg;

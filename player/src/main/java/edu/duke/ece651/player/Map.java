@@ -191,6 +191,8 @@ public class Map{
         String Validation = this.CurrPlayer.ReceiveActionRes();
         System.out.println("Validation " + Validation);
         this.CurrPlayer.ReceiveAllAction();
+
+        this.CurrPlayer.AddTechResource(this.CurrPlayer.getTerritoryMap(),this.CurrPlayer.getPlayerInfo());
         //the answer could be map or lose game and game end
         String Answer = this.CurrPlayer.ReceiveFromServer();
         if(Answer.contains("Game End!")){

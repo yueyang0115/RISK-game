@@ -107,6 +107,7 @@
                         <Font size="25.0" />
                     </font>
                 </Label>
+            <Label fx:id="Resource" prefHeight="124.0" prefWidth="415.0" text="Label" />
             <Label fx:id="Detail" prefHeight="438.0" prefWidth="392.0" text="Label" />
             </children>
             <opaqueInsets>
