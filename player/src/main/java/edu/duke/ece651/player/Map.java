@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import java.io.IOException;
@@ -70,6 +71,7 @@ public class Map implements Displayable{
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(playerInfo.getKey());
         this.Prompt.setText("You are " + PlayerName + " Player, please choose action");
+        this.Prompt.setFont(new Font("Arial", 28));
         for (HashMap.Entry<Integer, ArrayList<Territory>> entry : CurrentMap.entrySet()){
             //iterate each player color to set the button territory to its color
             String color = PlayerColor.getPlayerColor(entry.getKey());
@@ -108,12 +110,16 @@ public class Map implements Displayable{
         }
         return ShowDetail.toString();
     }
+    public void ShowLabel(Territory CurrentClicked){
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+        this.Detail.setFont(new Font("Arial", 20));
+    }
     @FXML
     public void BtnA(){
         System.out.println("Click on A");
         Territory CurrentClicked =  FindTerritory(this.TerrMap, "A");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        ShowLabel(CurrentClicked);
     }
 
     @FXML
