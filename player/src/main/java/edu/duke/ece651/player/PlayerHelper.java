@@ -2,6 +2,7 @@ package edu.duke.ece651.player;
 
 import edu.duke.ece651.shared.*;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -21,6 +22,9 @@ public class PlayerHelper {
     private int playerNum;
     private int FoodResource;
     private int TechResource;
+    private boolean Ask;
+    private boolean Lose;
+    private boolean LoseButWatch;
     //private Stage primaryStage;
 
 
@@ -32,6 +36,10 @@ public class PlayerHelper {
         this.UpgradeAction = new ArrayList<>();
         this.communicator = new Communicator("127.0.0.1", 1234);
         this.playerNum = 0;
+        this.TechResource = 200;
+        Ask = false;
+        Lose = false;
+        LoseButWatch = false;
     }
     //Init player's id, player info, receiving total player number from server
     public void InitValue(){
@@ -110,17 +118,41 @@ public class PlayerHelper {
     }
     public void ReceiveMapANDShow(){
         String msg = receiveString();
-        MyFormatter myformatter = new MyFormatter(playerNum);
-        territoryMap.clear();
-        myformatter.MapParse(territoryMap, msg);
         String FoodStr = receiveString();
         System.out.println("Received Food: " + FoodStr);
         FoodResource = Integer.parseInt(FoodStr);
+        MyFormatter myformatter = new MyFormatter(playerNum);
+        territoryMap.clear();
+        myformatter.MapParse(territoryMap, msg);
+
         //show map use controller
         //displayMap();
     }
+    public void setAsk(boolean Ask){
+        this.Ask = Ask;
+    }
+    public void setLose(boolean Ask){
+        this.Ask = Ask;
+    }
 
-
+    public void setLoseButWatch(boolean Ask){
+        this.Ask = Ask;
+    }
+    public String ReceiveFromServer(){
+        String msg = receiveString();
+        return msg;
+    }
+    public void ContinueReceive(String msg){
+        if(!LoseButWatch) {
+            String FoodStr = receiveString();
+            System.out.println("Received Food: " + FoodStr);
+            FoodResource = Integer.parseInt(FoodStr);
+            MyFormatter myformatter = new MyFormatter(playerNum);
+            territoryMap.clear();
+            myformatter.MapParse(territoryMap, msg);
+        }
+    }
+    /*
     public void PlayGame(Scanner scanner) throws IOException {
         String msg;
         boolean Ask = false;
@@ -174,25 +206,32 @@ public class PlayerHelper {
 
             //WaitAction(Lose, myformatter);
         }
-    }
+    }*/
     public HashMap<Integer, ArrayList<Action>> getAllAction(){
         return this.AllAction;
     }
     public void SendAction(){
-        MyFormatter myformatter = new MyFormatter(playerNum);
-        String UpgradeString = myformatter.UpgradeCompose(UpgradeAction).toString();
-        sendString(UpgradeString);
-        String MoveString = myformatter.ActionCompose(MoveAction, "Move").toString();
-        sendString(MoveString);
-        String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
-        sendString(AttackString);
+        if (!Lose) {
+            MyFormatter myformatter = new MyFormatter(playerNum);
+            String UpgradeString = myformatter.UpgradeCompose(UpgradeAction).toString();
+            System.out.println("Upgrade Actions: " + UpgradeString);
+            sendString(UpgradeString);
+            String MoveString = myformatter.ActionCompose(MoveAction, "Move").toString();
+            System.out.println("Move Actions: " + MoveString);
+            sendString(MoveString);
+            String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
+            System.out.println("Attack Actions: " + AttackString);
+            sendString(AttackString);
+        }
     }
     public String ReceiveActionRes(){
-        //Receive the Current Action Validation Result
-        String res = receiveString();
-        System.out.println("[DEBUG]Receive Result: " + res);
-        return res;
-
+        if (!Lose) {
+            //Receive the Current Action Validation Result
+            String res = receiveString();
+            System.out.println("[DEBUG]Receive Result: " + res);
+            return res;
+        }
+        return null;
     }
     public void ReceiveAllAction(){
         MyFormatter myformatter = new MyFormatter(playerNum);

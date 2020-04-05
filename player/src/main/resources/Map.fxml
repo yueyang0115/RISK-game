@@ -147,7 +147,7 @@
 <right>
     <VBox prefHeight="632.0" prefWidth="415.0" spacing="5.0" BorderPane.alignment="CENTER">
         <children>
-            <Label prefHeight="30.0" prefWidth="203.0" text="Territory Detail" textFill="MIDNIGHTBLUE">
+            <Label prefHeight="30.0" prefWidth="323.0" text="Original Territory Detail" textFill="MIDNIGHTBLUE">
                 <font>
                     <Font size="25.0" />
                 </font>

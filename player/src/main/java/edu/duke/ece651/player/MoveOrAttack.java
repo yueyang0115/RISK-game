@@ -86,12 +86,12 @@ public class MoveOrAttack {
 
     }
     public void initialize(){
-        /*InitButtonMap();
+        InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("You are " + PlayerName + " Player, please choose action");
-        this.Prompt.setFont(new Font("Arial", 28));*/
+        this.Prompt.setFont(new Font("Arial", 28));
         InitTerr();
     }
     public void InitTerr(){
@@ -179,6 +179,7 @@ public class MoveOrAttack {
         if(CheckAction()){
             Action Current = new Action();
             Current.setOwner("player_" + this.CurrPlayer.getPlayerInfo().getKey());
+            System.out.println("Current Action Owner: " + Current.getOwner());
             Territory Src = Show.FindTerritory(this.TerrMap, this.SourceTerr.getValue());
             Territory Dst = Show.FindTerritory(this.TerrMap, this.DstTerr.getValue());
             Current.setSrc(Src);

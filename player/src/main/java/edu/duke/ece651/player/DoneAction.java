@@ -91,6 +91,8 @@ public class DoneAction {
     public void BtnA(){
         System.out.println("Click on A");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "A");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
 
@@ -98,66 +100,88 @@ public class DoneAction {
     public void BtnB(){
         System.out.println("Click on B");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "B");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnC(){
         System.out.println("Click on C");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "C");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnD(){
         System.out.println("Click on D");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "D");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnE(){
         System.out.println("Click on E");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "E");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnF(){
         System.out.println("Click on F");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "F");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnG(){
         System.out.println("Click on G");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "G");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnH(){
         System.out.println("Click on H");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "H");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnI(){
         System.out.println("Click on I");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "I");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnJ(){
         System.out.println("Click on J");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "J");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnK(){
         System.out.println("Click on K");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "K");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnL(){
         System.out.println("Click on L");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "L");
+        this.ActionDetailPrompt.setText("Original Territory Detail ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
 
@@ -197,21 +221,42 @@ public class DoneAction {
         this.Window.show();
     }
 
-    @FXML
     public void ChooseDone() throws IOException {
         System.out.println("Click on Done");
         this.CurrPlayer.SendAction();
         String Validation = this.CurrPlayer.ReceiveActionRes();
+        System.out.println("Validation " + Validation);
         this.CurrPlayer.ReceiveAllAction();
-        this.CurrPlayer.ReceiveMapANDShow();
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Validation.fxml"));
-        loaderStart.setControllerFactory(c->{
-            return new DoneAction(this.CurrPlayer, Validation);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        this.Window.setScene(scene);
-        this.Window.show();
+        //this.CurrPlayer.ReceiveMapANDShow();
+        //the answer could be map or lose game and game end
+        String Answer = this.CurrPlayer.ReceiveFromServer();
+        if(Answer.contains("Game End!")){
+            System.out.println("Received Game End");
+            this.Window.close();
+            this.CurrPlayer.close();
+        }
+        else if(Answer.contains("Lose Game")){
+            System.out.println("Received Lose Game");
+            this.CurrPlayer.setAsk(true);
+            this.CurrPlayer.setLose(true);
+            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Lose.fxml"));
+            loaderStart.setControllerFactory(c->{
+                return new Lose(this.CurrPlayer, this.Window);
+            });
+            Scene scene = new Scene(loaderStart.load());
+            this.Window.setScene(scene);
+            this.Window.show();
+        }
+        else {
+            System.out.println("Normal Received Map");
+            this.CurrPlayer.ContinueReceive(Answer);
+            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Validation.fxml"));
+            loaderStart.setControllerFactory(c -> {
+                return new DoneAction(this.CurrPlayer, Validation);
+            });
+            Scene scene = new Scene(loaderStart.load());
+            this.Window.setScene(scene);
+            this.Window.show();
+        }
     }
-
-
 }
