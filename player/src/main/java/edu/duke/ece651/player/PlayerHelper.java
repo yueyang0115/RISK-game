@@ -222,7 +222,13 @@ public class PlayerHelper {
             String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
             System.out.println("Attack Actions: " + AttackString);
             sendString(AttackString);
+            ClearActions();
         }
+    }
+    public void ClearActions(){
+        this.UpgradeAction.clear();
+        this.AttackAction.clear();
+        this.MoveAction.clear();
     }
     public String ReceiveActionRes(){
         if (!Lose) {

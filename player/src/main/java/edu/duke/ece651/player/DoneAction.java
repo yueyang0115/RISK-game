@@ -225,6 +225,8 @@ public class DoneAction {
     @FXML
     public void ChooseDone() throws IOException {
         System.out.println("Click on Done");
+        this.ActionsOrDetail.setText("Finished Input. Please waiting for other players!");
+        this.ActionsOrDetail.setFont(new Font("Arial", 20));
         this.CurrPlayer.SendAction();
         String Validation = this.CurrPlayer.ReceiveActionRes();
         System.out.println("Validation " + Validation);
