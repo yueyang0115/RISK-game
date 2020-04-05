@@ -32,7 +32,7 @@ public class Player extends Application {
   public void start(Stage primaryStage) throws Exception {
     this.Window = primaryStage;
     PlayerHelper player = new PlayerHelper();
-    Displayable d = new Map(player);
+    Displayable d = new Text();
     player.addDisplayable(d);
 
     ReceiveID(player, player.getCommunicator());

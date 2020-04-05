@@ -77,7 +77,7 @@
                     <Font size="25.0" />
                 </font>
             </Button>
-            <Button fx:id="ButtonA" layoutX="164.0" layoutY="106.0" mnemonicParsing="false" prefHeight="131.0" prefWidth="199.0" style="-fx-shape: &quot;M 400 150 Q 450 400 350 400 Q 200 400 50 400 Q 50 200 250 200 Q 350 200 400 150 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="A">
+            <Button fx:id="ButtonA" layoutX="164.0" layoutY="106.0" mnemonicParsing="false" onAction="#BtnA" prefHeight="131.0" prefWidth="199.0" style="-fx-shape: &quot;M 400 150 Q 450 400 350 400 Q 200 400 50 400 Q 50 200 250 200 Q 350 200 400 150 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="A">
                 <font>
                     <Font size="25.0" />
                 </font>
