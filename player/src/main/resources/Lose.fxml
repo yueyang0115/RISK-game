@@ -155,7 +155,7 @@
 <right>
     <VBox prefHeight="632.0" prefWidth="415.0" spacing="5.0" BorderPane.alignment="CENTER">
         <children>
-            <Label prefHeight="30.0" prefWidth="203.0" text="You Lose" textFill="RED">
+            <Label prefHeight="30.0" prefWidth="203.0" text="You Lose" textFill="LIGHTCORAL">
                 <font>
                     <Font size="30.0" />
                 </font>

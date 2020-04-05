@@ -133,12 +133,12 @@
 <right>
     <VBox prefHeight="632.0" prefWidth="415.0" spacing="5.0" BorderPane.alignment="CENTER">
         <children>
-            <Label prefHeight="30.0" prefWidth="203.0" text="You Lose" textFill="RED">
+            <Label prefHeight="30.0" prefWidth="203.0" text="You Lose" textFill="LIGHTCORAL">
                 <font>
                     <Font size="30.0" />
                 </font>
             </Label>
-            <Label layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="203.0" text="Actions">
+            <Label layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="203.0" text="Actions" textFill="MIDNIGHTBLUE">
                <font>
                   <Font size="30.0" />
                </font>
@@ -146,7 +146,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="ActionDetail" layoutX="10.0" layoutY="62.0" prefHeight="30.0" prefWidth="203.0" text="Yellow:">
+            <Label fx:id="ActionDetail" layoutX="10.0" layoutY="62.0" prefHeight="30.0" prefWidth="203.0">
                <font>
                   <Font size="30.0" />
                </font>
