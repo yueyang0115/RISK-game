@@ -14,29 +14,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Lose{
-    @FXML private Button buttonYes;
-    @FXML private Button buttonNo;
-
-    @FXML
-    public void LoseButWatch() throws IOException {
-        System.out.println("Lose But Watch");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
-        loaderStart.setControllerFactory(c->{
-            return new Watch(this.CurrPlayer);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        this.Window.setScene(scene);
-        this.Window.show();
-    }
-
-    public void LoseNotWatch() throws IOException {
-        System.out.println("Lose Not Watch");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/End.fxml"));
-        loaderStart.setControllerFactory(c->{
-            return new End(this.CurrPlayer);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        this.Window.setScene(scene);
-        this.Window.show();
-    }
+//    @FXML private Button buttonYes;
+//    @FXML private Button buttonNo;
+//
+//    @FXML
+//    public void LoseButWatch() throws IOException {
+//        System.out.println("Lose But Watch");
+//        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
+//        loaderStart.setControllerFactory(c->{
+//            return new Watch(this.CurrPlayer);
+//        });
+//        Scene scene = new Scene(loaderStart.load());
+//        this.Window.setScene(scene);
+//        this.Window.show();
+//    }
+//
+//    public void LoseNotWatch() throws IOException {
+//        System.out.println("Lose Not Watch");
+//        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/End.fxml"));
+//        loaderStart.setControllerFactory(c->{
+//            return new End(this.CurrPlayer);
+//        });
+//        Scene scene = new Scene(loaderStart.load());
+//        this.Window.setScene(scene);
+//        this.Window.show();
+//    }
 }
