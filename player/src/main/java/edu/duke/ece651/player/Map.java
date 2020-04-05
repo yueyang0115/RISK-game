@@ -193,9 +193,9 @@ public class Map{
     @FXML
     public void Upgrading() throws IOException {
         System.out.println("Click on Upgrade");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Upgrade.fxml"));
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/UpgradeChoose.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new UpgradeAction();
+            return new UpgradeChoose(this.CurrPlayer, Window);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);
