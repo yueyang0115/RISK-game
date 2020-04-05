@@ -90,7 +90,7 @@ public class DoneAction {
 
     @FXML
     public void BtnA(){
-        System.out.println("Click on A");
+        //System.out.println("Click on A");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "A");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
@@ -99,7 +99,7 @@ public class DoneAction {
 
     @FXML
     public void BtnB(){
-        System.out.println("Click on B");
+        //System.out.println("Click on B");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "B");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
@@ -107,7 +107,7 @@ public class DoneAction {
     }
     @FXML
     public void BtnC(){
-        System.out.println("Click on C");
+        //System.out.println("Click on C");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "C");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
@@ -115,7 +115,7 @@ public class DoneAction {
     }
     @FXML
     public void BtnD(){
-        System.out.println("Click on D");
+        //System.out.println("Click on D");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "D");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
@@ -123,7 +123,7 @@ public class DoneAction {
     }
     @FXML
     public void BtnE(){
-        System.out.println("Click on E");
+        //System.out.println("Click on E");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "E");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
@@ -131,7 +131,7 @@ public class DoneAction {
     }
     @FXML
     public void BtnF(){
-        System.out.println("Click on F");
+        //System.out.println("Click on F");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "F");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
@@ -139,7 +139,7 @@ public class DoneAction {
     }
     @FXML
     public void BtnG(){
-        System.out.println("Click on G");
+        //System.out.println("Click on G");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "G");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
@@ -147,7 +147,7 @@ public class DoneAction {
     }
     @FXML
     public void BtnH(){
-        System.out.println("Click on H");
+        //System.out.println("Click on H");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "H");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
@@ -155,7 +155,7 @@ public class DoneAction {
     }
     @FXML
     public void BtnI(){
-        System.out.println("Click on I");
+        //System.out.println("Click on I");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "I");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
@@ -163,7 +163,7 @@ public class DoneAction {
     }
     @FXML
     public void BtnJ(){
-        System.out.println("Click on J");
+        //System.out.println("Click on J");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "J");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
@@ -171,7 +171,7 @@ public class DoneAction {
     }
     @FXML
     public void BtnK(){
-        System.out.println("Click on K");
+        //System.out.println("Click on K");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "K");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
@@ -179,7 +179,7 @@ public class DoneAction {
     }
     @FXML
     public void BtnL(){
-        System.out.println("Click on L");
+        //System.out.println("Click on L");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "L");
         this.ActionDetailPrompt.setText("Original Territory Detail ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
