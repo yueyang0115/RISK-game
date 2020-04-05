@@ -73,7 +73,7 @@
                         <ComboBox fx:id="Level3" layoutX="362.0" layoutY="10.0" prefHeight="27.0" prefWidth="97.0" promptText="Level 3" />
                         <ComboBox fx:id="Level4" layoutX="362.0" layoutY="10.0" prefHeight="27.0" prefWidth="102.0" promptText="Level 4" />
                         <ComboBox fx:id="Level5" layoutX="887.0" layoutY="10.0" prefHeight="27.0" prefWidth="96.0" promptText="Level 5" />
-                  <ComboBox fx:id="Level6" prefHeight="27.0" prefWidth="100.0" />
+                  <ComboBox fx:id="Level6" prefHeight="27.0" prefWidth="100.0" promptText="Level 6" />
                     </children>
                     <opaqueInsets>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

@@ -47,11 +47,6 @@ public class UpgradeDetail {
     }
 
     public void initialize(){
-
-        //For test purpose, delete later!!!
-        CurrPlayer.setTechResource(100);
-
-
         territoryName.setText(curTerritory.getTerritoryName());
         techResource.setText(String.valueOf(CurrPlayer.getTechResource()));
         level0.setText(String.valueOf(curTerritory.getSoldierLevel(0)));
