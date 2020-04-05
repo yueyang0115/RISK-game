@@ -22,6 +22,7 @@ public class PlayerHelper {
     private int TechResource;
     //private Stage primaryStage;
 
+
     public PlayerHelper() {
         this.territoryMap = new HashMap<>();
         this.MoveAction = new ArrayList<>();
@@ -61,7 +62,12 @@ public class PlayerHelper {
     public void addDisplayable(Displayable d) {
         this.displayer = d;
     }
-
+    public void setMoveAction(Action Current){
+        MoveAction.add(Current);
+    }
+    public void setAttackAction(Action Current){
+        MoveAction.add(Current);
+    }
     /*public void displayMap() {
         displayer.showMap(territoryMap, playerInfo);
     }*/

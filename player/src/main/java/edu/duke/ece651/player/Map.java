@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Pair;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,111 +85,81 @@ public class Map{
         }
         return ShowDetail.toString();
     }
-    public void ShowLabel(Territory CurrentClicked){
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
-        this.Detail.setFont(new Font("Arial", 20));
-    }
+
     @FXML
     public void BtnA(){
         System.out.println("Click on A");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "A");
-        ShowLabel(CurrentClicked);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "A");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
 
     @FXML
     public void BtnB(){
         System.out.println("Click on B");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "B");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "B");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
     public void BtnC(){
         System.out.println("Click on C");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "C");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "C");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
     public void BtnD(){
         System.out.println("Click on D");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "D");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "D");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
     public void BtnE(){
         System.out.println("Click on E");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "E");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "E");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
     public void BtnF(){
         System.out.println("Click on F");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "F");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "F");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
     public void BtnG(){
         System.out.println("Click on G");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "G");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "G");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
     public void BtnH(){
         System.out.println("Click on H");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "H");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "H");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
     public void BtnI(){
         System.out.println("Click on I");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "I");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "I");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
     public void BtnJ(){
         System.out.println("Click on J");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "J");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "J");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
     public void BtnK(){
         System.out.println("Click on K");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "K");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "K");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
     public void BtnL(){
         System.out.println("Click on L");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "L");
-        String ShowLabel = ComposeString(CurrentClicked);
-        this.Detail.setText(ShowLabel);
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "L");
+        Show.ShowLabel(CurrentClicked, this.Detail);
     }
 
-    public Territory FindTerritory(HashMap<Integer, ArrayList<Territory>> World, String TerritoryName) {
-        Territory ans = new Territory();
-        for (HashMap.Entry<Integer, ArrayList<Territory>> entry : World.entrySet()) {
-            ArrayList<Territory> territoryList = entry.getValue();
-            for (int j = 0; j < territoryList.size(); j++) {
-                Territory Terr = territoryList.get(j);
-                if (Terr.getTerritoryName().equals(TerritoryName)) {
-                    // System.out.println("[DEBUG] find ans");
-                    ans = Terr;
-                    return ans;
-                }
-            }
-        }
-        return ans;
-    }
     @FXML
     public void Upgrading() throws IOException {
         System.out.println("Click on Upgrade");
@@ -205,9 +175,9 @@ public class Map{
     @FXML
     public void ChooseMove() throws IOException {
         System.out.println("Click on Move");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_Attack.fxml"));
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_attack.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new MoveORAttack(this.CurrPlayer, "Move");
+            return new MoveOrAttack(this.CurrPlayer, "Move", this.Window);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);
@@ -217,9 +187,9 @@ public class Map{
     @FXML
     public void ChooseAttack() throws IOException {
         System.out.println("Click on Attack");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_Attack.fxml"));
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_attack.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new MoveORAttack(this.CurrPlayer, "Attack");
+            return new MoveOrAttack(this.CurrPlayer, "Attack", this.Window);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);
@@ -228,10 +198,10 @@ public class Map{
 
     @FXML
     public void ChooseDone() throws IOException {
-        System.out.println("Click on Move");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_Attack.fxml"));
+        System.out.println("Click on Done");
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Validation.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new MoveORAttack(this.CurrPlayer, "Attack");
+            return new MoveOrAttack(this.CurrPlayer, "Attack", this.Window);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);
