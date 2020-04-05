@@ -65,10 +65,11 @@ public class DoneAction {
         ButtonMap.put("K", ButtonK);
         ButtonMap.put("L", ButtonL);
     }
-    public DoneAction(PlayerHelper CurrPlayer, String Validation){
+    public DoneAction(PlayerHelper CurrPlayer, String Validation, Stage Window){
         this.CurrPlayer = CurrPlayer;
         this.ValidationResult = Validation;
         this.TerrMap = CurrPlayer.getTerritoryMap();
+        this.Window = Window;
     }
 
     public void initialize(){
@@ -221,6 +222,7 @@ public class DoneAction {
         this.Window.show();
     }
 
+    @FXML
     public void ChooseDone() throws IOException {
         System.out.println("Click on Done");
         this.CurrPlayer.SendAction();
@@ -252,7 +254,7 @@ public class DoneAction {
             this.CurrPlayer.ContinueReceive(Answer);
             FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Validation.fxml"));
             loaderStart.setControllerFactory(c -> {
-                return new DoneAction(this.CurrPlayer, Validation);
+                return new DoneAction(this.CurrPlayer, Validation, this.Window);
             });
             Scene scene = new Scene(loaderStart.load());
             this.Window.setScene(scene);

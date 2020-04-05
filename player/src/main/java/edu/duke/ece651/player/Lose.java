@@ -68,7 +68,7 @@ public class Lose{
         this.CurrPlayer.setLoseButWatch(true);
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new Watch();
+            return new Watch(this.CurrPlayer);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);

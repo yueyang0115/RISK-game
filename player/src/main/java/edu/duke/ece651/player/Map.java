@@ -212,11 +212,23 @@ public class Map{
             this.CurrPlayer.ContinueReceive(Answer);
             FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Validation.fxml"));
             loaderStart.setControllerFactory(c -> {
-                return new DoneAction(this.CurrPlayer, Validation);
+                return new DoneAction(this.CurrPlayer, Validation, this.Window);
             });
             Scene scene = new Scene(loaderStart.load());
             this.Window.setScene(scene);
             this.Window.show();
         }
+        /*else {
+            System.out.println("Normal Received Map");
+            this.CurrPlayer.ContinueReceive(Answer);
+            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));
+            loaderStart.setControllerFactory(c -> {
+                return new Map(this.CurrPlayer, this.Window);
+            });
+            Scene scene = new Scene(loaderStart.load());
+            this.Window.setScene(scene);
+            this.Window.show();
+        }*/
+
     }
 }
