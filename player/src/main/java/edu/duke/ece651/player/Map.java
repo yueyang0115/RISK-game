@@ -1,24 +1,13 @@
 package edu.duke.ece651.player;
 
-import edu.duke.ece651.shared.Action;
-import edu.duke.ece651.shared.ColorID;
-import edu.duke.ece651.shared.Territory;
+import edu.duke.ece651.shared.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,20 +18,21 @@ public class Map implements Displayable{
     @FXML private Button AttackBtn;
     @FXML private Button DoneBtn;
 
-    @FXML private Button ButtonA = new Button();
-    @FXML private Button ButtonB = new Button();
-    @FXML private Button ButtonC = new Button();
-    @FXML private Button ButtonD = new Button();
-    @FXML private Button ButtonE = new Button();
-    @FXML private Button ButtonF = new Button();
-    @FXML private Button ButtonG = new Button();
-    @FXML private Button ButtonH = new Button();
-    @FXML private Button ButtonI = new Button();
-    @FXML private Button ButtonJ = new Button();
-    @FXML private Button ButtonK = new Button();
-    @FXML private Button ButtonL = new Button();
+    @FXML private Button ButtonA;
+    @FXML private Button ButtonB;
+    @FXML private Button ButtonC;
+    @FXML private Button ButtonD;
+    @FXML private Button ButtonE;
+    @FXML private Button ButtonF;
+    @FXML private Button ButtonG;
+    @FXML private Button ButtonH;
+    @FXML private Button ButtonI;
+    @FXML private Button ButtonJ;
+    @FXML private Button ButtonK;
+    @FXML private Button ButtonL;
 
-    @FXML private TreeView<String> Detail;
+    @FXML private Label Detail;
+    @FXML private Label Prompt;
 
     private Stage Window;
 
@@ -66,19 +56,20 @@ public class Map implements Displayable{
     }
     public Map(PlayerHelper player, Stage Window){
         this.Window = Window;
-        this.Detail = new TreeView<>();
         this.CurrPlayer = player;
         this.TerrMap = player.getTerritoryMap();
     }
 
     public void initialize(){
         showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo());
-        //setTree();
     }
+
     @Override
     public void showMap(HashMap<Integer, ArrayList<Territory>> CurrentMap, Pair<Integer, String> playerInfo) {
         InitButtonMap();
         ColorID PlayerColor = new ColorID();
+        String PlayerName = PlayerColor.getPlayerColor(playerInfo.getKey());
+        this.Prompt.setText("You are " + PlayerName + " Player, please choose action");
         for (HashMap.Entry<Integer, ArrayList<Territory>> entry : CurrentMap.entrySet()){
             //iterate each player color to set the button territory to its color
             String color = PlayerColor.getPlayerColor(entry.getKey());
@@ -101,55 +92,168 @@ public class Map implements Displayable{
     public void showAction(HashMap<Integer, ArrayList<Action>> RecvAction, Pair<Integer, String> playerInfo) {
 
     }
-    public void setTree(){
 
-        TreeItem<String> TerrName, Soldier, Neighbor, Owner;
-        TerrName = new TreeItem<>("TerritoryName");
-        TerrName.setExpanded(true);
 
-        Owner = makeBranch("OwnerName", TerrName);
-        makeBranch("A", Owner);
-        Soldier = makeBranch("Soldiers", TerrName);
-        Neighbor = makeBranch("Neighbors", TerrName);
-
-        ArrayList<TreeItem<String>> Level = new ArrayList<TreeItem<String>>();
-
+    public String ComposeString(Territory Clicked){
+        StringBuilder ShowDetail = new StringBuilder();
+        int ID = Integer.valueOf(Clicked.getOwner().substring(7));
+        ColorID FindName = new ColorID();
+        ShowDetail.append("Territory Name: ").append(Clicked.getTerritoryName()).append("\n\n");
+        ShowDetail.append("Owner Name: ").append(FindName.getPlayerColor(ID)).append("\n\n");
+        int Size = new TerritorySize().getTerritorySize(Clicked.getTerritoryName());
+        ShowDetail.append("Territory Size: ").append(Size).append("\n\n");
+        ShowDetail.append("Soldiers\n");
         for(int i = 0; i < 7; i++){
-            TreeItem<String> TempLevel = new TreeItem<>();
-            TempLevel = makeBranch("Level " + i, Soldier);
-            Level.add(TempLevel);
+            ShowDetail.append("  Level ").append(i).append(": ").append(Clicked.getSoldierLevel(i)).append("\n");
         }
-        
-        this.Detail = new TreeView<>(TerrName);
+        return ShowDetail.toString();
     }
-
-    public TreeItem<String> makeBranch(String title, TreeItem<String> parent){
-        TreeItem<String> item = new TreeItem<>(title);
-        item.setExpanded(true);
-        parent.getChildren().add(item);
-        return item;//return the branch
+    @FXML
+    public void BtnA(){
+        System.out.println("Click on A");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "A");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
     }
 
     @FXML
-    public void BtnA(){
-        setTree();
-        System.out.println("Click on A");
-        /*this.Detail.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
-            if(newValue != null){
-                System.out.println(newValue);
+    public void BtnB(){
+        System.out.println("Click on B");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "B");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+    }
+    @FXML
+    public void BtnC(){
+        System.out.println("Click on C");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "C");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+    }
+    @FXML
+    public void BtnD(){
+        System.out.println("Click on D");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "D");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+    }
+    @FXML
+    public void BtnE(){
+        System.out.println("Click on E");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "E");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+    }
+    @FXML
+    public void BtnF(){
+        System.out.println("Click on F");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "F");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+    }
+    @FXML
+    public void BtnG(){
+        System.out.println("Click on G");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "G");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+    }
+    @FXML
+    public void BtnH(){
+        System.out.println("Click on H");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "H");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+    }
+    @FXML
+    public void BtnI(){
+        System.out.println("Click on I");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "I");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+    }
+    @FXML
+    public void BtnJ(){
+        System.out.println("Click on J");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "J");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+    }
+    @FXML
+    public void BtnK(){
+        System.out.println("Click on K");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "K");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+    }
+    @FXML
+    public void BtnL(){
+        System.out.println("Click on L");
+        Territory CurrentClicked =  FindTerritory(this.TerrMap, "L");
+        String ShowLabel = ComposeString(CurrentClicked);
+        this.Detail.setText(ShowLabel);
+    }
+
+    public Territory FindTerritory(HashMap<Integer, ArrayList<Territory>> World, String TerritoryName) {
+        Territory ans = new Territory();
+        for (HashMap.Entry<Integer, ArrayList<Territory>> entry : World.entrySet()) {
+            ArrayList<Territory> territoryList = entry.getValue();
+            for (int j = 0; j < territoryList.size(); j++) {
+                Territory Terr = territoryList.get(j);
+                if (Terr.getTerritoryName().equals(TerritoryName)) {
+                    // System.out.println("[DEBUG] find ans");
+                    ans = Terr;
+                    return ans;
+                }
             }
-        });*/
+        }
+        return ans;
     }
     @FXML
     public void Upgrading() throws IOException {
         System.out.println("Click on Upgrade");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_Attack.fxml"));
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Upgrade.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new Move();
+            return new UpgradeAction();
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);
         this.Window.show();
     }
 
+    @FXML
+    public void ChooseMove() throws IOException {
+        System.out.println("Click on Move");
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_Attack.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new MoveORAttack(this.CurrPlayer, "Move");
+        });
+        Scene scene = new Scene(loaderStart.load());
+        this.Window.setScene(scene);
+        this.Window.show();
+    }
+
+    @FXML
+    public void ChooseAttack() throws IOException {
+        System.out.println("Click on Attack");
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_Attack.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new MoveORAttack(this.CurrPlayer, "Attack");
+        });
+        Scene scene = new Scene(loaderStart.load());
+        this.Window.setScene(scene);
+        this.Window.show();
+    }
+
+    @FXML
+    public void ChooseDone() throws IOException {
+        System.out.println("Click on Move");
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_Attack.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new MoveORAttack(this.CurrPlayer, "Attack");
+        });
+        Scene scene = new Scene(loaderStart.load());
+        this.Window.setScene(scene);
+        this.Window.show();
+    }
 }
