@@ -13,7 +13,6 @@ public class StartController {
     @FXML private Button Start;
     private PlayerHelper CurrPlayer;
     private Pair<Integer, String> playerInfo;
-    private PlayerModel Model;
     private Stage Window;
     public StartController(PlayerHelper CurrPlayer, Stage Window){
         this.CurrPlayer = CurrPlayer;
@@ -23,18 +22,29 @@ public class StartController {
     public void StartGame() throws IOException {
         if(CurrPlayer.getID() == 0){
             System.out.println("MY ID 0");
-            showChooseView(this.CurrPlayer);
+            showChooseView(this.CurrPlayer, this.Window);
         }
         else{
             System.out.println("MY ID 1");
-
-
+            this.CurrPlayer.InitValue();
+            this.CurrPlayer.ReceiveMapANDShow();
+            MainPageView(this.CurrPlayer);
         }
     }
-    public void showChooseView(PlayerHelper player) throws IOException {
+    public void showChooseView(PlayerHelper player, Stage Window) throws IOException {
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/SelectNumber.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new SelectNumber(player);
+            return new SelectNumber(player, Window);
+        });
+        Scene scene = new Scene(loaderStart.load());
+        this.Window.setScene(scene);
+        this.Window.show();
+    }
+
+    public void MainPageView(PlayerHelper player) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new Map(player, this.Window);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);
