@@ -11,6 +11,7 @@ public class ColorID {
     Colorid.put(3, "Yellow");
     Colorid.put(4, "White");
   }
+
   public String getPlayerColor(int ID){
     return Colorid.get(ID);
   }
