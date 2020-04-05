@@ -5,19 +5,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.IOException;
 
 public class ErrorMsgController {
-    @FXML private Button OkBtn;
-    @FXML private Label msg;
+    @FXML private Button OKBtn;
+    @FXML private Label labelmsg;
 
     private Stage Window;
-    public ErrorMsgController(String content, Stage Window){
-        this.Window = Window;
-        msg.setText(content);
+    public ErrorMsgController(String content, Stage W){
+        Window = W;
+        Window.initModality(Modality.APPLICATION_MODAL);
+        labelmsg = new Label(content);
     }
     @FXML
     public void OK() throws IOException {
