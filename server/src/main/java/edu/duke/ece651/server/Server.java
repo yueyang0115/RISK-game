@@ -74,7 +74,7 @@ public class Server {
           "[DEBUG] After execute actions:" + new MaptoJson(territoryMap).getJSON().toString());
       // Get action string, send to players later
       String actionstr = ah.getActionString();
-      System.out.println("[DEBUG] action string is , " + actionstr);
+      System.out.println("[DEBUG] action string is, " + actionstr);
       int justLose = -1;
       for (int i = 0; i < list.size(); ++i) {
         // Check all the players if it wein.

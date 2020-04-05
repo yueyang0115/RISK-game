@@ -1,8 +1,12 @@
 package edu.duke.ece651.player;
 
-import edu.duke.ece651.shared.*;
+import edu.duke.ece651.shared.Action;
+import edu.duke.ece651.shared.ColorID;
+import edu.duke.ece651.shared.Territory;
+import edu.duke.ece651.shared.TerritorySize;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +17,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Map{
+public class DoneAction {
+    private PlayerHelper CurrPlayer;
+    private String ValidationResult;
+
+    @FXML private Label Result;
+    @FXML private Label ActionsOrDetail;
+
+    @FXML private Label ActionDetailPrompt;
+    private HashMap<String, Button> ButtonMap;
+    private HashMap<Integer, ArrayList<Territory> > TerrMap;
+
     @FXML private Button UpgradeBtn;
     @FXML private Button MoveBtn;
     @FXML private Button AttackBtn;
@@ -32,14 +46,10 @@ public class Map{
     @FXML private Button ButtonK;
     @FXML private Button ButtonL;
 
-    @FXML private Label Detail;
     @FXML private Label Prompt;
 
     private Stage Window;
 
-    private PlayerHelper CurrPlayer;
-    private HashMap<String, Button> ButtonMap;
-    private HashMap<Integer, ArrayList<Territory>> TerrMap;
     private void InitButtonMap(){
         ButtonMap = new HashMap<>();
         ButtonMap.put("A", ButtonA);
@@ -55,15 +65,21 @@ public class Map{
         ButtonMap.put("K", ButtonK);
         ButtonMap.put("L", ButtonL);
     }
-    public Map(PlayerHelper player, Stage Window){
-        this.Window = Window;
-        this.CurrPlayer = player;
-        this.TerrMap = player.getTerritoryMap();
+    public DoneAction(PlayerHelper CurrPlayer, String Validation){
+        this.CurrPlayer = CurrPlayer;
+        this.ValidationResult = Validation;
+        this.TerrMap = CurrPlayer.getTerritoryMap();
     }
 
     public void initialize(){
         InitButtonMap();
-        new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
+        Graph Display = new Graph();
+        Display.showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
+        this.ActionDetailPrompt.setText("Actions ");
+        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
+        this.Result.setText(this.ValidationResult);
+        this.Result.setFont(new Font("Arial", 24));
+        Display.showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionsOrDetail);
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("You are " + PlayerName + " Player, please choose action");
@@ -75,74 +91,74 @@ public class Map{
     public void BtnA(){
         System.out.println("Click on A");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "A");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
 
     @FXML
     public void BtnB(){
         System.out.println("Click on B");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "B");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnC(){
         System.out.println("Click on C");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "C");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnD(){
         System.out.println("Click on D");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "D");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnE(){
         System.out.println("Click on E");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "E");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnF(){
         System.out.println("Click on F");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "F");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnG(){
         System.out.println("Click on G");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "G");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnH(){
         System.out.println("Click on H");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "H");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnI(){
         System.out.println("Click on I");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "I");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnJ(){
         System.out.println("Click on J");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "J");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnK(){
         System.out.println("Click on K");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "K");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
     @FXML
     public void BtnL(){
         System.out.println("Click on L");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "L");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
     }
 
     @FXML
@@ -196,4 +212,6 @@ public class Map{
         this.Window.setScene(scene);
         this.Window.show();
     }
+
+
 }

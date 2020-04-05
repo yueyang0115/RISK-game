@@ -1,6 +1,7 @@
 package edu.duke.ece651.player;
 
 import edu.duke.ece651.shared.*;
+import javafx.scene.control.Label;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class PlayerHelper {
         this.MoveAction = new ArrayList<>();
         this.AttackAction = new ArrayList<>();
         this.AllAction = new HashMap<>();
+        this.UpgradeAction = new ArrayList<>();
         this.communicator = new Communicator("127.0.0.1", 1234);
         this.playerNum = 0;
     }
@@ -71,9 +73,9 @@ public class PlayerHelper {
     /*public void displayMap() {
         displayer.showMap(territoryMap, playerInfo);
     }*/
-    public void displayAction() {
+    /*public void displayAction() {
         displayer.showAction(AllAction, playerInfo);
-    }
+    }*/
     public void close() {
         communicator.close();
     }
@@ -101,7 +103,10 @@ public class PlayerHelper {
         MyFormatter myformatter = new MyFormatter(playerNum);
         territoryMap.clear();
         myformatter.MapParse(territoryMap, msg);
-        //TODO: show map use controller
+        String FoodStr = receiveString();
+        System.out.println("Received Food: " + FoodStr);
+        FoodResource = Integer.parseInt(FoodStr);
+        //show map use controller
         //displayMap();
     }
 
@@ -160,6 +165,34 @@ public class PlayerHelper {
             //WaitAction(Lose, myformatter);
         }
     }
+    public HashMap<Integer, ArrayList<Action>> getAllAction(){
+        return this.AllAction;
+    }
+    public void SendAction(){
+        MyFormatter myformatter = new MyFormatter(playerNum);
+        String UpgradeString = myformatter.UpgradeCompose(UpgradeAction).toString();
+        sendString(UpgradeString);
+        String MoveString = myformatter.ActionCompose(MoveAction, "Move").toString();
+        sendString(MoveString);
+        String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
+        sendString(AttackString);
+    }
+    public String ReceiveActionRes(){
+        //Receive the Current Action Validation Result
+        String res = receiveString();
+        System.out.println("[DEBUG]Receive Result: " + res);
+        return res;
+
+    }
+    public void ReceiveAllAction(){
+        MyFormatter myformatter = new MyFormatter(playerNum);
+        //receive all players' actions
+        String OtherActions = receiveString();
+        System.out.println("Receive All Actions: " + OtherActions);
+        AllAction.clear();
+        myformatter.AllActionParse(AllAction, OtherActions);
+    }
+
     /*
     public void WaitAction(boolean Lose, MyFormatter myformatter) throws IOException {
         if (!Lose) {
