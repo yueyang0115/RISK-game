@@ -68,8 +68,12 @@ public class PlayerHelper {
         MoveAction.add(Current);
     }
     public void setAttackAction(Action Current){
-        MoveAction.add(Current);
+        AttackAction.add(Current);
     }
+    public void setUpgradeAction(Upgrade Current){
+        UpgradeAction.add(Current);
+    }
+
 
     public int getFoodResource() { return FoodResource; }
     public void setFoodResource(int f) { FoodResource = f; }

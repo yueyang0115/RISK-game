@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -65,7 +64,7 @@ public class UpgradeChoose {
     @FXML
     public void BtnA() throws IOException{
         System.out.println("Click on A");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "A");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "A");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "A");
     }
@@ -73,42 +72,42 @@ public class UpgradeChoose {
     @FXML
     public void BtnB() throws IOException{
         System.out.println("Click on B");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "B");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "B");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "B");
     }
     @FXML
     public void BtnC() throws IOException{
         System.out.println("Click on C");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "C");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "C");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "C");
     }
     @FXML
     public void BtnD() throws IOException{
         System.out.println("Click on D");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "D");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "D");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "D");
     }
     @FXML
     public void BtnE() throws IOException{
         System.out.println("Click on E");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "E");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "E");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "E");
     }
     @FXML
     public void BtnF() throws IOException{
         System.out.println("Click on F");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "F");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "F");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "F");
     }
     @FXML
     public void BtnG() throws IOException{
         System.out.println("Click on G");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "G");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "G");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "G");
 
@@ -116,7 +115,7 @@ public class UpgradeChoose {
     @FXML
     public void BtnH() throws IOException{
         System.out.println("Click on H");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "H");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "H");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "H");
 
@@ -124,7 +123,7 @@ public class UpgradeChoose {
     @FXML
     public void BtnI() throws IOException{
         System.out.println("Click on I");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "I");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "I");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "I");
 
@@ -132,7 +131,7 @@ public class UpgradeChoose {
     @FXML
     public void BtnJ() throws IOException{
         System.out.println("Click on J");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "J");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "J");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "J");
 
@@ -140,32 +139,16 @@ public class UpgradeChoose {
     @FXML
     public void BtnK() throws IOException{
         System.out.println("Click on K");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "K");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "K");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "K");
     }
     @FXML
     public void BtnL() throws IOException{
         System.out.println("Click on L");
-        Territory CurrentClicked =  FindTerritory(this.TerrMap, "L");
+        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "L");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "L");
-    }
-
-    public Territory FindTerritory(HashMap<Integer, ArrayList<Territory>> World, String TerritoryName) {
-        Territory ans = new Territory();
-        for (HashMap.Entry<Integer, ArrayList<Territory>> entry : World.entrySet()) {
-            ArrayList<Territory> territoryList = entry.getValue();
-            for (int j = 0; j < territoryList.size(); j++) {
-                Territory Terr = territoryList.get(j);
-                if (Terr.getTerritoryName().equals(TerritoryName)) {
-                    // System.out.println("[DEBUG] find ans");
-                    ans = Terr;
-                    return ans;
-                }
-            }
-        }
-        return ans;
     }
 
     private void checkInput(Territory CurrentClicked, String territoryName) throws IOException {
