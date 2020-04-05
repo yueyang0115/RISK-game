@@ -47,12 +47,11 @@ public class Graph implements Displayable{
                 String ActionType = OneAction.getType();
                 String Source = OneAction.getSrc().getTerritoryName();
                 String Destination = OneAction.getDst().getTerritoryName();
-                Text.append(" " + ActionType + ": " + "\n");
                 HashMap<Integer,Integer> soldierMap = OneAction.getSoldiers();
                 for(int j = 0 ; j <soldierMap.size();j++) {
                     int ActSoldiers = OneAction.getSoldierLevel(j);
                     if (ActSoldiers != 0) {
-                        Text.append("    " + ActSoldiers + " units from " + Source + " to " + Destination + "\n");
+                        Text.append("  " + ActionType + ":  " + ActSoldiers + " units of level " +i +" from " + Source + " to " + Destination + "\n");
                     }
                 }
             }
