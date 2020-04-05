@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: azure;             -fx-border-color: cornflowerblue;             -fx-border-width: 5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Map">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: azure;             -fx-border-color: cornflowerblue;             -fx-border-width: 5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.player.Lose">
 <top>
     <VBox spacing="2.0">
         <children>
@@ -115,7 +115,7 @@
             </Label>
             <HBox prefHeight="27.0" prefWidth="423.0" spacing="50.0" BorderPane.alignment="CENTER">
                 <children>
-                    <Button mnemonicParsing="false" text="Yes">
+                    <Button fx:id="buttonYes" mnemonicParsing="false" text="Yes" onAction="#LoseButWatch">
                         <font>
                             <Font size="20.0" />
                         </font>
@@ -123,7 +123,7 @@
                         <Insets left="200.0" />
                      </HBox.margin>
                     </Button>
-                    <Button mnemonicParsing="false" text="No">
+                    <Button fx:id="buttonNo" mnemonicParsing="false" text="No" onAction="#LoseNotWatch" >
                         <font>
                             <Font size="20.0" />
                         </font>
