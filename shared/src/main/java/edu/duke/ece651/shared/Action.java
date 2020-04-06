@@ -8,6 +8,7 @@ public class Action {
   private String type;
 
   public Action() {
+    //at initial, all action hold 0 soldier of all soldier level
     soldiers = new HashMap<>();
     soldiers.put(0, 0);
     soldiers.put(1, 0);

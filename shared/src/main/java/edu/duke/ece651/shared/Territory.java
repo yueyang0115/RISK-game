@@ -11,6 +11,7 @@ public class Territory implements Comparable<Territory> {
 
   public Territory() {
     neighbor = new ArrayList<String>();
+    //at initial, all territory  hold 0 soldier of all soldier level
     soldiers = new HashMap<>();
     soldiers.put(0, 0);
     soldiers.put(1, 0);
@@ -37,12 +38,11 @@ public class Territory implements Comparable<Territory> {
     }
   }
 
+  //set specifically a certain level of soldiers
   public void setSoldierLevel(int level, int num) {
     soldiers.put(level, num);
   }
-
   public void setSoldiers() {}
-
   public ArrayList<String> getNeighbor() {
     return neighbor;
   }
