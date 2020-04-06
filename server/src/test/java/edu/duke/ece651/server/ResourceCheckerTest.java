@@ -129,7 +129,6 @@ public class ResourceCheckerTest {
 
     resource = actor.getNewResource();
     int numResource = resource.get(0);
-<<<<<<< HEAD
 
     int newAllFood = 0;
     TerritoryProduce tp = new TerritoryProduce();
@@ -143,9 +142,6 @@ public class ResourceCheckerTest {
       }
     }
     assertEquals(numResource, 89 + newAllFood);
-=======
-    //    assertEquals(numResource, 89);
->>>>>>> fd02a8c72125ca592a61d856dc8e21b94b038b31
   }
 
   @Test
@@ -185,7 +181,6 @@ public class ResourceCheckerTest {
     Dworld = actor.getNewWorld();
     resource = actor.getNewResource();
     int numResource = resource.get(0);
-<<<<<<< HEAD
 
     int newAllFood = 0;
     TerritoryProduce tp = new TerritoryProduce();
@@ -200,10 +195,6 @@ public class ResourceCheckerTest {
     }
 
     assertEquals(numResource, 62 + newAllFood); // 100-19*2
-=======
-    //assertEquals(numResource, 62); // 100-19*2
-    System.out.println("~~~~~~~~~~~~~~~~~~" + numResource);
->>>>>>> fd02a8c72125ca592a61d856dc8e21b94b038b31
     assertEquals(Dworld.get(0).get(1).getTerritoryName(), "B");
     assertEquals(Dworld.get(0).get(1).getSoldierLevel(0), 1);
     assertEquals(Dworld.get(0).get(4).getTerritoryName(), "E");
