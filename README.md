@@ -1,10 +1,24 @@
-# RISC Revolution1 Group9
+# RISC Group9
 ![pipeline](https://gitlab.oit.duke.edu/yy258/ece651-spr20-g9/badges/master/pipeline.svg)
 ![coverage](https://gitlab.oit.duke.edu/yy258/ece651-spr20-g9/badges/master/coverage.svg?job=test)
 
+* For evolutin 1, check https://gitlab.oit.duke.edu/yy258/ece651-spr20-g9/-/commit/140c54412f46bd9fba3d752a6772d029b0de74f9
+* For evolution 2, check 
+
 ## Steps
+* **Please change the server address in the constructor of `PlayerHelper`.**
 1. Go to the root of multiproject, then `gradle run-server`. Wait until it prints "Now connect players".
 2. `gradle run-player`. The first player will be asked to input the number of all players. Then just follow the printed instructions.
+
+## Evolution 2 Prototype
+* [Prototype](https://docs.google.com/presentation/d/17phhiZTou1P2t7HeLXoz7h1uZBJSJE39bzGNc9Juzk8/edit?usp=sharing)
+
+## UX Principles
+We use MVC design pattern in this evolution and follow the following UX principles:
+1. Similarity: We group all the territories together with black border, so the player can easily understand they are similar. Also, the player can see three buttons “Upgrade”, “Move” and “Attack” with the same color. They are similar and represent all the actions a player can choose.
+2. Proximity: We place all the actions at the bottom of the screen because they are more related. Then we show the territory detail on the right of the screen because it’s not related with the actions.
+3. Common Region: In the upgrade page, we put all the upgrades in a common region (tableView).
+4. Focal Point: We choose a different color for the “Done” action because it’s different from the other three and we want the player to easily notice that. Also, in the upgrade page, when the player choose an invalid territory, there will be a pop-up window with red text to capture the player’s attention. 
 
 ## Code Review
 * Most of our code reviews can be found in ["comments" tab in activity](https://gitlab.oit.duke.edu/yy258/ece651-spr20-g9/activity) / [merge requests](https://gitlab.oit.duke.edu/yy258/ece651-spr20-g9/-/merge_requests?scope=all&utf8=%E2%9C%93&state=merged). 
