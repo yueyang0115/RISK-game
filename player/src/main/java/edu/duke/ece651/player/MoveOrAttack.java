@@ -143,9 +143,8 @@ public class MoveOrAttack {
             int level = 0;
             for(HashMap.Entry<Integer, Integer> entry : Soldier.entrySet()){
                 System.out.println("Print Level " + level);
-                int Total = entry.getValue();
                 ArrayList<Integer> Num = new ArrayList<>();
-                for(int i = 0; i <= Total; i++){
+                for(int i = 0; i <= 100; i++){
                     Num.add(i);
                 }
                 ObservableList LevelTemp = FXCollections.observableArrayList(Num);

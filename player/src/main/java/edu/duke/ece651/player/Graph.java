@@ -58,7 +58,7 @@ public class Graph implements Displayable{
             }
         }
         ShowLabel.setText(Text.toString());
-        ShowLabel.setFont(new Font("Arial", 24));
+        ShowLabel.setFont(new Font("Arial", 18));
     }
 
     public String getStyle(String color, String territoryName) {
