@@ -1,6 +1,7 @@
 package edu.duke.ece651.player;
 
 import edu.duke.ece651.shared.*;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Duration;
 import javafx.util.Pair;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,17 +71,28 @@ public class Watch{
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("You are " + PlayerName + ".");
         this.Prompt.setFont(new Font("Arial", 28));
+        PauseTransition delay = new PauseTransition(Duration.seconds(1));
+        delay.setOnFinished(event -> {
+            try {
+                WatchGame();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Exception "+ e);
+            }
+        });
+        delay.play();
         new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionDetail);
-        WatchGame(this.Window);
+
     }
 
-    public void WatchGame(Stage newWindow) throws IOException {
+    public void WatchGame() throws IOException {
 
         this.CurrPlayer.ReceiveAllAction();
         this.CurrPlayer.ReceiveMapANDShow();
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new Watch(this.CurrPlayer, newWindow);
+            return new Watch(this.CurrPlayer, this.Window);
+            //return new Test();
         });
         System.out.println("================Reload Watch Page================");
         Scene scene = new Scene(loaderStart.load());
