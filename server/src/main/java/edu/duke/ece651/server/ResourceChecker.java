@@ -22,7 +22,16 @@ public class ResourceChecker {
     int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
     int srcResource = myresource.get(playerID);
     int cost = countResource(action);
-    return cost <= srcResource;
+    System.out.println("[DEBUG] srcResource is : "+srcResource);
+    System.out.println("[DEBUG] cost is :"+cost);
+    if(cost <= srcResource){
+      System.out.println("[DEBUG] checkresource success");
+      return true;
+    }
+    else{
+      System.out.println("[DEBUG] checkresource fail");
+      return false;
+    }
   }
 
   private int countResource(Action action) {

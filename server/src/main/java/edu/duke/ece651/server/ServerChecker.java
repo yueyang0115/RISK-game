@@ -19,7 +19,7 @@ public class ServerChecker {
     //    + ", dstTerritory is " + action.getDst().getTerritoryName());
     boolean temp = checkTerritory() && checkOwner() && checkNum() && checkNeighbor();
     if (temp == true) {
-      System.out.println("[DEBUG] check all succeed");
+      System.out.println("[DEBUG] check servercheck succeed");
     }
     return temp;
   }

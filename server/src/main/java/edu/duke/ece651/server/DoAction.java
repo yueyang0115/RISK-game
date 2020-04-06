@@ -76,6 +76,7 @@ public class DoAction {
 
       // if player has previous invalid action, ignore all its actions
       if (invalidPlayer.contains(action.getOwner())) {
+        System.out.println("[DEBUG] move action invalid");
         continue;
       }
 
@@ -84,6 +85,7 @@ public class DoAction {
       ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
       boolean isValid = mychecker.Check(action) && rschecker.CheckResource(action);
       if (!isValid) {
+        System.out.println("[DEBUG] move action invalid");
         removePlayer(action);
         moveList.remove(action);
         invalidPlayer.add(action.getOwner());
@@ -102,6 +104,7 @@ public class DoAction {
   }
 
   private void moveHelper(Action action) {
+    System.out.println("[DEBUG] move action valid");
     HashMap<Integer, Integer> movedSoldierMap = action.getSoldiers();
     for (HashMap.Entry<Integer, Integer> entry : movedSoldierMap.entrySet()) {
       int soldierLevel = entry.getKey();
@@ -148,7 +151,7 @@ public class DoAction {
 
   // remove player that contains invalid action from actionsmap
   private void removePlayer(Action action) {
-    System.out.println("[DEBUG] action inValid");
+    //System.out.println("[DEBUG] in remove player, action inValid");
     String playerName = action.getOwner();
     int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
     if (myActionMap.containsKey(playerID)) {
@@ -167,6 +170,11 @@ public class DoAction {
   }
 
   public void doAttackAction(ArrayList<Action> attackList) {
+    System.out.println("[DEBUG] attackList.size() is "+attackList.size());
+    for(int k = 0 ; k < attackList.size(); k++){
+      System.out.println("[DEBUG] action's src is " + attackList.get(k).getSrc().getTerritoryName());
+      System.out.println("[DEBUG] action's dst is " + attackList.get(k).getDst().getTerritoryName());
+    }
     if(attackList.size() == 0) {
       return;
     }
@@ -176,6 +184,7 @@ public class DoAction {
       System.out.println("+++++++++++++++++ [Before] Current Attack Action Number Level 0 ++++++++++++++ \n" + action.getSoldierLevel(0));
       // if player has previous invalid action, ignore all its actions
       if (invalidPlayer.contains(action.getOwner())) {
+        System.out.println("[DEBUG] attack action invalid");
         continue;
       }
 
@@ -184,6 +193,7 @@ public class DoAction {
       ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
       boolean isValid = mychecker.Check(action) && rschecker.CheckResource(action);
       if (!isValid) {
+        System.out.println("[DEBUG] attack action invalid");
         removePlayer(action);
         attackList.remove(action);
         invalidPlayer.add(action.getOwner());
@@ -206,6 +216,7 @@ public class DoAction {
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
       if (invalidPlayer.contains(action.getOwner())) {
+        System.out.println("[DEBUG] attack action invalid");
         continue;
       }
       removeHelper(action);
@@ -215,6 +226,7 @@ public class DoAction {
     for (int i = 0; i < attackList.size(); i++) {
       Action action = attackList.get(i);
       if (invalidPlayer.contains(action.getOwner())) {
+        System.out.println("[DEBUG] attack action invalid");
         continue;
       }
       ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
@@ -227,6 +239,7 @@ public class DoAction {
 
   // do atatckAction once
   private void attackHelper(Action action) {
+    System.out.println("[DEBUG] attack action valid");
     HashMap<Integer, Integer> attackSoldierMap = action.getSoldiers();
     Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
     Territory defenceTerritory = findTerritory(myworld, action.getDst().getTerritoryName());
