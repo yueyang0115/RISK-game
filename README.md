@@ -6,7 +6,7 @@
 * For evolution 2, check 
 
 ## Steps
-* **Please change the server address in the constructor of `PlayerHelper`.**
+* **Please change the server address in the constructor of `Player/PlayerHelper`.**
 1. Go to the root of multiproject, then `gradle run-server`. Wait until it prints "Now connect players".
 2. `gradle run-player`. The first player will be asked to input the number of all players. Then just follow the printed instructions.
 
