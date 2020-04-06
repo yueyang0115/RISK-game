@@ -17,6 +17,7 @@ public class StartController {
     public StartController(PlayerHelper CurrPlayer, Stage Window){
         this.CurrPlayer = CurrPlayer;
         this.Window = Window;
+        System.out.println("[DEBUG] Inside Start Controller Constructor");
     }
     @FXML
     public void StartGame() throws IOException {
