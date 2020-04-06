@@ -124,9 +124,6 @@ public class PlayerHelper {
         MyFormatter myformatter = new MyFormatter(playerNum);
         territoryMap.clear();
         myformatter.MapParse(territoryMap, msg);
-
-        //show map use controller
-        //displayMap();
     }
     public void setAsk(boolean Ask){
         this.Ask = Ask;
@@ -134,7 +131,9 @@ public class PlayerHelper {
     public void setLose(boolean Ask){
         this.Ask = Ask;
     }
-
+    public boolean getLoseButWatch(){
+        return this.LoseButWatch;
+    }
     public void setLoseButWatch(boolean Ask){
         this.Ask = Ask;
     }
@@ -253,7 +252,12 @@ public class PlayerHelper {
         MyFormatter myformatter = new MyFormatter(playerNum);
         //receive all players' actions
         String OtherActions = receiveString();
+
         System.out.println("Receive All Actions: " + OtherActions);
+        if(OtherActions.contains("valid")){
+            OtherActions = receiveString();
+            System.out.println("Before Game End All actions: " + OtherActions);
+        }
         AllAction.clear();
         myformatter.AllActionParse(AllAction, OtherActions);
     }

@@ -86,7 +86,6 @@ public class Watch{
     }
 
     public void WatchGame() throws IOException {
-        System.out.println("Action Result:" + this.CurrPlayer.ReceiveFromServer());
         this.CurrPlayer.ReceiveAllAction();
         String Answer = this.CurrPlayer.ReceiveFromServer();
         System.out.println("Answer" + Answer);
