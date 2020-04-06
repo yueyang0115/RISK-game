@@ -173,6 +173,7 @@ public class DoAction {
 
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
+      System.out.println("+++++++++++++++++ [Before] Current Attack Action Number Level 0 ++++++++++++++ \n" + action.getSoldierLevel(0));
       // if player has previous invalid action, ignore all its actions
       if (invalidPlayer.contains(action.getOwner())) {
         continue;
@@ -219,6 +220,7 @@ public class DoAction {
       ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
       rschecker.reduceCost(myResource, action);
       attackHelper(action);
+      System.out.println("+++++++++++++++++ [After] Current Attack Action Number Level 0 ++++++++++++++ \n" + action.getSoldierLevel(0));
     }
     invalidPlayer.clear();
   }

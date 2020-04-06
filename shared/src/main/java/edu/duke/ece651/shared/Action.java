@@ -52,7 +52,11 @@ public class Action {
     return owner;
   }
   public HashMap<Integer, Integer> getSoldiers() {
-    return soldiers;
+    HashMap<Integer, Integer> newMap = new HashMap<>();
+    for (HashMap.Entry<Integer, Integer> entry : soldiers.entrySet()) {
+      newMap.put(entry.getKey(), entry.getValue());
+    }
+    return newMap;
   }
   public int getSoldierLevel(int level) {
     return soldiers.get(level);
