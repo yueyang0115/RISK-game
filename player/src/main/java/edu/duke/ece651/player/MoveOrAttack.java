@@ -149,7 +149,6 @@ public class MoveOrAttack {
                 }
                 ObservableList LevelTemp = FXCollections.observableArrayList(Num);
                 getComboBox(level).setPromptText("Level " + level);
-                getComboBox(level).setValue(0);
                 getComboBox(level).setItems(LevelTemp);
                 Num.clear();
                 level++;
@@ -189,7 +188,12 @@ public class MoveOrAttack {
             Current.setDst(Dst);
             HashMap<Integer, Integer> Soldiers = new HashMap<>();
             for(int i = 0; i < 7; i++){
-                Soldiers.put(i,getComboBox(i).getValue());
+                if(getComboBox(i).getValue() == null) {
+                    Soldiers.put(i, 0);
+                }
+                else{
+                    Soldiers.put(i, getComboBox(i).getValue());
+                }
             }
             Current.setSoldiers(Soldiers);
             if(this.ActionType.equals("Move")){
