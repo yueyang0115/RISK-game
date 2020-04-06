@@ -58,11 +58,6 @@ public class Watch{
         this.Window = Window;
     }
 
-    /*public void DisableButton(){
-        for(HashMap.Entry<String, Button> entry : ButtonMap.entrySet()){
-            entry.getValue().setDisable(true);
-        }
-    }*/
 
     public void initialize() throws IOException {
         System.out.println("++++++++++++++++++Initialize Watch++++++++++++++++++++");
@@ -84,6 +79,7 @@ public class Watch{
         delay.play();
         new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionDetail);
 
+
     }
 
     public void WatchGame() throws IOException {
@@ -91,26 +87,28 @@ public class Watch{
         String Answer = this.CurrPlayer.ReceiveFromServer();
         System.out.println("Answer" + Answer);
         if(Answer.contains("Game End")){
-            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/End.fxml"));
+            new ShowView().ShowEndVIew(Answer,this.CurrPlayer, this.Window);
+            /*FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/End.fxml"));
             loaderStart.setControllerFactory(c->{
                 return new End(this.CurrPlayer, Answer);
                 //return new Test();
             });
             Scene scene = new Scene(loaderStart.load());
-            this.Window.setScene(scene);
+            this.Window.setScene(scene);*/
         }
         else{
             this.CurrPlayer.ContinueReceive(Answer);
-            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
+            /*FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
             loaderStart.setControllerFactory(c->{
                 return new Watch(this.CurrPlayer, this.Window);
 
             });
             System.out.println("================Reload Watch Page================");
             Scene scene = new Scene(loaderStart.load());
-            this.Window.setScene(scene);
+            this.Window.setScene(scene);*/
+            new ShowView().ShowWatchView(this.CurrPlayer,this.Window);
         }
-        this.Window.show();
+        //this.Window.show();
     }
 
 }
