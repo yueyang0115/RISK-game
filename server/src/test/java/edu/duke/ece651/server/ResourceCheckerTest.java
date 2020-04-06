@@ -129,7 +129,19 @@ public class ResourceCheckerTest {
 
     resource = actor.getNewResource();
     int numResource = resource.get(0);
-    //    assertEquals(numResource, 89);
+
+    int newAllFood = 0;
+    TerritoryProduce tp = new TerritoryProduce();
+    for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
+      if (entry.getKey() == 0) { // player_id = 0
+        for (Territory cur : entry.getValue()) {
+          System.out.println("currTerritoryName is " + cur.getTerritoryName());
+          System.out.println("added food is " + tp.getFood(cur.getTerritoryName()));
+          newAllFood = newAllFood + tp.getFood(cur.getTerritoryName());
+        }
+      }
+    }
+    assertEquals(numResource, 89 + newAllFood);
   }
 
   @Test
@@ -169,8 +181,20 @@ public class ResourceCheckerTest {
     Dworld = actor.getNewWorld();
     resource = actor.getNewResource();
     int numResource = resource.get(0);
-    //assertEquals(numResource, 62); // 100-19*2
-    System.out.println("~~~~~~~~~~~~~~~~~~" + numResource);
+
+    int newAllFood = 0;
+    TerritoryProduce tp = new TerritoryProduce();
+    for (HashMap.Entry<Integer, ArrayList<Territory>> entry : Dworld.entrySet()) {
+      if (entry.getKey() == 0) { // player_id = 0
+        for (Territory cur : entry.getValue()) {
+          System.out.println("currTerritoryName is " + cur.getTerritoryName());
+          System.out.println("added food is " + tp.getFood(cur.getTerritoryName()));
+          newAllFood = newAllFood + tp.getFood(cur.getTerritoryName());
+        }
+      }
+    }
+
+    assertEquals(numResource, 62 + newAllFood); // 100-19*2
     assertEquals(Dworld.get(0).get(1).getTerritoryName(), "B");
     assertEquals(Dworld.get(0).get(1).getSoldierLevel(0), 1);
     assertEquals(Dworld.get(0).get(4).getTerritoryName(), "E");

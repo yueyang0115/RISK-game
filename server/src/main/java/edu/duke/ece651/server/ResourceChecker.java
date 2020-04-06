@@ -22,13 +22,12 @@ public class ResourceChecker {
     int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
     int srcResource = myresource.get(playerID);
     int cost = countResource(action);
-    System.out.println("[DEBUG] srcResource is : "+srcResource);
-    System.out.println("[DEBUG] cost is :"+cost);
-    if(cost <= srcResource){
+    System.out.println("[DEBUG] in checkresource, srcResource is : " + srcResource);
+    System.out.println("[DEBUG] in checkresource, cost is :" + cost);
+    if (cost <= srcResource) {
       System.out.println("[DEBUG] checkresource success");
       return true;
-    }
-    else{
+    } else {
       System.out.println("[DEBUG] checkresource fail");
       return false;
     }
@@ -48,7 +47,8 @@ public class ResourceChecker {
     int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
     int srcResource = myresource.get(playerID);
     int cost = countResource(action);
-    resource.put(playerID, srcResource - cost);
+    int newResource = srcResource - cost;
+    resource.put(playerID, newResource);
   }
 
   // use Dijkstra’s Algorithm to find the path with samllest total size and count needed resources
@@ -62,7 +62,7 @@ public class ResourceChecker {
 
     srcTerritory.setTotalSize(sizegetter.getTerritorySize(srcName));
     pq.add(srcTerritory);
-    //System.out.println("[DEBUG] add srcTerritory in pq");
+    // System.out.println("[DEBUG] add srcTerritory in pq");
     printPriorityQueue(pq);
     settled.add(srcName);
 
@@ -85,22 +85,23 @@ public class ResourceChecker {
         String neighborName = neighborList.get(i);
         Territory neighborTerritory = myDoAction.findTerritory(myworld, neighborName);
         if (neighborTerritory.getOwner().equals(srcTerritory.getOwner())) {
-          //System.out.println("[DEBUG] find " + currName + "'s neighbor " + neighborName);
+          // System.out.println("[DEBUG] find " + currName + "'s neighbor " + neighborName);
           if (!settled.contains(neighborName)) {
             int edgeSize = sizegetter.getTerritorySize(neighborName);
             int newTotalSize = edgeSize + currSize;
             if ((newTotalSize < neighborTerritory.getTotalSize())) {
-              //System.out.println("[DEBUG] " + neighborName + "'s totalsize can be updated");
+              // System.out.println("[DEBUG] " + neighborName + "'s totalsize can be updated");
               neighborTerritory.setTotalSize(newTotalSize);
             }
 
             if (containsTerrotory(pq, neighborTerritory)) {
-              //System.out.println("[DEBUG] pq already contains " + neighborName + ", move it out");
+              // System.out.println("[DEBUG] pq already contains " + neighborName + ", move it
+              // out");
               pq.remove(neighborTerritory);
               printPriorityQueue(pq);
             }
             pq.add(neighborTerritory);
-            //System.out.println("[DEBUG] add " + neighborName + " in pq");
+            // System.out.println("[DEBUG] add " + neighborName + " in pq");
             printPriorityQueue(pq);
           }
         }
