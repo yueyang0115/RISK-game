@@ -34,7 +34,6 @@ public class OperateAction {
                 wholeTerritories.add(entry.getValue().get(i));
             }
         }
-        //System.out.println("[DEBUG] Own TerritoriesNum: " + ownTerritories.size());
     }
 
     public ArrayList<Action> getMoveActions() {
@@ -43,10 +42,6 @@ public class OperateAction {
 
     public ArrayList<Action> getAttackActions() {
         return AttackAction;
-    }
-
-    public ArrayList<Upgrade> getUpgradeActions() {
-        return UpgradeAction;
     }
 
     public void SeparateAction() {
@@ -179,11 +174,6 @@ public class OperateAction {
                 cur.setOwner(name);
             }
         }
-        if (TargetTerr == null) {
-            System.out.println("[Error] The territory is not yours. Please try again.");
-            return false;
-        }
-
         System.out.println("Please input the level before upgrade: ");
         int preL = Integer.parseInt(s.nextLine());
         if (preL > 6 || preL < 0) {
@@ -194,7 +184,7 @@ public class OperateAction {
 
         System.out.println("Please input the level after upgrade: ");
         int afterL = Integer.parseInt(s.nextLine());
-        if (afterL > 6 || preL < afterL) {
+        if (afterL > 6 || preL >= afterL) {
             System.out.println("The level after upgrade is invalid. Please try again.");
             return false;
         }

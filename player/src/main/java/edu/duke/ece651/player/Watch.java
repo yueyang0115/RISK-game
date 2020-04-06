@@ -57,11 +57,6 @@ public class Watch{
         this.Window = Window;
     }
 
-    /*public void DisableButton(){
-        for(HashMap.Entry<String, Button> entry : ButtonMap.entrySet()){
-            entry.getValue().setDisable(true);
-        }
-    }*/
 
     public void initialize() throws IOException {
         System.out.println("++++++++++++++++++Initialize Watch++++++++++++++++++++");

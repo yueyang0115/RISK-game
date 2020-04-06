@@ -24,9 +24,7 @@ public class Graph implements Displayable{
             for(int i = 0; i < TerrList.size(); i++){
                 Territory OneTerr = TerrList.get(i);
                 String TerrName = OneTerr.getTerritoryName();
-                //System.out.println("Territory Name: " + TerrName);
                 String styleStr = getStyle(background, TerrName);
-                //System.out.println("Set Style" + styleStr);
                 Button Btn = ButtonMap.get(TerrName);
                 Btn.setStyle(styleStr);
                 Btn.setCursor(Cursor.HAND);
