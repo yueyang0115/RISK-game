@@ -108,7 +108,7 @@ public class UpgradeDetail {
         int timesChoose = CurrPlayer.getTechResource() / perCost;
         timesChoose = Math.min(timesChoose, curTerritory.getSoldierLevel(startInput));
         ObservableList<Integer> timeChoices = FXCollections.observableArrayList();
-        for (int i = 1; i < timesChoose; i++) {
+        for (int i = 1; i < timesChoose + 1; i++) {
             timeChoices.add(i);
         }
         numChoose.setItems(timeChoices);
