@@ -30,6 +30,7 @@ public class Watch{
     @FXML private Button ButtonL;
     @FXML private Label Prompt;
     @FXML private Label ActionDetail;
+
     private PlayerHelper CurrPlayer;
     private HashMap<String, Button> ButtonMap;
 

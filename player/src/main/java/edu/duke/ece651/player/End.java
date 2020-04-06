@@ -18,12 +18,45 @@ public class End {
     private String EndGame;
     @FXML private Label Prompt;
 
+    @FXML private Button ButtonA;
+    @FXML private Button ButtonB;
+    @FXML private Button ButtonC;
+    @FXML private Button ButtonD;
+    @FXML private Button ButtonE;
+    @FXML private Button ButtonF;
+    @FXML private Button ButtonG;
+    @FXML private Button ButtonH;
+    @FXML private Button ButtonI;
+    @FXML private Button ButtonJ;
+    @FXML private Button ButtonK;
+    @FXML private Button ButtonL;
+
+    private HashMap<String, Button> ButtonMap;
+
+    private void InitButtonMap(){
+        ButtonMap = new HashMap<>();
+        ButtonMap.put("A", ButtonA);
+        ButtonMap.put("B", ButtonB);
+        ButtonMap.put("C", ButtonC);
+        ButtonMap.put("D", ButtonD);
+        ButtonMap.put("E", ButtonE);
+        ButtonMap.put("F", ButtonF);
+        ButtonMap.put("G", ButtonG);
+        ButtonMap.put("H", ButtonH);
+        ButtonMap.put("I", ButtonI);
+        ButtonMap.put("J", ButtonJ);
+        ButtonMap.put("K", ButtonK);
+        ButtonMap.put("L", ButtonL);
+    }
+
     public End(PlayerHelper CurrPlayer, String GameEnd){
         this.CurrPlayer = CurrPlayer;
         this.EndGame = GameEnd;
     }
 
     public void initialize(){
+        InitButtonMap();
+        new Graph().showMap(this.CurrPlayer.getTerritoryMap(),this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         System.out.println("+++++++++++==============Game End+++++++++++==========");
         this.Prompt.setText(this.EndGame);
         this.Prompt.setFont(new Font("Arial", 24));
