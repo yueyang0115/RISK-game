@@ -106,7 +106,15 @@ public class UpgradeDetail {
         Cost myCost = new Cost();
         int perCost = myCost.getCosts(startInput, endInput);
         int timesChoose = CurrPlayer.getTechResource() / perCost;
-        timesChoose = Math.min(timesChoose, curTerritory.getSoldierLevel(startInput));
+        int alreadyUpgraded = 0;
+        ObservableList<Upgrade> allUpgrades;
+        allUpgrades = upgradeTable.getItems();
+        for (Upgrade cur : allUpgrades) {
+            if (cur.getPrevLevel() == startInput) {
+                alreadyUpgraded += cur.getNumber();
+            }
+        }
+        timesChoose = Math.min(timesChoose, curTerritory.getSoldierLevel(startInput) - alreadyUpgraded);
         ObservableList<Integer> timeChoices = FXCollections.observableArrayList();
         for (int i = 1; i < timesChoose + 1; i++) {
             timeChoices.add(i);
