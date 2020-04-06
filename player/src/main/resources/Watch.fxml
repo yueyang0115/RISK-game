@@ -138,7 +138,7 @@
                     <Font size="30.0" />
                 </font>
             </Label>
-            <Label layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="203.0" text="Actions" textFill="MIDNIGHTBLUE">
+            <Label layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="203.0" textFill="MIDNIGHTBLUE">
                <font>
                   <Font size="30.0" />
                </font>

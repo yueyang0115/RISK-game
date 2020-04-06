@@ -4,6 +4,7 @@ import edu.duke.ece651.shared.*;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,7 +34,7 @@ public class Watch{
     @FXML private Button ButtonL;
     @FXML private Label Prompt;
     @FXML private Label ActionDetail;
-
+    private HashMap<Integer, ArrayList<Territory>> TerrMap;
     private PlayerHelper CurrPlayer;
     private HashMap<String, Button> ButtonMap;
 
@@ -54,6 +55,8 @@ public class Watch{
     }
     private Stage Window;
     public Watch(PlayerHelper CurrPlayer, Stage Window){
+        this.TerrMap = new HashMap<>();
+        this.TerrMap = CurrPlayer.getTerritoryMap();
         this.CurrPlayer = CurrPlayer;
         this.Window = Window;
     }
@@ -63,10 +66,12 @@ public class Watch{
         System.out.println("++++++++++++++++++Initialize Watch++++++++++++++++++++");
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
+        showButton();
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("You are " + PlayerName + ".");
         this.Prompt.setFont(new Font("Arial", 28));
+        new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionDetail);
         PauseTransition delay = new PauseTransition(Duration.seconds(1));
         delay.setOnFinished(event -> {
             try {
@@ -77,38 +82,38 @@ public class Watch{
             }
         });
         delay.play();
-        new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionDetail);
-
 
     }
-
+    public void showButton(){
+        for (HashMap.Entry<Integer, ArrayList<Territory>> entry : TerrMap.entrySet()){
+            ArrayList<Territory> TerrList = entry.getValue();
+            for(int i = 0; i < TerrList.size(); i++){
+                Territory OneTerr = TerrList.get(i);
+                String TerrName = OneTerr.getTerritoryName();
+                Button Btn = ButtonMap.get(TerrName);
+                HashMap<Integer,Integer> SoldierMap = OneTerr.getSoldiers();
+                StringBuilder SoldierDetail = new StringBuilder();
+                SoldierDetail.append(TerrName + "\n");
+                for(HashMap.Entry<Integer,Integer> CurrentMap : SoldierMap.entrySet()){
+                    SoldierDetail.append("Level " + CurrentMap.getKey() + ": " + CurrentMap.getValue() + "\n");
+                }
+                Btn.setText(SoldierDetail.toString());
+                Btn.setFont(new Font(6));
+            }
+        }
+        System.out.println("Already paint color");
+    }
     public void WatchGame() throws IOException {
         this.CurrPlayer.ReceiveAllAction();
         String Answer = this.CurrPlayer.ReceiveFromServer();
         System.out.println("Answer" + Answer);
         if(Answer.contains("Game End")){
             new ShowView().ShowEndVIew(Answer,this.CurrPlayer, this.Window);
-            /*FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/End.fxml"));
-            loaderStart.setControllerFactory(c->{
-                return new End(this.CurrPlayer, Answer);
-                //return new Test();
-            });
-            Scene scene = new Scene(loaderStart.load());
-            this.Window.setScene(scene);*/
         }
         else{
             this.CurrPlayer.ContinueReceive(Answer);
-            /*FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
-            loaderStart.setControllerFactory(c->{
-                return new Watch(this.CurrPlayer, this.Window);
-
-            });
-            System.out.println("================Reload Watch Page================");
-            Scene scene = new Scene(loaderStart.load());
-            this.Window.setScene(scene);*/
             new ShowView().ShowWatchView(this.CurrPlayer,this.Window);
         }
-        //this.Window.show();
     }
 
 }
