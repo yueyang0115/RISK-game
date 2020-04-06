@@ -78,6 +78,7 @@ public class Watch{
         delay.play();
         new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionDetail);
 
+
     }
 
     public void WatchGame() throws IOException {
