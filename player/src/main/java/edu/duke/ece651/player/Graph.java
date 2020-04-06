@@ -34,6 +34,7 @@ public class Graph implements Displayable{
         }
         System.out.println("Already paint color");
     }
+
     @Override
     public void showAction(HashMap<Integer, ArrayList<Action>> RecvAction, Pair<Integer, String> playerInfo, Label ShowLabel) {
         ColorID PlayerColor = new ColorID();
@@ -52,7 +53,7 @@ public class Graph implements Displayable{
                 for(int j = 0 ; j <soldierMap.size();j++) {
                     int ActSoldiers = OneAction.getSoldierLevel(j);
                     if (ActSoldiers != 0) {
-                        Text.append("  " + ActionType + ":  " + ActSoldiers + " units of level " + i +" from " + Source + " to " + Destination + "\n");
+                        Text.append("  " + ActionType + ":  " + ActSoldiers + " units of level " + j +" from " + Source + " to " + Destination + "\n");
                     }
                 }
             }
