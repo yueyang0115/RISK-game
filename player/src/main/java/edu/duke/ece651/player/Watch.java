@@ -88,15 +88,27 @@ public class Watch{
     public void WatchGame() throws IOException {
 
         this.CurrPlayer.ReceiveAllAction();
-        this.CurrPlayer.ReceiveMapANDShow();
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
-        loaderStart.setControllerFactory(c->{
-            return new Watch(this.CurrPlayer, this.Window);
-            //return new Test();
-        });
-        System.out.println("================Reload Watch Page================");
-        Scene scene = new Scene(loaderStart.load());
-        this.Window.setScene(scene);
+        String Answer = this.CurrPlayer.ReceiveFromServer();
+        if(Answer.contains("Game End")){
+            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/End.fxml"));
+            loaderStart.setControllerFactory(c->{
+                return new End(this.CurrPlayer, Answer);
+                //return new Test();
+            });
+            Scene scene = new Scene(loaderStart.load());
+            this.Window.setScene(scene);
+        }
+        else{
+            this.CurrPlayer.ContinueReceive(Answer);
+            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
+            loaderStart.setControllerFactory(c->{
+                return new Watch(this.CurrPlayer, this.Window);
+
+            });
+            System.out.println("================Reload Watch Page================");
+            Scene scene = new Scene(loaderStart.load());
+            this.Window.setScene(scene);
+        }
         this.Window.show();
     }
 
