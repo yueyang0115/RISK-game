@@ -1,0 +1,15 @@
+package edu.duke.ece651.player;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import javafx.stage.Stage;
+import org.junit.jupiter.api.Test;
+
+public class FXMLTest {
+  @Test
+  public void test_FXML() {
+    Player p = new Player();
+    Stage s = new Stage();
+    Map m = new Map(p, s);
+  }
+}

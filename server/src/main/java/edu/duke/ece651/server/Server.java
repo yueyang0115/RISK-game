@@ -40,8 +40,8 @@ public class Server {
     }
     // The other threads to handle the rest players
     for (int id = 1; id < playerNum[0]; id++) {
-      PlayerHandler ph =
-          new PlayerHandler(new Communicator(serverSock), id, playerNum, territoryMap, food, status);
+      PlayerHandler ph = new PlayerHandler(
+          new Communicator(serverSock), id, playerNum, territoryMap, food, status);
       list.add(ph);
       ph.start();
     }
@@ -123,7 +123,7 @@ public class Server {
             cur.sendPlayer(formatter.MapCompose(territoryMap).toString(), true);
             System.out.println("[DEBUG] Success Send Map to Player" + k
                 + formatter.MapCompose(territoryMap).toString());
-            //Send the food resource
+            // Send the food resource
             cur.sendPlayer(food.get(k).toString(), false);
             System.out.println("[DEBUG] send food resource to player_" + k + ": " + food.get(k));
           }
