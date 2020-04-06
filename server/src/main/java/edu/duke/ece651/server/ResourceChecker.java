@@ -17,6 +17,7 @@ public class ResourceChecker {
     myDoAction = new DoAction(myworld);
   }
 
+  //check if player hold enough food resource to do this action
   public boolean CheckResource(Action action) {
     String playerName = action.getOwner();
     int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
@@ -33,6 +34,7 @@ public class ResourceChecker {
     }
   }
 
+  //calculate the needed food resource
   private int countResource(Action action) {
     int numSoldiers = myDoAction.countSoldier(action.getSoldiers());
     if (action.getType().equals("Attack")) {
@@ -42,6 +44,7 @@ public class ResourceChecker {
     }
   }
 
+  //reduce the needed resource from original resource
   public void reduceCost(HashMap<Integer, Integer> resource, Action action) {
     String playerName = action.getOwner();
     int playerID = Character.getNumericValue(playerName.charAt(playerName.length() - 1));
@@ -120,6 +123,7 @@ public class ResourceChecker {
     System.out.print("\n");*/
   }
 
+  //check if priority queue already contains this territory
   private boolean containsTerrotory(PriorityQueue<Territory> pq, Territory territory) {
     for (Territory t : pq) {
       if (t.getTerritoryName().equals(territory.getTerritoryName())) {

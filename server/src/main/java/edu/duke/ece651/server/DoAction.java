@@ -101,6 +101,7 @@ public class DoAction {
     mymoveList = moveList;
   }
 
+  // do moveAction once
   private void moveHelper(Action action) {
     System.out.println("[DEBUG] move action valid");
     HashMap<Integer, Integer> movedSoldierMap = action.getSoldiers();
@@ -132,7 +133,7 @@ public class DoAction {
     }
   }
 
-  // do moveAction once
+  //for attack action. remove the soldiers involved in this action out of territory
   private void removeHelper(Action action) {
     HashMap<Integer, Integer> movedSoldierMap = action.getSoldiers();
     for (HashMap.Entry<Integer, Integer> entry : movedSoldierMap.entrySet()) {
@@ -161,12 +162,14 @@ public class DoAction {
     }
   }
 
+  //deep copy hashMap
   private void copyMap(HashMap<Integer, Integer> rscMap, HashMap<Integer, Integer> dstMap) {
     for (HashMap.Entry<Integer, Integer> entry : dstMap.entrySet()) {
       rscMap.put(entry.getKey(), entry.getValue());
     }
   }
 
+  //do attack action
   public void doAttackAction(ArrayList<Action> attackList) {
     System.out.println("[DEBUG] attackList.size() is " + attackList.size());
     for (int k = 0; k < attackList.size(); k++) {
@@ -267,6 +270,7 @@ public class DoAction {
     int defenceLevel;
     int i = 0;
 
+    //use bonus + generated random number to attack
     Bonus bonus = new Bonus();
     while (countSoldier(defenceSoldierMap) != 0 && countSoldier(attackSoldierMap) != 0) {
       if (i % 2 == 0) {
@@ -313,6 +317,7 @@ public class DoAction {
           + attackTerritory.getSoldierLevel(soldierLevel));
     }
 
+    //DEBUG
     for (HashMap.Entry<Integer, Integer> entry : defenceTerritory.getSoldiers().entrySet()) {
       int soldierLevel = entry.getKey();
       int numAttack = entry.getValue();
@@ -327,6 +332,7 @@ public class DoAction {
     System.out.println("[DEBUG] after attack, new worldmap is " + myMaptoJson.getJSON());
   }
 
+  //count the total number of soldiers in soldieraMap
   public int countSoldier(HashMap<Integer, Integer> soldierMap) {
     int size = soldierMap.size();
     int count = 0;
@@ -336,6 +342,7 @@ public class DoAction {
     return count;
   }
 
+  //find the soldiers that has the highest level
   private int findMaxSoldier(HashMap<Integer, Integer> soldierMap) {
     int size = soldierMap.size();
     for (int i = size - 1; i >= 0; i--) {
@@ -347,6 +354,7 @@ public class DoAction {
     return -1;
   }
 
+  //find the soldier that has the lowest level
   private int findMinSoldier(HashMap<Integer, Integer> soldierMap) {
     int size = soldierMap.size();
     for (int i = 0; i < size; i++) {
@@ -422,9 +430,12 @@ public class DoAction {
     return ans;
   }
 
+  //return worldMap with territory details changed
   public HashMap<Integer, ArrayList<Territory>> getNewWorld() {
     return this.myworld;
   }
+
+  //return resourceMap that contains all players food resource which has been added with the newly produced food
   public HashMap<Integer, Integer> getNewResource() {
     TerritoryProduce tp = new TerritoryProduce();
     for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
