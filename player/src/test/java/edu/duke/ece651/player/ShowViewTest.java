@@ -28,5 +28,6 @@ public class ShowViewTest extends Application {
         show.ShowEndVIew("Game End! Winner is Yellow!", SocketPlayer,primaryStage);
         show.ShowLoseView("valid", SocketPlayer, primaryStage);
         show.ShowWatchView(SocketPlayer,primaryStage);
+        primaryStage.close();
     }
 }
