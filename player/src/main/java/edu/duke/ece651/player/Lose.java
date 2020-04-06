@@ -30,6 +30,8 @@ public class Lose{
     @FXML private Button ButtonK;
     @FXML private Button ButtonL;
     @FXML private Label Prompt;
+    @FXML private Label Detail;
+    private String Result;
     private PlayerHelper CurrPlayer;
     private Stage Window;
     private HashMap<String, Button> ButtonMap;
@@ -50,13 +52,18 @@ public class Lose{
         ButtonMap.put("L", ButtonL);
     }
 
-    public Lose(PlayerHelper CurrPlayer, Stage Window){
+    public Lose(PlayerHelper CurrPlayer, Stage Window, String Validation){
         this.CurrPlayer = CurrPlayer;
         this.Window = Window;
+        this.Result = Validation;
     }
     public void initialize(){
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
+
+        new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.Detail);
+        System.out.println("Print out All Actions");
+
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("You are " + PlayerName + ".");
@@ -66,15 +73,20 @@ public class Lose{
     public void LoseButWatch() throws IOException {
         System.out.println("Lose But Watch");
         this.CurrPlayer.setLoseButWatch(true);
+        //send Y to server to continue watch the game
+        this.CurrPlayer.sendString("Y");
+        System.out.println("Already Send the Watch result to server");
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new Watch(this.CurrPlayer);
+            return new Watch(this.CurrPlayer, this.Window);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);
         this.Window.show();
     }
     public void LoseNotWatch() throws IOException {
+        //send N to server to not watch
+        this.CurrPlayer.sendString("N");
         System.out.println("Lose Not Watch");
         this.Window.close();
     }

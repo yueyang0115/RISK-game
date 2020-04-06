@@ -14,5 +14,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class End {
+    private PlayerHelper CurrPlayer;
+    private String EndGame;
+    @FXML private Label Prompt;
+
+    public End(PlayerHelper CurrPlayer, String GameEnd){
+        this.CurrPlayer = CurrPlayer;
+        this.EndGame = GameEnd;
+    }
+
+    public void initialize(){
+        System.out.println("+++++++++++==============Game End+++++++++++==========");
+        this.Prompt.setText(this.EndGame);
+        this.Prompt.setFont(new Font("Arial", 24));
+    }
 
 }

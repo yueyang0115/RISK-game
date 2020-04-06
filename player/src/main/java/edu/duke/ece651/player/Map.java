@@ -195,8 +195,13 @@ public class Map{
         String Answer = this.CurrPlayer.ReceiveFromServer();
         if(Answer.contains("Game End!")){
             System.out.println("Received Game End");
-            this.Window.close();
-            this.CurrPlayer.close();
+            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/End.fxml"));
+            loaderStart.setControllerFactory(c->{
+                return new End(this.CurrPlayer, Answer);
+            });
+            Scene scene = new Scene(loaderStart.load());
+            this.Window.setScene(scene);
+            this.Window.show();
         }
         else if(Answer.contains("Lose Game")){
             System.out.println("Received Lose Game");
@@ -204,7 +209,7 @@ public class Map{
             this.CurrPlayer.setLose(true);
             FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Lose.fxml"));
             loaderStart.setControllerFactory(c->{
-                return new Lose(this.CurrPlayer, this.Window);
+                return new Lose(this.CurrPlayer, this.Window, Validation);
             });
             Scene scene = new Scene(loaderStart.load());
             this.Window.setScene(scene);

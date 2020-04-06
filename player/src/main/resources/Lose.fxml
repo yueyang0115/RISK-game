@@ -168,7 +168,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <Label layoutX="10.0" layoutY="62.0" prefHeight="30.0" prefWidth="203.0" text="Yellow:">
+            <Label fx:id="Detail" layoutX="10.0" layoutY="62.0" prefHeight="528.0" prefWidth="406.0">
                <font>
                   <Font size="30.0" />
                </font>

@@ -138,6 +138,7 @@ public class PlayerHelper {
     public void setLoseButWatch(boolean Ask){
         this.Ask = Ask;
     }
+    ///map or lose game or game end
     public String ReceiveFromServer(){
         String msg = receiveString();
         return msg;

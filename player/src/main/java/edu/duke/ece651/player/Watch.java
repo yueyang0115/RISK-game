@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Pair;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,26 +48,42 @@ public class Watch{
         ButtonMap.put("K", ButtonK);
         ButtonMap.put("L", ButtonL);
     }
-
-    public Watch(PlayerHelper CurrPlayer){
+    private Stage Window;
+    public Watch(PlayerHelper CurrPlayer, Stage Window){
         this.CurrPlayer = CurrPlayer;
+        this.Window = Window;
     }
 
-    public void DisableButton(){
+    /*public void DisableButton(){
         for(HashMap.Entry<String, Button> entry : ButtonMap.entrySet()){
             entry.getValue().setDisable(true);
         }
-    }
+    }*/
 
-    public void initialize(){
+    public void initialize() throws IOException {
+        System.out.println("++++++++++++++++++Initialize Watch++++++++++++++++++++");
         InitButtonMap();
-        DisableButton();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("You are " + PlayerName + ".");
         this.Prompt.setFont(new Font("Arial", 28));
         new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionDetail);
+        WatchGame(this.Window);
+    }
+
+    public void WatchGame(Stage newWindow) throws IOException {
+
+        this.CurrPlayer.ReceiveAllAction();
+        this.CurrPlayer.ReceiveMapANDShow();
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new Watch(this.CurrPlayer, newWindow);
+        });
+        System.out.println("================Reload Watch Page================");
+        Scene scene = new Scene(loaderStart.load());
+        this.Window.setScene(scene);
+        this.Window.show();
     }
 
 }
