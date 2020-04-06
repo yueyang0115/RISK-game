@@ -18,6 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 
 public class UpgradeDetail {
+    //------------- Evolution 2 --------------//
+    //The player has chosen a territory to upgrade, now choose the detail
     @FXML private Label territoryName;
     @FXML private Label techResource;
     @FXML private Label level0;
@@ -46,6 +48,7 @@ public class UpgradeDetail {
         this.curTerritory = Show.FindTerritory(player.getTerritoryMap(), name);
     }
 
+    //Initialize the table and ComboBoxes
     public void initialize(){
         territoryName.setText(curTerritory.getTerritoryName());
         techResource.setText(String.valueOf(CurrPlayer.getTechResource()));
@@ -89,23 +92,28 @@ public class UpgradeDetail {
         upgradeTable.getColumns().addAll(fromColumn, toColumn, numColumn);
     }
 
+    //Click on the start level combobox
     @FXML
     public void startClick() throws IOException {
         int startInput = (int) startChoose.getValue();
         ObservableList<Integer> endChoices = FXCollections.observableArrayList();
+        //Set the values of the end level combobox
         for (int i = startInput + 1; i < 7; i++) {
             endChoices.add(i);
         }
         endChoose.setItems(endChoices);
     }
 
+    //Click on the end level combobox
     @FXML
     public void endClick() throws IOException {
         int startInput = (int) startChoose.getValue();
         int endInput = (int) endChoose.getValue();
         Cost myCost = new Cost();
         int perCost = myCost.getCosts(startInput, endInput);
+        //How many soldier can upgrade based on the resource
         int timesChoose = CurrPlayer.getTechResource() / perCost;
+        //How many soldier can upgrade based on the original soldier number
         int alreadyUpgraded = 0;
         ObservableList<Upgrade> allUpgrades;
         allUpgrades = upgradeTable.getItems();
@@ -114,14 +122,17 @@ public class UpgradeDetail {
                 alreadyUpgraded += cur.getNumber();
             }
         }
+        //Choose the min value of the possible number
         timesChoose = Math.min(timesChoose, curTerritory.getSoldierLevel(startInput) - alreadyUpgraded);
         ObservableList<Integer> timeChoices = FXCollections.observableArrayList();
+        //Set the values of the number combobox
         for (int i = 1; i < timesChoose + 1; i++) {
             timeChoices.add(i);
         }
         numChoose.setItems(timeChoices);
     }
 
+    //Click on the add button
     @FXML
     public void AddClick() throws IOException {
         int startInput = (int) startChoose.getValue();
@@ -129,21 +140,26 @@ public class UpgradeDetail {
         int numInput = (int) numChoose.getValue();
         Cost myCost = new Cost();
         int totalCost = myCost.getCosts(startInput, endInput) * numInput;
+        //Create the according upgrade
         Upgrade cur = new Upgrade();
         cur.setTerritoryName(curTerritory.getTerritoryName());
         cur.setOwner(curTerritory.getOwner());
         cur.setPrevLevel(startInput);
         cur.setNextLevel(endInput);
         cur.setNumber((int) numChoose.getValue());
+        //Add the upgrade to the tableView
         upgradeTable.getItems().add(cur);
         startChoose.setValue(null);
         endChoose.setValue(null);
         numChoose.setValue(null);
+        //Decrease the resource
         CurrPlayer.setTechResource(CurrPlayer.getTechResource() - totalCost);
         techResource.setText(String.valueOf(CurrPlayer.getTechResource()));
+        //Add the current upgrade
         this.CurrPlayer.setUpgradeAction(cur);
     }
 
+    //Click on the ok (back) button
     @FXML
     public void OKClick() throws IOException {
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));

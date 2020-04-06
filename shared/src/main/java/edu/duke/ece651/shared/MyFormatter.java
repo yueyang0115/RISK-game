@@ -145,17 +145,20 @@ public class MyFormatter {
   }
 
   public JSONObject UpgradeCompose(ArrayList<Upgrade> upgradeList) {
+    // compose the jsonstring based on the upgrade arraylist
     UpgradetoJson myUpgradetoJson = new UpgradetoJson(upgradeList);
     return myUpgradetoJson.getJSON();
   }
 
   public void UpgradeParse(ArrayList<Upgrade> Input, String UpgradeJson) {
+    // get a jsonstring of all upgrades and parse that into an arraylist
     JSONObject InputUpgrade = new JSONObject(UpgradeJson);
     JSONArray UpgradeArray = InputUpgrade.optJSONArray("Upgrade");
     ParseUpgradeArray(Input, UpgradeArray);
   }
 
   private void ParseUpgradeArray(ArrayList<Upgrade> Input, JSONArray UpgradeArray) {
+    // parse each upgrade in the jsonarray
     for (int i = 0; i < UpgradeArray.length(); i++) {
       Upgrade InnerUpgrade = new Upgrade();
       JSONObject UpgradeTemp = UpgradeArray.optJSONObject(i);

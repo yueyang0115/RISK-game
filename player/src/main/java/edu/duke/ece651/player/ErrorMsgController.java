@@ -12,6 +12,7 @@ import javafx.util.Pair;
 import java.io.IOException;
 
 public class ErrorMsgController {
+    //------------- Evolution 2 --------------//
     @FXML private Button OKBtn;
     @FXML private Label labelmsg;
     private String message;

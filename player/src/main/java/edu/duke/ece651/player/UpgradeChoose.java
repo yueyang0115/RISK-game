@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UpgradeChoose {
+    //------------- Evolution 2 --------------//
+    //Show the map and ask the player to choose which one to upgrade
+    //If the player choose another player's territory, pop-up the error message
     @FXML private Button ButtonA;
     @FXML private Button ButtonB;
     @FXML private Button ButtonC;
@@ -53,6 +56,7 @@ public class UpgradeChoose {
         this.TerrMap = player.getTerritoryMap();
     }
 
+    //Paint the territory button
     public void initialize(){
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
@@ -63,7 +67,7 @@ public class UpgradeChoose {
 
     @FXML
     public void BtnA() throws IOException{
-        System.out.println("Click on A");
+        //System.out.println("Click on A");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "A");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "A");
@@ -71,42 +75,42 @@ public class UpgradeChoose {
 
     @FXML
     public void BtnB() throws IOException{
-        System.out.println("Click on B");
+        //System.out.println("Click on B");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "B");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "B");
     }
     @FXML
     public void BtnC() throws IOException{
-        System.out.println("Click on C");
+        //System.out.println("Click on C");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "C");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "C");
     }
     @FXML
     public void BtnD() throws IOException{
-        System.out.println("Click on D");
+        //System.out.println("Click on D");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "D");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "D");
     }
     @FXML
     public void BtnE() throws IOException{
-        System.out.println("Click on E");
+        //System.out.println("Click on E");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "E");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "E");
     }
     @FXML
     public void BtnF() throws IOException{
-        System.out.println("Click on F");
+        //System.out.println("Click on F");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "F");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "F");
     }
     @FXML
     public void BtnG() throws IOException{
-        System.out.println("Click on G");
+        //System.out.println("Click on G");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "G");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "G");
@@ -114,7 +118,7 @@ public class UpgradeChoose {
     }
     @FXML
     public void BtnH() throws IOException{
-        System.out.println("Click on H");
+        //System.out.println("Click on H");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "H");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "H");
@@ -122,7 +126,7 @@ public class UpgradeChoose {
     }
     @FXML
     public void BtnI() throws IOException{
-        System.out.println("Click on I");
+        //System.out.println("Click on I");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "I");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "I");
@@ -130,7 +134,7 @@ public class UpgradeChoose {
     }
     @FXML
     public void BtnJ() throws IOException{
-        System.out.println("Click on J");
+        //System.out.println("Click on J");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "J");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "J");
@@ -138,19 +142,20 @@ public class UpgradeChoose {
     }
     @FXML
     public void BtnK() throws IOException{
-        System.out.println("Click on K");
+        //System.out.println("Click on K");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "K");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "K");
     }
     @FXML
     public void BtnL() throws IOException{
-        System.out.println("Click on L");
+        //System.out.println("Click on L");
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "L");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "L");
     }
 
+    //Check if the player choose his own territory
     private void checkInput(Territory CurrentClicked, String territoryName) throws IOException {
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         if (CurrentClicked.getOwner().equals(str)) {
@@ -161,8 +166,9 @@ public class UpgradeChoose {
         }
     }
 
+    //If check is successful, go to the UpgradeDetail page
     private void promptSuccess(String territoryName) throws IOException {
-        System.out.println("owner match");
+        //System.out.println("owner match");
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/UpgradeDetail.fxml"));
         loaderStart.setControllerFactory(c->{
             return new UpgradeDetail(this.CurrPlayer, territoryName, Window);
@@ -172,6 +178,7 @@ public class UpgradeChoose {
         this.Window.show();
     }
 
+    //If  check fails, pop-up an error window
     private void promptError() throws IOException {
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/ErrorMsg.fxml"));
         Stage newWindow = new Stage();
