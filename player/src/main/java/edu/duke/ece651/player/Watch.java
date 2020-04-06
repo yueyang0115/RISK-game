@@ -86,9 +86,10 @@ public class Watch{
     }
 
     public void WatchGame() throws IOException {
-
+        System.out.println("Action Result:" + this.CurrPlayer.ReceiveFromServer());
         this.CurrPlayer.ReceiveAllAction();
         String Answer = this.CurrPlayer.ReceiveFromServer();
+        System.out.println("Answer" + Answer);
         if(Answer.contains("Game End")){
             FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/End.fxml"));
             loaderStart.setControllerFactory(c->{
