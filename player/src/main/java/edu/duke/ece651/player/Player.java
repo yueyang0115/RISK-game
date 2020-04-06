@@ -14,14 +14,14 @@ import javafx.fxml.*;
 public class Player extends Application {
   private Stage Window;
 
-  public void showStartView(PlayerHelper player) throws IOException {
+  public void showStartView(PlayerHelper player, Stage Window) throws IOException {
     FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/StartGame.fxml"));
     loaderStart.setControllerFactory(c->{
-      return new StartController(player, this.Window);
+      return new StartController(player, Window);
     });
     Scene scene = new Scene(loaderStart.load());
-    this.Window.setScene(scene);
-    this.Window.show();
+    Window.setScene(scene);
+    Window.show();
   }
 
 
@@ -32,7 +32,7 @@ public class Player extends Application {
     Displayable d = new Text();
     player.addDisplayable(d);
     ReceiveID(player, player.getCommunicator());
-    showStartView(player);
+    showStartView(player, this.Window);
   }
 
 
