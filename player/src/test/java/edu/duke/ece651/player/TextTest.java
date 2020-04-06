@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.*;
 
+import javafx.scene.control.Button;
 import org.junit.jupiter.api.Test;
 
 import edu.duke.ece651.shared.*;
@@ -13,8 +14,8 @@ import javafx.util.Pair;
 public class TextTest {
   @Test
   public void test_Text() {
-    /*HashMap<Integer, ArrayList<Territory>> Map = new HashMap<>();
-    
+    HashMap<Integer, ArrayList<Territory>> Map = new HashMap<>();
+    /*
     Territory TestTerr_a1 = new Territory();
     TestTerr_a1.setOwner("aaa");
     TestTerr_a1.setSoldierLevel(0,3);
@@ -51,21 +52,31 @@ public class TextTest {
     InnerAL2.add(TestTerr_b1);
     InnerAL2.add(TestTerr_b2);
     Map.put(1, InnerAL2);
-
+*/
     Pair<Integer, String> playerInfo = new Pair<>(0,"Green");
     Text Test = new Text();
     System.out.println("[DEBUG] TestText.showMap():\n");
-    
-    //Test.showMap(Map, playerInfo);
+    String TestMapStr = "{'player_0':[ {'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'C'},{'neighbor_2':'D'}], 'territoryName':'A'},{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'L'}], 'territoryName':'B'},{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'B'},{'neighbor_2':'L'},{'neighbor_3':'J'},{'neighbor_4':'F'},{'neighbor_5':'D'}], 'territoryName':'C'},{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'F'}, {'neighbor_3':'E'}], 'territoryName':'D'},{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'D'},{'neighbor_1':'F'}, {'neighbor_2':'G'}], 'territoryName':'E'},{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'D'},{'neighbor_1':'C'},{'neighbor_2':'J'},{'neighbor_3':'I'},{'neighbor_4':'G'},{'neighbor_5':'E'}], 'territoryName':'F'}], 'player_1':[ {'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'E'},{'neighbor_1':'F'},{'neighbor_2':'I'},{'neighbor_3':'H'}], 'territoryName':'G'}, {'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'G'},{'neighbor_1':'I'}], 'territoryName':'H'}, {'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'F'},{'neighbor_1':'J'},{'neighbor_2':'K'},{'neighbor_3':'H'},{'neighbor_4':'G'}], 'territoryName':'I'}, {'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'C'},{'neighbor_1':'L'},{'neighbor_2':'K'},{'neighbor_3':'I'},{'neighbor_4':'F'}], 'territoryName':'J'},{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'I'},{'neighbor_1':'J'},{'neighbor_2':'L'}], 'territoryName':'K'},{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'C'},{'neighbor_2':'J'},{'neighbor_3':'K'}], 'territoryName':'L'}] }";
 
 
-    MyFormatter AllAct = new MyFormatter(3);
-    String Input = "{'player_0':[{'owner':'aaa','dst':{'owner':'aaa','territoryName':'aaaTerr2','soldiers':4,'neighbor':[{'neighbor_0':'aaa_neigh3'}]},'src':{'owner':'aaa','territoryName':'aaaTerr1','soldiers':3,'neighbor':[{'neighbor_0':'aaa_neigh1'},{'neighbor_1':'aaa_neigh2'}]},'soldiers':12, 'type':'Move'},{'owner':'bbb','dst':{'owner':'bbb','territoryName':'bbbTerr2','soldiers':6,'neighbor':[{'neighbor_0':'bbb_neigh3'},{'neighbor_1':'bbb_neigh4'}]},'src':{'owner':'bbb','territoryName':'bbbTerr1','soldiers':5,'neighbor':[{'neighbor_0':'bbb_neigh1'},{'neighbor_1':'bbb_neigh2'}]},'soldiers':20,'type':'Move'}],'player_2':[{'owner':'aaa','dst':{'owner':'aaa','territoryName':'aaaTerr2','soldiers':4,'neighbor':[{'neighbor_0':'aaa_neigh3'},{'neighbor_1':'aaa_neigh4'}]},'src':{'owner':'aaa','territoryName':'aaaTerr1','soldiers':3,'neighbor':[{'neighbor_0':'aaa_neigh1'},{'neighbor_1':'aaa_neigh2'}]},'soldiers':12,'type': 'Attack'},{'owner':'bbb','dst':{'owner':'bbb','territoryName':'bbbTerr2','soldiers':6,'neighbor':[{'neighbor_0':'bbb_neigh3'},{'neighbor_1':'bbb_neigh4'}]},'src':{'owner':'bbb','territoryName':'bbbTerr1','soldiers':5,'neighbor':[{'neighbor_0':'bbb_neigh1'},{'neighbor_1':'bbb_neigh2'}]},'soldiers':20,'type':'Attack'}]}";
-    
+    MyFormatter Change = new MyFormatter(2);
+    Change.MapParse(Map, TestMapStr);
+
+    /*HashMap<String, Button> ButtonMap = new HashMap<>();
+    for(int i = 0; i < 7; i++){
+      Button temp = new Button();
+      String Current = "A" + Integer.valueOf(i);
+      ButtonMap.put(Current, temp);
+    }*/
+    Test.showMap(Map, playerInfo, null);
+
+
+    MyFormatter AllAct = new MyFormatter(2);
+    String Input = "{'player_1':[{'owner':'player_1','dst':{'owner':'player_0','territoryName':'B','soldiers':[{'level_0':3},{'level_1':0},{'level_2':0},{'level_3':0},{'level_4':0},{'level_5':0},{'level_6':0}],'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'L'}]},'src':{'owner':'player_1','territoryName':'L','soldiers':[{'level_0':3},{'level_1':0},{'level_2':0},{'level_3':0},{'level_4':0},{'level_5':0},{'level_6':0}],'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'C'},{'neighbor_2':'J'},{'neighbor_3':'K'}]},'soldiers':[{'level_0':2},{'level_1':0},{'level_2':0},{'level_3':0},{'level_4':0},{'level_5':0},{'level_6':0}],'type':'Attack'}],'player_0':[{'owner':'player_0','dst':{'owner':'player_0','territoryName':'A','soldiers':[{'level_0':3},{'level_1':0},{'level_2':0},{'level_3':0},{'level_4':0},{'level_5':0},{'level_6':0}],'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'C'},{'neighbor_2':'D'}]},'src':{'owner':'player_0','territoryName':'C','soldiers':[{'level_0':3},{'level_1':0},{'level_2':0},{'level_3':0},{'level_4':0},{'level_5':0},{'level_6':0}],'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'B'},{'neighbor_2':'L'},{'neighbor_3':'J'},{'neighbor_4':'F'},{'neighbor_5':'D'}]},'soldiers':[{'level_0':2},{'level_1':0},{'level_2':0},{'level_3':0},{'level_4':0},{'level_5':0},{'level_6':0}],'type':'Move'}]}";
     HashMap<Integer, ArrayList<Action>> ParsedAction =  new HashMap<>();
     AllAct.AllActionParse(ParsedAction, Input);
     System.out.println("[DEBUG] TestText.showAction():\n");
-    //Test.showAction(ParsedAction, playerInfo);*/
+    Test.showAction(ParsedAction, playerInfo, null);
 
   }
 
