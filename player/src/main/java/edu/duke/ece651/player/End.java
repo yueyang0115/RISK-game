@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class End {
+    //------------- Evolution 2 --------------//
     private PlayerHelper CurrPlayer;
     private String EndGame;
     @FXML private Label Prompt;
@@ -56,8 +57,10 @@ public class End {
 
     public void initialize(){
         InitButtonMap();
+        //show the  map
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(),this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         System.out.println("+++++++++++==============Game End+++++++++++==========");
+        //print out the winner message
         this.Prompt.setText(this.EndGame);
         this.Prompt.setFont(new Font("Arial", 24));
     }

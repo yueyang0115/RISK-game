@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Map{
+    //------------- Evolution 2 --------------//
     @FXML private Button UpgradeBtn;
     @FXML private Button MoveBtn;
     @FXML private Button AttackBtn;
@@ -70,7 +71,7 @@ public class Map{
         this.Prompt.setFont(new Font("Arial", 28));
     }
 
-
+    //if the player click the button, show the detail of each territory in the right side label
     @FXML
     public void BtnA(){
         //System.out.println("Click on A");
@@ -145,6 +146,9 @@ public class Map{
         Show.ShowLabel(CurrentClicked, this.Detail);
     }
 
+    //-----------------------------------------------//
+    //these three buttons are related to actions
+    //and if click on each of them we jump into different page to finish each actions's input information
     @FXML
     public void Upgrading() throws IOException {
         System.out.println("Click on Upgrade");
@@ -183,6 +187,7 @@ public class Map{
 
     @FXML
     public void ChooseDone() throws IOException {
+        //if it choose done, receive this turn's result information
         System.out.println("Click on Done in Map");
         ShowView show = new ShowView();
         this.CurrPlayer.SendAction();
@@ -193,6 +198,8 @@ public class Map{
         this.CurrPlayer.AddTechResource(this.CurrPlayer.getTerritoryMap(),this.CurrPlayer.getPlayerInfo());
         //the answer could be map or lose game and game end
         String Answer = this.CurrPlayer.ReceiveFromServer();
+        //check whether the received string is game end or lose game or normal map
+        //display different page with different received string content
         if(Answer.contains("Game End!")){
             System.out.println("Received Game End");
             new ShowView().ShowEndVIew(Answer, this.CurrPlayer, this.Window);

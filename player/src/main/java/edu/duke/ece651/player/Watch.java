@@ -3,23 +3,17 @@ package edu.duke.ece651.player;
 import edu.duke.ece651.shared.*;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Duration;
-import javafx.util.Pair;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Watch{
-
-    
+    //------------- Evolution 2 --------------//
     @FXML private Button ButtonA;
     @FXML private Button ButtonB;
     @FXML private Button ButtonC;
@@ -37,7 +31,7 @@ public class Watch{
     private HashMap<Integer, ArrayList<Territory>> TerrMap;
     private PlayerHelper CurrPlayer;
     private HashMap<String, Button> ButtonMap;
-
+    //create a button map which can relate the Territory name to the Button
     private void InitButtonMap(){
         ButtonMap = new HashMap<>();
         ButtonMap.put("A", ButtonA);
@@ -85,6 +79,7 @@ public class Watch{
 
     }
     public void showButton(){
+        //iterate through all the territory map to print out the details of the soldier number in the map
         for (HashMap.Entry<Integer, ArrayList<Territory>> entry : TerrMap.entrySet()){
             ArrayList<Territory> TerrList = entry.getValue();
             for(int i = 0; i < TerrList.size(); i++){
@@ -92,6 +87,7 @@ public class Watch{
                 String TerrName = OneTerr.getTerritoryName();
                 Button Btn = ButtonMap.get(TerrName);
                 HashMap<Integer,Integer> SoldierMap = OneTerr.getSoldiers();
+                //construct the string that need to print out
                 StringBuilder SoldierDetail = new StringBuilder();
                 SoldierDetail.append(TerrName + "\n");
                 for(HashMap.Entry<Integer,Integer> CurrentMap : SoldierMap.entrySet()){

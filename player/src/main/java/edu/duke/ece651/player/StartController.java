@@ -10,6 +10,7 @@ import javafx.util.Pair;
 import java.io.IOException;
 
 public class StartController {
+    //------------- Evolution 2 --------------//
     @FXML private Button Start;
     private PlayerHelper CurrPlayer;
     private Pair<Integer, String> playerInfo;
@@ -23,12 +24,16 @@ public class StartController {
     public void StartGame() throws IOException {
         if(CurrPlayer.getID() == 0){
             System.out.println("MY ID 0");
+            //if it is the first player, the page will jump to ask the player to choose a total number
             showChooseView(this.CurrPlayer, this.Window);
+
         }
         else{
             System.out.println("MY ID 1");
+            //wait until the first player already choose the total number
             this.CurrPlayer.InitValue();
             this.CurrPlayer.ReceiveMapANDShow();
+            //after received information from server, go to main page of the game
             new ShowView().MainPageView(this.CurrPlayer, this.Window);
         }
     }

@@ -13,8 +13,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Graph implements Displayable{
+    //-------------Evolution 2 --------------//
+    //implements the interface Displayable
+    // show the map and actions by graph
     @Override
     public void showMap(HashMap<Integer, ArrayList<Territory>> CurrentMap, Pair<Integer, String> playerInfo, HashMap<String, Button> ButtonMap) {
+        //set each button's color and shape in buttonMap
         ColorID PlayerColor = new ColorID();
         for (HashMap.Entry<Integer, ArrayList<Territory>> entry : CurrentMap.entrySet()){
             //iterate each player color to set the button territory to its color
@@ -61,7 +65,9 @@ public class Graph implements Displayable{
     }
 
     public String getStyle(String color, String territoryName) {
+        //set each button's shape and color
         StringBuilder sb = new StringBuilder();
+        //map from territory name to shape and color
         if (color.equals(("green"))) { color = "lightgreen"; }
         else if (color.equals(("blue"))) { color = "lightskyblue"; }
         else if (color.equals(("red"))) { color = "lightcoral"; }

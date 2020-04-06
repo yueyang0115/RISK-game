@@ -15,6 +15,7 @@ public class Player extends Application {
   private Stage Window;
 
   public void showStartView(PlayerHelper player, Stage Window) throws IOException {
+    //load the start game page
     FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/StartGame.fxml"));
     loaderStart.setControllerFactory(c->{
       return new StartController(player, Window);
@@ -31,11 +32,11 @@ public class Player extends Application {
     PlayerHelper player = new PlayerHelper();
     Displayable d = new Text();
     player.addDisplayable(d);
+    //start the game and receive their own id and store it
     ReceiveID(player, player.getCommunicator());
+    //after received, continue to display the start page
     showStartView(player, this.Window);
   }
-
-
 
   public void ReceiveID(PlayerHelper player, Communicator communicator){
     System.out.println("Waiting for id");
@@ -60,9 +61,6 @@ public class Player extends Application {
   public static void main(String[] args) throws IOException {
     Scanner scanner = new Scanner(System.in);
     Player player = new Player();
-
-
-
     launch(args);
 
 //    player.init(scanner);

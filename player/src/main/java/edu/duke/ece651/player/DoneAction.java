@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DoneAction {
+    //------------- Evolution 2 --------------//
     private PlayerHelper CurrPlayer;
     private String ValidationResult;
 
@@ -49,7 +50,7 @@ public class DoneAction {
     @FXML private Label Prompt;
 
     private Stage Window;
-
+    //create a button map which can relate the Territory name to the Button
     private void InitButtonMap(){
         ButtonMap = new HashMap<>();
         ButtonMap.put("A", ButtonA);
@@ -73,21 +74,25 @@ public class DoneAction {
     }
 
     public void initialize(){
+        //display the latest map by using showMap function
         InitButtonMap();
         Graph Display = new Graph();
         Display.showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
+        //display the result of validating the player's actions
         this.ActionDetailPrompt.setText("Actions ");
         this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         this.Result.setText(this.ValidationResult);
         this.Result.setFont(new Font("Arial", 24));
+        //display the actions of all the players
         Display.showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionsOrDetail);
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
+        //print the prompt
         this.Prompt.setText("You are " + PlayerName + " Player, please choose action");
         this.Prompt.setFont(new Font("Arial", 28));
     }
 
-
+    //if the player click the button, show the detail of each territory in the right side label
     @FXML
     public void BtnA(){
         //System.out.println("Click on A");
@@ -234,6 +239,8 @@ public class DoneAction {
         this.CurrPlayer.AddTechResource(this.CurrPlayer.getTerritoryMap(),this.CurrPlayer.getPlayerInfo());
         //the answer could be map or lose game and game end
         String Answer = this.CurrPlayer.ReceiveFromServer();
+        //check whether the received string is game end or lose game or normal map
+        //display different page with different received string content
         if(Answer.contains("Game End!")){
             System.out.println("Received Game End");
             new ShowView().ShowEndVIew(Answer, this.CurrPlayer, this.Window);

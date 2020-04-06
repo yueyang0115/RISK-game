@@ -41,8 +41,10 @@ public class PlayerHelper {
         Lose = false;
         LoseButWatch = false;
     }
-    //Init player's id, player info, receiving total player number from server
+
+
     public void InitValue(){
+        //Init player's id, player info, receiving total player number from server
         int id = this.playerInfo.getKey();
         String color = new ColorID().getPlayerColor(id);
         this.playerInfo = new Pair<>(id, color);
@@ -112,6 +114,7 @@ public class PlayerHelper {
         this.communicator.sendString(str);
     }
     public void ReceiveMapANDShow(){
+        //for the player that was not end of game or lose to receive map and food resources from server
         String msg = receiveString();
         String FoodStr = receiveString();
         System.out.println("Received Food: " + FoodStr);
@@ -135,6 +138,9 @@ public class PlayerHelper {
         return msg;
     }
     public void ContinueReceive(String msg){
+        //after check whether last receive is string or map
+        //then continue receive food and parse the territory map
+        //only receive food if the current player does not lose the game
         if(!LoseButWatch) {
             String FoodStr = receiveString();
             System.out.println("Received Food: " + FoodStr);
@@ -145,6 +151,7 @@ public class PlayerHelper {
         }
     }
     public void AddTechResource(HashMap<Integer, ArrayList<Territory>> TerrMap, Pair<Integer, String> PlayerInfo){
+        //at the end of each turn, add their own technology resources
         TerritoryProduce AddResource = new TerritoryProduce();
         ArrayList<Territory> MyTerr = new ArrayList<>();
         MyTerr = TerrMap.get(PlayerInfo.getKey());
@@ -158,6 +165,7 @@ public class PlayerHelper {
         return this.AllAction;
     }
     public void SendAction(){
+        //send the actions separately to the server
         if (!Lose) {
             MyFormatter myformatter = new MyFormatter(playerNum);
             String UpgradeString = myformatter.UpgradeCompose(UpgradeAction).toString();
@@ -173,10 +181,12 @@ public class PlayerHelper {
         }
     }
     public void ClearActions(){
+        //after each turn, remove the actions' list to add new actions
         this.UpgradeAction.clear();
         this.AttackAction.clear();
         this.MoveAction.clear();
     }
+
     public String ReceiveActionRes(){
         if (!Lose) {
             //Receive the Current Action Validation Result
@@ -186,6 +196,7 @@ public class PlayerHelper {
         }
         return null;
     }
+
     public void ReceiveAllAction(){
         MyFormatter myformatter = new MyFormatter(playerNum);
         //receive all players' actions

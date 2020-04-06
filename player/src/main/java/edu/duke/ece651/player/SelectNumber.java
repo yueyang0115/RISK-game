@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SelectNumber {
+    //------------- Evolution 2 --------------//
     ObservableList<Integer> ChoiceNumber = FXCollections.observableArrayList(2,3,4,5);
     @FXML private ChoiceBox<Integer> PlayerNumber;
     @FXML private Button OKBtn;
@@ -28,11 +29,14 @@ public class SelectNumber {
     }
     @FXML
     public void OKNumber() throws IOException {
+        //if the first player already choose the value, they will click on the OK button
         int TotalNumber = PlayerNumber.getValue();
         CurrPlayer.setPlayerNum(TotalNumber);
         System.out.println("OK Total Number " + TotalNumber);
         Player temp = new Player();
+        //send the total number chose by the first player to the server
         temp.SendTotalNumber(TotalNumber, this.CurrPlayer.getCommunicator());
+        //inside init value: init some player's information
         this.CurrPlayer.InitValue();
         this.CurrPlayer.ReceiveMapANDShow();
         new ShowView().MainPageView(this.CurrPlayer, this.Window);

@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ShowView {
+    //------------- Evolution 2 --------------//
+    //This Class is aim to load new page by using each methods
+
     public void ShowDoneView(String validation,PlayerHelper CurrPlayer, Stage Window) throws IOException {
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Validation.fxml"));
         loaderStart.setControllerFactory(c -> {
@@ -49,7 +52,6 @@ public class ShowView {
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
         loaderStart.setControllerFactory(c->{
             return new Watch(CurrPlayer, Window);
-
         });
         System.out.println("================Reload Watch Page================");
         Scene scene = new Scene(loaderStart.load());

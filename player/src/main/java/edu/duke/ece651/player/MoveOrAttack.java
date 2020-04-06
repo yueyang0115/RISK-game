@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MoveOrAttack {
+    //------------- Evolution 2 --------------//
     private PlayerHelper CurrPlayer;
     private String ActionType;
     private HashMap<Integer, ArrayList<Territory>> TerrMap;
@@ -52,6 +53,7 @@ public class MoveOrAttack {
     @FXML private Button ButtonL;
 
     private HashMap<String, Button> ButtonMap;
+    //create a button map which can relate the Territory name to the Button
     private void InitButtonMap(){
         ButtonMap = new HashMap<>();
         ButtonMap.put("A", ButtonA);
@@ -87,6 +89,7 @@ public class MoveOrAttack {
 
     }
     public void initialize(){
+        //initialize the button's shape and color
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         ColorID PlayerColor = new ColorID();
@@ -99,12 +102,15 @@ public class MoveOrAttack {
         this.Resource.setFont(new Font("Arial", 20));
     }
     public void InitTerr(){
+        //for different action type: MOVE OR ATTACK
+        //search through all the territory map to set the comboBox's value
         int ID = this.CurrPlayer.getPlayerInfo().getKey();
         this.TerrMap = this.CurrPlayer.getTerritoryMap();
         ArrayList<Territory> OwnTerr = this.TerrMap.get(ID);
         ArrayList<String> Src = new ArrayList<>();
         ArrayList<String> MoveDst = new ArrayList<>();
         ArrayList<String> AttackDst = new ArrayList<>();
+        //initialize the source territory and destination territory
         for (int i = 0; i < OwnTerr.size(); i++) {
             Src.add(OwnTerr.get(i).getTerritoryName());
             MoveDst.add(OwnTerr.get(i).getTerritoryName());
@@ -145,6 +151,7 @@ public class MoveOrAttack {
                 System.out.println("Print Level " + level);
                 ArrayList<Integer> Num = new ArrayList<>();
                 for(int i = 0; i <= 100; i++){
+                    //give each combo box 0~100 choices and validate it in the server side
                     Num.add(i);
                 }
                 ObservableList LevelTemp = FXCollections.observableArrayList(Num);
@@ -158,6 +165,9 @@ public class MoveOrAttack {
 
 
     private boolean CheckAction(){
+        //make sure the source is not the empty
+        //the destination is not empty
+        //the source is not the same as the destination
         if(this.SourceTerr.getValue() == this.DstTerr.getValue()){
             this.Detail.setText("Invalid Action! Source Name cannot same as Destination Name");
             this.Detail.setFont(new Font("Arial", 24));
@@ -178,7 +188,10 @@ public class MoveOrAttack {
     @FXML
     public void OKBtn() throws IOException {
         System.out.println("Click on OK");
+        //if it click on the OK
+        //check whether the value is valid
         if(CheckAction()){
+            //if it is valid, add the current action into its action list which is stored in the PlayerHelper class
             Action Current = new Action();
             Current.setOwner("player_" + this.CurrPlayer.getPlayerInfo().getKey());
             System.out.println("Current Action Owner: " + Current.getOwner());
@@ -196,6 +209,7 @@ public class MoveOrAttack {
                 }
             }
             Current.setSoldiers(Soldiers);
+            //MOVE OR ATTACK
             if(this.ActionType.equals("Move")){
                 Current.setType("Move");
                 this.CurrPlayer.setMoveAction(Current);
@@ -204,22 +218,15 @@ public class MoveOrAttack {
                 Current.setType("Attack");
                 this.CurrPlayer.setAttackAction(Current);
             }
-            MainPageView(this.CurrPlayer);
+            new ShowView().MainPageView(this.CurrPlayer, this.Window);
         }
         else{
+            //if it is not a valid action, OK will not work
             System.out.println("INVALID ACTION");
         }
 
     }
-    public void MainPageView(PlayerHelper player) throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));
-        loaderStart.setControllerFactory(c->{
-            return new Map(player, this.Window);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        this.Window.setScene(scene);
-        this.Window.show();
-    }
+    //if the player click the button, show the detail of each territory in the right side label
     @FXML
     public void BtnA(){
         System.out.println("Click on A");

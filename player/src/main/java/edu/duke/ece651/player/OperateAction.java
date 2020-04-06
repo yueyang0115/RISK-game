@@ -14,6 +14,13 @@ public class OperateAction {
     private ArrayList<Upgrade> UpgradeAction;
     private HashMap<String, String> ActionType;
 
+
+    //------------------ Evolution 1 ------------------------//
+    //Function: read the action input from player
+    //do some simply check and filled the move, attack, upgrade action list.
+    //Ready to send to server
+
+
     public OperateAction(Pair<Integer, String> PlayerInfo, HashMap<Integer, ArrayList<Territory>> TerritoryMap) {
         allAction = new ArrayList<>();
         MoveAction = new ArrayList<>();

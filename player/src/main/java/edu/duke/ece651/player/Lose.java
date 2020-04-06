@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Lose{
+    //------------- Evolution 2 --------------//
     @FXML private Button buttonYes;
     @FXML private Button buttonNo;
 
@@ -36,6 +37,7 @@ public class Lose{
     private Stage Window;
     private HashMap<String, Button> ButtonMap;
     private HashMap<Integer, ArrayList<Territory>> TerrMap;
+    //create a button map which can relate the Territory name to the Button
     private void InitButtonMap(){
         ButtonMap = new HashMap<>();
         ButtonMap.put("A", ButtonA);
@@ -76,6 +78,7 @@ public class Lose{
         //send Y to server to continue watch the game
         this.CurrPlayer.sendString("Y");
         System.out.println("Already Send the Watch result to server");
+        //here we could use the functions in ShowView->ShowWatchView
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
         loaderStart.setControllerFactory(c->{
             return new Watch(this.CurrPlayer, this.Window);
@@ -88,6 +91,7 @@ public class Lose{
         //send N to server to not watch
         this.CurrPlayer.sendString("N");
         System.out.println("Lose Not Watch");
+        //close the window directly
         this.Window.close();
     }
 }
