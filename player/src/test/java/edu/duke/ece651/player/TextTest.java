@@ -13,7 +13,7 @@ import javafx.util.Pair;
 public class TextTest {
   @Test
   public void test_Text() {
-    HashMap<Integer, ArrayList<Territory>> Map = new HashMap<>();
+    /*HashMap<Integer, ArrayList<Territory>> Map = new HashMap<>();
     
     Territory TestTerr_a1 = new Territory();
     TestTerr_a1.setOwner("aaa");
@@ -55,7 +55,8 @@ public class TextTest {
     Pair<Integer, String> playerInfo = new Pair<>(0,"Green");
     Text Test = new Text();
     System.out.println("[DEBUG] TestText.showMap():\n");
-    Test.showMap(Map, playerInfo);
+    
+    //Test.showMap(Map, playerInfo);
 
 
     MyFormatter AllAct = new MyFormatter(3);
@@ -64,7 +65,7 @@ public class TextTest {
     HashMap<Integer, ArrayList<Action>> ParsedAction =  new HashMap<>();
     AllAct.AllActionParse(ParsedAction, Input);
     System.out.println("[DEBUG] TestText.showAction():\n");
-    Test.showAction(ParsedAction, playerInfo);
+    //Test.showAction(ParsedAction, playerInfo);*/
 
   }
 
