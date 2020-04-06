@@ -3,7 +3,7 @@
 ![coverage](https://gitlab.oit.duke.edu/yy258/ece651-spr20-g9/badges/master/coverage.svg?job=test)
 
 * For evolutin 1, check https://gitlab.oit.duke.edu/yy258/ece651-spr20-g9/-/commit/140c54412f46bd9fba3d752a6772d029b0de74f9
-* For evolution 2, check 
+* For evolution 2, check the newest commit.
 
 ## Steps
 * **Please change the server address in the constructor of `Player/PlayerHelper`.**
