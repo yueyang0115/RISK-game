@@ -49,35 +49,6 @@ public class Player extends Application {
   }
 
 
-
-/*
-  public void init(Scanner scanner) {
-    
-    int id = this.playerInfo.getKey();
-    //the first player input the total number of players
-    if (id == 0) {
-      System.out.println(
-          "===You're the first player, please enter the number of all players ([2:5])===");
-      int playerNum = scanner.nextInt();
-      while (playerNum < 2 || playerNum > 5) {
-        System.out.println("========Invalid playerNumber, try again ([2:5])========");
-        playerNum = scanner.nextInt();
-      }
-      sendString(String.valueOf(playerNum));
-      //send it to server
-    }
-    // System.out.println("[DEBUG] my id is " + id);
-    String color = new ColorID().getPlayerColor(id);
-    this.playerInfo = new Pair<>(id, color);
-    playerNum = Integer.parseInt(receiveString());
-  }
-
-
-
-
-
-
-*/
   public void sendString(String str, Communicator communicator) {
     communicator.sendString(str);
   }
@@ -89,16 +60,6 @@ public class Player extends Application {
 
 
   public static void main(String[] args) throws IOException {
-    Scanner scanner = new Scanner(System.in);
-    Player player = new Player();
-
-
-
     launch(args);
-
-//    player.init(scanner);
-//    player.PlayGame(scanner);
-//    //close the socket
-//    player.close();
   }
 }
