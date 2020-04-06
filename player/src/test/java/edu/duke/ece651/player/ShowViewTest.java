@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class StartFirstTest extends Application {
+public class ShowViewTest extends Application {
     @Test
     public void test_start(){
         String[] args = {"null"};
@@ -22,6 +22,11 @@ public class StartFirstTest extends Application {
         System.out.println("In Start");
         StartController start = new StartController(SocketPlayer, primaryStage);
         start.showChooseView(SocketPlayer, primaryStage);
-        start.MainPageView(SocketPlayer);
+        ShowView show = new ShowView();
+        show.MainPageView(SocketPlayer, primaryStage);
+        show.ShowDoneView("valid", SocketPlayer,primaryStage);
+        show.ShowEndVIew("Game End! Winner is Yellow!", SocketPlayer,primaryStage);
+        show.ShowLoseView("valid", SocketPlayer, primaryStage);
+        show.ShowWatchView(SocketPlayer,primaryStage);
     }
 }

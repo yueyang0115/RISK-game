@@ -29,23 +29,13 @@ public class StartController {
             System.out.println("MY ID 1");
             this.CurrPlayer.InitValue();
             this.CurrPlayer.ReceiveMapANDShow();
-            MainPageView(this.CurrPlayer);
+            new ShowView().MainPageView(this.CurrPlayer, this.Window);
         }
     }
     public void showChooseView(PlayerHelper player, Stage Window) throws IOException {
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/SelectNumber.fxml"));
         loaderStart.setControllerFactory(c->{
             return new SelectNumber(player, Window);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        this.Window.setScene(scene);
-        this.Window.show();
-    }
-
-    public void MainPageView(PlayerHelper player) throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));
-        loaderStart.setControllerFactory(c->{
-            return new Map(player, this.Window);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);

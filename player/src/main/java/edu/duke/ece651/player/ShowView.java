@@ -36,4 +36,25 @@ public class ShowView {
         Window.setScene(scene);
         Window.show();
     }
+    public void MainPageView(PlayerHelper player, Stage Window) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new Map(player, Window);
+        });
+        Scene scene = new Scene(loaderStart.load());
+        Window.setScene(scene);
+        Window.show();
+    }
+    public void ShowWatchView(PlayerHelper CurrPlayer, Stage Window) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new Watch(CurrPlayer, Window);
+
+        });
+        System.out.println("================Reload Watch Page================");
+        Scene scene = new Scene(loaderStart.load());
+        Window.setScene(scene);
+        Window.show();
+    }
+
 }
