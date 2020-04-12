@@ -164,7 +164,7 @@ public class UpgradeDetail {
     public void OKClick() throws IOException {
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new Map(this.CurrPlayer, Window);
+            return new Map(this.CurrPlayer, Window, false);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);

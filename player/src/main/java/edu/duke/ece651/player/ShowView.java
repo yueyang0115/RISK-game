@@ -39,10 +39,10 @@ public class ShowView {
         Window.setScene(scene);
         Window.show();
     }
-    public void MainPageView(PlayerHelper player, Stage Window) throws IOException {
+    public void MainPageView(PlayerHelper player, Stage Window, Boolean first) throws IOException {
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new Map(player, Window);
+            return new Map(player, Window, first);
         });
         Scene scene = new Scene(loaderStart.load());
         Window.setScene(scene);

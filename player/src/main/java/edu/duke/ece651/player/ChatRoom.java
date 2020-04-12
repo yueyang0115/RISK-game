@@ -24,7 +24,10 @@ public class ChatRoom {
                 //receive content
                 String str = communicator.receive();
                 //add content
-                content.getItems().add(str);
+                String[] arr = str.split(":");
+                if (!arr[0].equals(name)) {
+                    content.getItems().add(str);
+                }
             }
         }
     };
@@ -41,5 +44,6 @@ public class ChatRoom {
     @FXML
     public void sendClick() throws IOException {
         communicator.sendString(name + ": " + input.getText());
+        input.clear();
     }
 }

@@ -39,7 +39,7 @@ public class SelectNumber {
         //inside init value: init some player's information
         this.CurrPlayer.InitValue();
         this.CurrPlayer.ReceiveMapANDShow();
-        new ShowView().MainPageView(this.CurrPlayer, this.Window);
+        new ShowView().MainPageView(this.CurrPlayer, this.Window, true);
     }
 
 

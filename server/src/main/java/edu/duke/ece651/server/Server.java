@@ -12,6 +12,7 @@ public class Server {
   private HashMap<Integer, ArrayList<Territory>> territoryMap;
   private HashMap<Integer, Integer> food;
   private ArrayList<String> status;
+  private ChatServer chatServer;
 
   public Server(int port) {
     this.port = port;
@@ -38,6 +39,8 @@ public class Server {
     } catch (Exception ex) {
       System.out.println("Exception:" + ex);
     }
+    //Initialize the chatServer, pass in player number
+    this.chatServer = new ChatServer(playerNum[0]);
     // The other threads to handle the rest players
     for (int id = 1; id < playerNum[0]; id++) {
       PlayerHandler ph = new PlayerHandler(
@@ -53,6 +56,7 @@ public class Server {
         System.out.println("Exception:" + ex);
       }
     }
+    chatServer.setUp();
   }
 
   public void startGame() {

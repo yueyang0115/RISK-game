@@ -218,7 +218,7 @@ public class MoveOrAttack {
                 Current.setType("Attack");
                 this.CurrPlayer.setAttackAction(Current);
             }
-            new ShowView().MainPageView(this.CurrPlayer, this.Window);
+            new ShowView().MainPageView(this.CurrPlayer, this.Window, false);
         }
         else{
             //if it is not a valid action, OK will not work
