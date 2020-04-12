@@ -132,6 +132,14 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                     </Button>
+                  <Button fx:id="AllianceBtn" layoutX="307.0" layoutY="10.0" mnemonicParsing="false" onAction="#ChooseAlliance" style="-fx-background-color: lavender; -fx-border-color: black;" text="Alliance">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
                     <Button fx:id="DoneBtn" mnemonicParsing="false" onAction="#ChooseDone" style="-fx-background-color: plum; -fx-border-color: black;" text="Done">
                         <font>
                             <Font size="20.0" />

@@ -228,6 +228,18 @@ public class DoneAction {
     }
 
     @FXML
+    public void ChooseAlliance() throws IOException {
+        System.out.println("Click on Alliance");
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Alliance.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new Alliance(this.CurrPlayer, this.Window);
+        });
+        Scene scene = new Scene(loaderStart.load());
+        this.Window.setScene(scene);
+        this.Window.show();
+    }
+
+    @FXML
     public void ChooseDone() throws IOException {
         System.out.println("Click on Done in Map");
 
