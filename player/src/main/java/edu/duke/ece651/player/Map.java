@@ -1,6 +1,7 @@
 package edu.duke.ece651.player;
 
 import edu.duke.ece651.shared.*;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class Map{
     @FXML private Label Prompt;
 
     private Stage Window;
+    private Boolean firstTime;
 
     private PlayerHelper CurrPlayer;
     private HashMap<String, Button> ButtonMap;
@@ -56,10 +59,11 @@ public class Map{
         ButtonMap.put("K", ButtonK);
         ButtonMap.put("L", ButtonL);
     }
-    public Map(PlayerHelper player, Stage Window){
+    public Map(PlayerHelper player, Stage Window, Boolean first){
         this.Window = Window;
         this.CurrPlayer = player;
         this.TerrMap = player.getTerritoryMap();
+        this.firstTime = first;
     }
 
     public void initialize(){
@@ -69,6 +73,18 @@ public class Map{
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("You are " + PlayerName + " Player, please choose action");
         this.Prompt.setFont(new Font("Arial", 28));
+        if (firstTime) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            delay.setOnFinished(event -> {
+                try {
+                    showChat();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("Exception "+ e);
+                }
+            });
+            delay.play();
+        }
     }
 
     //if the player click the button, show the detail of each territory in the right side label
@@ -215,6 +231,18 @@ public class Map{
             this.CurrPlayer.ContinueReceive(Answer);
             new ShowView().ShowDoneView(Validation, this.CurrPlayer, this.Window);
         }
+    }
+
+    public void showChat() throws IOException {
+        ColorID cid = new ColorID();
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/ChatRoom.fxml"));
+        Stage newWindow = new Stage();
+        loaderStart.setControllerFactory(c->{
+            return new ChatRoom(cid.getPlayerColor(CurrPlayer.getID()), newWindow);
+        });
+        Scene scene = new Scene(loaderStart.load());
+        newWindow.setScene(scene);
+        newWindow.show();
     }
 
 
