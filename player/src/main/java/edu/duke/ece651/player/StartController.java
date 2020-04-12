@@ -1,5 +1,6 @@
 package edu.duke.ece651.player;
 
+import edu.duke.ece651.shared.ColorID;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -36,6 +37,7 @@ public class StartController {
             //after received information from server, go to main page of the game
             new ShowView().MainPageView(this.CurrPlayer, this.Window);
         }
+        showChat();
     }
     public void showChooseView(PlayerHelper player, Stage Window) throws IOException {
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/SelectNumber.fxml"));
@@ -45,5 +47,17 @@ public class StartController {
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);
         this.Window.show();
+    }
+
+    public void showChat() throws IOException {
+        ColorID cid = new ColorID();
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/ChatRoom.fxml"));
+        Stage newWindow = new Stage();
+        loaderStart.setControllerFactory(c->{
+            return new ChatRoom(cid.getPlayerColor(CurrPlayer.getID()), newWindow);
+        });
+        Scene scene = new Scene(loaderStart.load());
+        newWindow.setScene(scene);
+        newWindow.show();
     }
 }
