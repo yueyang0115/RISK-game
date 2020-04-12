@@ -28,6 +28,9 @@ public class ChatRoom {
                 if (!arr[0].equals(name)) {
                     content.getItems().add(str);
                 }
+                else {
+                    content.getItems().add("Me: " + arr[1]);
+                }
             }
         }
     };
