@@ -144,8 +144,16 @@ public class Alliance {
         Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
-    public void ChooseDone(){
+    public void ChooseDone() throws IOException {
         System.out.println("Click on Done");
+        //TODO: add alliance
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new Map(this.CurrPlayer, Window, false);
+        });
+        Scene scene = new Scene(loaderStart.load());
+        this.Window.setScene(scene);
+        this.Window.show();
 
     }
 }
