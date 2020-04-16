@@ -1,5 +1,6 @@
 package edu.duke.ece651.player;
 
+import edu.duke.ece651.shared.Upgrade;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -48,8 +49,18 @@ public class ShowView {
         Window.setScene(scene);
         Window.show();
     }
-    public void ShowWatchView(PlayerHelper CurrPlayer, Stage Window) throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
+    public static void ShowWatchView(PlayerHelper CurrPlayer, Stage Window) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(ShowView.class.getResource("/Watch.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new Watch(CurrPlayer, Window);
+        });
+        System.out.println("================Reload Watch Page================");
+        Scene scene = new Scene(loaderStart.load());
+        Window.setScene(scene);
+        Window.show();
+    }
+    public static void ShowUpgradeChooseNum(Upgrade Action, PlayerHelper CurrPlayer, Stage Window) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(ShowView.class.getResource("/Watch.fxml"));
         loaderStart.setControllerFactory(c->{
             return new Watch(CurrPlayer, Window);
         });

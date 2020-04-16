@@ -169,7 +169,7 @@ public class UpgradeChoose {
     //If check is successful, go to the UpgradeDetail page
     private void promptSuccess(String territoryName) throws IOException {
         //System.out.println("owner match");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/UpgradeDetail.fxml"));
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/UpgradeInfo.fxml"));
         loaderStart.setControllerFactory(c->{
             return new UpgradeDetail(this.CurrPlayer, territoryName, Window);
         });

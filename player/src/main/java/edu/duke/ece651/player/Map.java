@@ -170,7 +170,7 @@ public class Map{
         System.out.println("Click on Upgrade");
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/UpgradeChoose.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new UpgradeChoose(this.CurrPlayer, Window);
+            return new UpgradeChoose(this.CurrPlayer, this.Window);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);

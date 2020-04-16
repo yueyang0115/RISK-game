@@ -33,17 +33,11 @@ public class Player extends Application {
     Displayable d = new Text();
     player.addDisplayable(d);
     //start the game and receive their own id and store it
-    ReceiveID(player, player.getCommunicator());
+    player.ReceiveID();
     //after received, continue to display the start page
     showStartView(player, this.Window);
   }
 
-  public void ReceiveID(PlayerHelper player, Communicator communicator){
-    System.out.println("Waiting for id");
-    int id = Integer.parseInt(receiveString(communicator));
-    player.setID(id);
-    System.out.println("Received! MY ID is " + id);
-  }
   public void SendTotalNumber(int PlayerNum, Communicator communicator){
     sendString(String.valueOf(PlayerNum), communicator);
   }
@@ -52,20 +46,9 @@ public class Player extends Application {
     communicator.sendString(str);
   }
 
-  public String receiveString(Communicator communicator) {
-    return communicator.receive();
-  }
 
 
-
-  public static void main(String[] args) throws IOException {
-    Scanner scanner = new Scanner(System.in);
-    Player player = new Player();
+  public static void main(String[] args) {
     launch(args);
-
-//    player.init(scanner);
-//    player.PlayGame(scanner);
-//    //close the socket
-//    player.close();
   }
 }
