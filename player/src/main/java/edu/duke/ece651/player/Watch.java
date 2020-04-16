@@ -104,11 +104,11 @@ public class Watch{
         String Answer = this.CurrPlayer.ReceiveFromServer();
         System.out.println("Answer" + Answer);
         if(Answer.contains("Game End")){
-            new ShowView().ShowEndVIew(Answer,this.CurrPlayer, this.Window);
+            ShowView.ShowEndVIew(Answer,this.CurrPlayer, this.Window);
         }
         else{
             this.CurrPlayer.ContinueReceive(Answer);
-            new ShowView().ShowWatchView(this.CurrPlayer,this.Window);
+            ShowView.ShowWatchView(this.CurrPlayer,this.Window);
         }
     }
 

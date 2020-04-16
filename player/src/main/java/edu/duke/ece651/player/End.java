@@ -57,7 +57,6 @@ public class End {
 
     public void initialize(){
         InitButtonMap();
-        //show the  map
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(),this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         System.out.println("+++++++++++==============Game End+++++++++++==========");
         //print out the winner message

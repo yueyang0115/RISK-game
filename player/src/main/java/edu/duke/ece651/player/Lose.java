@@ -79,13 +79,7 @@ public class Lose{
         this.CurrPlayer.sendString("Y");
         System.out.println("Already Send the Watch result to server");
         //here we could use the functions in ShowView->ShowWatchView
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
-        loaderStart.setControllerFactory(c->{
-            return new Watch(this.CurrPlayer, this.Window);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        this.Window.setScene(scene);
-        this.Window.show();
+        ShowView.ShowWatchView(this.CurrPlayer, this.Window);
     }
     public void LoseNotWatch() throws IOException {
         //send N to server to not watch

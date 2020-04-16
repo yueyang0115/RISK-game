@@ -168,7 +168,7 @@ public class Map{
     @FXML
     public void Upgrading() throws IOException {
         System.out.println("Click on Upgrade");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/UpgradeChoose.fxml"));
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/UpgradeChoose.fxml"));
         loaderStart.setControllerFactory(c->{
             return new UpgradeChoose(this.CurrPlayer, this.Window);
         });
@@ -180,19 +180,13 @@ public class Map{
     @FXML
     public void ChooseMove() throws IOException {
         System.out.println("Click on Move");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_attack.fxml"));
-        loaderStart.setControllerFactory(c->{
-            return new MoveOrAttack(this.CurrPlayer, "Move", this.Window);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        this.Window.setScene(scene);
-        this.Window.show();
+        ShowView.ShowMoveAttack(this.CurrPlayer, "Move", this.Window);
     }
 
     @FXML
     public void ChooseAlliance() throws IOException {
         System.out.println("Click on Alliance");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Alliance.fxml"));
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/Alliance.fxml"));
         loaderStart.setControllerFactory(c->{
             return new Alliance(this.CurrPlayer, this.Window);
         });
@@ -204,13 +198,7 @@ public class Map{
     @FXML
     public void ChooseAttack() throws IOException {
         System.out.println("Click on Attack");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Move_attack.fxml"));
-        loaderStart.setControllerFactory(c->{
-            return new MoveOrAttack(this.CurrPlayer, "Attack", this.Window);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        this.Window.setScene(scene);
-        this.Window.show();
+        ShowView.ShowMoveAttack(this.CurrPlayer, "Attack", this.Window);
     }
 
     @FXML
@@ -230,24 +218,24 @@ public class Map{
         //display different page with different received string content
         if(Answer.contains("Game End!")){
             System.out.println("Received Game End");
-            new ShowView().ShowEndVIew(Answer, this.CurrPlayer, this.Window);
+            ShowView.ShowEndVIew(Answer, this.CurrPlayer, this.Window);
         }
         else if(Answer.contains("Lose Game")){
             System.out.println("Received Lose Game");
             this.CurrPlayer.setAsk(true);
             this.CurrPlayer.setLose(true);
-            new ShowView().ShowLoseView(Validation, this.CurrPlayer, this.Window);
+            ShowView.ShowLoseView(Validation, this.CurrPlayer, this.Window);
         }
         else {
             System.out.println("Normal Received Map");
             this.CurrPlayer.ContinueReceive(Answer);
-            new ShowView().ShowDoneView(Validation, this.CurrPlayer, this.Window);
+            ShowView.ShowDoneView(Validation, this.CurrPlayer, this.Window);
         }
     }
 
     public void showChat() throws IOException {
         ColorID cid = new ColorID();
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/ChatRoom.fxml"));
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/ChatRoom.fxml"));
         Stage newWindow = new Stage();
         loaderStart.setControllerFactory(c->{
             return new ChatRoom(cid.getPlayerColor(CurrPlayer.getID()), newWindow);

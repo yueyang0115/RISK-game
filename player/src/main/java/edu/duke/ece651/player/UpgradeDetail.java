@@ -1,13 +1,10 @@
 package edu.duke.ece651.player;
 
 import edu.duke.ece651.shared.*;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +12,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -143,7 +139,7 @@ public class UpgradeDetail {
         int Remain = SearchTableView(0,CurrentTotal);
         if(Remain > 0) {
             newWindow = new Stage();
-            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/UpTo_Num.fxml"));
+            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/UpTo_Num.fxml"));
             loaderStart.setControllerFactory(c -> {
                 return new UpTo(this.CurrPlayer, Act, newWindow, this.upgradeTable, Remain, techResource);
             });

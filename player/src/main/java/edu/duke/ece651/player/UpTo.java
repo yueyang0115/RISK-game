@@ -92,5 +92,5 @@ public class UpTo {
         this.myWindow.close();
 
     }
-    
+
 }

@@ -3,8 +3,6 @@ package edu.duke.ece651.player;
 import edu.duke.ece651.shared.*;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -16,7 +14,7 @@ public class Player extends Application {
 
   public void showStartView(PlayerHelper player, Stage Window) throws IOException {
     //load the start game page
-    FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/StartGame.fxml"));
+    FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/StartGame.fxml"));
     loaderStart.setControllerFactory(c->{
       return new StartController(player, Window);
     });
