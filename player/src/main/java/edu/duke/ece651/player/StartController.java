@@ -1,6 +1,5 @@
 package edu.duke.ece651.player;
 
-import edu.duke.ece651.shared.ColorID;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -35,11 +34,11 @@ public class StartController {
             this.CurrPlayer.InitValue();
             this.CurrPlayer.ReceiveMapANDShow();
             //after received information from server, go to main page of the game
-            new ShowView().MainPageView(this.CurrPlayer, this.Window, true);
+            ShowView.MainPageView(this.CurrPlayer, this.Window, true);
         }
     }
-    public void showChooseView(PlayerHelper player, Stage Window) throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/SelectNumber.fxml"));
+    private void showChooseView(PlayerHelper player, Stage Window) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/SelectNumber.fxml"));
         loaderStart.setControllerFactory(c->{
             return new SelectNumber(player, Window);
         });

@@ -81,6 +81,14 @@ public class PlayerHelper {
         UpgradeAction.add(Current);
     }
 
+    public void ReceiveID(){
+        System.out.println("Waiting for id");
+        int id = Integer.parseInt(receiveString());
+        setID(id);
+        System.out.println("Received! MY ID is " + id);
+    }
+
+
 
     public int getFoodResource() { return FoodResource; }
     public int getTechResource() { return TechResource; }

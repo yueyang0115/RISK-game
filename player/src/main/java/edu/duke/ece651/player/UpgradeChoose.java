@@ -162,14 +162,14 @@ public class UpgradeChoose {
             promptSuccess(territoryName);
         }
         else {
-            promptError();
+            ShowView.promptError("Invalid Territory");
         }
     }
 
     //If check is successful, go to the UpgradeDetail page
     private void promptSuccess(String territoryName) throws IOException {
         //System.out.println("owner match");
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/UpgradeDetail.fxml"));
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/UpgradeInfo.fxml"));
         loaderStart.setControllerFactory(c->{
             return new UpgradeDetail(this.CurrPlayer, territoryName, Window);
         });
@@ -179,14 +179,5 @@ public class UpgradeChoose {
     }
 
     //If  check fails, pop-up an error window
-    private void promptError() throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/ErrorMsg.fxml"));
-        Stage newWindow = new Stage();
-        loaderStart.setControllerFactory(c->{
-            return new ErrorMsgController("Invalid Territory", newWindow);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        newWindow.setScene(scene);
-        newWindow.show();
-    }
+
 }

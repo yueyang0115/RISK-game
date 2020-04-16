@@ -1,6 +1,5 @@
 package edu.duke.ece651.player;
 import edu.duke.ece651.shared.*;
-import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -147,7 +145,7 @@ public class Alliance {
     public void ChooseDone() throws IOException {
         System.out.println("Click on Done");
         //TODO: add alliance
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/Map.fxml"));
         loaderStart.setControllerFactory(c->{
             return new Map(this.CurrPlayer, Window, false);
         });

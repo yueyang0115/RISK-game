@@ -10,8 +10,8 @@ public class ShowView {
     //------------- Evolution 2 --------------//
     //This Class is aim to load new page by using each methods
 
-    public void ShowDoneView(String validation,PlayerHelper CurrPlayer, Stage Window) throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Validation.fxml"));
+    public static void ShowDoneView(String validation,PlayerHelper CurrPlayer, Stage Window) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(ShowView.class.getResource("/Views/Validation.fxml"));
         loaderStart.setControllerFactory(c -> {
             return new DoneAction(CurrPlayer, validation, Window);
         });
@@ -20,8 +20,8 @@ public class ShowView {
         Window.show();
     }
 
-    public void ShowLoseView(String validation, PlayerHelper CurrPlayer, Stage Window) throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Lose.fxml"));
+    public static void ShowLoseView(String validation, PlayerHelper CurrPlayer, Stage Window) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(ShowView.class.getResource("/Views/Lose.fxml"));
         loaderStart.setControllerFactory(c->{
             return new Lose(CurrPlayer, Window, validation);
         });
@@ -30,8 +30,8 @@ public class ShowView {
         Window.show();
     }
 
-    public void ShowEndVIew(String answer, PlayerHelper CurrPlayer, Stage Window) throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/End.fxml"));
+    public static void ShowEndVIew(String answer, PlayerHelper CurrPlayer, Stage Window) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(ShowView.class.getResource("/Views/End.fxml"));
         loaderStart.setControllerFactory(c->{
             return new End(CurrPlayer, answer);
         });
@@ -39,8 +39,8 @@ public class ShowView {
         Window.setScene(scene);
         Window.show();
     }
-    public void MainPageView(PlayerHelper player, Stage Window, Boolean first) throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));
+    public static void MainPageView(PlayerHelper player, Stage Window, Boolean first) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(ShowView.class.getResource("/Views/Map.fxml"));
         loaderStart.setControllerFactory(c->{
             return new Map(player, Window, first);
         });
@@ -48,8 +48,8 @@ public class ShowView {
         Window.setScene(scene);
         Window.show();
     }
-    public void ShowWatchView(PlayerHelper CurrPlayer, Stage Window) throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Watch.fxml"));
+    public static void ShowWatchView(PlayerHelper CurrPlayer, Stage Window) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(ShowView.class.getResource("/Views/Watch.fxml"));
         loaderStart.setControllerFactory(c->{
             return new Watch(CurrPlayer, Window);
         });
@@ -57,6 +57,26 @@ public class ShowView {
         Scene scene = new Scene(loaderStart.load());
         Window.setScene(scene);
         Window.show();
+    }
+    public static void ShowMoveAttack(PlayerHelper CurrPlayer, String ActionType, Stage Window) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(ShowView.class.getResource("/Views/Move_attack.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new MoveOrAttack(CurrPlayer, ActionType, Window);
+        });
+        Scene scene = new Scene(loaderStart.load());
+        Window.setScene(scene);
+        Window.show();
+    }
+
+    public static void promptError(String msg) throws IOException {
+        Stage newWindow = new Stage();
+        FXMLLoader loaderStart = new FXMLLoader(ShowView.class.getResource("/Views/ErrorMsg.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new ErrorMsgController(msg, newWindow);
+        });
+        Scene scene = new Scene(loaderStart.load());
+        newWindow.setScene(scene);
+        newWindow.show();
     }
 
 }
