@@ -37,7 +37,7 @@
             <Insets />
          </opaqueInsets>
       </Label>
-      <Label fx:id="techResource" layoutX="425.0" layoutY="140.0" text="Label" textFill="LIGHTCORAL" underline="true">
+      <Label fx:id="techResource" layoutX="398.0" layoutY="152.0" text="Label" textFill="LIGHTCORAL" underline="true">
          <font>
             <Font size="28.0" />
          </font>
@@ -52,34 +52,34 @@
             <Font name="Arial Bold Italic" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="l6" layoutX="440.0" layoutY="629.0" prefHeight="32.0" prefWidth="134.0" text="Label" textAlignment="CENTER" />
-      <Label fx:id="l5" layoutX="259.0" layoutY="629.0" prefHeight="32.0" prefWidth="139.0" text="Label" textAlignment="CENTER" />
-      <Label fx:id="l4" layoutX="69.0" layoutY="630.0" prefHeight="32.0" prefWidth="136.0" text="Label" textAlignment="CENTER" />
-      <Label fx:id="l3" layoutX="545.0" layoutY="432.0" prefHeight="32.0" prefWidth="118.0" text="Label" textAlignment="CENTER" />
-      <Label fx:id="l2" layoutX="378.0" layoutY="432.0" prefHeight="32.0" prefWidth="114.0" text="Label" textAlignment="CENTER" />
-      <Label fx:id="l1" layoutX="204.0" layoutY="432.0" prefHeight="32.0" prefWidth="118.0" text="Label" textAlignment="CENTER" />
-      <Label fx:id="l0" layoutX="48.0" layoutY="432.0" prefHeight="32.0" prefWidth="118.0" text="Label" textAlignment="CENTER" />
-      <Button fx:id="level031" layoutX="531.0" layoutY="292.0" mnemonicParsing="false" onAction="#Up3" prefHeight="95.0" prefWidth="95.0">
+      <Label fx:id="l6" layoutX="430.0" layoutY="629.0" prefHeight="32.0" prefWidth="144.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="l5" layoutX="247.0" layoutY="629.0" prefHeight="32.0" prefWidth="151.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="l4" layoutX="55.0" layoutY="630.0" prefHeight="32.0" prefWidth="150.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="l3" layoutX="531.0" layoutY="432.0" prefHeight="32.0" prefWidth="144.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="l2" layoutX="358.0" layoutY="432.0" prefHeight="32.0" prefWidth="144.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="l1" layoutX="186.0" layoutY="432.0" prefHeight="32.0" prefWidth="144.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="l0" layoutX="22.0" layoutY="432.0" prefHeight="32.0" prefWidth="153.0" text="Label" textAlignment="CENTER" />
+      <Button fx:id="level3" layoutX="531.0" layoutY="292.0" mnemonicParsing="false" onAction="#Up3" prefHeight="95.0" prefWidth="95.0">
          <graphic>
             <ImageView fx:id="imageView3" fitHeight="120.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
-      <Button fx:id="level04" layoutX="431.0" layoutY="492.0" mnemonicParsing="false" onAction="#Up6" prefHeight="130.0" prefWidth="139.0">
+      <Button fx:id="level6" layoutX="431.0" layoutY="492.0" mnemonicParsing="false" onAction="#Up6" prefHeight="130.0" prefWidth="139.0">
          <graphic>
             <ImageView fx:id="imageView6" fitHeight="120.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
-      <Button fx:id="level03" layoutX="250.0" layoutY="493.0" mnemonicParsing="false" onAction="#Up5" prefHeight="127.0" prefWidth="132.0">
+      <Button fx:id="level5" layoutX="250.0" layoutY="493.0" mnemonicParsing="false" onAction="#Up5" prefHeight="127.0" prefWidth="132.0">
          <graphic>
             <ImageView fx:id="imageView5" fitHeight="120.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
-      <Button fx:id="level02" layoutX="64.0" layoutY="493.0" mnemonicParsing="false" onAction="#Up4" prefHeight="95.0" prefWidth="95.0">
+      <Button fx:id="level4" layoutX="64.0" layoutY="493.0" mnemonicParsing="false" onAction="#Up4" prefHeight="95.0" prefWidth="95.0">
          <graphic>
             <ImageView fx:id="imageView4" fitHeight="120.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
-      <Button fx:id="level01" layoutX="360.0" layoutY="292.0" mnemonicParsing="false" onAction="#Up2" prefHeight="95.0" prefWidth="95.0">
+      <Button fx:id="level2" layoutX="360.0" layoutY="292.0" mnemonicParsing="false" onAction="#Up2" prefHeight="95.0" prefWidth="95.0">
          <graphic>
             <ImageView fx:id="imageView2" fitHeight="120.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
@@ -104,5 +104,10 @@
             <Font name="Arial Bold Italic" size="25.0" />
          </font>
       </Label>
+      <Button layoutX="780.0" layoutY="628.0" mnemonicParsing="false" onAction="#SubmitUpgrade" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #98fb98;" text="Submit">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

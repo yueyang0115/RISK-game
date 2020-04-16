@@ -3,10 +3,12 @@ package edu.duke.ece651.player;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import static javafx.scene.text.FontPosture.*;
+import static javafx.scene.text.FontWeight.BOLD;
 
 public class ErrorMsgController {
     //------------- Evolution 2 --------------//
@@ -23,9 +25,10 @@ public class ErrorMsgController {
     }
     public void initialize(){
         labelmsg.setText(message);
+        labelmsg.setFont(Font.font("Arial", BOLD, ITALIC, 18));
     }
     @FXML
-    public void OK() throws IOException {
+    public void OK(){
         Window.close();
     }
 

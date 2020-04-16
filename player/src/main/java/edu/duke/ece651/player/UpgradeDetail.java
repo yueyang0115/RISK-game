@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,7 +43,6 @@ public class UpgradeDetail {
     @FXML private Label l5;
     @FXML private Label l6;
     @FXML private ImageView PlayerImg;
-
 
     private HashMap<Integer, Label> LabelMap;
     private HashMap<Integer, ImageView> ImageViewMap;
@@ -129,6 +129,17 @@ public class UpgradeDetail {
         return CurrentTotal - alreadyUpgraded;
     }
 
+    private void ShowToNum(PlayerHelper CurrPlayer, Upgrade Act, TableView<Upgrade> upTable, int Remain, Label tech) throws IOException {
+        newWindow = new Stage();
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/UpTo_Num.fxml"));
+        loaderStart.setControllerFactory(c -> {
+            return new UpTo(CurrPlayer, Act, newWindow, upTable, Remain, tech);
+        });
+        Scene scene = new Scene(loaderStart.load());
+        newWindow.setScene(scene);
+        newWindow.show();
+    }
+
     @FXML
     public void Up0() throws IOException {
         Upgrade Act = new Upgrade();
@@ -136,45 +147,95 @@ public class UpgradeDetail {
         Act.setOwner(this.curTerritory.getOwner());
         Act.setPrevLevel(0);
         int CurrentTotal = this.curTerritory.getSoldierLevel(0);
-        int Remain = SearchTableView(0,CurrentTotal);
+        int Remain = SearchTableView(0, CurrentTotal);
         if(Remain > 0) {
-            newWindow = new Stage();
-            FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/UpTo_Num.fxml"));
-            loaderStart.setControllerFactory(c -> {
-                return new UpTo(this.CurrPlayer, Act, newWindow, this.upgradeTable, Remain, techResource);
-            });
-            Scene scene = new Scene(loaderStart.load());
-            newWindow.setScene(scene);
-            newWindow.show();
+            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
         }
         else {
-            System.out.println("Left 0 can upgrade");
+            ShowView.promptError("Empty to Upgrade");
+        }
+    }
+
+    @FXML
+    public void Up1() throws IOException {
+        Upgrade Act = new Upgrade();
+        Act.setTerritoryName(this.TerrName);
+        Act.setOwner(this.curTerritory.getOwner());
+        Act.setPrevLevel(1);
+        int CurrentTotal = this.curTerritory.getSoldierLevel(1);
+        int Remain = SearchTableView(1, CurrentTotal);
+        if(Remain > 0) {
+            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
+        }
+        else {
+            ShowView.promptError("Empty to Upgrade");
         }
     }
     @FXML
-    public void Up1(){
-
+    public void Up2() throws IOException {
+        Upgrade Act = new Upgrade();
+        Act.setTerritoryName(this.TerrName);
+        Act.setOwner(this.curTerritory.getOwner());
+        Act.setPrevLevel(2);
+        int CurrentTotal = this.curTerritory.getSoldierLevel(2);
+        int Remain = SearchTableView(2, CurrentTotal);
+        if(Remain > 0) {
+            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
+        }
+        else {
+            ShowView.promptError("Empty to Upgrade");
+        }
     }
     @FXML
-    public void Up2(){
-
+    public void Up3() throws IOException {
+        Upgrade Act = new Upgrade();
+        Act.setTerritoryName(this.TerrName);
+        Act.setOwner(this.curTerritory.getOwner());
+        Act.setPrevLevel(3);
+        int CurrentTotal = this.curTerritory.getSoldierLevel(3);
+        int Remain = SearchTableView(3, CurrentTotal);
+        if(Remain > 0) {
+            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
+        }
+        else {
+            ShowView.promptError("Empty to Upgrade");
+        }
     }
     @FXML
-    public void Up3(){
-
+    public void Up4() throws IOException {
+        Upgrade Act = new Upgrade();
+        Act.setTerritoryName(this.TerrName);
+        Act.setOwner(this.curTerritory.getOwner());
+        Act.setPrevLevel(4);
+        int CurrentTotal = this.curTerritory.getSoldierLevel(4);
+        int Remain = SearchTableView(4, CurrentTotal);
+        if(Remain > 0) {
+            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
+        }
+        else {
+            ShowView.promptError("Empty to Upgrade");
+        }
     }
     @FXML
-    public void Up4(){
-
+    public void Up5() throws IOException {
+        Upgrade Act = new Upgrade();
+        Act.setTerritoryName(this.TerrName);
+        Act.setOwner(this.curTerritory.getOwner());
+        Act.setPrevLevel(5);
+        int CurrentTotal = this.curTerritory.getSoldierLevel(5);
+        int Remain = SearchTableView(5, CurrentTotal);
+        if(Remain > 0) {
+            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
+        }
+        else {
+            ShowView.promptError("Empty to Upgrade");
+        }
     }
     @FXML
-    public void Up5(){
-
+    public void Up6() throws IOException {
+        ShowView.promptError("Highest Level. No More Upgrade");
     }
-    @FXML
-    public void Up6(){
 
-    }
     private void InitTableView(){
         //Initialize the upgradeTable
         //Start Level column
@@ -196,6 +257,21 @@ public class UpgradeDetail {
         numColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
         upgradeTable.getColumns().addAll(fromColumn, toColumn, numColumn);
     }
+
+    @FXML
+    public void SubmitUpgrade() throws IOException {
+        //Traverse the current TableView Value
+        //Extract each upgrade Action
+        //Add them into Player's UpgradeActionList
+        ObservableList<Upgrade> UpgradeList= upgradeTable.getItems();
+        for(Upgrade SingleUp: UpgradeList){
+            this.CurrPlayer.setUpgradeAction(SingleUp);
+        }
+        CurrPlayer.setTechResource(Integer.parseInt(techResource.getText()));
+        //Return to MainPage for further actions
+        ShowView.MainPageView(this.CurrPlayer, this.Window, false);
+    }
+
     //Initialize the table and ComboBoxes
     /*public void initialize(){
 

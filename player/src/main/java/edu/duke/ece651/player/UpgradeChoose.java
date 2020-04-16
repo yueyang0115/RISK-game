@@ -162,7 +162,7 @@ public class UpgradeChoose {
             promptSuccess(territoryName);
         }
         else {
-            promptError();
+            ShowView.promptError("Invalid Territory");
         }
     }
 
@@ -179,14 +179,5 @@ public class UpgradeChoose {
     }
 
     //If  check fails, pop-up an error window
-    private void promptError() throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/ErrorMsg.fxml"));
-        Stage newWindow = new Stage();
-        loaderStart.setControllerFactory(c->{
-            return new ErrorMsgController("Invalid Territory", newWindow);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        newWindow.setScene(scene);
-        newWindow.show();
-    }
+
 }

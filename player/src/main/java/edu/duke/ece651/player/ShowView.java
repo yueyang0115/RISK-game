@@ -68,4 +68,15 @@ public class ShowView {
         Window.show();
     }
 
+    public static void promptError(String msg) throws IOException {
+        Stage newWindow = new Stage();
+        FXMLLoader loaderStart = new FXMLLoader(ShowView.class.getResource("/Views/ErrorMsg.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new ErrorMsgController(msg, newWindow);
+        });
+        Scene scene = new Scene(loaderStart.load());
+        newWindow.setScene(scene);
+        newWindow.show();
+    }
+
 }
