@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,6 +28,8 @@ public class ChatRoom {
                 //add content
                 String[] arr = str.split(":");
                 if (!arr[0].equals(name)) {
+                    ImageView test = new ImageView(new Image(getClass().getResourceAsStream("/Player0/level0.png")));
+                    //content.getItems().add(test);
                     content.getItems().add(str);
                 }
                 else {
