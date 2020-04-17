@@ -13,7 +13,7 @@ public class PlayerHelper {
     private ArrayList<Action> AttackAction;
     private HashMap<Integer, ArrayList<Action>> AllAction;
     private ArrayList<Upgrade> UpgradeAction;
-    private Alliance alliance;
+    private Alliance AllianceAction;
     private Displayable displayer;
     public Communicator communicator;
     private int playerNum;
@@ -31,7 +31,7 @@ public class PlayerHelper {
         this.AttackAction = new ArrayList<>();
         this.AllAction = new HashMap<>();
         this.UpgradeAction = new ArrayList<>();
-        this.alliance = new Alliance();
+        this.AllianceAction = new Alliance();
         this.communicator = new Communicator("127.0.0.1", 1234);
         this.playerNum = 0;
         this.TechResource = 200;
@@ -79,7 +79,7 @@ public class PlayerHelper {
     public void setUpgradeAction(Upgrade Current){
         UpgradeAction.add(Current);
     }
-    public void setAlliance(Alliance a) { this.alliance = a; }
+    public void setAlliance(Alliance a) { this.AllianceAction = a; }
 
     public void ReceiveID(){
         System.out.println("Waiting for id");
@@ -97,7 +97,7 @@ public class PlayerHelper {
     public ArrayList<Upgrade> getUpgradeAction(){
         return this.UpgradeAction;
     }
-    public Alliance getAllianceAction() { return this.alliance; }
+    public Alliance getAllianceAction() { return this.AllianceAction; }
 
     public int getFoodResource() { return FoodResource; }
     public int getTechResource() { return TechResource; }
@@ -194,6 +194,9 @@ public class PlayerHelper {
             String AttackString = myformatter.ActionCompose(AttackAction, "Attack").toString();
             System.out.println("Attack Actions: " + AttackString);
             sendString(AttackString);
+            String AllianceString = myformatter.AllianceCompose(AllianceAction).toString();
+            System.out.println("Alliance Actions: " + AllianceString);
+            sendString(AllianceString);
             ClearActions();
         }
     }
@@ -202,6 +205,7 @@ public class PlayerHelper {
         this.UpgradeAction.clear();
         this.AttackAction.clear();
         this.MoveAction.clear();
+        this.AllianceAction = new Alliance();
     }
 
     public String ReceiveActionRes(){
