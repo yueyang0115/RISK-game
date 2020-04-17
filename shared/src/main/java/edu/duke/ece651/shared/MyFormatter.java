@@ -183,9 +183,9 @@ public class MyFormatter {
 
   public boolean AllianceParse(Alliance Input, String AllianceJson) {
     JSONObject InputAlliance = new JSONObject(AllianceJson);
-    String owner = InputAlliance.optString("owner");
-    String ally = InputAlliance.optString("ally");
-    if (owner.equals("") || ally.equals("")) { return false; }
+    int owner = InputAlliance.optInt("owner");
+    int ally = InputAlliance.optInt("ally");
+    if (owner == -1 || ally == -1 ) { return false; }
     Input.setOwner(owner);
     Input.setAlly(ally);
     return true;

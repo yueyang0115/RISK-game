@@ -1,23 +1,23 @@
 package edu.duke.ece651.shared;
 
 public class Alliance {
-    private String owner;
-    private String ally;
+    private int owner;
+    private int ally;
 
     public Alliance() {
-        this.owner = "";
-        this.ally = "";
+        this.owner = -1;
+        this.ally = -1;
     }
-    public void setOwner(String Owner) {
+    public void setOwner(int Owner) {
         owner = Owner;
     }
-    public void setAlly(String Ally){
+    public void setAlly(int Ally){
         ally = Ally;
     }
-    public String getOwner() {
+    public int getOwner() {
         return owner;
     }
-    public String getAlly(){
+    public int getAlly(){
         return ally;
     }
 }

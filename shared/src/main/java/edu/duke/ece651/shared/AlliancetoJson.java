@@ -18,9 +18,9 @@ public class AlliancetoJson {
     }
 
     public void getAllianceObj() {
-        String owner = alliance.getOwner();
+        int owner = alliance.getOwner();
         ans.put("owner", owner);
-        String ally = alliance.getAlly();
+        int ally = alliance.getAlly();
         ans.put("ally", ally);
     }
 }

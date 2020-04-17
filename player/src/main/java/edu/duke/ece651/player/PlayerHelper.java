@@ -57,9 +57,7 @@ public class PlayerHelper {
     public Communicator getCommunicator(){
         return this.communicator;
     }
-    public void setPlayerNum(int total){
-        this.playerNum = total;
-    }
+    public Alliance getAlliance() { return this.alliance; }
     public int getID(){
         return this.playerInfo.getKey();
     }
@@ -68,6 +66,9 @@ public class PlayerHelper {
     }
     public void addDisplayable(Displayable d) {
         this.displayer = d;
+    }
+    public void setPlayerNum(int total){
+        this.playerNum = total;
     }
     public void setMoveAction(Action Current){
         MoveAction.add(Current);
@@ -78,6 +79,7 @@ public class PlayerHelper {
     public void setUpgradeAction(Upgrade Current){
         UpgradeAction.add(Current);
     }
+    public void setAlliance(Alliance a) { this.alliance = a; }
 
     public void ReceiveID(){
         System.out.println("Waiting for id");
