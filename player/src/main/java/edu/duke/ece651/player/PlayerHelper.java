@@ -61,6 +61,7 @@ public class PlayerHelper {
     public int getID(){
         return this.playerInfo.getKey();
     }
+    public int getPlayerNum() { return this.playerNum; }
     public void setID(int id){
         this.playerInfo = new Pair<>(id, "Init");
     }

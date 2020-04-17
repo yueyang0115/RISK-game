@@ -1,20 +1,27 @@
 package edu.duke.ece651.player;
 import edu.duke.ece651.shared.*;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class AllianceController {
     //------------- Evolution 2 --------------//
-    @FXML private Button DoneBtn;
+    @FXML private Button submit;
+    @FXML private Button button0;
+    @FXML private Button button1;
+    @FXML private Button button2;
+    @FXML private Button button3;
+    @FXML private Button button4;
 
     @FXML private Button ButtonA;
     @FXML private Button ButtonB;
@@ -29,14 +36,30 @@ public class AllianceController {
     @FXML private Button ButtonK;
     @FXML private Button ButtonL;
 
-    @FXML private Label Detail;
     @FXML private Label Prompt;
+    @FXML private Label Choose;
+
+    @FXML private ImageView image0;
+    @FXML private ImageView image1;
+    @FXML private ImageView image2;
+    @FXML private ImageView image3;
+    @FXML private ImageView image4;
 
     private Stage Window;
     private PlayerHelper CurrPlayer;
     private HashMap<String, Button> ButtonMap;
+    private HashMap<Integer, Button> ChooseBtn;
+    private HashMap<Integer, ImageView> ImageViewMap;
     private HashMap<Integer, ArrayList<Territory>> TerrMap;
     private int clickResult;
+
+    public AllianceController(PlayerHelper player, Stage Window){
+        this.Window = Window;
+        this.CurrPlayer = player;
+        this.TerrMap = player.getTerritoryMap();
+        this.clickResult = -1;
+    }
+
     private void InitButtonMap(){
         ButtonMap = new HashMap<>();
         ButtonMap.put("A", ButtonA);
@@ -52,96 +75,66 @@ public class AllianceController {
         ButtonMap.put("K", ButtonK);
         ButtonMap.put("L", ButtonL);
     }
-    public AllianceController(PlayerHelper player, Stage Window){
-        this.Window = Window;
-        this.CurrPlayer = player;
-        this.TerrMap = player.getTerritoryMap();
-        this.clickResult = -1;
+    private void InitialChooseBtn() {
+        ChooseBtn = new HashMap<>();
+        ChooseBtn.put(0, button0);
+        ChooseBtn.put(1, button1);
+        ChooseBtn.put(2, button2);
+        ChooseBtn.put(3, button3);
+        ChooseBtn.put(4, button4);
+    }
+
+    private void InitialImageView(){
+        ImageViewMap = new HashMap<>();
+        ImageViewMap.put(0, image0);
+        ImageViewMap.put(1, image1);
+        ImageViewMap.put(2, image2);
+        ImageViewMap.put(3, image3);
+        ImageViewMap.put(4, image4);
     }
 
     public void initialize(){
+        InitialChooseBtn();
         InitButtonMap();
+        InitialImageView();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
+        InitTerritoryDetail();
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("You territories are in " + PlayerName + " color");
+        for (int i = 0; i < this.ChooseBtn.size(); i++) {
+            Button curBtn = ChooseBtn.get(i);
+            if (i == CurrPlayer.getID() || i > CurrPlayer.getPlayerNum() -1) {
+                curBtn.setDisable(true);
+            }
+            else {
+                Image Photo = new Image(getClass().getResourceAsStream("/Player_Photo/player" + i + ".png"));
+                ImageViewMap.get(i).setImage(Photo);
+            }
+        }
     }
 
-    //if the player click the button, show the detail of each territory in the right side label
-    @FXML
-    public void BtnA(){
-        //System.out.println("Click on A");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "A");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+    private void InitTerritoryDetail(){
+        for(int i = 0; i < this.ButtonMap.size(); i++){
+            String SearchBase = "A";
+            int curr = SearchBase.charAt(0) + i;
+            StringBuilder Search = new StringBuilder();
+            Search.append((char)curr);
+            Button CurrentBtn = this.ButtonMap.get(Search.toString());
+            Tooltip TerrDetail = new Tooltip();
+            Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, Search.toString());
+            ShowToolTip(CurrentClicked, TerrDetail);
+            CurrentBtn.setTooltip(TerrDetail);
+        }
+
     }
 
+    public void ShowToolTip(Territory CurrentClicked, Tooltip TerrDetail){
+        String ShowLabel = Show.ComposeString(CurrentClicked);
+        TerrDetail.setText(ShowLabel);
+        TerrDetail.setFont(new Font("Arial", 12));
+    }
 
-    @FXML
-    public void BtnB(){
-        //System.out.println("Click on B");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "B");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnC(){
-        //System.out.println("Click on C");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "C");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnD(){
-        //System.out.println("Click on D");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "D");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnE(){
-        //System.out.println("Click on E");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "E");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnF(){
-        //System.out.println("Click on F");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "F");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnG(){
-        //System.out.println("Click on G");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "G");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnH(){
-        //System.out.println("Click on H");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "H");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnI(){
-        //System.out.println("Click on I");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "I");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnJ(){
-        //System.out.println("Click on J");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "J");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnK(){
-        //System.out.println("Click on K");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "K");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnL(){
-        //System.out.println("Click on L");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "L");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
     @FXML
     public void Click0() {
         clickResult = 0;
