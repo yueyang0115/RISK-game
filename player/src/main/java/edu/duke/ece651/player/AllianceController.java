@@ -36,6 +36,7 @@ public class AllianceController {
     private PlayerHelper CurrPlayer;
     private HashMap<String, Button> ButtonMap;
     private HashMap<Integer, ArrayList<Territory>> TerrMap;
+    private int clickResult;
     private void InitButtonMap(){
         ButtonMap = new HashMap<>();
         ButtonMap.put("A", ButtonA);
@@ -55,6 +56,7 @@ public class AllianceController {
         this.Window = Window;
         this.CurrPlayer = player;
         this.TerrMap = player.getTerritoryMap();
+        this.clickResult = -1;
     }
 
     public void initialize(){
@@ -142,9 +144,36 @@ public class AllianceController {
         Show.ShowLabel(CurrentClicked, this.Detail);
     }
     @FXML
-    public void ChooseDone() throws IOException {
+    public void Click0() {
+        clickResult = 0;
+    }
+    @FXML
+    public void Click1() {
+        clickResult = 1;
+    }
+    @FXML
+    public void Click2() {
+        clickResult = 2;
+    }
+    @FXML
+    public void Click3() {
+        clickResult = 3;
+    }
+    @FXML
+    public void Click4() {
+        clickResult = 4;
+    }
+    @FXML
+    public void ClickSubmit() throws IOException {
         System.out.println("Click on Done");
         //TODO: add alliance
+
+        Alliance a = new Alliance();
+        a.setOwner(CurrPlayer.getID());
+        //a.setAlly();
+        CurrPlayer.setAlliance(a);
+
+
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/Map.fxml"));
         loaderStart.setControllerFactory(c->{
             return new Map(this.CurrPlayer, Window, false);
