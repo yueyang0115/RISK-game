@@ -7,13 +7,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static javafx.scene.text.FontPosture.ITALIC;
+import static javafx.scene.text.FontWeight.BOLD;
 
 public class Map{
     //------------- Evolution 2 --------------//
@@ -37,6 +41,8 @@ public class Map{
 
     @FXML private Label Detail;
     @FXML private Label Prompt;
+
+    @FXML private ImageView Figure;
 
     private Stage Window;
     private Boolean firstTime;
@@ -66,13 +72,20 @@ public class Map{
         this.firstTime = first;
     }
 
+    private void InitFigure(){
+        int ID = this.CurrPlayer.getPlayerInfo().getKey();
+        Image player = new Image(getClass().getResourceAsStream("/Player_Photo/player" + ID + ".png"));
+        this.Figure.setImage(player);
+    }
+
     public void initialize(){
+        InitFigure();
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
-        this.Prompt.setText("You are " + PlayerName + " Player, please choose action");
-        this.Prompt.setFont(new Font("Arial", 28));
+        this.Prompt.setText("Your territories are in " + PlayerName + " Color, please choose an action");
+        this.Prompt.setFont(Font.font("Arial", BOLD, ITALIC, 18));
         if (firstTime) {
             PauseTransition delay = new PauseTransition(Duration.seconds(1));
             delay.setOnFinished(event -> {
