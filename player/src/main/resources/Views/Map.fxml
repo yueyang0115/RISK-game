@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="660.0" prefWidth="922.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.player.Map">
    <children>
-      <Label layoutX="30.0" layoutY="22.0" text="Strategic Conquest Game (RISK)" textFill="MIDNIGHTBLUE" underline="true">
+      <Label layoutX="30.0" layoutY="22.0" text="Battle! Digital Monsters" textFill="MIDNIGHTBLUE" underline="true">
           <font>
               <Font name="Arial Bold Italic" size="31.0" />
           </font>
@@ -22,12 +22,12 @@
               <Font name="Arial Bold Italic" size="21.0" />
           </font>
       </Label>
-      <Label fx:id="Prompt" layoutX="231.0" layoutY="514.0" prefHeight="20.0" prefWidth="535.0" text="Your territories are in Yellow Color, please choose an action" textFill="#000007">
+      <Label fx:id="Prompt" layoutX="231.0" layoutY="528.0" prefHeight="20.0" prefWidth="535.0" text="Your territories are in Yellow Color, please choose an action" textFill="#000007">
           <font>
               <Font name="Arial Bold Italic" size="17.0" />
           </font>
       </Label>
-        <Button fx:id="UpgradeBtn" layoutX="33.0" layoutY="589.0" mnemonicParsing="false" onAction="#Upgrading" style="-fx-background-color: lavender; -fx-border-color: black;" text="Upgrade">
+        <Button fx:id="UpgradeBtn" layoutX="33.0" layoutY="589.0" mnemonicParsing="false" onAction="#Upgrading" prefHeight="42.0" prefWidth="134.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Upgrade">
             <font>
                 <Font size="20.0" />
             </font>
@@ -35,7 +35,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
         </Button>
-        <Button fx:id="MoveBtn" layoutX="175.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseMove" prefHeight="42.0" prefWidth="123.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Move">
+        <Button fx:id="MoveBtn" layoutX="205.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseMove" prefHeight="42.0" prefWidth="134.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Move">
             <font>
                 <Font size="20.0" />
             </font>
@@ -43,7 +43,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
         </Button>
-        <Button layoutX="327.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseAttack" prefHeight="42.0" prefWidth="135.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Attack">
+        <Button layoutX="377.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseAttack" prefHeight="42.0" prefWidth="134.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Attack">
             <font>
                 <Font size="20.0" />
             </font>
@@ -51,7 +51,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
         </Button>
-      <Button layoutX="493.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseAlliance" style="-fx-background-color: lavender; -fx-border-color: black;" text="Alliance">
+      <Button layoutX="555.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseAlliance" prefHeight="42.0" prefWidth="134.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Alliance">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -59,7 +59,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-        <Button layoutX="629.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseDone" prefHeight="42.0" prefWidth="123.0" style="-fx-background-color: plum; -fx-border-color: black;" text="Done">
+        <Button layoutX="733.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseDone" prefHeight="42.0" prefWidth="134.0" style="-fx-background-color: plum; -fx-border-color: black;" text="Done">
             <font>
                 <Font size="20.0" />
             </font>

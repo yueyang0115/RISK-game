@@ -57,10 +57,10 @@ public class PlayerHelper {
     public Communicator getCommunicator(){
         return this.communicator;
     }
-    public Alliance getAlliance() { return this.alliance; }
     public int getID(){
         return this.playerInfo.getKey();
     }
+    public int getPlayerNum() { return this.playerNum; }
     public void setID(int id){
         this.playerInfo = new Pair<>(id, "Init");
     }
@@ -97,6 +97,8 @@ public class PlayerHelper {
     public ArrayList<Upgrade> getUpgradeAction(){
         return this.UpgradeAction;
     }
+    public Alliance getAllianceAction() { return this.alliance; }
+
     public int getFoodResource() { return FoodResource; }
     public int getTechResource() { return TechResource; }
     public void setTechResource(int t) { TechResource = t;}
