@@ -64,8 +64,7 @@ public class AllianceController {
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
-        this.Prompt.setText("You are " + PlayerName + " Player, please choose which player to form alliance");
-        this.Prompt.setFont(new Font("Arial", 28));
+        this.Prompt.setText("You territories are in " + PlayerName + " color");
     }
 
     //if the player click the button, show the detail of each territory in the right side label
