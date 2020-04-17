@@ -29,7 +29,7 @@ public class ChatRoom {
                 String[] arr = str.split(":");
                 if (!arr[0].equals(name)) {
                     ImageView test = new ImageView(new Image(getClass().getResourceAsStream("/Player0/level0.png")));
-                    //content.getItems().add(test);
+                    //recontent.getItems().add(test);
                     content.getItems().add(str);
                 }
                 else {
