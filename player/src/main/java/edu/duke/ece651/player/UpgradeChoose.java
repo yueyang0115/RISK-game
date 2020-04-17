@@ -4,8 +4,10 @@ import edu.duke.ece651.shared.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +29,8 @@ public class UpgradeChoose {
     @FXML private Button ButtonJ;
     @FXML private Button ButtonK;
     @FXML private Button ButtonL;
-
+    @FXML private Button BackBtn;
+    @FXML private ImageView PlayerImage;
     @FXML private Label Prompt;
 
     private Stage Window;
@@ -62,7 +65,9 @@ public class UpgradeChoose {
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
-        this.Prompt.setText("You are " + PlayerName + " Player.");
+        this.Prompt.setText("Your territories are in " + PlayerName + " color.");
+        Image Photo = new Image(getClass().getResourceAsStream("/Player_Photo/player" + CurrPlayer.getID() + ".png"));
+        PlayerImage.setImage(Photo);
     }
 
     @FXML
@@ -153,6 +158,17 @@ public class UpgradeChoose {
         Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "L");
         String str = "player_" + CurrPlayer.getPlayerInfo().getKey();
         checkInput(CurrentClicked, "L");
+    }
+
+    @FXML
+    public void ClickBack() throws IOException{
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/Map.fxml"));
+        loaderStart.setControllerFactory(c->{
+            return new Map(this.CurrPlayer, Window, false);
+        });
+        Scene scene = new Scene(loaderStart.load());
+        this.Window.setScene(scene);
+        this.Window.show();
     }
 
     //Check if the player choose his own territory
