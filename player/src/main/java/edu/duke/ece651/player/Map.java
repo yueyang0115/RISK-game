@@ -183,7 +183,6 @@ public class Map{
             ShowToolTip(CurrentClicked, TerrDetail);
             CurrentBtn.setTooltip(TerrDetail);
         }
-
     }
 
     public void ShowToolTip(Territory CurrentClicked, Tooltip TerrDetail){
@@ -232,10 +231,16 @@ public class Map{
 
     @FXML
     public void ChooseDone() throws IOException {
+
+        //Clicked the Done Button, show a window to remind players
+
+
+
         //if it choose done, receive this turn's result information
         System.out.println("Click on Done in Map");
-        ShowView show = new ShowView();
         this.CurrPlayer.SendAction();
+
+
         String Validation = this.CurrPlayer.ReceiveActionRes();
         System.out.println("Validation " + Validation);
         this.CurrPlayer.ReceiveAllAction();
@@ -243,6 +248,9 @@ public class Map{
         this.CurrPlayer.AddTechResource(this.CurrPlayer.getTerritoryMap(),this.CurrPlayer.getPlayerInfo());
         //the answer could be map or lose game and game end
         String Answer = this.CurrPlayer.ReceiveFromServer();
+
+        //After received actions from server, close the waiting window
+
         //check whether the received string is game end or lose game or normal map
         //display different page with different received string content
         if(Answer.contains("Game End!")){
@@ -258,16 +266,25 @@ public class Map{
         else {
             System.out.println("Normal Received Map");
             this.CurrPlayer.ContinueReceive(Answer);
+
             ShowView.ShowDoneView(Validation, this.CurrPlayer, this.Window);
         }
     }
+
+    /*
+    private void ShowWaitingWindow(Stage Waiting) throws IOException {
+        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/WaitingWindow.fxml"));
+        Scene scene = new Scene(loaderStart.load());
+        Waiting.setScene(scene);
+        Waiting.show();
+    }*/
 
     public void showChat() throws IOException {
         ColorID cid = new ColorID();
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/ChatRoom.fxml"));
         Stage newWindow = new Stage();
         loaderStart.setControllerFactory(c->{
-            return new ChatRoom(cid.getPlayerColor(CurrPlayer.getID()), newWindow);
+            return new ChatRoom(cid.getPlayerColor(CurrPlayer.getID()), newWindow, this.CurrPlayer);
         });
         Scene scene = new Scene(loaderStart.load());
         newWindow.setScene(scene);
