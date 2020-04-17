@@ -135,37 +135,43 @@ public class AllianceController {
         TerrDetail.setFont(new Font("Arial", 12));
     }
 
+    private void ChooseHelper(int allyID) {
+        ColorID PlayerColor = new ColorID();
+        String color = PlayerColor.getPlayerColor(allyID);
+        this.Choose.setText("You chose the player with " + color + " territories");
+    }
+
     @FXML
     public void Click0() {
         clickResult = 0;
+        ChooseHelper(clickResult);
     }
     @FXML
     public void Click1() {
         clickResult = 1;
+        ChooseHelper(clickResult);
     }
     @FXML
     public void Click2() {
         clickResult = 2;
+        ChooseHelper(clickResult);
     }
     @FXML
     public void Click3() {
         clickResult = 3;
+        ChooseHelper(clickResult);
     }
     @FXML
     public void Click4() {
         clickResult = 4;
+        ChooseHelper(clickResult);
     }
     @FXML
     public void ClickSubmit() throws IOException {
         System.out.println("Click on Done");
-        //TODO: add alliance
-
-        Alliance a = new Alliance();
+        Alliance a = CurrPlayer.getAlliance();
         a.setOwner(CurrPlayer.getID());
-        //a.setAlly();
-        CurrPlayer.setAlliance(a);
-
-
+        a.setAlly(clickResult);
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/Map.fxml"));
         loaderStart.setControllerFactory(c->{
             return new Map(this.CurrPlayer, Window, false);
@@ -173,6 +179,5 @@ public class AllianceController {
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);
         this.Window.show();
-
     }
 }

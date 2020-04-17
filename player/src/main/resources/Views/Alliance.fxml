@@ -94,7 +94,7 @@
                 </Button>
             </children>
         </Pane>
-      <Label fx:id="Choose" layoutX="81.0" layoutY="503.0" prefHeight="23.0" prefWidth="404.0" text="You choose the player of Yellow Territories" textFill="#000007">
+      <Label fx:id="Choose" layoutX="81.0" layoutY="503.0" prefHeight="23.0" prefWidth="469.0" text="Click the button below player profile to choose." textFill="#000007">
          <font>
             <Font name="Arial" size="20.0" />
          </font>
