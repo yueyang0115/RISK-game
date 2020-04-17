@@ -88,8 +88,15 @@ public class PlayerHelper {
         System.out.println("Received! MY ID is " + id);
     }
 
-
-
+    public ArrayList<Action> getMoveAction(){
+        return this.MoveAction;
+    }
+    public ArrayList<Action> getAttackAction(){
+        return this.AttackAction;
+    }
+    public ArrayList<Upgrade> getUpgradeAction(){
+        return this.UpgradeAction;
+    }
     public int getFoodResource() { return FoodResource; }
     public int getTechResource() { return TechResource; }
     public void setTechResource(int t) { TechResource = t;}

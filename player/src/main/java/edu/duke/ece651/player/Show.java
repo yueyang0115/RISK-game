@@ -4,6 +4,7 @@ import edu.duke.ece651.shared.ColorID;
 import edu.duke.ece651.shared.Territory;
 import edu.duke.ece651.shared.TerritorySize;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ public class Show {
         Detail.setText(ShowLabel);
         Detail.setFont(new Font("Arial", 20));
     }
+
+
 
     public static Territory FindTerritory(HashMap<Integer, ArrayList<Territory>> World, String TerritoryName) {
         //get the territory name and find the territory in the territory map and return it

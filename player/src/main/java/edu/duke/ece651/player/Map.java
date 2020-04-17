@@ -5,8 +5,7 @@ import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
@@ -39,7 +38,7 @@ public class Map{
     @FXML private Button ButtonK;
     @FXML private Button ButtonL;
 
-    @FXML private Label Detail;
+    @FXML private TreeView<String> Detail;
     @FXML private Label Prompt;
 
     @FXML private ImageView Figure;
@@ -80,8 +79,14 @@ public class Map{
 
     public void initialize(){
         InitFigure();
+
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
+
+        InitTerritoryDetail();
+
+        InitActionDetail();
+
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("Your territories are in " + PlayerName + " Color, please choose an action");
@@ -100,82 +105,82 @@ public class Map{
         }
     }
 
-    //if the player click the button, show the detail of each territory in the right side label
-    @FXML
-    public void BtnA(){
-        //System.out.println("Click on A");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "A");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+    private void InitActionDetail(){
+        TreeItem<String> rootItem = new TreeItem<String> ("Actions List");
+        rootItem.setExpanded(true);
+
+        ArrayList<Action> move = this.CurrPlayer.getMoveAction();
+        TreeItem<String> MoveItem = MoveAttackHelper(move, "Move");
+
+        ArrayList<Action> attack = this.CurrPlayer.getAttackAction();
+        TreeItem<String> AttackItem = MoveAttackHelper(attack, "Attack");
+
+        ArrayList<Upgrade> upgrade = this.CurrPlayer.getUpgradeAction();
+        TreeItem<String> UpgradeItem = UpgradeHelper(upgrade, "Upgrade");
+
+        rootItem.getChildren().addAll(MoveItem, AttackItem, UpgradeItem);
+        this.Detail.setRoot(rootItem);
+
     }
 
-    @FXML
-    public void BtnB(){
-        //System.out.println("Click on B");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "B");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnC(){
-        //System.out.println("Click on C");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "C");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnD(){
-        //System.out.println("Click on D");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "D");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnE(){
-        //System.out.println("Click on E");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "E");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnF(){
-        //System.out.println("Click on F");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "F");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnG(){
-        //System.out.println("Click on G");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "G");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnH(){
-        //System.out.println("Click on H");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "H");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnI(){
-        //System.out.println("Click on I");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "I");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnJ(){
-        //System.out.println("Click on J");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "J");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnK(){
-        //System.out.println("Click on K");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "K");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnL(){
-        //System.out.println("Click on L");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "L");
-        Show.ShowLabel(CurrentClicked, this.Detail);
+    private TreeItem<String> UpgradeHelper(ArrayList<Upgrade> Actions, String Type){
+        TreeItem<String> Items = new TreeItem<> (Type + " Actions");
+        for (int i = 0; i < Actions.size(); i++) {
+            Upgrade Curr = Actions.get(i);
+            StringBuilder Display = new StringBuilder();
+            Display.append(Curr.getTerritoryName()).append(": ");
+            Display.append("Level ").append(Curr.getPrevLevel()).append(" -> ").append("Level ").append(Curr.getNextLevel());
+            Display.append(" *").append(Curr.getNumber());
+            String ShowText = Display.toString();
+            TreeItem<String> item = new TreeItem<String> (ShowText);
+            Items.getChildren().add(item);
+        }
+        return Items;
     }
 
-    //-----------------------------------------------//
+    private TreeItem<String> MoveAttackHelper(ArrayList<Action> Actions, String Type) {
+        TreeItem<String> Items = new TreeItem<String> (Type + " Actions");
+        for (int i = 0; i < Actions.size(); i++) {
+            Action Curr = Actions.get(i);
+            HashMap<Integer, Integer> MoveSoldier = Curr.getSoldiers();
+            StringBuilder Display = new StringBuilder();
+            Display.append(Curr.getSrc().getTerritoryName()).append(" -> ").append(Curr.getDst().getTerritoryName()).append(": ");
+            for(int j = 0; j < 7; j++) {
+                int Number = MoveSoldier.get(j);
+                if(Number != 0){
+                    Display.append("Level ").append(j).append(" *").append(Number);
+                }
+            }
+            String ShowText = Display.toString();
+            TreeItem<String> item = new TreeItem<String> (ShowText);
+            Items.getChildren().add(item);
+        }
+        return Items;
+    }
+
+
+
+    private void InitTerritoryDetail(){
+        for(int i = 0; i < this.ButtonMap.size(); i++){
+            String SearchBase = "A";
+            int curr = SearchBase.charAt(0) + i;
+            StringBuilder Search = new StringBuilder();
+            Search.append((char)curr);
+            Button CurrentBtn = this.ButtonMap.get(Search.toString());
+            Tooltip TerrDetail = new Tooltip();
+            Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, Search.toString());
+            ShowToolTip(CurrentClicked, TerrDetail);
+            CurrentBtn.setTooltip(TerrDetail);
+        }
+
+    }
+
+    public void ShowToolTip(Territory CurrentClicked, Tooltip TerrDetail){
+        String ShowLabel = Show.ComposeString(CurrentClicked);
+        TerrDetail.setText(ShowLabel);
+        TerrDetail.setFont(new Font("Arial", 12));
+    }
+
     //these three buttons are related to actions
     //and if click on each of them we jump into different page to finish each actions's input information
     @FXML
