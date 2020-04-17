@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Alliance {
+public class AllianceController {
     //------------- Evolution 2 --------------//
     @FXML private Button DoneBtn;
 
@@ -51,7 +51,7 @@ public class Alliance {
         ButtonMap.put("K", ButtonK);
         ButtonMap.put("L", ButtonL);
     }
-    public Alliance(PlayerHelper player, Stage Window){
+    public AllianceController(PlayerHelper player, Stage Window){
         this.Window = Window;
         this.CurrPlayer = player;
         this.TerrMap = player.getTerritoryMap();
