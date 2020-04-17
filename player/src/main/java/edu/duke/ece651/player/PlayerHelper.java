@@ -1,14 +1,10 @@
 package edu.duke.ece651.player;
 
 import edu.duke.ece651.shared.*;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class PlayerHelper {
     private HashMap<Integer, ArrayList<Territory>> territoryMap;
@@ -17,6 +13,7 @@ public class PlayerHelper {
     private ArrayList<Action> AttackAction;
     private HashMap<Integer, ArrayList<Action>> AllAction;
     private ArrayList<Upgrade> UpgradeAction;
+    private Alliance alliance;
     private Displayable displayer;
     public Communicator communicator;
     private int playerNum;
@@ -34,6 +31,7 @@ public class PlayerHelper {
         this.AttackAction = new ArrayList<>();
         this.AllAction = new HashMap<>();
         this.UpgradeAction = new ArrayList<>();
+        this.alliance = new Alliance();
         this.communicator = new Communicator("127.0.0.1", 1234);
         this.playerNum = 0;
         this.TechResource = 200;

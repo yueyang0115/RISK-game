@@ -5,6 +5,8 @@ public class Alliance {
     private String ally;
 
     public Alliance() {
+        this.owner = "";
+        this.ally = "";
     }
     public void setOwner(String Owner) {
         owner = Owner;

@@ -185,7 +185,7 @@ public class MyFormatter {
     JSONObject InputAlliance = new JSONObject(AllianceJson);
     String owner = InputAlliance.optString("owner");
     String ally = InputAlliance.optString("ally");
-    if (owner == null || ally == null) { return false; }
+    if (owner.equals("") || ally.equals("")) { return false; }
     Input.setOwner(owner);
     Input.setAlly(ally);
     return true;
