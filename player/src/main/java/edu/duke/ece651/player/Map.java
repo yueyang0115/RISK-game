@@ -104,12 +104,44 @@ public class Map{
             delay.play();
         }
     }
+
     private void InitActionDetail(){
-        ArrayList<Action> move = this.CurrPlayer.getMoveAction();
-        TreeItem<String> rootItem = new TreeItem<String> ("Move Actions");
+        TreeItem<String> rootItem = new TreeItem<String> ("Actions List");
         rootItem.setExpanded(true);
-        for (int i = 0; i < move.size(); i++) {
-            Action Curr = move.get(i);
+
+        ArrayList<Action> move = this.CurrPlayer.getMoveAction();
+        TreeItem<String> MoveItem = MoveAttackHelper(move, "Move");
+
+        ArrayList<Action> attack = this.CurrPlayer.getAttackAction();
+        TreeItem<String> AttackItem = MoveAttackHelper(attack, "Attack");
+
+        ArrayList<Upgrade> upgrade = this.CurrPlayer.getUpgradeAction();
+        TreeItem<String> UpgradeItem = UpgradeHelper(upgrade, "Upgrade");
+
+        rootItem.getChildren().addAll(MoveItem, AttackItem, UpgradeItem);
+        this.Detail.setRoot(rootItem);
+
+    }
+
+    private TreeItem<String> UpgradeHelper(ArrayList<Upgrade> Actions, String Type){
+        TreeItem<String> Items = new TreeItem<> (Type + " Actions");
+        for (int i = 0; i < Actions.size(); i++) {
+            Upgrade Curr = Actions.get(i);
+            StringBuilder Display = new StringBuilder();
+            Display.append(Curr.getTerritoryName()).append(": ");
+            Display.append("Level ").append(Curr.getPrevLevel()).append(" -> ").append("Level ").append(Curr.getNextLevel());
+            Display.append(" *").append(Curr.getNumber());
+            String ShowText = Display.toString();
+            TreeItem<String> item = new TreeItem<String> (ShowText);
+            Items.getChildren().add(item);
+        }
+        return Items;
+    }
+
+    private TreeItem<String> MoveAttackHelper(ArrayList<Action> Actions, String Type) {
+        TreeItem<String> Items = new TreeItem<String> (Type + " Actions");
+        for (int i = 0; i < Actions.size(); i++) {
+            Action Curr = Actions.get(i);
             HashMap<Integer, Integer> MoveSoldier = Curr.getSoldiers();
             StringBuilder Display = new StringBuilder();
             Display.append(Curr.getSrc().getTerritoryName()).append(" -> ").append(Curr.getDst().getTerritoryName()).append(": ");
@@ -121,17 +153,19 @@ public class Map{
             }
             String ShowText = Display.toString();
             TreeItem<String> item = new TreeItem<String> (ShowText);
-            rootItem.getChildren().add(item);
+            Items.getChildren().add(item);
         }
-        this.Detail.setRoot(rootItem);
+        return Items;
     }
+
+
+
     private void InitTerritoryDetail(){
         for(int i = 0; i < this.ButtonMap.size(); i++){
             String SearchBase = "A";
             int curr = SearchBase.charAt(0) + i;
             StringBuilder Search = new StringBuilder();
             Search.append((char)curr);
-            //System.out.println("[DEBUG] Which Territory: " + Search.toString());
             Button CurrentBtn = this.ButtonMap.get(Search.toString());
             Tooltip TerrDetail = new Tooltip();
             Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, Search.toString());
@@ -140,17 +174,13 @@ public class Map{
         }
 
     }
+
     public void ShowToolTip(Territory CurrentClicked, Tooltip TerrDetail){
         String ShowLabel = Show.ComposeString(CurrentClicked);
         TerrDetail.setText(ShowLabel);
         TerrDetail.setFont(new Font("Arial", 12));
     }
 
-
-
-
-
-    //-----------------------------------------------//
     //these three buttons are related to actions
     //and if click on each of them we jump into different page to finish each actions's input information
     @FXML

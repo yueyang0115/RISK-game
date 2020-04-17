@@ -91,7 +91,7 @@ public class PlayerHelper {
     public ArrayList<Action> getMoveAction(){
         return this.MoveAction;
     }
-    public ArrayList<Action> getAttackActionAction(){
+    public ArrayList<Action> getAttackAction(){
         return this.AttackAction;
     }
     public ArrayList<Upgrade> getUpgradeAction(){
