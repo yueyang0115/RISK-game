@@ -169,7 +169,7 @@ public class AllianceController {
     @FXML
     public void ClickSubmit() throws IOException {
         System.out.println("Click on Done");
-        Alliance a = CurrPlayer.getAlliance();
+        Alliance a = CurrPlayer.getAllianceAction();
         a.setOwner(CurrPlayer.getID());
         a.setAlly(clickResult);
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/Map.fxml"));
