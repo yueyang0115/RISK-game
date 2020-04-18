@@ -56,7 +56,7 @@ public class PlayerHandler extends Thread {
     }
 
     public void startPlay() {    
-      //If not lose, receive actions twice, add to ActionHelper
+      //If not lose, receive actions four times, add to ActionHelper
       if (status.get(id).equals("INGAME")) {
         ArrayList<Upgrade> upgradeList = new ArrayList<>();
         ArrayList<Action> moveList = new ArrayList<>();
