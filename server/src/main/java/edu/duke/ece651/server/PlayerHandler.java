@@ -9,6 +9,7 @@ public class PlayerHandler extends Thread {
     private int id;
     private int[] playerNum;
     private ActionHelper actionHelper;
+    private AllianceHelper allianceHelper;
     //ArrayList to record the status of every player" INGAME, OUTBUTWATCH, OUTNOWATCH
     private ArrayList<String> status;
 
@@ -24,6 +25,9 @@ public class PlayerHandler extends Thread {
 
     public void addActionHelper(ActionHelper ah) {
       this.actionHelper = ah;
+    }
+    public void addAllianceHelper(AllianceHelper ah) {
+        this.allianceHelper = ah;
     }
 
     public void run() {
@@ -61,17 +65,26 @@ public class PlayerHandler extends Thread {
         ArrayList<Upgrade> upgradeList = new ArrayList<>();
         ArrayList<Action> moveList = new ArrayList<>();
         ArrayList<Action> attackList = new ArrayList<>();
+        Alliance alliance = new Alliance();
         MyFormatter myformatter = new MyFormatter(playerNum[0]);
+        //Receive upgrade
         String str = communicator.receive();
         System.out.println("[DEBUG]: received upgradeList, " + str);
         myformatter.UpgradeParse(upgradeList, str);
+        //Receive move
         str = communicator.receive();
         System.out.println("[DEBUG]: received moveList, " + str);
         myformatter.ActionParse(moveList, str);
+        //Receive attack
         str = communicator.receive();
         System.out.println("[DEBUG]: received attackList, " + str);
         myformatter.ActionParse(attackList, str);
         actionHelper.addActions(id, moveList, attackList, upgradeList);
+        //Receive alliance
+        str = communicator.receive();
+        System.out.println("[DEBUG]: received alliance, " + str);
+        myformatter.AllianceParse(alliance, str);
+        allianceHelper.addCurrentRoundAlliance(alliance);
         //Commit the actions of current player
         actionHelper.actionsCompleted(id);
       }

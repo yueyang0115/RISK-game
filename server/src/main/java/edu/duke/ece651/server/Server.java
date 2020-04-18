@@ -60,9 +60,11 @@ public class Server {
   }
 
   public void startGame() {
-    ActionHelper ah = new ActionHelper(playerNum[0], territoryMap);
+    ActionHelper actionh = new ActionHelper(playerNum[0], territoryMap);
+    AllianceHelper allianceh = new AllianceHelper(playerNum[0]);
     for (PlayerHandler cur : list) {
-      cur.addActionHelper(ah);
+      cur.addActionHelper(actionh);
+      cur.addAllianceHelper(allianceh);
     }
     StringBuilder winMsg = new StringBuilder("Game End! Winner is ");
     MyFormatter formatter = new MyFormatter(playerNum[0]);
@@ -73,11 +75,12 @@ public class Server {
       }
       System.out.println(
           "[DEBUG] Before execute actions:" + new MaptoJson(territoryMap).getJSON().toString());
-      ah.executeActions(food);
+      actionh.executeActions(food);
+      allianceh.executeCurRound();
       System.out.println(
           "[DEBUG] After execute actions:" + new MaptoJson(territoryMap).getJSON().toString());
       // Get action string, send to players later
-      String actionstr = ah.getActionString();
+      String actionstr = actionh.getActionString();
       System.out.println("[DEBUG] action string is, " + actionstr);
       int justLose = -1;
       for (int i = 0; i < list.size(); ++i) {
@@ -117,7 +120,11 @@ public class Server {
           if (status.get(k).equals("INGAME")) {
             System.out.println(
                 "[DEBUG] Not lose, send Validation Result" + status.get(k).equals("INGAME"));
+            //Send action validation result
             cur.sendPlayer(cur.checkAction(), false);
+            //Send alliance checkResult
+            String allianceRes = allianceh.getAllianceResult(k);
+            cur.sendPlayer(allianceRes, false);
           }
           if (justLose != k) {
             // Send actions of other players to every player
@@ -133,7 +140,8 @@ public class Server {
           }
         }
       }
-      ah.reset();
+      actionh.reset();
+      allianceh.resetCurRound();
     }
     // end while
   }
