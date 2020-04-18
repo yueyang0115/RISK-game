@@ -10,6 +10,7 @@ public class AllianceHelper {
     private HashMap<String, Set<Integer>> allianceMap; //territory affected by move/attack
     private Set<Integer> successID;
     private Set<Integer> noNewID;
+    private Set<Integer> breakID;
 
     public AllianceHelper(int playerNum) {
         this.curRoundAlliance = new ArrayList<>();
@@ -17,12 +18,15 @@ public class AllianceHelper {
         this.allianceMap = new HashMap<>();
         this.successID = new HashSet<>();
         this.noNewID = new HashSet<>();
+        this.breakID = new HashSet<>();
     }
 
     public ArrayList<String> breakAlliance(int attacker, int attackee) {
         Set<Integer> inputSet = new HashSet<>();
         inputSet.add(attacker);
         inputSet.add(attackee);
+        breakID.add(attacker);
+        breakID.add(attackee);
         deleteAlliancePair(inputSet);
         return deleteAllianceTerritory(attacker, attackee);
     }
@@ -93,6 +97,9 @@ public class AllianceHelper {
         else if (noNewID.contains(id)) {
             return "No new alliance in this round.";
         }
+        else if (breakID.contains(id)) {
+            return "Your alliance is broken!";
+        }
         return "Failed to form alliance!";
     }
 
@@ -100,5 +107,6 @@ public class AllianceHelper {
         this.curRoundAlliance = new ArrayList<>();
         this.successID = new HashSet<>();
         this.noNewID = new HashSet<>();
+        this.breakID = new HashSet<>();
     }
 }
