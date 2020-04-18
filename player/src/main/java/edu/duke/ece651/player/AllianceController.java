@@ -104,7 +104,7 @@ public class AllianceController {
         this.Prompt.setText("You territories are in " + PlayerName + " color");
         for (int i = 0; i < this.ChooseBtn.size(); i++) {
             Button curBtn = ChooseBtn.get(i);
-            if (i == CurrPlayer.getID() || i > CurrPlayer.getPlayerNum() -1) {
+            if (i == CurrPlayer.getID() || i > CurrPlayer.getPlayerNum() -1 || CurrPlayer.getTerritoryMap().get(i).size() == 0) {
                 curBtn.setDisable(true);
             }
             else {
