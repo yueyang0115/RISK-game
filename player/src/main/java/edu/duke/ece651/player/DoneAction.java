@@ -229,7 +229,7 @@ public class DoneAction {
         System.out.println("Click on Alliance");
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/Alliance.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new Alliance(this.CurrPlayer, this.Window);
+            return new AllianceController(this.CurrPlayer, this.Window);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);

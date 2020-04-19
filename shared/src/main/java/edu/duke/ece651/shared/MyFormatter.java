@@ -175,4 +175,19 @@ public class MyFormatter {
       Input.add(InnerUpgrade);
     }
   }
+
+  public JSONObject AllianceCompose(Alliance a) {
+    AlliancetoJson myAlliancetoJson = new AlliancetoJson(a);
+    return myAlliancetoJson.getJSON();
+  }
+
+  public boolean AllianceParse(Alliance Input, String AllianceJson) {
+    JSONObject InputAlliance = new JSONObject(AllianceJson);
+    int owner = InputAlliance.optInt("owner");
+    int ally = InputAlliance.optInt("ally");
+    if (owner == -1 || ally == -1 ) { return false; }
+    Input.setOwner(owner);
+    Input.setAlly(ally);
+    return true;
+  }
 }

@@ -119,18 +119,20 @@ public class Map{
         TreeItem<String> rootItem = new TreeItem<String> ("Actions List");
         rootItem.setExpanded(true);
 
+        ArrayList<Upgrade> upgrade = this.CurrPlayer.getUpgradeAction();
+        TreeItem<String> UpgradeItem = UpgradeHelper(upgrade, "Upgrade");
+
         ArrayList<Action> move = this.CurrPlayer.getMoveAction();
         TreeItem<String> MoveItem = MoveAttackHelper(move, "Move");
 
         ArrayList<Action> attack = this.CurrPlayer.getAttackAction();
         TreeItem<String> AttackItem = MoveAttackHelper(attack, "Attack");
 
-        ArrayList<Upgrade> upgrade = this.CurrPlayer.getUpgradeAction();
-        TreeItem<String> UpgradeItem = UpgradeHelper(upgrade, "Upgrade");
+        Alliance alliance = this.CurrPlayer.getAllianceAction();
+        TreeItem<String> AllianceItem = AllianceHelper(alliance, "Alliance");
 
-        rootItem.getChildren().addAll(MoveItem, AttackItem, UpgradeItem);
+        rootItem.getChildren().addAll(UpgradeItem, MoveItem, AttackItem, AllianceItem);
         this.Detail.setRoot(rootItem);
-
     }
 
     private TreeItem<String> UpgradeHelper(ArrayList<Upgrade> Actions, String Type){
@@ -168,6 +170,15 @@ public class Map{
         return Items;
     }
 
+    private TreeItem<String> AllianceHelper(Alliance alliance, String Type){
+        TreeItem<String> Items = new TreeItem<> (Type + " Actions");
+        if (alliance.getAlly() == -1) { return Items; }
+        ColorID PlayerColor = new ColorID();
+        String ShowText = new String("Alliance with " + PlayerColor.getPlayerColor(alliance.getAlly()) + " player");
+        TreeItem<String> item = new TreeItem<> (ShowText);
+        Items.getChildren().add(item);
+        return Items;
+    }
 
 
     private void InitTerritoryDetail(){
@@ -215,7 +226,7 @@ public class Map{
         System.out.println("Click on Alliance");
         FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/Alliance.fxml"));
         loaderStart.setControllerFactory(c->{
-            return new Alliance(this.CurrPlayer, this.Window);
+            return new AllianceController(this.CurrPlayer, this.Window);
         });
         Scene scene = new Scene(loaderStart.load());
         this.Window.setScene(scene);
