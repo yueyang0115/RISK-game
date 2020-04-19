@@ -25,6 +25,9 @@ public class Map{
     @FXML private Button AttackBtn;
     @FXML private Button DoneBtn;
 
+    @FXML private Label Food;
+    @FXML private Label Tech;
+
     @FXML private Button ButtonA;
     @FXML private Button ButtonB;
     @FXML private Button ButtonC;
@@ -78,19 +81,26 @@ public class Map{
     }
 
     public void initialize(){
-        InitFigure();
 
+        //Set the profile photo of player
+        InitFigure();
+        //Show map
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
-
+        //init tooltip with territory information
         InitTerritoryDetail();
-
+        //display entered action information
         InitActionDetail();
-
+        //init prompt
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("Your territories are in " + PlayerName + " Color, please choose an action");
         this.Prompt.setFont(Font.font("Arial", BOLD, ITALIC, 18));
+
+        //display food & technology resources
+        this.Food.setText(String.valueOf(this.CurrPlayer.getFoodResource()));
+        this.Tech.setText(String.valueOf(this.CurrPlayer.getTechResource()));
+
         if (firstTime) {
             PauseTransition delay = new PauseTransition(Duration.seconds(1));
             delay.setOnFinished(event -> {

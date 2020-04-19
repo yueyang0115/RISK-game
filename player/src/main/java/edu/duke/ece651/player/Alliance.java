@@ -31,7 +31,7 @@ public class Alliance {
 
     @FXML private Label Detail;
     @FXML private Label Prompt;
-
+    @FXML private Label AllianceInfo;
     private Stage Window;
     private PlayerHelper CurrPlayer;
     private HashMap<String, Button> ButtonMap;

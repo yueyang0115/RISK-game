@@ -12,17 +12,17 @@
 
 <AnchorPane prefHeight="660.0" prefWidth="922.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.player.Map">
    <children>
-      <Label layoutX="30.0" layoutY="22.0" text="Strategic Conquest Game (RISK)" textFill="MIDNIGHTBLUE" underline="true">
+      <Label layoutX="30.0" layoutY="22.0" prefHeight="39.0" prefWidth="394.0" text="Battle! Digital Monster" textFill="MIDNIGHTBLUE" underline="true">
           <font>
               <Font name="Arial Bold Italic" size="31.0" />
           </font>
       </Label>
-      <Label layoutX="582.0" layoutY="68.0" prefHeight="44.0" prefWidth="323.0" text="Entered Actions" textFill="MIDNIGHTBLUE">
+      <Label layoutX="514.0" layoutY="140.0" prefHeight="44.0" prefWidth="323.0" text="Entered Actions" textFill="MIDNIGHTBLUE">
           <font>
               <Font name="Arial Bold Italic" size="21.0" />
           </font>
       </Label>
-      <Label fx:id="Prompt" layoutX="231.0" layoutY="514.0" prefHeight="20.0" prefWidth="535.0" text="Your territories are in Yellow Color, please choose an action" textFill="#000007">
+      <Label fx:id="Prompt" layoutX="200.0" layoutY="520.0" prefHeight="20.0" prefWidth="535.0" text="Your territories are in Yellow Color, please choose an action" textFill="#000007">
           <font>
               <Font name="Arial Bold Italic" size="17.0" />
           </font>
@@ -132,6 +132,36 @@
         </children>
       </Pane>
       <ImageView fx:id="Figure" fitHeight="124.0" fitWidth="106.0" layoutX="77.0" layoutY="448.0" pickOnBounds="true" preserveRatio="true" />
-      <TreeView fx:id="Detail" layoutX="534.0" layoutY="117.0" prefHeight="375.0" prefWidth="334.0" />
+      <TreeView fx:id="Detail" layoutX="509.0" layoutY="189.0" prefHeight="297.0" prefWidth="334.0" />
+      <Label layoutX="515.0" layoutY="31.0" prefHeight="28.0" prefWidth="228.0" text="Food Resources" textFill="#ba4a30">
+         <font>
+            <Font name="Chalkduster" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="516.0" layoutY="64.0" text="Technology Resources" textFill="#b94b3d">
+         <font>
+            <Font name="Chalkduster" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="Food" layoutX="686.0" layoutY="31.0" prefHeight="27.0" prefWidth="79.0" text="Label" textFill="#bc3838">
+         <font>
+            <Font name="Chalkduster" size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="Tech" layoutX="744.0" layoutY="62.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="#bf3c3c">
+         <font>
+            <Font name="Chalkduster" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="515.0" layoutY="103.0" prefHeight="23.0" prefWidth="275.0" text="Your Alliance Information：" textFill="#b94b3d">
+         <font>
+            <Font name="Chalkduster" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="AllianceInfo" layoutX="785.0" layoutY="101.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="#bf3c3c">
+         <font>
+            <Font name="Chalkduster" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
