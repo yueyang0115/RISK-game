@@ -94,7 +94,7 @@
                 </Button>
             </children>
         </Pane>
-      <Label fx:id="Choose" layoutX="81.0" layoutY="503.0" prefHeight="23.0" prefWidth="469.0" text="Click the button below player profile to choose." textFill="#000007">
+      <Label fx:id="Choose" layoutX="56.0" layoutY="503.0" prefHeight="23.0" prefWidth="469.0" text="Click the button below player profile to choose." textFill="#000007">
          <font>
             <Font name="Arial" size="20.0" />
          </font>
@@ -167,6 +167,11 @@
       <Label fx:id="Prompt2" layoutX="570.0" layoutY="126.0" prefHeight="23.0" prefWidth="285.0" text="Please choose your ally" textFill="#000007">
          <font>
             <Font name="Arial Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="error" layoutX="56.0" layoutY="461.0" prefHeight="26.0" prefWidth="515.0" textFill="RED" wrapText="true">
+         <font>
+            <Font size="20.0" />
          </font>
       </Label>
     </children>

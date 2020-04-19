@@ -38,6 +38,8 @@ public class AllianceController {
 
     @FXML private Label Prompt;
     @FXML private Label Choose;
+    @FXML private Label error;
+
 
     @FXML private ImageView image0;
     @FXML private ImageView image1;
@@ -102,6 +104,21 @@ public class AllianceController {
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("You territories are in " + PlayerName + " color");
+        //Get number of player in game
+        int playerInGame = 0;
+        for (java.util.Map.Entry<Integer, ArrayList<Territory>> entry : CurrPlayer.getTerritoryMap().entrySet()) {
+            if (entry.getValue().size() != 0) { playerInGame++; }
+        }
+        //Check if the player already has an ally
+        if (CurrPlayer.getMyAlly() != -1) {
+            disableBtns("You already have an ally!");
+            return;
+        }
+        //Check the number of players in game
+        if (playerInGame <= 2) {
+            disableBtns("Need at least three players currently in game!");
+            return;
+        }
         for (int i = 0; i < this.ChooseBtn.size(); i++) {
             Button curBtn = ChooseBtn.get(i);
             if (i == CurrPlayer.getID() || i > CurrPlayer.getPlayerNum() -1 || CurrPlayer.getTerritoryMap().get(i).size() == 0) {
@@ -111,6 +128,15 @@ public class AllianceController {
                 Image Photo = new Image(getClass().getResourceAsStream("/Player_Photo/player" + i + ".png"));
                 ImageViewMap.get(i).setImage(Photo);
             }
+        }
+    }
+
+    private void disableBtns(String text) {
+        error.setText(text);
+        submit.setText("OK");
+        for (int i = 0; i < this.ChooseBtn.size(); i++) {
+            Button curBtn = ChooseBtn.get(i);
+            curBtn.setDisable(true);
         }
     }
 
