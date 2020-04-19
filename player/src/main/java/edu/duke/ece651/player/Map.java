@@ -6,11 +6,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +31,7 @@ public class Map{
 
     @FXML private Label Food;
     @FXML private Label Tech;
+    @FXML private Label AllianceInfo;
 
     @FXML private Button ButtonA;
     @FXML private Button ButtonB;
@@ -101,6 +106,8 @@ public class Map{
         this.Food.setText(String.valueOf(this.CurrPlayer.getFoodResource()));
         this.Tech.setText(String.valueOf(this.CurrPlayer.getTechResource()));
 
+        InitAlliance(PlayerColor);
+
         if (firstTime) {
             PauseTransition delay = new PauseTransition(Duration.seconds(1));
             delay.setOnFinished(event -> {
@@ -112,6 +119,19 @@ public class Map{
                 }
             });
             delay.play();
+        }
+    }
+
+    private void InitAlliance(ColorID PlayerColor){
+        //display Alliance Information
+        int AllyID = this.CurrPlayer.getMyAlly();
+        if(AllyID != -1){
+            String AllyName = PlayerColor.getPlayerColor(AllyID);
+            String OwnerName = this.CurrPlayer.getPlayerInfo().getValue();
+            this.AllianceInfo.setText(OwnerName + " ~ " + AllyName);
+        }
+        else {
+            this.AllianceInfo.setText(" ");
         }
     }
 
@@ -243,9 +263,6 @@ public class Map{
     public void ChooseDone() throws IOException {
 
         //Clicked the Done Button, show a window to remind players
-
-
-
         //if it choose done, receive this turn's result information
         System.out.println("Click on Done in Map");
         this.CurrPlayer.SendAction();
@@ -253,11 +270,21 @@ public class Map{
 
         String Validation = this.CurrPlayer.ReceiveActionRes();
         System.out.println("Validation " + Validation);
+        String AllianceResult = this.CurrPlayer.receiveString();
+
+        if(AllianceResult.contains("Successfully")){
+            int AllyID = this.CurrPlayer.getAllianceAction().getAlly();
+            this.CurrPlayer.setMyAlly(AllyID);
+        }
+        else if(AllianceResult.contains("broken")){
+            this.CurrPlayer.setMyAlly(-1);
+        }
+
         this.CurrPlayer.ReceiveAllAction();
 
         this.CurrPlayer.AddTechResource(this.CurrPlayer.getTerritoryMap(),this.CurrPlayer.getPlayerInfo());
         //the answer could be map or lose game and game end
-        String Answer = this.CurrPlayer.ReceiveFromServer();
+        String Answer = this.CurrPlayer.receiveString();
 
         //After received actions from server, close the waiting window
 

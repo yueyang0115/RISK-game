@@ -101,7 +101,7 @@ public class Watch{
     }
     public void WatchGame() throws IOException {
         this.CurrPlayer.ReceiveAllAction();
-        String Answer = this.CurrPlayer.ReceiveFromServer();
+        String Answer = this.CurrPlayer.receiveString();
         System.out.println("Answer" + Answer);
         if(Answer.contains("Game End")){
             ShowView.ShowEndVIew(Answer,this.CurrPlayer, this.Window);

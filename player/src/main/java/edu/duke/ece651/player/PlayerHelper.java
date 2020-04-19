@@ -14,6 +14,7 @@ public class PlayerHelper {
     private HashMap<Integer, ArrayList<Action>> AllAction;
     private ArrayList<Upgrade> UpgradeAction;
     private Alliance AllianceAction;
+    private int myAlly;
     private Displayable displayer;
     public Communicator communicator;
     private int playerNum;
@@ -26,6 +27,7 @@ public class PlayerHelper {
 
 
     public PlayerHelper() {
+        this.myAlly = -1;
         this.territoryMap = new HashMap<>();
         this.MoveAction = new ArrayList<>();
         this.AttackAction = new ArrayList<>();
@@ -40,6 +42,12 @@ public class PlayerHelper {
         LoseButWatch = false;
     }
 
+    public void setMyAlly(int ID){
+        this.myAlly = ID;
+    }
+    public int getMyAlly(){
+        return this.myAlly;
+    }
 
     public void InitValue(){
         //Init player's id, player info, receiving total player number from server
@@ -79,6 +87,7 @@ public class PlayerHelper {
     public void setUpgradeAction(Upgrade Current){
         UpgradeAction.add(Current);
     }
+
     public void setAlliance(Alliance a) { this.AllianceAction = a; }
 
     public void ReceiveID(){
@@ -149,11 +158,7 @@ public class PlayerHelper {
     public void setLoseButWatch(boolean Ask){
         this.Ask = Ask;
     }
-    ///map or lose game or game end
-    public String ReceiveFromServer(){
-        String msg = receiveString();
-        return msg;
-    }
+
     public void ContinueReceive(String msg){
         //after check whether last receive is string or map
         //then continue receive food and parse the territory map
@@ -197,7 +202,7 @@ public class PlayerHelper {
             String AllianceString = myformatter.AllianceCompose(AllianceAction).toString();
             System.out.println("Alliance Actions: " + AllianceString);
             sendString(AllianceString);
-            ClearActions();
+
         }
     }
     public void ClearActions(){
@@ -225,11 +230,13 @@ public class PlayerHelper {
 
         System.out.println("Receive All Actions: " + OtherActions);
         if(OtherActions.contains("valid")){
+            //if the turn in game end send alliance, receive one more time
             OtherActions = receiveString();
             System.out.println("Before Game End All actions: " + OtherActions);
         }
         AllAction.clear();
         myformatter.AllActionParse(AllAction, OtherActions);
+        ClearActions();
     }
 
 }

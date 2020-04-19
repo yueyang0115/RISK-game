@@ -247,7 +247,7 @@ public class DoneAction {
 
         this.CurrPlayer.AddTechResource(this.CurrPlayer.getTerritoryMap(),this.CurrPlayer.getPlayerInfo());
         //the answer could be map or lose game and game end
-        String Answer = this.CurrPlayer.ReceiveFromServer();
+        String Answer = this.CurrPlayer.receiveString();
         //check whether the received string is game end or lose game or normal map
         //display different page with different received string content
         if(Answer.contains("Game End!")){
