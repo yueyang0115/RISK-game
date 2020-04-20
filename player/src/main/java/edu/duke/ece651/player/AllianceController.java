@@ -100,7 +100,8 @@ public class AllianceController {
         InitButtonMap();
         InitialImageView();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
-        InitTerritoryDetail();
+        //init tooltip with territory information
+        SharedMethod.InitTerritoryDetail(this.ButtonMap, this.TerrMap);
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("You territories are in " + PlayerName + " color");
@@ -138,27 +139,6 @@ public class AllianceController {
             Button curBtn = ChooseBtn.get(i);
             curBtn.setDisable(true);
         }
-    }
-
-    private void InitTerritoryDetail(){
-        for(int i = 0; i < this.ButtonMap.size(); i++){
-            String SearchBase = "A";
-            int curr = SearchBase.charAt(0) + i;
-            StringBuilder Search = new StringBuilder();
-            Search.append((char)curr);
-            Button CurrentBtn = this.ButtonMap.get(Search.toString());
-            Tooltip TerrDetail = new Tooltip();
-            Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, Search.toString());
-            ShowToolTip(CurrentClicked, TerrDetail);
-            CurrentBtn.setTooltip(TerrDetail);
-        }
-
-    }
-
-    public void ShowToolTip(Territory CurrentClicked, Tooltip TerrDetail){
-        String ShowLabel = Show.ComposeString(CurrentClicked);
-        TerrDetail.setText(ShowLabel);
-        TerrDetail.setFont(new Font("Arial", 12));
     }
 
     private void ChooseHelper(int allyID) {

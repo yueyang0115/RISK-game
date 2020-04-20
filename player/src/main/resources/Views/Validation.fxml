@@ -142,12 +142,12 @@
                 <Font name="Chalkduster" size="16.0" />
             </font>
         </Label>
-        <Label fx:id="Food" layoutX="686.0" layoutY="31.0" prefHeight="27.0" prefWidth="79.0" text="Label" textFill="#bc3838">
+        <Label fx:id="Food" layoutX="686.0" layoutY="31.0" prefHeight="27.0" prefWidth="182.0" text="Label" textFill="#bc3838">
             <font>
                 <Font name="Chalkduster" size="19.0" />
             </font>
         </Label>
-        <Label fx:id="Tech" layoutX="744.0" layoutY="64.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="#bf3c3c">
+        <Label fx:id="Tech" layoutX="744.0" layoutY="64.0" prefHeight="28.0" prefWidth="143.0" text="Label" textFill="#bf3c3c">
             <font>
                 <Font name="Chalkduster" size="20.0" />
             </font>
@@ -162,16 +162,16 @@
                 <Font name="Chalkduster" size="20.0" />
             </font>
         </Label>
-      <Label fx:id="Actions" layoutX="493.0" layoutY="201.0" prefHeight="307.0" prefWidth="408.0" />
       <Label layoutX="515.0" layoutY="172.0" prefHeight="23.0" prefWidth="275.0" text="Validation Result" textFill="MIDNIGHTBLUE">
          <font>
             <Font name="Chalkduster" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="Result" layoutX="704.0" layoutY="169.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="MIDNIGHTBLUE">
+      <Label fx:id="Result" layoutX="704.0" layoutY="169.0" prefHeight="28.0" prefWidth="168.0" text="Label" textFill="MIDNIGHTBLUE">
          <font>
             <Font name="Chalkduster" size="20.0" />
          </font>
       </Label>
+      <TreeView fx:id="Actions" layoutX="508.0" layoutY="205.0" prefHeight="305.0" prefWidth="394.0" />
     </children>
 </AnchorPane>
