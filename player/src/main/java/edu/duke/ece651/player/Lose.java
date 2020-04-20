@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -31,7 +32,7 @@ public class Lose{
     @FXML private Button ButtonK;
     @FXML private Button ButtonL;
     @FXML private Label Prompt;
-    @FXML private Label Detail;
+    @FXML private TreeView<String> Detail;
     private String Result;
     private PlayerHelper CurrPlayer;
     private Stage Window;
@@ -62,8 +63,7 @@ public class Lose{
     public void initialize(){
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
-        //TODO: change to treeview
-        //new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.Detail);
+        new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.Detail);
         System.out.println("Print out All Actions");
 
         ColorID PlayerColor = new ColorID();

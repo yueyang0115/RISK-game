@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -8,96 +10,98 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane prefHeight="927.0" prefWidth="1281.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="660.0" prefWidth="922.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.player.Watch">
    <children>
-      <Label fx:id="Prompt" layoutX="164.0" layoutY="744.0" text="You are Yellow Player" textFill="MIDNIGHTBLUE">
+      <Label layoutX="30.0" layoutY="22.0" prefHeight="39.0" prefWidth="394.0" text="Battle! Digital Monster" textFill="MIDNIGHTBLUE" underline="true">
          <font>
-            <Font size="25.0" />
+            <Font name="Arial Bold Italic" size="31.0" />
          </font>
       </Label>
-      <Label layoutX="167.0" layoutY="806.0" text="You lose the game. Happy watching!" textFill="MIDNIGHTBLUE">
+      <Label layoutX="521.0" layoutY="90.0" prefHeight="44.0" prefWidth="323.0" text="Actions of other players" textFill="MIDNIGHTBLUE">
          <font>
-            <Font size="25.0" />
+            <Font name="Arial Bold Italic" size="21.0" />
          </font>
       </Label>
-      <Label layoutX="906.0" layoutY="124.0" prefHeight="82.0" prefWidth="302.0" text="You Lose！" textFill="#eb2727">
+      <Label fx:id="Prompt" layoutX="87.0" layoutY="523.0" prefHeight="36.0" prefWidth="624.0" text="Your territories are in Yellow Color" textFill="MIDNIGHTBLUE">
          <font>
-            <Font name="Avenir Heavy Oblique" size="56.0" />
+            <Font name="Arial Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="ActionDetail" layoutX="889.0" layoutY="207.0" prefHeight="535.0" prefWidth="318.0">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
-      <Label layoutX="36.0" layoutY="19.0" text="Battle! Digital Monster" textFill="MIDNIGHTBLUE" underline="true">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
-      <Pane layoutX="10.0" layoutY="34.0" prefHeight="686.0" prefWidth="830.0">
+      <Pane layoutX="40.0" layoutY="101.0" prefHeight="352.0" prefWidth="435.0">
          <children>
-            <Button fx:id="ButtonI" layoutX="402.0" layoutY="405.0" mnemonicParsing="false" prefHeight="216.0" prefWidth="196.0" style="-fx-shape: &quot;M 350 450 C 500 400 550 425 700 400 Q 650 250 700 100 L 350 100 Q 300 250 350 450&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="I">
+            <Button fx:id="ButtonI" layoutX="212.0" layoutY="244.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="97.0" style="-fx-shape: &quot;M 350 450 C 500 400 550 425 700 400 Q 650 250 700 100 L 350 100 Q 300 250 350 450&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="I">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonJ" layoutX="229.0" layoutY="406.0" mnemonicParsing="false" prefHeight="158.0" prefWidth="213.0" style="-fx-shape: &quot;M 350 400 Q 500 450 700 400 Q 800 300 800 200 C 450 200 500 200 350 200 Q 300 250 350 400&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="J">
+            <Button fx:id="ButtonK" layoutX="108.0" layoutY="280.0" mnemonicParsing="false" prefHeight="103.0" prefWidth="135.0" style="-fx-shape: &quot;M 350 350 C 500 350 550 450 700 400 Q 800 300 700 150 C 450 200 500 200 350 200 Q 300 250 350 350 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="K">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonG" layoutX="577.0" layoutY="211.0" mnemonicParsing="false" prefHeight="195.0" prefWidth="216.0" style="-fx-shape: &quot;M 350 350 C 450 350 450 350 600 350 Q 650 250 600 150 Q 500 150 350 200 Q 350 200 350 350 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="G">
+            <Button fx:id="ButtonJ" layoutX="108.0" layoutY="241.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="143.0" style="-fx-shape: &quot;M 350 400 Q 500 450 700 400 Q 800 300 800 200 C 450 200 500 200 350 200 Q 300 250 350 400&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="J">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonF" layoutX="402.0" layoutY="192.0" mnemonicParsing="false" prefHeight="214.0" prefWidth="224.0" style="-fx-shape: &quot;M 350 350 C 450 350 450 350 550 350 Q 600 200 600 100 Q 450 0 350 100 Q 350 200 350 350 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="F">
+            <Button fx:id="ButtonG" layoutX="291.0" layoutY="142.0" mnemonicParsing="false" prefHeight="103.0" prefWidth="134.0" style="-fx-shape: &quot;M 350 350 C 450 350 450 350 600 350 Q 650 250 600 150 Q 500 150 350 200 Q 350 200 350 350 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="G">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonC" layoutX="280.0" layoutY="195.0" mnemonicParsing="false" prefHeight="211.0" prefWidth="183.0" style="-fx-shape: &quot;M 350 300 C 425 300 475 300 550 300 Q 650 200 600 50 L 350 50 Q 350 200 350 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="C">
+            <Button fx:id="ButtonF" layoutX="196.0" layoutY="111.0" mnemonicParsing="false" prefHeight="133.0" prefWidth="123.0" style="-fx-shape: &quot;M 350 350 C 450 350 450 350 550 350 Q 600 200 600 100 Q 450 0 350 100 Q 350 200 350 350 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="F">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonE" layoutX="491.0" layoutY="24.0" mnemonicParsing="false" prefHeight="233.0" prefWidth="268.0" style="-fx-shape: &quot;M 400 200 Q 450 300 550 300 Q 650 300 750 250 Q 750 0 450 50 Q 450 100 400 200 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="E">
+            <Button fx:id="ButtonC" layoutX="111.0" layoutY="142.0" mnemonicParsing="false" prefHeight="103.0" prefWidth="123.0" style="-fx-shape: &quot;M 350 300 C 425 300 475 300 550 300 Q 650 200 600 50 L 350 50 Q 350 200 350 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="C">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonD" layoutX="331.0" layoutY="16.0" mnemonicParsing="false" prefHeight="221.0" prefWidth="256.0" style="-fx-shape: &quot;M 350 300 C 425 300 475 300 600 300 Q 650 200 600 100 Q 450 50 350 150 Q 350 200 350 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="D">
+            <Button fx:id="ButtonE" layoutX="269.0" layoutY="33.0" mnemonicParsing="false" prefHeight="133.0" prefWidth="134.0" style="-fx-shape: &quot;M 400 200 Q 450 300 550 300 Q 650 300 750 250 Q 750 0 450 50 Q 450 100 400 200 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="E">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonB" layoutX="86.0" layoutY="239.0" mnemonicParsing="false" prefHeight="168.0" prefWidth="194.0" style="-fx-shape: &quot;M 400 300 Q 450 300 600 300 L 600 100 L 400 100 Q 350 200 400 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="B">
+            <Button fx:id="ButtonD" layoutX="150.0" layoutY="34.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="168.0" style="-fx-shape: &quot;M 350 300 C 425 300 475 300 600 300 Q 650 200 600 100 Q 450 50 350 150 Q 350 200 350 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="D">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonA" layoutX="110.0" layoutY="98.0" mnemonicParsing="false" prefHeight="183.0" prefWidth="256.0" style="-fx-shape: &quot;M 400 150 Q 450 400 350 400 Q 200 400 50 400 Q 50 200 250 200 Q 350 200 400 150 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="A">
+            <Button fx:id="ButtonB" layoutX="25.0" layoutY="166.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="90.0" style="-fx-shape: &quot;M 400 300 Q 450 300 600 300 L 600 100 L 400 100 Q 350 200 400 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="B">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonL" layoutX="12.0" layoutY="406.0" mnemonicParsing="false" prefHeight="252.0" prefWidth="296.0" style="-fx-shape: &quot;M 350 450 C 450 500 450 450 550 450 Q 500 300 600 200 C 450 200 500 200 350 200 C 400 300 200 350 350 450 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="L">
+            <Button fx:id="ButtonA" layoutX="42.0" layoutY="72.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="134.0" style="-fx-shape: &quot;M 400 150 Q 450 400 350 400 Q 200 400 50 400 Q 50 200 250 200 Q 350 200 400 150 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="A">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonH" layoutX="558.0" layoutY="405.0" mnemonicParsing="false" prefHeight="220.0" prefWidth="239.0" style="-fx-shape: &quot;M 550 350 Q 600 400 700 400 Q 800 250 750 100 L 550 100 Q 500 200 550 350&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="H">
+            <Button fx:id="ButtonL" layoutX="-20.0" layoutY="245.0" mnemonicParsing="false" prefHeight="125.0" prefWidth="168.0" style="-fx-shape: &quot;M 350 450 C 450 500 450 450 550 450 Q 500 300 600 200 C 450 200 500 200 350 200 C 400 300 200 350 350 450 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="L">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonK" layoutX="238.0" layoutY="501.0" mnemonicParsing="false" prefHeight="176.0" prefWidth="222.0" style="-fx-shape: &quot;M 350 350 C 500 350 550 450 700 400 Q 800 300 700 150 C 450 200 500 200 350 200 Q 300 250 350 350 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="K">
+            <Button fx:id="ButtonH" layoutX="287.0" layoutY="245.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="135.0" style="-fx-shape: &quot;M 550 350 Q 600 400 700 400 Q 800 250 750 100 L 550 100 Q 500 200 550 350&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="H">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
          </children>
       </Pane>
+      <ImageView fx:id="Figure" fitHeight="124.0" fitWidth="106.0" layoutX="77.0" layoutY="448.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="519.0" layoutY="42.0" text="You Lose!" textFill="RED">
+         <font>
+            <Font name="System Bold Italic" size="40.0" />
+         </font>
+      </Label>
+      <TreeView fx:id="ActionDetail" layoutX="517.0" layoutY="144.0" prefHeight="489.0" prefWidth="375.0" />
+      <Label fx:id="Prompt1" layoutX="40.0" layoutY="586.0" prefHeight="36.0" prefWidth="624.0" text="You chose to watch the game, happy watching!" textFill="#000007">
+         <font>
+            <Font name="Arial Bold Italic" size="20.0" />
+         </font>
+      </Label>
    </children>
-</Pane>
+</AnchorPane>
