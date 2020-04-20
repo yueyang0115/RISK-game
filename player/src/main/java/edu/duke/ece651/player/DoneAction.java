@@ -1,18 +1,26 @@
 package edu.duke.ece651.player;
 
-import edu.duke.ece651.shared.ColorID;
-import edu.duke.ece651.shared.Territory;
+import edu.duke.ece651.shared.*;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static javafx.scene.text.FontPosture.ITALIC;
+import static javafx.scene.text.FontWeight.BOLD;
 
 public class DoneAction {
     //------------- Evolution 2 --------------//
@@ -20,9 +28,11 @@ public class DoneAction {
     private String ValidationResult;
 
     @FXML private Label Result;
-    @FXML private Label ActionsOrDetail;
+    @FXML private Label Actions;
+    @FXML private Label Food;
+    @FXML private Label Tech;
+    @FXML private Label AllianceInfo;
 
-    @FXML private Label ActionDetailPrompt;
     private HashMap<String, Button> ButtonMap;
     private HashMap<Integer, ArrayList<Territory> > TerrMap;
 
@@ -75,117 +85,53 @@ public class DoneAction {
         InitButtonMap();
         Graph Display = new Graph();
         Display.showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
+        //init tooltip with territory information
+        InitTerritoryDetail();
         //display the result of validating the player's actions
-        this.ActionDetailPrompt.setText("Actions ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
         this.Result.setText(this.ValidationResult);
-        this.Result.setFont(new Font("Arial", 24));
         //display the actions of all the players
-        Display.showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionsOrDetail);
+        Display.showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.Actions);
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         //print the prompt
-        this.Prompt.setText("You are " + PlayerName + " Player, please choose action");
-        this.Prompt.setFont(new Font("Arial", 28));
+        this.Prompt.setText("Your territories are in " + PlayerName + " Color, please choose an action");
+        this.Prompt.setFont(Font.font("Arial", BOLD, ITALIC, 18));
+        this.Food.setText(String.valueOf(this.CurrPlayer.getFoodResource()));
+        this.Tech.setText(String.valueOf(this.CurrPlayer.getTechResource()));
+        InitAlliance(PlayerColor);
     }
 
-    //if the player click the button, show the detail of each territory in the right side label
-    @FXML
-    public void BtnA(){
-        //System.out.println("Click on A");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "A");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
+    private void InitAlliance(ColorID PlayerColor){
+        //display Alliance Information
+        int AllyID = this.CurrPlayer.getMyAlly();
+        if(AllyID != -1){
+            String AllyName = PlayerColor.getPlayerColor(AllyID);
+            String OwnerName = this.CurrPlayer.getPlayerInfo().getValue();
+            this.AllianceInfo.setText(OwnerName + " ~ " + AllyName);
+        }
+        else {
+            this.AllianceInfo.setText(" ");
+        }
     }
 
-    @FXML
-    public void BtnB(){
-        //System.out.println("Click on B");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "B");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
+    private void InitTerritoryDetail(){
+        for(int i = 0; i < this.ButtonMap.size(); i++){
+            String SearchBase = "A";
+            int curr = SearchBase.charAt(0) + i;
+            StringBuilder Search = new StringBuilder();
+            Search.append((char)curr);
+            Button CurrentBtn = this.ButtonMap.get(Search.toString());
+            Tooltip TerrDetail = new Tooltip();
+            Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, Search.toString());
+            ShowToolTip(CurrentClicked, TerrDetail);
+            CurrentBtn.setTooltip(TerrDetail);
+        }
     }
-    @FXML
-    public void BtnC(){
-        //System.out.println("Click on C");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "C");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
-    }
-    @FXML
-    public void BtnD(){
-        //System.out.println("Click on D");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "D");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
-    }
-    @FXML
-    public void BtnE(){
-        //System.out.println("Click on E");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "E");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
-    }
-    @FXML
-    public void BtnF(){
-        //System.out.println("Click on F");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "F");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
-    }
-    @FXML
-    public void BtnG(){
-        //System.out.println("Click on G");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "G");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
-    }
-    @FXML
-    public void BtnH(){
-        //System.out.println("Click on H");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "H");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
-    }
-    @FXML
-    public void BtnI(){
-        //System.out.println("Click on I");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "I");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
-    }
-    @FXML
-    public void BtnJ(){
-        //System.out.println("Click on J");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "J");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
-    }
-    @FXML
-    public void BtnK(){
-        //System.out.println("Click on K");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "K");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
-    }
-    @FXML
-    public void BtnL(){
-        //System.out.println("Click on L");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "L");
-        this.ActionDetailPrompt.setText("Original Territory Detail ");
-        this.ActionDetailPrompt.setFont(new Font("Arial", 24));
-        Show.ShowLabel(CurrentClicked, this.ActionsOrDetail);
+
+    public void ShowToolTip(Territory CurrentClicked, Tooltip TerrDetail){
+        String ShowLabel = Show.ComposeString(CurrentClicked);
+        TerrDetail.setText(ShowLabel);
+        TerrDetail.setFont(new Font("Arial", 12));
     }
 
     @FXML

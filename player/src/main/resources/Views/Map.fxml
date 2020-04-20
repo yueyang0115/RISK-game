@@ -22,12 +22,12 @@
               <Font name="Arial Bold Italic" size="21.0" />
           </font>
       </Label>
-      <Label fx:id="Prompt" layoutX="200.0" layoutY="520.0" prefHeight="20.0" prefWidth="535.0" text="Your territories are in Yellow Color, please choose an action" textFill="#000007">
+      <Label fx:id="Prompt" layoutX="200.0" layoutY="520.0" prefHeight="23.0" prefWidth="637.0" text="Your territories are in Yellow Color, please choose an action" textFill="#000007">
           <font>
-              <Font name="Arial Bold Italic" size="17.0" />
+              <Font name="Arial Bold Italic" size="20.0" />
           </font>
       </Label>
-        <Button fx:id="UpgradeBtn" layoutX="33.0" layoutY="589.0" mnemonicParsing="false" onAction="#Upgrading" style="-fx-background-color: lavender; -fx-border-color: black;" text="Upgrade">
+        <Button fx:id="UpgradeBtn" layoutX="33.0" layoutY="589.0" mnemonicParsing="false" onAction="#Upgrading" prefHeight="42.0" prefWidth="135.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Upgrade">
             <font>
                 <Font size="20.0" />
             </font>
@@ -35,7 +35,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
         </Button>
-        <Button fx:id="MoveBtn" layoutX="175.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseMove" prefHeight="42.0" prefWidth="123.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Move">
+        <Button fx:id="MoveBtn" layoutX="211.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseMove" prefHeight="42.0" prefWidth="135.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Move">
             <font>
                 <Font size="20.0" />
             </font>
@@ -43,7 +43,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
         </Button>
-        <Button layoutX="327.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseAttack" prefHeight="42.0" prefWidth="135.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Attack">
+        <Button layoutX="392.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseAttack" prefHeight="42.0" prefWidth="135.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Attack">
             <font>
                 <Font size="20.0" />
             </font>
@@ -51,7 +51,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
         </Button>
-      <Button layoutX="493.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseAlliance" style="-fx-background-color: lavender; -fx-border-color: black;" text="Alliance">
+      <Button layoutX="576.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseAlliance" prefHeight="42.0" prefWidth="135.0" style="-fx-background-color: lavender; -fx-border-color: black;" text="Alliance">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -59,7 +59,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-        <Button layoutX="629.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseDone" prefHeight="42.0" prefWidth="123.0" style="-fx-background-color: plum; -fx-border-color: black;" text="Done">
+        <Button layoutX="752.0" layoutY="589.0" mnemonicParsing="false" onAction="#ChooseDone" prefHeight="42.0" prefWidth="135.0" style="-fx-background-color: plum; -fx-border-color: black;" text="Done">
             <font>
                 <Font size="20.0" />
             </font>
@@ -138,7 +138,7 @@
             <Font name="Chalkduster" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="516.0" layoutY="64.0" text="Technology Resources" textFill="#b94b3d">
+      <Label layoutX="516.0" layoutY="67.0" text="Technology Resources" textFill="#b94b3d">
          <font>
             <Font name="Chalkduster" size="16.0" />
          </font>
@@ -148,17 +148,17 @@
             <Font name="Chalkduster" size="19.0" />
          </font>
       </Label>
-      <Label fx:id="Tech" layoutX="744.0" layoutY="62.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="#bf3c3c">
+      <Label fx:id="Tech" layoutX="744.0" layoutY="64.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="#bf3c3c">
          <font>
             <Font name="Chalkduster" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="515.0" layoutY="103.0" prefHeight="23.0" prefWidth="275.0" text="Your Alliance Information：" textFill="#b94b3d">
+      <Label layoutX="515.0" layoutY="103.0" prefHeight="23.0" prefWidth="275.0" text="Alliance Information" textFill="#b94b3d">
          <font>
             <Font name="Chalkduster" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="AllianceInfo" layoutX="785.0" layoutY="101.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="#bf3c3c">
+      <Label fx:id="AllianceInfo" layoutX="736.0" layoutY="101.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="#bf3c3c">
          <font>
             <Font name="Chalkduster" size="20.0" />
          </font>
