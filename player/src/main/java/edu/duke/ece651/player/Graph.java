@@ -1,11 +1,11 @@
 package edu.duke.ece651.player;
 
-import edu.duke.ece651.shared.Action;
-import edu.duke.ece651.shared.ColorID;
-import edu.duke.ece651.shared.Territory;
+import edu.duke.ece651.shared.*;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.text.Font;
 import javafx.util.Pair;
 
@@ -38,15 +38,15 @@ public class Graph implements Displayable{
     }
 
     @Override
-    public void showAction(HashMap<Integer, ArrayList<Action>> RecvAction, Pair<Integer, String> playerInfo, Label ShowLabel) {
+    public void showAction(HashMap<Integer, ArrayList<Action>> RecvAction, Pair<Integer, String> playerInfo, TreeView<String> tree) {
         ColorID PlayerColor = new ColorID();
-        StringBuilder Text = new StringBuilder();
+        TreeItem<String> rootItem = new TreeItem<String> ("Actions List");
+        rootItem.setExpanded(true);
         for (HashMap.Entry<Integer, ArrayList<Action>> entry : RecvAction.entrySet()){
             String color = PlayerColor.getPlayerColor(entry.getKey());
-            Text.append(color + " Player:\n");
-            Text.append("---------------\n");
+            TreeItem<String> Items = new TreeItem<> (color + " Player");
             ArrayList<Action> ActionList = entry.getValue();
-            for(int i = 0; i < ActionList.size(); i++){
+            for(int i = 0; i < ActionList.size(); i++) {
                 Action OneAction = ActionList.get(i);
                 String ActionType = OneAction.getType();
                 String Source = OneAction.getSrc().getTerritoryName();
@@ -55,13 +55,17 @@ public class Graph implements Displayable{
                 for(int j = 0 ; j <soldierMap.size();j++) {
                     int ActSoldiers = OneAction.getSoldierLevel(j);
                     if (ActSoldiers != 0) {
-                        Text.append("  " + ActionType + ":  " + ActSoldiers + " units of level " + j +" from " + Source + " to " + Destination + "\n");
+                        String Text = ActionType + ":  " + ActSoldiers + " units of level " + j +" from " + Source + " to " + Destination;
+                        TreeItem<String> item = new TreeItem<> (Text);
+                        Items.getChildren().add(item);
+                        Items.setExpanded(true);
                     }
                 }
             }
+            rootItem.getChildren().add(Items);
         }
-        ShowLabel.setText(Text.toString());
-        ShowLabel.setFont(new Font("Arial", 18));
+        tree.setRoot(rootItem);
+        tree.setShowRoot(false);
     }
 
     public String getStyle(String color, String territoryName) {

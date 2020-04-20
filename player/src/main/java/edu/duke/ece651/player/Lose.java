@@ -62,8 +62,8 @@ public class Lose{
     public void initialize(){
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
-
-        new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.Detail);
+        //TODO: change to treeview
+        //new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.Detail);
         System.out.println("Print out All Actions");
 
         ColorID PlayerColor = new ColorID();

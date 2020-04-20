@@ -28,10 +28,11 @@ public class DoneAction {
     private String ValidationResult;
 
     @FXML private Label Result;
-    @FXML private Label Actions;
     @FXML private Label Food;
     @FXML private Label Tech;
     @FXML private Label AllianceInfo;
+    @FXML private TreeView<String> Actions;
+
 
     private HashMap<String, Button> ButtonMap;
     private HashMap<Integer, ArrayList<Territory> > TerrMap;
@@ -55,6 +56,8 @@ public class DoneAction {
     @FXML private Button ButtonL;
 
     @FXML private Label Prompt;
+    @FXML private ImageView Figure;
+
 
     private Stage Window;
     //create a button map which can relate the Territory name to the Button
@@ -81,15 +84,17 @@ public class DoneAction {
     }
 
     public void initialize(){
-        //display the latest map by using showMap function
+        //Set the profile photo of player
+        SharedMethod.InitFigure(this.CurrPlayer, this.Figure);
+        //Show map
         InitButtonMap();
-        Graph Display = new Graph();
-        Display.showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
+        new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         //init tooltip with territory information
-        InitTerritoryDetail();
+        SharedMethod.InitTerritoryDetail(this.ButtonMap, this.TerrMap);
         //display the result of validating the player's actions
         this.Result.setText(this.ValidationResult);
         //display the actions of all the players
+        Graph Display = new Graph();
         Display.showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.Actions);
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
@@ -98,40 +103,7 @@ public class DoneAction {
         this.Prompt.setFont(Font.font("Arial", BOLD, ITALIC, 18));
         this.Food.setText(String.valueOf(this.CurrPlayer.getFoodResource()));
         this.Tech.setText(String.valueOf(this.CurrPlayer.getTechResource()));
-        InitAlliance(PlayerColor);
-    }
-
-    private void InitAlliance(ColorID PlayerColor){
-        //display Alliance Information
-        int AllyID = this.CurrPlayer.getMyAlly();
-        if(AllyID != -1){
-            String AllyName = PlayerColor.getPlayerColor(AllyID);
-            String OwnerName = this.CurrPlayer.getPlayerInfo().getValue();
-            this.AllianceInfo.setText(OwnerName + " ~ " + AllyName);
-        }
-        else {
-            this.AllianceInfo.setText(" ");
-        }
-    }
-
-    private void InitTerritoryDetail(){
-        for(int i = 0; i < this.ButtonMap.size(); i++){
-            String SearchBase = "A";
-            int curr = SearchBase.charAt(0) + i;
-            StringBuilder Search = new StringBuilder();
-            Search.append((char)curr);
-            Button CurrentBtn = this.ButtonMap.get(Search.toString());
-            Tooltip TerrDetail = new Tooltip();
-            Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, Search.toString());
-            ShowToolTip(CurrentClicked, TerrDetail);
-            CurrentBtn.setTooltip(TerrDetail);
-        }
-    }
-
-    public void ShowToolTip(Territory CurrentClicked, Tooltip TerrDetail){
-        String ShowLabel = Show.ComposeString(CurrentClicked);
-        TerrDetail.setText(ShowLabel);
-        TerrDetail.setFont(new Font("Arial", 12));
+        this.AllianceInfo.setText(SharedMethod.getAllianceInfo(this.CurrPlayer));
     }
 
     @FXML
@@ -184,16 +156,33 @@ public class DoneAction {
 
     @FXML
     public void ChooseDone() throws IOException {
-        System.out.println("Click on Done in Map");
 
+        //Clicked the Done Button, show a window to remind players
+        //if it choose done, receive this turn's result information
+        System.out.println("Click on Done in Map");
         this.CurrPlayer.SendAction();
+
+
         String Validation = this.CurrPlayer.ReceiveActionRes();
         System.out.println("Validation " + Validation);
+        String AllianceResult = this.CurrPlayer.receiveString();
+
+        if(AllianceResult.contains("Successfully")){
+            int AllyID = this.CurrPlayer.getAllianceAction().getAlly();
+            this.CurrPlayer.setMyAlly(AllyID);
+        }
+        else if(AllianceResult.contains("broken")){
+            this.CurrPlayer.setMyAlly(-1);
+        }
+
         this.CurrPlayer.ReceiveAllAction();
 
         this.CurrPlayer.AddTechResource(this.CurrPlayer.getTerritoryMap(),this.CurrPlayer.getPlayerInfo());
         //the answer could be map or lose game and game end
         String Answer = this.CurrPlayer.receiveString();
+
+        //After received actions from server, close the waiting window
+
         //check whether the received string is game end or lose game or normal map
         //display different page with different received string content
         if(Answer.contains("Game End!")){
@@ -209,6 +198,7 @@ public class DoneAction {
         else {
             System.out.println("Normal Received Map");
             this.CurrPlayer.ContinueReceive(Answer);
+
             ShowView.ShowDoneView(Validation, this.CurrPlayer, this.Window);
         }
     }
