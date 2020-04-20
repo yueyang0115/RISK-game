@@ -7,18 +7,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.player.ErrorMsgController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="336.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.player.ErrorMsgController">
    <children>
-      <Button fx:id="OKBtn" layoutX="172.0" layoutY="182.0" mnemonicParsing="false" onAction="#OK" style="-fx-background-color: lavender; -fx-border-color: black;" text="OK">
+      <Button fx:id="OKBtn" layoutX="203.0" layoutY="210.0" mnemonicParsing="false" onAction="#OK" style="-fx-background-color: lavender; -fx-border-color: black;" text="OK">
          <font>
             <Font size="15.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Label fx:id="labelmsg" alignment="CENTER" layoutX="13.0" layoutY="66.0" prefHeight="72.0" prefWidth="364.0" text="message" textFill="LIGHTCORAL" AnchorPane.leftAnchor="13.0">
+      <Label fx:id="labelmsg" alignment="CENTER" layoutX="6.0" layoutY="79.0" prefHeight="72.0" prefWidth="438.0" text="message" textFill="LIGHTCORAL" AnchorPane.leftAnchor="6.0">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Arial Bold Italic" size="18.0" />
          </font>
       </Label>
    </children>

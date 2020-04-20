@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -140,96 +141,62 @@ public class UpgradeDetail {
         newWindow.show();
     }
 
-    @FXML
-    public void Up0() throws IOException {
+
+    private int SearchUpgraded(Territory Current, int StartLevel){
+        ArrayList<Upgrade> UpgradedList = this.CurrPlayer.getUpgradeAction();
+        String TerrName = Current.getTerritoryName();
+        int AlreadyEntered = 0;
+        for(int i = 0; i < UpgradedList.size(); i++){
+            Upgrade TempAction = UpgradedList.get(i);
+            if(TempAction.getTerritoryName().equals(TerrName) && TempAction.getPrevLevel() == StartLevel){
+                AlreadyEntered += TempAction.getNumber();
+            }
+        }
+        return AlreadyEntered;
+    }
+
+    public void UpFromBtn(Territory curTerritory, int StartLevel, PlayerHelper CurrPlayer, TableView<Upgrade> upgradeTable, Label techResource) throws IOException {
         Upgrade Act = new Upgrade();
-        Act.setTerritoryName(this.TerrName);
-        Act.setOwner(this.curTerritory.getOwner());
-        Act.setPrevLevel(0);
-        int CurrentTotal = this.curTerritory.getSoldierLevel(0);
-        int Remain = SearchTableView(0, CurrentTotal);
+        Act.setTerritoryName(curTerritory.getTerritoryName());
+        Act.setOwner(curTerritory.getOwner());
+        Act.setPrevLevel(StartLevel);
+        int CurrentTotal = curTerritory.getSoldierLevel(StartLevel);
+        int Remain = SearchTableView(StartLevel, CurrentTotal);
         if(Remain > 0) {
-            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
+            if((Remain - SearchUpgraded(curTerritory, StartLevel)) > 0){
+                ShowToNum(CurrPlayer, Act, upgradeTable, Remain, techResource);
+                return;
+            }
+            ShowView.promptError("Already Upgraded All The Units in This Level");
         }
         else {
             ShowView.promptError("Empty to Upgrade");
         }
+    }
+    @FXML
+    public void Up0() throws IOException {
+        UpFromBtn(curTerritory, 0, CurrPlayer, upgradeTable, techResource);
     }
 
     @FXML
     public void Up1() throws IOException {
-        Upgrade Act = new Upgrade();
-        Act.setTerritoryName(this.TerrName);
-        Act.setOwner(this.curTerritory.getOwner());
-        Act.setPrevLevel(1);
-        int CurrentTotal = this.curTerritory.getSoldierLevel(1);
-        int Remain = SearchTableView(1, CurrentTotal);
-        if(Remain > 0) {
-            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
-        }
-        else {
-            ShowView.promptError("Empty to Upgrade");
-        }
+        UpFromBtn(curTerritory, 1, CurrPlayer, upgradeTable, techResource);
     }
     @FXML
     public void Up2() throws IOException {
-        Upgrade Act = new Upgrade();
-        Act.setTerritoryName(this.TerrName);
-        Act.setOwner(this.curTerritory.getOwner());
-        Act.setPrevLevel(2);
-        int CurrentTotal = this.curTerritory.getSoldierLevel(2);
-        int Remain = SearchTableView(2, CurrentTotal);
-        if(Remain > 0) {
-            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
-        }
-        else {
-            ShowView.promptError("Empty to Upgrade");
-        }
+        UpFromBtn(curTerritory, 2, CurrPlayer, upgradeTable, techResource);
     }
     @FXML
     public void Up3() throws IOException {
-        Upgrade Act = new Upgrade();
-        Act.setTerritoryName(this.TerrName);
-        Act.setOwner(this.curTerritory.getOwner());
-        Act.setPrevLevel(3);
-        int CurrentTotal = this.curTerritory.getSoldierLevel(3);
-        int Remain = SearchTableView(3, CurrentTotal);
-        if(Remain > 0) {
-            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
-        }
-        else {
-            ShowView.promptError("Empty to Upgrade");
-        }
+        UpFromBtn(curTerritory, 3, CurrPlayer, upgradeTable, techResource);
     }
     @FXML
     public void Up4() throws IOException {
-        Upgrade Act = new Upgrade();
-        Act.setTerritoryName(this.TerrName);
-        Act.setOwner(this.curTerritory.getOwner());
-        Act.setPrevLevel(4);
-        int CurrentTotal = this.curTerritory.getSoldierLevel(4);
-        int Remain = SearchTableView(4, CurrentTotal);
-        if(Remain > 0) {
-            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
-        }
-        else {
-            ShowView.promptError("Empty to Upgrade");
-        }
+        UpFromBtn(curTerritory, 4, CurrPlayer, upgradeTable, techResource);
     }
     @FXML
     public void Up5() throws IOException {
-        Upgrade Act = new Upgrade();
-        Act.setTerritoryName(this.TerrName);
-        Act.setOwner(this.curTerritory.getOwner());
-        Act.setPrevLevel(5);
-        int CurrentTotal = this.curTerritory.getSoldierLevel(5);
-        int Remain = SearchTableView(5, CurrentTotal);
-        if(Remain > 0) {
-            ShowToNum(this.CurrPlayer, Act, this.upgradeTable, Remain,this.techResource);
-        }
-        else {
-            ShowView.promptError("Empty to Upgrade");
-        }
+        UpFromBtn(curTerritory, 5, CurrPlayer, upgradeTable, techResource);
     }
     @FXML
     public void Up6() throws IOException {
@@ -271,126 +238,4 @@ public class UpgradeDetail {
         //Return to MainPage for further actions
         ShowView.MainPageView(this.CurrPlayer, this.Window, false);
     }
-
-    //Initialize the table and ComboBoxes
-    /*public void initialize(){
-
-        level0.setText(String.valueOf(curTerritory.getSoldierLevel(0)));
-        level1.setText(String.valueOf(curTerritory.getSoldierLevel(1)));
-        level2.setText(String.valueOf(curTerritory.getSoldierLevel(2)));
-        level3.setText(String.valueOf(curTerritory.getSoldierLevel(3)));
-        level4.setText(String.valueOf(curTerritory.getSoldierLevel(4)));
-        level5.setText(String.valueOf(curTerritory.getSoldierLevel(5)));
-        level6.setText(String.valueOf(curTerritory.getSoldierLevel(6)));
-        ArrayList<Integer> starts = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            if (curTerritory.getSoldierLevel(i) != 0) {
-                starts.add(i);
-            }
-        }
-        ObservableList<Integer> StartChoices = FXCollections.observableArrayList(starts);
-        startChoose.setItems(StartChoices);
-        endChoose.setItems(FXCollections.observableArrayList());
-        numChoose.setItems(FXCollections.observableArrayList());
-
-        //Initialize the upgradeTable
-
-        //Start Level column
-        TableColumn<Upgrade, String> fromColumn = new TableColumn<>("Upgrade From");
-        fromColumn.setMinWidth(200);
-        fromColumn.setStyle( "-fx-alignment: CENTER;");
-        fromColumn.setCellValueFactory(new PropertyValueFactory<>("prevLevel"));
-
-        //End Level column
-        TableColumn<Upgrade, Double> toColumn = new TableColumn<>("Upgrade To");
-        toColumn.setMinWidth(200);
-        toColumn.setStyle( "-fx-alignment: CENTER;");
-        toColumn.setCellValueFactory(new PropertyValueFactory<>("nextLevel"));
-
-        //Number column
-        TableColumn<Upgrade, String> numColumn = new TableColumn<>("Number");
-        numColumn.setMinWidth(200);
-        numColumn.setStyle( "-fx-alignment: CENTER;");
-        numColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
-        upgradeTable.getColumns().addAll(fromColumn, toColumn, numColumn);
-    }
-*/
-    //Click on the start level combobox
-    /*@FXML
-    public void startClick() throws IOException {
-        int startInput = (int) startChoose.getValue();
-        ObservableList<Integer> endChoices = FXCollections.observableArrayList();
-        //Set the values of the end level combobox
-        for (int i = startInput + 1; i < 7; i++) {
-            endChoices.add(i);
-        }
-        endChoose.setItems(endChoices);
-    }
-
-    //Click on the end level combobox
-    @FXML
-    public void endClick() throws IOException {
-        int startInput = (int) startChoose.getValue();
-        int endInput = (int) endChoose.getValue();
-        Cost myCost = new Cost();
-        int perCost = myCost.getCosts(startInput, endInput);
-        //How many soldier can upgrade based on the resource
-        int timesChoose = CurrPlayer.getTechResource() / perCost;
-        //How many soldier can upgrade based on the original soldier number
-        int alreadyUpgraded = 0;
-        ObservableList<Upgrade> allUpgrades;
-        allUpgrades = upgradeTable.getItems();
-        for (Upgrade cur : allUpgrades) {
-            if (cur.getPrevLevel() == startInput) {
-                alreadyUpgraded += cur.getNumber();
-            }
-        }
-        //Choose the min value of the possible number
-        timesChoose = Math.min(timesChoose, curTerritory.getSoldierLevel(startInput) - alreadyUpgraded);
-        ObservableList<Integer> timeChoices = FXCollections.observableArrayList();
-        //Set the values of the number combobox
-        for (int i = 1; i < timesChoose + 1; i++) {
-            timeChoices.add(i);
-        }
-        numChoose.setItems(timeChoices);
-    }
-
-    //Click on the add button
-    @FXML
-    public void AddClick() throws IOException {
-        int startInput = (int) startChoose.getValue();
-        int endInput = (int) endChoose.getValue();
-        int numInput = (int) numChoose.getValue();
-        Cost myCost = new Cost();
-        int totalCost = myCost.getCosts(startInput, endInput) * numInput;
-        //Create the according upgrade
-        Upgrade cur = new Upgrade();
-        cur.setTerritoryName(curTerritory.getTerritoryName());
-        cur.setOwner(curTerritory.getOwner());
-        cur.setPrevLevel(startInput);
-        cur.setNextLevel(endInput);
-        cur.setNumber((int) numChoose.getValue());
-        //Add the upgrade to the tableView
-        upgradeTable.getItems().add(cur);
-        startChoose.setValue(null);
-        endChoose.setValue(null);
-        numChoose.setValue(null);
-        //Decrease the resource
-        CurrPlayer.setTechResource(CurrPlayer.getTechResource() - totalCost);
-        techResource.setText(String.valueOf(CurrPlayer.getTechResource()));
-        //Add the current upgrade
-        this.CurrPlayer.setUpgradeAction(cur);
-    }
-
-    //Click on the ok (back) button
-    @FXML
-    public void OKClick() throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Map.fxml"));
-        loaderStart.setControllerFactory(c->{
-            return new Map(this.CurrPlayer, Window, false);
-        });
-        Scene scene = new Scene(loaderStart.load());
-        this.Window.setScene(scene);
-        this.Window.show();
-    }*/
 }

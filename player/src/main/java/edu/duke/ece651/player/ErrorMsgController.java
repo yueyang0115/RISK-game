@@ -25,7 +25,6 @@ public class ErrorMsgController {
     }
     public void initialize(){
         labelmsg.setText(message);
-        labelmsg.setFont(Font.font("Arial", BOLD, ITALIC, 18));
     }
     @FXML
     public void OK(){
