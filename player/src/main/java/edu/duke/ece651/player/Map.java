@@ -79,23 +79,18 @@ public class Map{
         this.firstTime = first;
     }
 
-    private void InitFigure(){
-        int ID = this.CurrPlayer.getPlayerInfo().getKey();
-        Image player = new Image(getClass().getResourceAsStream("/Player_Photo/player" + ID + ".png"));
-        this.Figure.setImage(player);
-    }
+
 
     public void initialize(){
-
         //Set the profile photo of player
-        InitFigure();
+        SharedMethod.InitFigure(this.CurrPlayer, this.Figure);
         //Show map
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
         //init tooltip with territory information
-        InitTerritoryDetail();
+        SharedMethod.InitTerritoryDetail(this.ButtonMap, this.TerrMap);
         //display entered action information
-        InitActionDetail();
+        SharedMethod.InitActionDetail(this.CurrPlayer, this.Detail);
         //init prompt
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
@@ -106,7 +101,7 @@ public class Map{
         this.Food.setText(String.valueOf(this.CurrPlayer.getFoodResource()));
         this.Tech.setText(String.valueOf(this.CurrPlayer.getTechResource()));
 
-        InitAlliance(PlayerColor);
+        this.AllianceInfo.setText(SharedMethod.getAllianceInfo(this.CurrPlayer));
 
         if (firstTime) {
             PauseTransition delay = new PauseTransition(Duration.seconds(1));
@@ -122,104 +117,9 @@ public class Map{
         }
     }
 
-    private void InitAlliance(ColorID PlayerColor){
-        //display Alliance Information
-        int AllyID = this.CurrPlayer.getMyAlly();
-        if(AllyID != -1){
-            String AllyName = PlayerColor.getPlayerColor(AllyID);
-            String OwnerName = this.CurrPlayer.getPlayerInfo().getValue();
-            this.AllianceInfo.setText(OwnerName + " ~ " + AllyName);
-        }
-        else {
-            this.AllianceInfo.setText(" ");
-        }
-    }
-
-    private void InitActionDetail(){
-        TreeItem<String> rootItem = new TreeItem<String> ("Actions List");
-        rootItem.setExpanded(true);
-
-        ArrayList<Upgrade> upgrade = this.CurrPlayer.getUpgradeAction();
-        TreeItem<String> UpgradeItem = UpgradeHelper(upgrade, "Upgrade");
-
-        ArrayList<Action> move = this.CurrPlayer.getMoveAction();
-        TreeItem<String> MoveItem = MoveAttackHelper(move, "Move");
-
-        ArrayList<Action> attack = this.CurrPlayer.getAttackAction();
-        TreeItem<String> AttackItem = MoveAttackHelper(attack, "Attack");
-
-        Alliance alliance = this.CurrPlayer.getAllianceAction();
-        TreeItem<String> AllianceItem = AllianceHelper(alliance, "Alliance");
-
-        rootItem.getChildren().addAll(UpgradeItem, MoveItem, AttackItem, AllianceItem);
-        this.Detail.setRoot(rootItem);
-    }
-
-    private TreeItem<String> UpgradeHelper(ArrayList<Upgrade> Actions, String Type){
-        TreeItem<String> Items = new TreeItem<> (Type + " Actions");
-        for (int i = 0; i < Actions.size(); i++) {
-            Upgrade Curr = Actions.get(i);
-            StringBuilder Display = new StringBuilder();
-            Display.append(Curr.getTerritoryName()).append(": ");
-            Display.append("Level ").append(Curr.getPrevLevel()).append(" -> ").append("Level ").append(Curr.getNextLevel());
-            Display.append(" *").append(Curr.getNumber());
-            String ShowText = Display.toString();
-            TreeItem<String> item = new TreeItem<String> (ShowText);
-            Items.getChildren().add(item);
-        }
-        return Items;
-    }
-
-    private TreeItem<String> MoveAttackHelper(ArrayList<Action> Actions, String Type) {
-        TreeItem<String> Items = new TreeItem<String> (Type + " Actions");
-        for (int i = 0; i < Actions.size(); i++) {
-            Action Curr = Actions.get(i);
-            HashMap<Integer, Integer> MoveSoldier = Curr.getSoldiers();
-            StringBuilder Display = new StringBuilder();
-            Display.append(Curr.getSrc().getTerritoryName()).append(" -> ").append(Curr.getDst().getTerritoryName()).append(": ");
-            for(int j = 0; j < 7; j++) {
-                int Number = MoveSoldier.get(j);
-                if(Number != 0){
-                    Display.append("Level ").append(j).append(" *").append(Number);
-                }
-            }
-            String ShowText = Display.toString();
-            TreeItem<String> item = new TreeItem<String> (ShowText);
-            Items.getChildren().add(item);
-        }
-        return Items;
-    }
-
-    private TreeItem<String> AllianceHelper(Alliance alliance, String Type){
-        TreeItem<String> Items = new TreeItem<> (Type + " Actions");
-        if (alliance.getAlly() == -1) { return Items; }
-        ColorID PlayerColor = new ColorID();
-        String ShowText = new String("Alliance with " + PlayerColor.getPlayerColor(alliance.getAlly()) + " player");
-        TreeItem<String> item = new TreeItem<> (ShowText);
-        Items.getChildren().add(item);
-        return Items;
-    }
 
 
-    private void InitTerritoryDetail(){
-        for(int i = 0; i < this.ButtonMap.size(); i++){
-            String SearchBase = "A";
-            int curr = SearchBase.charAt(0) + i;
-            StringBuilder Search = new StringBuilder();
-            Search.append((char)curr);
-            Button CurrentBtn = this.ButtonMap.get(Search.toString());
-            Tooltip TerrDetail = new Tooltip();
-            Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, Search.toString());
-            ShowToolTip(CurrentClicked, TerrDetail);
-            CurrentBtn.setTooltip(TerrDetail);
-        }
-    }
 
-    public void ShowToolTip(Territory CurrentClicked, Tooltip TerrDetail){
-        String ShowLabel = Show.ComposeString(CurrentClicked);
-        TerrDetail.setText(ShowLabel);
-        TerrDetail.setFont(new Font("Arial", 12));
-    }
 
     //these three buttons are related to actions
     //and if click on each of them we jump into different page to finish each actions's input information
