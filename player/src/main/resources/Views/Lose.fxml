@@ -13,9 +13,9 @@
 <top>
     <VBox spacing="2.0">
         <children>
-            <Label text="Strategic Conquest Game (RISK)" textFill="MIDNIGHTBLUE" underline="true">
+            <Label text="Battle! Digital Monster" textFill="MIDNIGHTBLUE" underline="true">
                 <font>
-                    <Font size="30.0" />
+                    <Font name="Arial Bold" size="40.0" />
                 </font>
                 <VBox.margin>
                     <Insets left="10.0" top="10.0" />
@@ -155,9 +155,9 @@
 <right>
     <VBox prefHeight="632.0" prefWidth="415.0" spacing="5.0" BorderPane.alignment="CENTER">
         <children>
-            <Label prefHeight="30.0" prefWidth="203.0" text="You Lose" textFill="LIGHTCORAL">
+            <Label prefHeight="30.0" prefWidth="203.0" text="You Lose" textFill="#e80f0f">
                 <font>
-                    <Font size="30.0" />
+                    <Font name="Avenir Heavy Oblique" size="47.0" />
                 </font>
             </Label>
             <Label layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="203.0" text="Actions">
