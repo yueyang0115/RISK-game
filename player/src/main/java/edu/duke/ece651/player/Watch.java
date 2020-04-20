@@ -5,6 +5,7 @@ import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -27,10 +28,11 @@ public class Watch{
     @FXML private Button ButtonK;
     @FXML private Button ButtonL;
     @FXML private Label Prompt;
-    @FXML private Label ActionDetail;
+    @FXML private TreeView<String> ActionDetail;
     private HashMap<Integer, ArrayList<Territory>> TerrMap;
     private PlayerHelper CurrPlayer;
     private HashMap<String, Button> ButtonMap;
+    private WatchHelper watchHelper;
     //create a button map which can relate the Territory name to the Button
     private void InitButtonMap(){
         ButtonMap = new HashMap<>();
@@ -48,69 +50,64 @@ public class Watch{
         ButtonMap.put("L", ButtonL);
     }
     private Stage Window;
+
+    private class WatchHelper extends Thread {
+        private PlayerHelper CurrPlayer;
+        private Stage Window;
+        private TreeView<String> ActionDetail;
+        private HashMap<String, Button> ButtonMap;
+        private HashMap<Integer, ArrayList<Territory>> TerrMap;
+        public WatchHelper(PlayerHelper C, Stage W, TreeView<String> A, HashMap<String, Button> B, HashMap<Integer, ArrayList<Territory>> T) {
+            this.CurrPlayer = C;
+            this.Window = W;
+            this.ActionDetail = A;
+            this.ButtonMap = B;
+            this.TerrMap = T;
+        }
+        public void run() {
+            while (true) {
+                this.CurrPlayer.ReceiveAllAction();
+                String Answer = this.CurrPlayer.receiveString();
+                System.out.println("Answer" + Answer);
+                try {
+                    if(Answer.contains("Game End")) {
+                        ShowView.ShowEndVIew(Answer,this.CurrPlayer, this.Window);
+                    }
+                    else {
+                        this.CurrPlayer.ContinueReceive(Answer);
+                        new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionDetail);
+                        new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
+                        //init tooltip with territory information
+                        SharedMethod.InitTerritoryDetail(this.ButtonMap, this.TerrMap);
+                    }
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public Watch(PlayerHelper CurrPlayer, Stage Window){
         this.TerrMap = new HashMap<>();
         this.TerrMap = CurrPlayer.getTerritoryMap();
         this.CurrPlayer = CurrPlayer;
         this.Window = Window;
+        this.watchHelper = new WatchHelper(CurrPlayer, Window, ActionDetail, ButtonMap, TerrMap);
     }
-
 
     public void initialize() throws IOException {
         System.out.println("++++++++++++++++++Initialize Watch++++++++++++++++++++");
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
-        showButton();
+        //init tooltip with territory information
+        SharedMethod.InitTerritoryDetail(this.ButtonMap, this.TerrMap);
+        //Show actions of other players
+        new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionDetail);
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
-        this.Prompt.setText("You are " + PlayerName + ".");
-        this.Prompt.setFont(new Font("Arial", 28));
-        //TODO: change to treeview
-        //new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionDetail);
-        PauseTransition delay = new PauseTransition(Duration.seconds(1));
-        delay.setOnFinished(event -> {
-            try {
-                WatchGame();
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Exception "+ e);
-            }
-        });
-        delay.play();
-
-    }
-    public void showButton(){
-        //iterate through all the territory map to print out the details of the soldier number in the map
-        for (HashMap.Entry<Integer, ArrayList<Territory>> entry : TerrMap.entrySet()){
-            ArrayList<Territory> TerrList = entry.getValue();
-            for(int i = 0; i < TerrList.size(); i++){
-                Territory OneTerr = TerrList.get(i);
-                String TerrName = OneTerr.getTerritoryName();
-                Button Btn = ButtonMap.get(TerrName);
-                HashMap<Integer,Integer> SoldierMap = OneTerr.getSoldiers();
-                //construct the string that need to print out
-                StringBuilder SoldierDetail = new StringBuilder();
-                SoldierDetail.append(TerrName + "\n");
-                for(HashMap.Entry<Integer,Integer> CurrentMap : SoldierMap.entrySet()){
-                    SoldierDetail.append("Level " + CurrentMap.getKey() + ": " + CurrentMap.getValue() + "\n");
-                }
-                Btn.setText(SoldierDetail.toString());
-                Btn.setFont(new Font(6));
-            }
-        }
-        System.out.println("Already paint color");
-    }
-    public void WatchGame() throws IOException {
-        this.CurrPlayer.ReceiveAllAction();
-        String Answer = this.CurrPlayer.receiveString();
-        System.out.println("Answer" + Answer);
-        if(Answer.contains("Game End")){
-            ShowView.ShowEndVIew(Answer,this.CurrPlayer, this.Window);
-        }
-        else{
-            this.CurrPlayer.ContinueReceive(Answer);
-            ShowView.ShowWatchView(this.CurrPlayer,this.Window);
-        }
+        this.Prompt.setText("Your territories are in " + PlayerName + " color.");
+        this.watchHelper.start();
     }
 
 }
