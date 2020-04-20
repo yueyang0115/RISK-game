@@ -6,12 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.checkerframework.checker.units.qual.C;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,9 +24,15 @@ public class MoveOrAttack {
     private HashMap<Integer, ArrayList<Territory>> TerrMap;
     private HashMap<Integer, ComboBox<Integer>> MapLevel;
     private Stage Window;
+
+    @FXML private ImageView Photo;
+
+    @FXML private Label Food;
+    @FXML private Label Tech;
+    @FXML private Label AllianceInfo;
+
     @FXML private ComboBox<String> SourceTerr;
     @FXML private ComboBox<String> DstTerr;
-    @FXML private Label Resource;
     @FXML private ComboBox<Integer> Level0;
     @FXML private ComboBox<Integer> Level1;
     @FXML private ComboBox<Integer> Level2;
@@ -36,8 +42,12 @@ public class MoveOrAttack {
     @FXML private ComboBox<Integer> Level6;
 
     @FXML private Button OKButton;
+    @FXML private TreeView<String> DetailActions;
+
     @FXML private Label Detail;
-    @FXML private Label Prompt;
+    @FXML private Label PromptColor;
+    @FXML private Label PromptAction;
+    @FXML private Label EnteredPrompt;
 
     @FXML private Button ButtonA;
     @FXML private Button ButtonB;
@@ -83,29 +93,43 @@ public class MoveOrAttack {
         return this.MapLevel.get(level);
     }
     public MoveOrAttack(PlayerHelper player, String Type, Stage Window){
+        LevelMap();
         this.CurrPlayer = player;
         this.ActionType = Type;
         this.Window = Window;
+        this.TerrMap = this.CurrPlayer.getTerritoryMap();
 
     }
     public void initialize(){
         //initialize the button's shape and color
         InitButtonMap();
         new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
-        ColorID PlayerColor = new ColorID();
-        String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
-        this.Prompt.setText("You are " + PlayerName + " Player, please choose action");
-        this.Prompt.setFont(new Font("Arial", 28));
-        InitTerr();
-        this.Resource.setText("Food Resources: " + this.CurrPlayer.getFoodResource());
-        this.Resource.setTextFill(Color.web("#ff0000"));
-        this.Resource.setFont(new Font("Arial", 20));
+        SharedMethod.InitTerritoryDetail(this.ButtonMap, this.TerrMap);
+        SharedMethod.InitFigure(this.CurrPlayer, this.Photo);
+        InitInfo();
+        InitPrompt();
+        InitSrcDst();
+        SharedMethod.InitActionDetail(this.CurrPlayer, this.DetailActions);
     }
-    public void InitTerr(){
+
+
+    private void InitInfo(){
+        Food.setText(String.valueOf(CurrPlayer.getFoodResource()));
+        Tech.setText(String.valueOf(CurrPlayer.getTechResource()));
+        this.AllianceInfo.setText(SharedMethod.getAllianceInfo(this.CurrPlayer));
+    }
+
+    private void InitPrompt(){
+        this.PromptAction.setText("please choose " + this.ActionType + " action details");
+        this.PromptColor.setText("Your territories is in " + this.CurrPlayer.getPlayerInfo().getValue() + " Color");
+        this.EnteredPrompt.setText("Entered " + this.ActionType + " Actions");
+    }
+
+    public void InitSrcDst(){
         //for different action type: MOVE OR ATTACK
         //search through all the territory map to set the comboBox's value
         int ID = this.CurrPlayer.getPlayerInfo().getKey();
-        this.TerrMap = this.CurrPlayer.getTerritoryMap();
+
         ArrayList<Territory> OwnTerr = this.TerrMap.get(ID);
         ArrayList<String> Src = new ArrayList<>();
         ArrayList<String> MoveDst = new ArrayList<>();
@@ -169,18 +193,26 @@ public class MoveOrAttack {
         //the destination is not empty
         //the source is not the same as the destination
         if(this.SourceTerr.getValue() == this.DstTerr.getValue()){
-            this.Detail.setText("Invalid Action! Source Name cannot same as Destination Name");
-            this.Detail.setFont(new Font("Arial", 24));
+            this.Detail.setText("Invalid Action!\nSource Name cannot same as Destination Name");
             return false;
         }
         if(this.SourceTerr.getValue() == null){
-            this.Detail.setText("Source cannot be empty!");
-            this.Detail.setFont(new Font("Arial", 24));
+            this.Detail.setText("Invalid Action!\nSource cannot be empty!");
             return false;
         }
         if(this.DstTerr.getValue() == null){
-            this.Detail.setText("Destination cannot be empty!");
-            this.Detail.setFont(new Font("Arial", 24));
+            this.Detail.setText("Invalid Action!\nDestination cannot be empty!");
+            return false;
+        }
+        boolean NumberCheck = false;
+        for(int i = 0; i < 7; i++){
+            if(this.MapLevel.get(i).getValue() != null){
+                NumberCheck = true;
+                break;
+            }
+        }
+        if(!NumberCheck){
+            this.Detail.setText("Invalid Action!\nAt Least One Level has to be Non-Zero");
             return false;
         }
         return true;
@@ -226,81 +258,5 @@ public class MoveOrAttack {
         }
 
     }
-    //if the player click the button, show the detail of each territory in the right side label
-    @FXML
-    public void BtnA(){
-        System.out.println("Click on A");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "A");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-
-    @FXML
-    public void BtnB(){
-        System.out.println("Click on B");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "B");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnC(){
-        System.out.println("Click on C");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "C");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnD(){
-        System.out.println("Click on D");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "D");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnE(){
-        System.out.println("Click on E");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "E");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnF(){
-        System.out.println("Click on F");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "F");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnG(){
-        System.out.println("Click on G");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "G");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnH(){
-        System.out.println("Click on H");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "H");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnI(){
-        System.out.println("Click on I");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "I");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnJ(){
-        System.out.println("Click on J");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "J");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnK(){
-        System.out.println("Click on K");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "K");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-    @FXML
-    public void BtnL(){
-        System.out.println("Click on L");
-        Territory CurrentClicked =  Show.FindTerritory(this.TerrMap, "L");
-        Show.ShowLabel(CurrentClicked, this.Detail);
-    }
-
-
 
 }
