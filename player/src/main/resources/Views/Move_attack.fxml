@@ -114,12 +114,12 @@
             <Font name="Avenir Medium" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="AllianceInfo" layoutX="850.0" layoutY="87.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="#bf3c3c">
+      <Label fx:id="AllianceInfo" layoutX="790.0" layoutY="87.0" prefHeight="28.0" prefWidth="149.0" text="Label" textFill="#bf3c3c">
          <font>
             <Font name="Chalkduster" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="580.0" layoutY="89.0" prefHeight="23.0" prefWidth="275.0" text="Your Alliance Information：" textFill="#b94b3d">
+      <Label layoutX="580.0" layoutY="89.0" prefHeight="23.0" prefWidth="275.0" text="Alliance Information" textFill="#b94b3d">
          <font>
             <Font name="Chalkduster" size="16.0" />
          </font>
