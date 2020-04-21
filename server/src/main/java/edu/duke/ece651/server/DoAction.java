@@ -16,19 +16,7 @@ public class DoAction {
   private AllianceHelper myAllianceHelper;
 
   public DoAction(HashMap<Integer, ArrayList<Territory>> world,
-      HashMap<Integer, ArrayList<Action>> actionsMap, HashMap<Integer, Integer> resource) {
-    init();
-    myworld = world;
-    myActionMap = actionsMap;
-    myformatter = new MyFormatter(myworld.size());
-    tempWorldStr = myformatter.MapCompose(myworld).toString();
-    myResource = resource;
-    copyMap(rawResource, resource);
-  }
-
-  //constructor add AllianceHelper
-  public DoAction(HashMap<Integer, ArrayList<Territory>> world,
-                  HashMap<Integer, ArrayList<Action>> actionsMap, HashMap<Integer, Integer> resource, AllianceHelper ah) {
+      HashMap<Integer, ArrayList<Action>> actionsMap, HashMap<Integer, Integer> resource, AllianceHelper ah) {
     init();
     myworld = world;
     myActionMap = actionsMap;

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class ServerCheckerTest {
   private AllianceHelper ah;
   public ServerCheckerTest(){
-    AllianceHelper ah = new AllianceHelper();
+    ah = new AllianceHelper();
   }
 
   @Test
