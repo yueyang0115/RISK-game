@@ -100,6 +100,9 @@ public class Server {
         System.out.println("[DEBUG] Before Current Status " + j + status.get(j));
         if (status.get(j).equals("INGAME") && territoryMap.get(j).size() == 0 && !gameEnd) {
           cur.sendPlayer(cur.checkAction(), false);
+          //Send alliance checkResult
+          String allianceRes = allianceh.getAllianceResult(j);
+          cur.sendPlayer(allianceRes, false);
           cur.sendPlayer(actionstr, false);
           cur.sendPlayer("Lose Game", false);
           System.out.println("[DEBUG] Player" + j + "Lose Game!");
