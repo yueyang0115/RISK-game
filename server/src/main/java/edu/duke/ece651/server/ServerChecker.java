@@ -41,8 +41,11 @@ public class ServerChecker {
     String dstOwner = action.getDst().getOwner();
     String actionOwner = action.getOwner();
     if (action.getType().equals("Move")) {
+      //TODO: dst canbe alliance
+      //playerisAllianced
       return srcOwner.equals(dstOwner) && actionOwner.equals(srcOwner);
     } else {
+      //TODO: dst cannot be alliance, not check here, check in doaction
       return (!srcOwner.equals(dstOwner)) && actionOwner.equals(srcOwner);
     }
   }
@@ -101,6 +104,9 @@ public class ServerChecker {
             //    Neighbor.getTerritoryName());
             return true;
           }
+
+          //TODO: path neighbor can be alliance
+          //territoryisAllianced(Neighbor.getTerritoryName,srcTerritory.getOwner())
           if (Neighbor.getOwner().equals(srcTerritory.getOwner())) {
             stack.push(Neighbor);
             // System.out.println("[DEBUG] check " + curr.getTerritoryName()

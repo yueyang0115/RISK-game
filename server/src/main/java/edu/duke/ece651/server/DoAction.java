@@ -13,6 +13,7 @@ public class DoAction {
   private ArrayList<Action> mymoveList;
   private HashMap<Integer, Integer> myResource;
   private HashMap<Integer, Integer> rawResource;
+  private AllianceHelper myAllianceHelper;
 
   public DoAction(HashMap<Integer, ArrayList<Territory>> world,
       HashMap<Integer, ArrayList<Action>> actionsMap, HashMap<Integer, Integer> resource) {
@@ -23,6 +24,19 @@ public class DoAction {
     tempWorldStr = myformatter.MapCompose(myworld).toString();
     myResource = resource;
     copyMap(rawResource, resource);
+  }
+
+  //constructor add AllianceHelper
+  public DoAction(HashMap<Integer, ArrayList<Territory>> world,
+                  HashMap<Integer, ArrayList<Action>> actionsMap, HashMap<Integer, Integer> resource, AllianceHelper ah) {
+    init();
+    myworld = world;
+    myActionMap = actionsMap;
+    myformatter = new MyFormatter(myworld.size());
+    tempWorldStr = myformatter.MapCompose(myworld).toString();
+    myResource = resource;
+    copyMap(rawResource, resource);
+    myAllianceHelper = ah;
   }
 
   public DoAction(HashMap<Integer, ArrayList<Territory>> world) {
@@ -38,6 +52,8 @@ public class DoAction {
     myResource = new HashMap<>();
     rawResource = new HashMap<>();
   }
+  //TODO: check alliance, if break, split
+
 
   // do upgrade action
   public void doUpgradeAction(ArrayList<Upgrade> upgradeList) {
@@ -118,6 +134,8 @@ public class DoAction {
           + "level_" + soldierLevel + " soldier to " + dstTerritory.getTerritoryName()
           + ", original_src_level  has " + srcTerritory.getSoldierLevel(soldierLevel)
           + ", original_ dst_level has " + dstTerritory.getSoldierLevel(soldierLevel));
+
+      //TODO: if src dst are alliance, ah.addAlliance(name, Moveaction.owner), record where has two player's soldier
 
       srcTerritory.setSoldierLevel(
           soldierLevel, srcTerritory.getSoldierLevel(soldierLevel) - numReduce);
@@ -227,7 +245,8 @@ public class DoAction {
       removeHelper(action);
     }
 
-    // perform attack actions
+    //TODO: first reduceCost and combine same dst from same player
+    //perform attack actions
     for (int i = 0; i < attackList.size(); i++) {
       Action action = attackList.get(i);
       if (invalidPlayer.contains(action.getOwner())) {
@@ -236,7 +255,10 @@ public class DoAction {
       }
       ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
       rschecker.reduceCost(myResource, action);
+
+      //TODO: find if has alliance, combine, bool attackHelper()
       attackHelper(action);
+      //TODO: if win, ah.addAlliance(name,  贡献小的.playerid)
       System.out.println(
           "+++++++++++++++++ [After] Current Attack Action Number Level 0 ++++++++++++++ \n"
           + action.getSoldierLevel(0));
