@@ -14,7 +14,7 @@ import javafx.util.Pair;
 
 public class PlayerTest {
   @Test
-  public void test_Player() throws IOException {
+  public void test_Player() throws IOException{
 
     PlayerHelper player = new PlayerHelper();
 

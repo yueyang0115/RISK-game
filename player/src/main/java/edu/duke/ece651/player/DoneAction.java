@@ -165,6 +165,7 @@ public class DoneAction {
 
         String Validation = this.CurrPlayer.ReceiveActionRes();
         System.out.println("Validation " + Validation);
+
         String AllianceResult = this.CurrPlayer.receiveString();
 
         if(AllianceResult.contains("Successfully")){

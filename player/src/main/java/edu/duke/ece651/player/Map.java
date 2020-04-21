@@ -203,7 +203,6 @@ public class Map{
         else {
             System.out.println("Normal Received Map");
             this.CurrPlayer.ContinueReceive(Answer);
-
             ShowView.ShowDoneView(Validation, this.CurrPlayer, this.Window);
         }
     }

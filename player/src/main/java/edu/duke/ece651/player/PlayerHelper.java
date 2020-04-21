@@ -61,7 +61,6 @@ public class PlayerHelper {
     public String receiveString(){
         return this.communicator.receive();
     }
-
     public Communicator getCommunicator(){
         return this.communicator;
     }
@@ -87,16 +86,13 @@ public class PlayerHelper {
     public void setUpgradeAction(Upgrade Current){
         UpgradeAction.add(Current);
     }
-
     public void setAlliance(Alliance a) { this.AllianceAction = a; }
-
     public void ReceiveID(){
         System.out.println("Waiting for id");
         int id = Integer.parseInt(receiveString());
         setID(id);
         System.out.println("Received! MY ID is " + id);
     }
-
     public ArrayList<Action> getMoveAction(){
         return this.MoveAction;
     }
@@ -107,11 +103,9 @@ public class PlayerHelper {
         return this.UpgradeAction;
     }
     public Alliance getAllianceAction() { return this.AllianceAction; }
-
     public int getFoodResource() { return FoodResource; }
     public int getTechResource() { return TechResource; }
     public void setTechResource(int t) { TechResource = t;}
-
     public void displayMap() {
         displayer.showMap(territoryMap, playerInfo,null);
     }
@@ -153,12 +147,11 @@ public class PlayerHelper {
         this.Ask = Ask;
     }
     public void setLose(boolean Ask){
-        this.Ask = Ask;
+        this.Lose = Ask;
     }
     public void setLoseButWatch(boolean Ask){
-        this.Ask = Ask;
+        this.LoseButWatch = Ask;
     }
-
     public void ContinueReceive(String msg){
         //after check whether last receive is string or map
         //then continue receive food and parse the territory map
@@ -167,10 +160,10 @@ public class PlayerHelper {
             String FoodStr = receiveString();
             System.out.println("Received Food: " + FoodStr);
             FoodResource = Integer.parseInt(FoodStr);
-            MyFormatter myformatter = new MyFormatter(playerNum);
-            territoryMap.clear();
-            myformatter.MapParse(territoryMap, msg);
         }
+        MyFormatter myformatter = new MyFormatter(playerNum);
+        territoryMap.clear();
+        myformatter.MapParse(territoryMap, msg);
     }
     public void AddTechResource(HashMap<Integer, ArrayList<Territory>> TerrMap, Pair<Integer, String> PlayerInfo){
         //at the end of each turn, add their own technology resources
@@ -182,7 +175,6 @@ public class PlayerHelper {
             this.TechResource += CurrAdd;
         }
     }
-
     public HashMap<Integer, ArrayList<Action>> getAllAction(){
         return this.AllAction;
     }
@@ -212,7 +204,6 @@ public class PlayerHelper {
         this.MoveAction.clear();
         this.AllianceAction = new Alliance();
     }
-
     public String ReceiveActionRes(){
         if (!Lose) {
             //Receive the Current Action Validation Result
@@ -222,7 +213,6 @@ public class PlayerHelper {
         }
         return null;
     }
-
     public void ReceiveAllAction(){
         MyFormatter myformatter = new MyFormatter(playerNum);
         //receive all players' actions
@@ -238,5 +228,4 @@ public class PlayerHelper {
         myformatter.AllActionParse(AllAction, OtherActions);
         ClearActions();
     }
-
 }
