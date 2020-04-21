@@ -95,7 +95,7 @@ public class DoAction {
       }
 
       // check if action is valid
-      ServerChecker mychecker = new ServerChecker(myworld);
+      ServerChecker mychecker = new ServerChecker(myworld, myAllianceHelper);
       ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
       boolean isValid = mychecker.Check(action) && rschecker.CheckResource(action);
       if (!isValid) {
@@ -212,7 +212,7 @@ public class DoAction {
       }
 
       // based on moveActions result, check if attackaction is valid
-      ServerChecker mychecker = new ServerChecker(myworld);
+      ServerChecker mychecker = new ServerChecker(myworld, myAllianceHelper);
       ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
       boolean isValid = mychecker.Check(action) && rschecker.CheckResource(action);
       if (!isValid) {

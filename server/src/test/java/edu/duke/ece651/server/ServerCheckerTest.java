@@ -6,6 +6,11 @@ import edu.duke.ece651.shared.*;
 import java.util.*;
 import org.junit.jupiter.api.Test;
 public class ServerCheckerTest {
+  private AllianceHelper ah;
+  public ServerCheckerTest(){
+    AllianceHelper ah = new AllianceHelper();
+  }
+
   @Test
   public void test_checkTerritory() {
     WorldInitter myworInitter = new WorldInitter(4);
@@ -22,7 +27,7 @@ public class ServerCheckerTest {
     myaction.setSoldierLevel(0, 2);
     myaction.setType("Move");
 
-    ServerChecker mychecker = new ServerChecker(myworld);
+    ServerChecker mychecker = new ServerChecker(myworld,ah);
     boolean ans = mychecker.Check(myaction);
     assertEquals(ans, false);
   }
@@ -40,7 +45,7 @@ public class ServerCheckerTest {
     myaction.setSoldierLevel(0, 2);
     myaction.setType("Attack");
 
-    ServerChecker mychecker = new ServerChecker(myworld);
+    ServerChecker mychecker = new ServerChecker(myworld,ah);
     boolean ans = mychecker.Check(myaction); // srcOwner!=actionOwner
     assertEquals(ans, false);
 
@@ -72,7 +77,7 @@ public class ServerCheckerTest {
     myaction.setSoldierLevel(0, 4);
     myaction.setType("Attack");
 
-    ServerChecker mychecker = new ServerChecker(myworld);
+    ServerChecker mychecker = new ServerChecker(myworld,ah);
     boolean ans = mychecker.Check(myaction);
     assertEquals(ans, false);
 
@@ -94,7 +99,7 @@ public class ServerCheckerTest {
     myaction.setSoldierLevel(0, 2);
     myaction.setType("Attack");
 
-    ServerChecker mychecker = new ServerChecker(myworld);
+    ServerChecker mychecker = new ServerChecker(myworld,ah);
     boolean ans = mychecker.Check(myaction);
     assertEquals(ans, false);
 

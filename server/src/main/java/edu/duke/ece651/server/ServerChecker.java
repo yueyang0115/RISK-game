@@ -6,11 +6,13 @@ import java.util.*;
 public class ServerChecker {
   private HashMap<Integer, ArrayList<Territory>> world;
   private Action action;
+  private AllianceHelper allianceHelper;
 
-  public ServerChecker(HashMap<Integer, ArrayList<Territory>> myworld) {
+  public ServerChecker(HashMap<Integer, ArrayList<Territory>> myworld, AllianceHelper myallianceHelper) {
     world = new HashMap<>();
     world = myworld;
     action = new Action();
+    allianceHelper = myallianceHelper;
   }
 
   public boolean Check(Action myaction) {

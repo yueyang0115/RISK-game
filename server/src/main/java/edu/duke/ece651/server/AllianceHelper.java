@@ -12,7 +12,7 @@ public class AllianceHelper {
     private Set<Integer> noNewID;
     private Set<Integer> breakID;
 
-    public AllianceHelper(int playerNum) {
+    public AllianceHelper() {
         this.curRoundAlliance = new ArrayList<>();
         this.allAlliances = new HashSet<>();
         this.allianceMap = new HashMap<>();
