@@ -13,8 +13,10 @@ public class ResourceCheckerTest {
   private HashMap<Integer, ArrayList<Territory>> myworld;
   private Territory territoryA;
   private Territory territoryB;
+  private AllianceHelper ah;
 
   public ResourceCheckerTest() {
+    ah = new AllianceHelper();
     resource = new HashMap<>();
     resource.put(0, 100);
     resource.put(1, 100);
@@ -80,7 +82,7 @@ public class ResourceCheckerTest {
     HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
     myactionMap.put(0, actionList);
 
-    DoAction actor = new DoAction(myworld, myactionMap, resource);
+    DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
     actor.doAttackAction(actionList);
 
     myworld = actor.getNewWorld();
@@ -124,7 +126,7 @@ public class ResourceCheckerTest {
     HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
     myactionMap.put(0, actionList);
 
-    DoAction actor = new DoAction(myworld, myactionMap, resource);
+    DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
     actor.doAttackAction(actionList);
 
     resource = actor.getNewResource();
@@ -174,7 +176,7 @@ public class ResourceCheckerTest {
     HashMap<Integer, ArrayList<Action>> myactionMap2 = new HashMap<>();
     myactionMap2.put(0, actionList);
 
-    DoAction actor = new DoAction(Dworld, myactionMap2, resource);
+    DoAction actor = new DoAction(Dworld, myactionMap2, resource, ah);
     assertEquals(resource.get(0), 100);
     actor.doMoveAction(actionList);
 
