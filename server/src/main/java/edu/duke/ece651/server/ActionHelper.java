@@ -49,7 +49,7 @@ public class ActionHelper {
   public synchronized void actionsCompleted(int playerId) {
     playerComplete.set(playerId, true);
   }
-  public synchronized void executeActions(HashMap<Integer, Integer> food) {
+  public synchronized void executeActions(HashMap<Integer, Integer> food, AllianceHelper allianceHelper) {
     // Reference to Piazza post.
     // Wait until all players have committed the actions to execute all the actions
     while (playerComplete.contains(false)) {
@@ -72,7 +72,7 @@ public class ActionHelper {
       }
     }*/
 
-    DoAction d = new DoAction(worldMap, playersActions, food);
+    DoAction d = new DoAction(worldMap, playersActions, food, allianceHelper);
     // First do the upgrade actions, then move and attack actions, then add 1 to all territory.
     d.doUpgradeAction(upgradeList);
     d.doMoveAction(moveList);

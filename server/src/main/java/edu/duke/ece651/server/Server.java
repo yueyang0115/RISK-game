@@ -75,7 +75,7 @@ public class Server {
       }
       System.out.println(
           "[DEBUG] Before execute actions:" + new MaptoJson(territoryMap).getJSON().toString());
-      actionh.executeActions(food);
+      actionh.executeActions(food, allianceh);
       allianceh.executeCurRound();
       System.out.println(
           "[DEBUG] After execute actions:" + new MaptoJson(territoryMap).getJSON().toString());
