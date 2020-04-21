@@ -46,6 +46,9 @@ public class AllianceHelper {
     }
 
     public boolean territoryisAllianced(String territoryname, int id) {
+        if(allianceMap.get(territoryname)==null){
+            return false;
+        }
         return allianceMap.get(territoryname).contains(id);
     }
 

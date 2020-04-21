@@ -6,14 +6,14 @@ import java.util.*;
 public class ServerChecker {
   private HashMap<Integer, ArrayList<Territory>> world;
   private Action action;
-  private AllianceHelper ah;
+  private AllianceHelper allianceHelper;
 
   public ServerChecker(HashMap<Integer, ArrayList<Territory>> myworld, AllianceHelper myah) {
     world = new HashMap<>();
     world = myworld;
     action = new Action();
-    ah = new AllianceHelper();
-    ah = myah;
+    allianceHelper = new AllianceHelper();
+    allianceHelper = myah;
   }
 
   public boolean Check(Action myaction) {
@@ -43,17 +43,17 @@ public class ServerChecker {
     String srcOwner = action.getSrc().getOwner();
     String dstOwner = action.getDst().getOwner();
     String actionOwner = action.getOwner();
+    int srcID = Character.getNumericValue(srcOwner.charAt(srcOwner.length() - 1));
+    int dstID = Character.getNumericValue(dstOwner.charAt(dstOwner.length() - 1));
+    boolean isalliance = allianceHelper.playerisAllianced(srcID,dstID);
+
     if (action.getType().equals("Move")) {
-      //TODO: dst can be alliance
-      int srcID = Character.getNumericValue(srcOwner.charAt(srcOwner.length() - 1));
-      int dstID = Character.getNumericValue(dstOwner.charAt(dstOwner.length() - 1));
-      boolean isalliance = ah.playerisAllianced(srcID,dstID);
-      System.out.println("isalliance = "+ isalliance);
-      //return (srcOwner.equals(dstOwner) || isalliance) && actionOwner.equals(srcOwner);
-      return srcOwner.equals(dstOwner) && actionOwner.equals(srcOwner);
+      //dst can be alliance
+      //System.out.println("[DEBUG] move action's src and dst isalliance  = "+ isalliance);
+      return (srcOwner.equals(dstOwner) || isalliance) && actionOwner.equals(srcOwner);
     } else {
-      //TODO: dst cannot be alliance, not check here, check in doaction
-      return (!srcOwner.equals(dstOwner)) && actionOwner.equals(srcOwner);
+      //src and dst cannot be alliance, not check here, check and break in doaction
+      return (!srcOwner.equals(dstOwner)) && (!isalliance) && actionOwner.equals(srcOwner);
     }
   }
 
@@ -113,8 +113,10 @@ public class ServerChecker {
           }
 
           //TODO: path neighbor can be alliance
-          //territoryisAllianced(Neighbor.getTerritoryName,srcTerritory.getOwner())
-          if (Neighbor.getOwner().equals(srcTerritory.getOwner())) {
+          String srcOwner = srcTerritory.getOwner();
+          int srcID = Character.getNumericValue(srcOwner.charAt(srcOwner.length() - 1));
+          boolean isAllianced = allianceHelper.territoryisAllianced(Neighbor.getTerritoryName(),srcID);
+          if (Neighbor.getOwner().equals(srcOwner) || isAllianced) {
             stack.push(Neighbor);
             // System.out.println("[DEBUG] check " + curr.getTerritoryName()
             //    + "'s neighbor, put its neighbor " + Neighbor.getTerritoryName() + " in stack");
