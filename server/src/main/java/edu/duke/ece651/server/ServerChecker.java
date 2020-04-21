@@ -6,13 +6,14 @@ import java.util.*;
 public class ServerChecker {
   private HashMap<Integer, ArrayList<Territory>> world;
   private Action action;
-  private AllianceHelper allianceHelper;
+  private AllianceHelper ah;
 
-  public ServerChecker(HashMap<Integer, ArrayList<Territory>> myworld, AllianceHelper myallianceHelper) {
+  public ServerChecker(HashMap<Integer, ArrayList<Territory>> myworld, AllianceHelper myah) {
     world = new HashMap<>();
     world = myworld;
     action = new Action();
-    allianceHelper = myallianceHelper;
+    ah = new AllianceHelper();
+    ah = myah;
   }
 
   public boolean Check(Action myaction) {
@@ -43,8 +44,12 @@ public class ServerChecker {
     String dstOwner = action.getDst().getOwner();
     String actionOwner = action.getOwner();
     if (action.getType().equals("Move")) {
-      //TODO: dst canbe alliance
-      //playerisAllianced
+      //TODO: dst can be alliance
+      int srcID = Character.getNumericValue(srcOwner.charAt(srcOwner.length() - 1));
+      int dstID = Character.getNumericValue(dstOwner.charAt(dstOwner.length() - 1));
+      boolean isalliance = ah.playerisAllianced(srcID,dstID);
+      System.out.println("isalliance = "+ isalliance);
+      //return (srcOwner.equals(dstOwner) || isalliance) && actionOwner.equals(srcOwner);
       return srcOwner.equals(dstOwner) && actionOwner.equals(srcOwner);
     } else {
       //TODO: dst cannot be alliance, not check here, check in doaction

@@ -48,9 +48,11 @@ public class AllianceHelper {
     public boolean territoryisAllianced(String territoryname, int id) {
         return allianceMap.get(territoryname).contains(id);
     }
+
     public void addAlliance(String territoryname, int owner){
         allianceMap.get(territoryname).add(owner);
     }
+
     public boolean playerisAllianced(int id1, int id2){
         Set<Integer> newSet = new HashSet<>();
         newSet.add(id1);
