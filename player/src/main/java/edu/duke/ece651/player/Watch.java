@@ -93,7 +93,6 @@ public class Watch{
         this.TerrMap = CurrPlayer.getTerritoryMap();
         this.CurrPlayer = CurrPlayer;
         this.Window = Window;
-        this.watchHelper = new WatchHelper(CurrPlayer, Window, ActionDetail, ButtonMap, TerrMap);
     }
 
     public void initialize() throws IOException {
@@ -107,6 +106,7 @@ public class Watch{
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("Your territories are in " + PlayerName + " color.");
+        this.watchHelper = new WatchHelper(CurrPlayer, Window, ActionDetail, ButtonMap, TerrMap);
         this.watchHelper.start();
     }
 
