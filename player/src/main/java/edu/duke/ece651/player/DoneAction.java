@@ -175,7 +175,6 @@ public class DoneAction {
         else if(AllianceResult.contains("broken")){
             this.CurrPlayer.setMyAlly(-1);
         }
-
         this.CurrPlayer.ReceiveAllAction();
 
         this.CurrPlayer.AddTechResource(this.CurrPlayer.getTerritoryMap(),this.CurrPlayer.getPlayerInfo());

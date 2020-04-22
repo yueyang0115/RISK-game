@@ -156,11 +156,9 @@ public class PlayerHelper {
         //after check whether last receive is string or map
         //then continue receive food and parse the territory map
         //only receive food if the current player does not lose the game
-        if(!LoseButWatch) {
-            String FoodStr = receiveString();
-            System.out.println("Received Food: " + FoodStr);
-            FoodResource = Integer.parseInt(FoodStr);
-        }
+        String FoodStr = receiveString();
+        System.out.println("Received Food: " + FoodStr);
+        FoodResource = Integer.parseInt(FoodStr);
         MyFormatter myformatter = new MyFormatter(playerNum);
         territoryMap.clear();
         myformatter.MapParse(territoryMap, msg);
