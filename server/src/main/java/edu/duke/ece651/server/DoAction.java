@@ -123,11 +123,11 @@ public class DoAction {
           + ", original_src_level  has " + srcTerritory.getSoldierLevel(soldierLevel)
           + ", original_ dst_level has " + dstTerritory.getSoldierLevel(soldierLevel));
 
-      //TODO: if src dst are alliance, ah.addAlliance(name, Moveaction.owner), record where has two player's soldier
+      //TODO: if src dst are alliance, ah.addAlliance(dstName, Moveaction.owner), record where has two player's soldier
       if(ownerisAllianced(srcTerritory,dstTerritory,myAllianceHelper)){
-        String dstOwner = dstTerritory.getOwner();
-        int dstID = Character.getNumericValue(dstOwner.charAt(dstOwner.length() - 1));
-        myAllianceHelper.addAlliance(dstTerritory.getTerritoryName(),dstID);
+        String srcOwner = srcTerritory.getOwner();
+        int srcID = Character.getNumericValue(srcOwner.charAt(srcOwner.length() - 1));
+        myAllianceHelper.addAlliance(dstTerritory.getTerritoryName(),srcID);
       }
 
       srcTerritory.setSoldierLevel(

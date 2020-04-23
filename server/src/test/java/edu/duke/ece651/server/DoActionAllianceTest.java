@@ -25,8 +25,9 @@ public class DoActionAllianceTest {
         resource.put(2, 100);
         resource.put(3, 100);
 
+        myworld = new HashMap<>();
         WorldInitter myworInitter = new WorldInitter(4);
-        HashMap<Integer, ArrayList<Territory>> myworld = myworInitter.getWorld();
+        myworld = myworInitter.getWorld();
 
         MyFormatter formatter = new MyFormatter(2);
         String Astr =
