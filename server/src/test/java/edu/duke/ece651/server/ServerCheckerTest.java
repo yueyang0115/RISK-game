@@ -132,12 +132,12 @@ public class ServerCheckerTest {
 
     ServerChecker mychecker = new ServerChecker(myworld,ah);
     boolean ans = mychecker.Check(myaction);
-    assertEquals(ans, true);
+    assertEquals(ans, true);  //check move dst can be alliance and path can go through alliance
 
     myaction.setType("Attack"); //break alliance, check will not pass
     ServerChecker mychecker_2 = new ServerChecker(myworld,ah);
     boolean ans_2 = mychecker_2.Check(myaction);
-    assertEquals(ans_2, false);
+    assertEquals(ans_2, false); //check attack dst cannot be alliance
   }
 
 }

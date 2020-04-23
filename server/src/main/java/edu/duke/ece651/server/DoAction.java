@@ -124,6 +124,11 @@ public class DoAction {
           + ", original_ dst_level has " + dstTerritory.getSoldierLevel(soldierLevel));
 
       //TODO: if src dst are alliance, ah.addAlliance(name, Moveaction.owner), record where has two player's soldier
+      if(ownerisAllianced(srcTerritory,dstTerritory,myAllianceHelper)){
+        String dstOwner = dstTerritory.getOwner();
+        int dstID = Character.getNumericValue(dstOwner.charAt(dstOwner.length() - 1));
+        myAllianceHelper.addAlliance(dstTerritory.getTerritoryName(),dstID);
+      }
 
       srcTerritory.setSoldierLevel(
           soldierLevel, srcTerritory.getSoldierLevel(soldierLevel) - numReduce);
@@ -137,6 +142,16 @@ public class DoAction {
           + dstTerritory.getTerritoryName() + ", num of soldier in level_" + soldierLevel + " is "
           + dstTerritory.getSoldierLevel(soldierLevel));
     }
+  }
+
+  //check whether two territories' owners are allianced
+  private boolean ownerisAllianced(Territory srcTerritory, Territory dstTerritory, AllianceHelper ah){
+    String srcOwner = srcTerritory.getOwner();
+    int srcID = Character.getNumericValue(srcOwner.charAt(srcOwner.length() - 1));
+    String dstOwner = dstTerritory.getOwner();
+    int dstID = Character.getNumericValue(dstOwner.charAt(dstOwner.length() - 1));
+    boolean isAllianced = ah.playerisAllianced(srcID, dstID);
+    return isAllianced;
   }
 
   //for attack action. remove the soldiers involved in this action out of territory
