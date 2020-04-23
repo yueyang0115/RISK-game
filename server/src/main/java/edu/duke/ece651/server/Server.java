@@ -118,9 +118,11 @@ public class Server {
         PlayerHandler cur = list.get(k);
         if (gameEnd) {
           cur.sendPlayer(cur.checkAction(), false);
-          //Send alliance checkResult
-          String allianceRes = allianceh.getAllianceResult(k);
-          cur.sendPlayer(allianceRes, false);
+          if (!status.get(k).equals("OUTBUTWATCH")) {
+            //Send alliance checkResult
+            String allianceRes = allianceh.getAllianceResult(k);
+            cur.sendPlayer(allianceRes, false);
+          }
           //Send actions to player
           cur.sendPlayer(actionstr, false);
           cur.sendPlayer(winMsg.toString(), false);

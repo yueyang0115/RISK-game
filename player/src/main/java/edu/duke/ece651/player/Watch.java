@@ -2,10 +2,12 @@ package edu.duke.ece651.player;
 
 import edu.duke.ece651.shared.*;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeView;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -28,6 +30,7 @@ public class Watch{
     @FXML private Button ButtonK;
     @FXML private Button ButtonL;
     @FXML private Label Prompt;
+    @FXML private Label result;
     @FXML private TreeView<String> ActionDetail;
     private HashMap<Integer, ArrayList<Territory>> TerrMap;
     private PlayerHelper CurrPlayer;
@@ -57,32 +60,40 @@ public class Watch{
         private TreeView<String> ActionDetail;
         private HashMap<String, Button> ButtonMap;
         private HashMap<Integer, ArrayList<Territory>> TerrMap;
-        public WatchHelper(PlayerHelper C, Stage W, TreeView<String> A, HashMap<String, Button> B, HashMap<Integer, ArrayList<Territory>> T) {
+        private Label result;
+        public WatchHelper(PlayerHelper C, Stage W, TreeView<String> A, HashMap<String, Button> B, HashMap<Integer, ArrayList<Territory>> T, Label res) {
             this.CurrPlayer = C;
             this.Window = W;
             this.ActionDetail = A;
             this.ButtonMap = B;
             this.TerrMap = T;
+            this.result = res;
         }
         public void run() {
             while (true) {
                 this.CurrPlayer.ReceiveAllAction();
                 String Answer = this.CurrPlayer.receiveString();
                 System.out.println("Answer" + Answer);
-                try {
-                    if(Answer.contains("Game End")) {
-                        ShowView.ShowEndVIew(Answer,this.CurrPlayer, this.Window);
-                    }
-                    else {
-                        this.CurrPlayer.ContinueReceive(Answer);
-                        new Graph().showAction(this.CurrPlayer.getAllAction(), this.CurrPlayer.getPlayerInfo(), this.ActionDetail);
-                        new Graph().showMap(this.CurrPlayer.getTerritoryMap(), this.CurrPlayer.getPlayerInfo(), this.ButtonMap);
-                        //init tooltip with territory information
-                        SharedMethod.InitTerritoryDetail(this.ButtonMap, this.TerrMap);
-                    }
+                if(Answer.contains("Game End")) {
+                    System.out.println("==============receive game end====================");
+                    Platform.runLater(new Runnable() {
+                        @Override public void run() {
+                            result.setText(Answer);
+                            result.setTextFill(Color.RED);
+                        }
+                    });
                 }
-                catch (IOException e) {
-                    e.printStackTrace();
+                else {
+                    this.CurrPlayer.ContinueReceive(Answer);
+                    Platform.runLater(new Runnable() {
+                        @Override public void run() {
+                            new Graph().showAction(CurrPlayer.getAllAction(), CurrPlayer.getPlayerInfo(), ActionDetail);
+                            new Graph().showMap(CurrPlayer.getTerritoryMap(), CurrPlayer.getPlayerInfo(), ButtonMap);
+                            //init tooltip with territory information
+                            SharedMethod.InitTerritoryDetail(ButtonMap, TerrMap);
+                        }
+                    });
+
                 }
             }
         }
@@ -106,7 +117,7 @@ public class Watch{
         ColorID PlayerColor = new ColorID();
         String PlayerName = PlayerColor.getPlayerColor(this.CurrPlayer.getPlayerInfo().getKey());
         this.Prompt.setText("Your territories are in " + PlayerName + " color.");
-        this.watchHelper = new WatchHelper(CurrPlayer, Window, ActionDetail, ButtonMap, TerrMap);
+        this.watchHelper = new WatchHelper(CurrPlayer, Window, ActionDetail, ButtonMap, TerrMap, result);
         this.watchHelper.start();
     }
 

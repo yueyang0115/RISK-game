@@ -98,7 +98,7 @@
          </font>
       </Label>
       <TreeView fx:id="ActionDetail" layoutX="517.0" layoutY="144.0" prefHeight="489.0" prefWidth="375.0" />
-      <Label fx:id="Prompt1" layoutX="40.0" layoutY="586.0" prefHeight="36.0" prefWidth="624.0" text="You chose to watch the game, happy watching!" textFill="#000007">
+      <Label fx:id="result" layoutX="40.0" layoutY="586.0" prefHeight="36.0" prefWidth="624.0" text="You chose to watch the game, happy watching!" textFill="#000007">
          <font>
             <Font name="Arial Bold Italic" size="20.0" />
          </font>
