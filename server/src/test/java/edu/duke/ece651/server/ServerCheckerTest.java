@@ -114,4 +114,30 @@ public class ServerCheckerTest {
     boolean ans3 = mychecker.Check(myaction);
     assertEquals(ans3, true);
   }
+
+  @Test
+  public void test_alliance(){
+    WorldInitter myworInitter = new WorldInitter(4);
+    HashMap<Integer, ArrayList<Territory>> myworld = myworInitter.getWorld();
+    Action myaction = new Action();
+    Territory srcTerritory = myworld.get(0).get(0); // player_0.A
+    Territory dstTerritory = myworld.get(1).get(1); // player_1.E
+    myaction.setSrc(srcTerritory);
+    myaction.setDst(dstTerritory);
+    myaction.setOwner("player_0");
+    myaction.setSoldierLevel(0, 2);
+    myaction.setType("Move"); //pass through alliance
+
+    ah.formNewAlliance(0,1);
+
+    ServerChecker mychecker = new ServerChecker(myworld,ah);
+    boolean ans = mychecker.Check(myaction);
+    assertEquals(ans, true);
+
+    myaction.setType("Attack"); //break alliance, check will not pass
+    ServerChecker mychecker_2 = new ServerChecker(myworld,ah);
+    boolean ans_2 = mychecker_2.Check(myaction);
+    assertEquals(ans_2, false);
+  }
+
 }

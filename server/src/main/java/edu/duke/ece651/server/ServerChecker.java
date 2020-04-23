@@ -112,10 +112,13 @@ public class ServerChecker {
             return true;
           }
 
-          //TODO: path neighbor can be alliance
+          //path neighbor can be alliance
           String srcOwner = srcTerritory.getOwner();
           int srcID = Character.getNumericValue(srcOwner.charAt(srcOwner.length() - 1));
-          boolean isAllianced = allianceHelper.territoryisAllianced(Neighbor.getTerritoryName(),srcID);
+          String neighborOwner = Neighbor.getOwner();
+          int neighborID = Character.getNumericValue(neighborOwner.charAt(neighborOwner.length() - 1));
+          boolean isAllianced = allianceHelper.playerisAllianced(srcID, neighborID);
+          //System.out.println("[DEBUG] Neighbor owner player_"+ neighborID+" and action owner player_"+srcID+" is allianed: "+isAllianced);
           if (Neighbor.getOwner().equals(srcOwner) || isAllianced) {
             stack.push(Neighbor);
             // System.out.println("[DEBUG] check " + curr.getTerritoryName()
@@ -124,7 +127,7 @@ public class ServerChecker {
           visitedSet.add(Neighbor);
         }
       }
-      printStack(stack);
+      //printStack(stack);
     }
     // System.out.println("[DEBUG] not find dstTerritory");
     return false;
