@@ -16,6 +16,10 @@ public class AllianceHelper {
         this.curRoundAlliance = new ArrayList<>();
         this.allAlliances = new HashSet<>();
         this.allianceMap = new HashMap<>();
+        for (char c = 'A'; c <= 'L'; c++) {
+            Set<Integer> tmp = new HashSet<>();
+            this.allianceMap.put(String.valueOf(c), tmp);
+        }
         this.successID = new HashSet<>();
         this.noNewID = new HashSet<>();
         this.breakID = new HashSet<>();
