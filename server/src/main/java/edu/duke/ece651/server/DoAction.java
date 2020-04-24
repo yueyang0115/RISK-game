@@ -301,13 +301,12 @@ public class DoAction {
         int soldierLevel = entry.getKey();
         int numTo = toSoldiers.get(soldierLevel);
         int numFrom = fromSoldiers.get(soldierLevel);
-
         System.out.println("[DEBUG] add " +  numFrom
                 + " level_" + soldierLevel + " soldier to original " + numTo +" soldier");
         toSoldiers.replace(
                 soldierLevel, numTo + numFrom);
-        System.out.println("[DEBUG] after add, toAction get  "
-                + (numTo+numFrom) + " soldier in level_" + soldierLevel);
+//        System.out.println("[DEBUG] after add, toAction get  "
+//                + (numTo+numFrom) + " soldier in level_" + soldierLevel);
       }
   }
 

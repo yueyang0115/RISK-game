@@ -85,14 +85,14 @@ public class DoActionAllianceTest {
         //test: combine action from same player with same same dst
         Action myaction = new Action();
         myaction.setSrc(territoryA); // player_0.A
-        myaction.setDst(territoryD); // player_1.E
+        myaction.setDst(territoryD); // player_1.D
         myaction.setOwner("player_0");
         myaction.setSoldierLevel(0, 2);
         myaction.setType("Attack"); //pass through alliance
 
         Action myaction_2 = new Action();
-        myaction_2.setSrc(territoryB); // player_0.A
-        myaction_2.setDst(territoryD); // player_1.E
+        myaction_2.setSrc(territoryB); // player_0.B
+        myaction_2.setDst(territoryD); // player_1.D
         myaction_2.setOwner("player_0");
         myaction_2.setSoldierLevel(0, 1);
         myaction_2.setType("Attack"); //pass through alliance
@@ -104,7 +104,7 @@ public class DoActionAllianceTest {
         myactionMap.put(0, actionList);
 
         DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
-        actor.doMoveAction(actionList);
+        actor.doAttackAction(actionList);
         myworld = actor.getNewWorld();
         assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 1); //A
         assertEquals(myworld.get(0).get(1).getSoldierLevel(0), 2); //B
