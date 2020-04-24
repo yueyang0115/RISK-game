@@ -15,6 +15,7 @@ public class DoActionAllianceTest {
     private Territory territoryD;
     private Territory territoryE;
     private Territory territoryF;
+    private Territory territoryJ;
     private AllianceHelper ah;
 
     public DoActionAllianceTest(){
@@ -48,12 +49,17 @@ public class DoActionAllianceTest {
         JSONObject tempD = new JSONObject(Dstr);
         territoryD = formatter.JsonToTerritory(tempD);
 
-
         String Estr =
                 "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'D'},{'neighbor_1':'F'}, {'neighbor_2':'G'}], 'territoryName':'E'}";
         territoryE = new Territory();
         JSONObject tempE = new JSONObject(Estr);
         territoryE = formatter.JsonToTerritory(tempE);
+
+        String Jstr =
+                "{'owner':'player_3', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'C'},{'neighbor_1':'L'},{'neighbor_2':'K'},{'neighbor_3':'I'},{'neighbor_4':'F'}], 'territoryName':'J'}";
+        territoryJ = new Territory();
+        JSONObject tempJ = new JSONObject(Jstr);
+        territoryJ = formatter.JsonToTerritory(tempJ);
     }
 
     @Test
@@ -108,5 +114,52 @@ public class DoActionAllianceTest {
         myworld = actor.getNewWorld();
         assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 1); //A
         assertEquals(myworld.get(0).get(1).getSoldierLevel(0), 2); //B
+    }
+
+    @Test
+    public void test_allianceAttack(){
+        //test: alliance attack same territory, should be combined
+        territoryJ.setSoldierLevel(0,0);
+        myworld.get(3).get(0).setSoldierLevel(0,0); //J
+
+        Action myaction = new Action();
+        myaction.setSrc(territoryA); // player_0.A
+        myaction.setDst(territoryJ); // player_3.J
+        myaction.setOwner("player_0");
+        myaction.setSoldierLevel(0, 1);
+        myaction.setType("Attack"); //pass through alliance
+
+        Action myaction_2 = new Action();
+        myaction_2.setSrc(territoryD); // player_1.D
+        myaction_2.setDst(territoryJ); // player_3.J
+        myaction_2.setOwner("player_1");
+        myaction_2.setSoldierLevel(0, 2);
+        myaction_2.setType("Attack"); //pass through alliance
+
+        ArrayList<Action> actionList = new ArrayList<>();
+        actionList.add(myaction);
+        ArrayList<Action> actionList_2 = new ArrayList<>();
+        actionList_2.add(myaction_2);
+        HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
+        myactionMap.put(0, actionList);
+        myactionMap.put(1, actionList_2);
+        ArrayList<Action> allActionList = new ArrayList<>();
+        allActionList.add(myaction);
+        allActionList.add(myaction_2);
+
+        ah.formNewAlliance(0,1);
+        assertEquals(territoryJ.getTerritoryName(), "J"); //J
+        assertEquals(territoryJ.getSoldierLevel(0), 0); //J
+        assertEquals(myaction.getDst().getTerritoryName(), "J"); //J
+        assertEquals(myaction.getDst().getSoldierLevel(0), 0); //J
+        assertEquals(myworld.get(3).get(0).getTerritoryName(), "J"); //J
+        assertEquals(myworld.get(3).get(0).getSoldierLevel(0), 0); //J
+        DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
+        actor.doAttackAction(allActionList);
+        myworld = actor.getNewWorld();
+        assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 2); //A
+        assertEquals(myworld.get(1).get(0).getSoldierLevel(0), 1); //B
+        assertEquals(myworld.get(1).get(3).getOwner(),"player_1"); //J's owner is player_1
+        assertEquals(ah.territoryisAllianced("J",0),true); //J has player_0 's soldier
     }
 }
