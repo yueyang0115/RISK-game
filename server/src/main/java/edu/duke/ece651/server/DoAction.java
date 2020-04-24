@@ -261,7 +261,9 @@ public class DoAction {
       }
       for(int j = i + 1; j< attackList.size(); j++){
         Action nextAction = attackList.get(j);
-        if(nextAction.getOwner().equals(action.getOwner()) && (nextAction.getSrc()==action.getSrc())){
+        boolean sameOwner = nextAction.getOwner().equals(action.getOwner();
+        boolean sameDst = nextAction.getDst().getTerritoryName().equals(action.getDst().getTerritoryName());
+        if( sameOwner && sameDst){
           HashMap<Integer, Integer> toSoldiers = action.getSoldiers();
           HashMap<Integer, Integer> fromSoldiers = nextAction.getSoldiers();
           combineSoldier(toSoldiers,fromSoldiers);
