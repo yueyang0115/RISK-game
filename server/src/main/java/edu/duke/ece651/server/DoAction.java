@@ -155,7 +155,7 @@ public class DoAction {
   }
 
   //for attack action. remove the soldiers involved in this action out of territory
-  private void removeHelper(Action action) {
+  private void removeSoldier(Action action) {
     HashMap<Integer, Integer> movedSoldierMap = action.getSoldiers();
     for (HashMap.Entry<Integer, Integer> entry : movedSoldierMap.entrySet()) {
       int soldierLevel = entry.getKey();
@@ -230,7 +230,7 @@ public class DoAction {
       }
       // if valid, remove soldiers from attackTerritory
       rschecker.reduceCost(myResource, action);
-      removeHelper(action);
+      removeSoldier(action);
     }
 
     // reset map back to after upgrade performed status, do move actions first
@@ -238,26 +238,50 @@ public class DoAction {
     copyMap(myResource, rawResource); // reset resource
     doMoveAction(mymoveList);
 
-    // move soldiers out of srcTerritory
+    // perform attack actions for all
+    // TODO: first move soldiers out of srcTerritory and reduceCost
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
       if (invalidPlayer.contains(action.getOwner())) {
-        System.out.println("[DEBUG] attack action invalid");
+        //System.out.println("[DEBUG] attack action invalid");
         continue;
       }
-      removeHelper(action);
+      removeSoldier(action);
+
+      ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
+      rschecker.reduceCost(myResource, action);
     }
 
-    //TODO: first reduceCost and combine same dst from same player
-    //perform attack actions
+    //TODO: then combine action from same player and has same dst
     for (int i = 0; i < attackList.size(); i++) {
       Action action = attackList.get(i);
       if (invalidPlayer.contains(action.getOwner())) {
-        System.out.println("[DEBUG] attack action invalid");
+        //System.out.println("[DEBUG] attack action invalid");
         continue;
       }
-      ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
-      rschecker.reduceCost(myResource, action);
+      for(int j = i + 1; j< attackList.size(); j++){
+        Action nextAction = attackList.get(j);
+        if(nextAction.getOwner().equals(action.getOwner()) && (nextAction.getSrc()==action.getSrc())){
+          HashMap<Integer, Integer> toSoldiers = action.getSoldiers();
+          HashMap<Integer, Integer> fromSoldiers = nextAction.getSoldiers();
+          combineSoldier(toSoldiers,fromSoldiers);
+          action.setSoldiers(toSoldiers);
+          attackList.remove(j);
+        }
+      }
+    }
+
+    //go through dstMap, combine actions with same dst
+
+    //perform real attack action
+    for (int i = 0; i < attackList.size(); i++) {
+      Action action = attackList.get(i);
+      if (invalidPlayer.contains(action.getOwner())) {
+        //System.out.println("[DEBUG] attack action invalid");
+        continue;
+      }
+//      ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
+//      rschecker.reduceCost(myResource, action);
 
       //TODO: find if has alliance, combine, bool attackHelper()
       attackHelper(action);
@@ -267,6 +291,22 @@ public class DoAction {
           + action.getSoldierLevel(0));
     }
     invalidPlayer.clear();
+  }
+
+  private void combineSoldier(HashMap<Integer, Integer> toSoldiers, HashMap<Integer, Integer> fromSoldiers){
+      System.out.println("[DEBUG] combine the soldiers in two actions");
+      for (HashMap.Entry<Integer, Integer> entry : toSoldiers.entrySet()) {
+        int soldierLevel = entry.getKey();
+        int numTo = toSoldiers.get(soldierLevel);
+        int numFrom = fromSoldiers.get(soldierLevel);
+
+        System.out.println("[DEBUG] add " +  numFrom
+                + " level_" + soldierLevel + " soldier to original " + numTo +" soldier");
+        toSoldiers.replace(
+                soldierLevel, numTo + numFrom);
+        System.out.println("[DEBUG] after add, toAction get  "
+                + (numTo+numFrom) + " soldier in level_" + soldierLevel);
+      }
   }
 
   // do atatckAction once

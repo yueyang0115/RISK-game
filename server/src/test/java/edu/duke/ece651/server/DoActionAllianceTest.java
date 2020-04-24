@@ -44,7 +44,7 @@ public class DoActionAllianceTest {
     }
 
     @Test
-    public void test_moveaddAlliance(){
+    public void test_moveAddAlliance(){
         Action myaction = new Action();
         myaction.setSrc(territoryA); // player_0.A
         myaction.setDst(territoryE); // player_1.E
@@ -64,5 +64,6 @@ public class DoActionAllianceTest {
         assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 1); //A
         assertEquals(myworld.get(1).get(1).getSoldierLevel(0), 5); //e
         assertEquals(ah.territoryisAllianced("E",0),true);
+        //test if src dst are alliance, should do ah.addAlliance(dstName, Moveaction.owner)
     }
 }
