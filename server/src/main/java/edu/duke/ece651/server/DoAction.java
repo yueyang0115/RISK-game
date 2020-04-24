@@ -41,7 +41,23 @@ public class DoAction {
     rawResource = new HashMap<>();
   }
   //TODO: check alliance, if break, split
-
+  public void checkAllianceBreak(ArrayList<Action> attackList){
+    for(int i=0; i< attackList.size(); i++){
+      Action action = attackList.get(i);
+      Territory srcTerritory = action.getSrc();
+      Territory dstTerritory = action.getDst();
+      boolean isAllianced = ownerisAllianced(srcTerritory,dstTerritory,myAllianceHelper);
+      if(isAllianced){
+        System.out.println("[DEBUG] find attack alliance");
+        int ID_1 = Character.getNumericValue(srcTerritory.getOwner().charAt(srcTerritory.getOwner().length() - 1));
+        int ID_2 = Character.getNumericValue(dstTerritory.getOwner().charAt(dstTerritory.getOwner().length() - 1));
+        myAllianceHelper.breakAlliance(ID_1,ID_2);
+        System.out.println("[DEBUG] break alliance with player_" + ID_1 + " and player_"+ ID_2);
+        attackList.remove(i);
+        //split soldier
+      }
+    }
+  }
 
   // do upgrade action
   public void doUpgradeAction(ArrayList<Upgrade> upgradeList) {

@@ -162,4 +162,31 @@ public class DoActionAllianceTest {
         assertEquals(myworld.get(1).get(3).getOwner(),"player_1"); //J's owner is player_1
         assertEquals(ah.territoryisAllianced("J",0),true); //J has player_0 's soldier
     }
+
+    @Test
+    public void test_breakAlliance(){
+        //test: attack alliance, alliance break, soldier get back
+
+        Action myaction = new Action();
+        myaction.setSrc(territoryA); // player_0.A
+        myaction.setDst(territoryD); // player_1.D
+        myaction.setOwner("player_0");
+        myaction.setSoldierLevel(0, 1);
+        myaction.setType("Attack"); //pass through alliance
+
+        ArrayList<Action> actionList = new ArrayList<>();
+        actionList.add(myaction);
+        HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
+        myactionMap.put(0, actionList);
+
+        ah.formNewAlliance(0,1);
+        DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
+        actor.checkAllianceBreak(actionList);
+        actor.doAttackAction(actionList);
+        myworld = actor.getNewWorld();
+        assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 3); //A
+        assertEquals(myworld.get(1).get(0).getSoldierLevel(0), 3); //D
+        assertEquals(ah.territoryisAllianced("D",0),false); //D doesn't have player_0 's soldier
+        assertEquals(ah.playerisAllianced(0,1),false); //player_0 and player_1 don't allianced any more
+    }
 }
