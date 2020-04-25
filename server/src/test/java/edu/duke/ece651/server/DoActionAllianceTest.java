@@ -55,6 +55,13 @@ public class DoActionAllianceTest {
         JSONObject tempE = new JSONObject(Estr);
         territoryE = formatter.JsonToTerritory(tempE);
 
+        String Fstr =
+                "{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'D'},{'neighbor_1':'C'},{'neighbor_2':'J'},{'neighbor_3':'I'},{'neighbor_4':'G'},{'neighbor_5':'E'}], 'territoryName':'F'}";
+        territoryF = new Territory();
+        JSONObject tempF = new JSONObject(Fstr);
+        territoryF = formatter.JsonToTerritory(tempF);
+
+
         String Jstr =
                 "{'owner':'player_3', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'C'},{'neighbor_1':'L'},{'neighbor_2':'K'},{'neighbor_3':'I'},{'neighbor_4':'F'}], 'territoryName':'J'}";
         territoryJ = new Territory();
@@ -165,14 +172,14 @@ public class DoActionAllianceTest {
 
     @Test
     public void test_breakAlliance(){
-        //test: attack alliance, alliance break, soldier get back
-
+        //test: player_0 attack alliance player_1, alliance break, soldier get back
+        // assume territoryF hold player_0 alliance soldiers, F should return soldiers
         Action myaction = new Action();
         myaction.setSrc(territoryA); // player_0.A
         myaction.setDst(territoryD); // player_1.D
         myaction.setOwner("player_0");
         myaction.setSoldierLevel(0, 1);
-        myaction.setType("Attack"); //pass through alliance
+        myaction.setType("Attack"); //break alliance
 
         ArrayList<Action> actionList = new ArrayList<>();
         actionList.add(myaction);
@@ -180,6 +187,7 @@ public class DoActionAllianceTest {
         myactionMap.put(0, actionList);
 
         ah.formNewAlliance(0,1);
+        ah.addAlliance("F",0);
         DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
         actor.checkAllianceBreak(actionList);
         actor.doAttackAction(actionList);
@@ -188,5 +196,7 @@ public class DoActionAllianceTest {
         assertEquals(myworld.get(1).get(0).getSoldierLevel(0), 3); //D
         assertEquals(ah.territoryisAllianced("D",0),false); //D doesn't have player_0 's soldier
         assertEquals(ah.playerisAllianced(0,1),false); //player_0 and player_1 don't allianced any more
+        assertEquals(ah.territoryisAllianced("F",0),false); //F break alliance
+        assertEquals(myworld.get(1).get(2).getSoldierLevel(0), 2); //F return 1/2 soldiers as numReturned
     }
 }

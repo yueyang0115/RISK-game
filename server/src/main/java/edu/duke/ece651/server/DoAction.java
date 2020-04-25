@@ -40,23 +40,73 @@ public class DoAction {
     myResource = new HashMap<>();
     rawResource = new HashMap<>();
   }
-  //TODO: check alliance, if break, split
+
+  //go through attacklist, check if attack alliance, break alliance, return soldiers
   public void checkAllianceBreak(ArrayList<Action> attackList){
     for(int i=0; i< attackList.size(); i++){
       Action action = attackList.get(i);
       Territory srcTerritory = action.getSrc();
       Territory dstTerritory = action.getDst();
       boolean isAllianced = ownerisAllianced(srcTerritory,dstTerritory,myAllianceHelper);
+      //if break alliance, return soldiers
       if(isAllianced){
         System.out.println("[DEBUG] find attack alliance");
         int ID_1 = Character.getNumericValue(srcTerritory.getOwner().charAt(srcTerritory.getOwner().length() - 1));
         int ID_2 = Character.getNumericValue(dstTerritory.getOwner().charAt(dstTerritory.getOwner().length() - 1));
-        myAllianceHelper.breakAlliance(ID_1,ID_2);
         System.out.println("[DEBUG] break alliance with player_" + ID_1 + " and player_"+ ID_2);
+        breakAlliance(srcTerritory, ID_1, ID_2);
         attackList.remove(i);
-        //split soldier
+        myAllianceHelper.breakAlliance(ID_1,ID_2);
       }
     }
+  }
+
+  //go through territories in worldmap, find those have alliance soldiers, return soldiers
+  private void breakAlliance(Territory fromTerritory, int ID_1, int ID_2){
+    String startTerritoryName = fromTerritory.getTerritoryName(); //record where the alliance breaking happened
+    for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
+      ArrayList<Territory> territories = entry.getValue();
+      int owner = entry.getKey();
+      for(Territory t:territories){
+        String t_name = t.getTerritoryName();
+        if(owner == ID_1 && myAllianceHelper.territoryisAllianced(t_name, ID_2)){
+          System.out.println("[DEBUG] player_" + ID_2 + "'s soldiers in territory" + t_name + " should be returned");
+          returnSoldiers(startTerritoryName, t_name, ID_2);
+        }
+        else if(owner == ID_2 && myAllianceHelper.territoryisAllianced(t_name, ID_1)){
+          System.out.println("[DEBUG] player_" + ID_1 + "'s soldiers in territory" + t_name + " should be returned");
+          returnSoldiers(startTerritoryName, t_name, ID_1);
+        }
+        else{
+          continue;
+        }
+      }
+    }
+    tempWorldStr = myformatter.MapCompose(myworld).toString();
+  }
+
+  //TODO: return alliance soldiers
+  private void returnSoldiers(String startTerritoryName, String t_name, int allianceID){
+    Territory t = findTerritory(myworld, t_name);
+    HashMap<Integer, Integer> returnedSoldiers = splitSoldiers(t);
+    //send returnedSoldiers back to nearest soldier
+  }
+
+  // split soldiers, reduce in srcTerritory
+  private HashMap<Integer, Integer> splitSoldiers(Territory t){
+    HashMap<Integer, Integer> returnedSoldiers = new HashMap<>();
+    HashMap<Integer, Integer> srcSoldiers = t.getSoldiers();
+    for (HashMap.Entry<Integer, Integer> entry : srcSoldiers.entrySet()) {
+      int level = entry.getKey();
+      int num = entry.getValue();
+      if(num!=0) {
+        System.out.println("[DEBUG] split " + num + " soldiers in level_" + level);
+        int numReturned = num / 2;
+        srcSoldiers.replace(level, num - numReturned);
+        returnedSoldiers.put(level, numReturned);
+      }
+    }
+    return returnedSoldiers;
   }
 
   // do upgrade action
