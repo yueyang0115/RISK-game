@@ -187,16 +187,17 @@ public class DoActionAllianceTest {
         myactionMap.put(0, actionList);
 
         ah.formNewAlliance(0,1);
-        ah.addAlliance("F",0);
+        ah.addAlliance("E",0);
         DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
         actor.checkAllianceBreak(actionList);
         actor.doAttackAction(actionList);
         myworld = actor.getNewWorld();
-        assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 3); //A
+        assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 4); //A
         assertEquals(myworld.get(1).get(0).getSoldierLevel(0), 3); //D
         assertEquals(ah.territoryisAllianced("D",0),false); //D doesn't have player_0 's soldier
         assertEquals(ah.playerisAllianced(0,1),false); //player_0 and player_1 don't allianced any more
-        assertEquals(ah.territoryisAllianced("F",0),false); //F break alliance
-        assertEquals(myworld.get(1).get(2).getSoldierLevel(0), 2); //F return 1/2 soldiers as numReturned
+        assertEquals(ah.territoryisAllianced("E",0),false); //F break alliance
+        assertEquals(myworld.get(1).get(1).getSoldierLevel(0), 2); //F return 1/2 soldiers as numReturned
+
     }
 }

@@ -63,19 +63,18 @@ public class DoAction {
 
   //go through territories in worldmap, find those have alliance soldiers, return soldiers
   private void breakAlliance(Territory fromTerritory, int ID_1, int ID_2){
-    String startTerritoryName = fromTerritory.getTerritoryName(); //record where the alliance breaking happened
     for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
       ArrayList<Territory> territories = entry.getValue();
       int owner = entry.getKey();
-      for(Territory t:territories){
-        String t_name = t.getTerritoryName();
-        if(owner == ID_1 && myAllianceHelper.territoryisAllianced(t_name, ID_2)){
-          System.out.println("[DEBUG] player_" + ID_2 + "'s soldiers in territory" + t_name + " should be returned");
-          returnSoldiers(startTerritoryName, t_name, ID_2);
+      for(Territory srcTerritory : territories){
+        String srcTerritoryName = srcTerritory.getTerritoryName();
+        if(owner == ID_1 && myAllianceHelper.territoryisAllianced(srcTerritoryName, ID_2)){
+          System.out.println("[DEBUG] player_" + ID_2 + "'s soldiers in territory " + srcTerritoryName + " should be returned");
+          returnSoldiers(srcTerritory, ID_2);
         }
-        else if(owner == ID_2 && myAllianceHelper.territoryisAllianced(t_name, ID_1)){
-          System.out.println("[DEBUG] player_" + ID_1 + "'s soldiers in territory" + t_name + " should be returned");
-          returnSoldiers(startTerritoryName, t_name, ID_1);
+        else if(owner == ID_2 && myAllianceHelper.territoryisAllianced(srcTerritoryName, ID_1)){
+          System.out.println("[DEBUG] player_" + ID_1 + "'s soldiers in territory " + srcTerritoryName + " should be returned");
+          returnSoldiers(srcTerritory, ID_1);
         }
         else{
           continue;
@@ -85,28 +84,82 @@ public class DoAction {
     tempWorldStr = myformatter.MapCompose(myworld).toString();
   }
 
-  //TODO: return alliance soldiers
-  private void returnSoldiers(String startTerritoryName, String t_name, int allianceID){
-    Territory t = findTerritory(myworld, t_name);
-    HashMap<Integer, Integer> returnedSoldiers = splitSoldiers(t);
-    //send returnedSoldiers back to nearest soldier
+  //return allianceID's soldiers in srcTerritory
+  private void returnSoldiers(Territory srcTerritory, int allianceID){
+    HashMap<Integer, Integer> returnedSoldiers = splitSoldiers(srcTerritory);
+    Territory dstTerritory = findNearest(srcTerritory, allianceID); //find the dstTerritory to return soldiers
+    if(dstTerritory != null){ //return allianceID soldiers from srcTerritory to dstTerritory
+      HashMap<Integer, Integer> combinedSoldiers = dstTerritory.getSoldiers();
+      combineSoldier(combinedSoldiers, returnedSoldiers);
+      dstTerritory.setSoldiers(combinedSoldiers);
+    }
+    else{ //no path found, soldiers unchanged
+      HashMap<Integer, Integer> combinedSoldiers = srcTerritory.getSoldiers();
+      combineSoldier(combinedSoldiers, returnedSoldiers);
+      srcTerritory.setSoldiers(combinedSoldiers);
+    }
   }
 
-  // split soldiers, reduce in srcTerritory
-  private HashMap<Integer, Integer> splitSoldiers(Territory t){
+  // get splitted soldiers, soldier reduced in srcTerritory
+  private HashMap<Integer, Integer> splitSoldiers(Territory srcTerritory){
     HashMap<Integer, Integer> returnedSoldiers = new HashMap<>();
-    HashMap<Integer, Integer> srcSoldiers = t.getSoldiers();
+    HashMap<Integer, Integer> srcSoldiers = srcTerritory.getSoldiers();
     for (HashMap.Entry<Integer, Integer> entry : srcSoldiers.entrySet()) {
       int level = entry.getKey();
       int num = entry.getValue();
-      if(num!=0) {
-        System.out.println("[DEBUG] split " + num + " soldiers in level_" + level);
-        int numReturned = num / 2;
-        srcSoldiers.replace(level, num - numReturned);
-        returnedSoldiers.put(level, numReturned);
-      }
+      System.out.println("[DEBUG] split " + num + " soldiers in level_" + level);
+      int numReturned = num / 2;
+      srcSoldiers.replace(level, num - numReturned);
+      returnedSoldiers.put(level, numReturned);
     }
     return returnedSoldiers;
+  }
+
+  //find the dstTerritory to return allianceID's soldiers in srcTerritory
+  private Territory findNearest(Territory srcTerritory, int allianceID) {
+    String allianceName = "player_" + allianceID;
+    HashSet<Territory> visitedSet = new HashSet<>();
+    Queue<Territory> queue = new LinkedList<Territory>();
+    queue.add(srcTerritory);
+    System.out.println("[DEBUG] init queue, add Territory " + srcTerritory.getTerritoryName());
+    visitedSet.add(srcTerritory);
+
+    while (!queue.isEmpty()) {
+      Territory curr = queue.poll();
+      if (curr.getOwner().equals(allianceName)) {
+        System.out.println("[DEBUG] find returned dstTerritory " + curr.getTerritoryName());
+        return curr;
+      }
+      ArrayList<String> neighborList = curr.getNeighbor();
+      for (int i = 0; i < neighborList.size(); i++) {
+        String tempName = neighborList.get(i);
+        Territory Neighbor = findTerritory(myworld, tempName);
+        if (!visitedSet.contains(Neighbor)) {
+          if (Neighbor.getOwner().equals(allianceName)) {
+            System.out.println("[DEBUG] check " + curr.getTerritoryName() + "'s neighbor, find returned dstTerritory " + Neighbor.getTerritoryName());
+            return Neighbor;
+          }
+          boolean isAllianced = ownerisAllianced(srcTerritory, Neighbor, myAllianceHelper);
+          if (Neighbor.getOwner().equals(srcTerritory.getOwner()) || isAllianced) {
+            queue.add(Neighbor);
+             System.out.println("[DEBUG] check " + curr.getTerritoryName()
+                + "'s neighbor, put its neighbor " + Neighbor.getTerritoryName() + " in queue");
+          }
+          visitedSet.add(Neighbor);
+        }
+      }
+      printQueue(queue);
+    }
+    System.out.println("[DEBUG] not find dstTerritory");
+    return null;
+  }
+
+  private void printQueue(Queue<Territory> queue) {
+    System.out.print("[DEBUG] Queue contains: ");
+    for (Territory item : queue) {
+      System.out.print(item.getTerritoryName() + ",");
+    }
+    System.out.print("\n");
   }
 
   // do upgrade action
