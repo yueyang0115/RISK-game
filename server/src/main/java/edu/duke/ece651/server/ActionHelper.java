@@ -60,20 +60,9 @@ public class ActionHelper {
       }
     }
 
-    /*
-    for (HashMap.Entry<Integer, ArrayList<Action>> entry : playersActions.entrySet()) {
-      System.out.println("[DEBUG] send playersActions to doAction is: " );
-      int playerID = entry.getKey();
-      ArrayList<Action> actionList = entry.getValue();
-      for(int k = 0 ; k < actionList.size(); k++){
-        System.out.println("[DEBUG] without using formatter, action's src is " + actionList.get(k).getSrc().getTerritoryName());
-        System.out.println("[DEBUG] without using formatter, action's dst is " + actionList.get(k).getDst().getTerritoryName());
-        System.out.println("[DEBUG] without using formatter, action's soldoerLevel0 has " + actionList.get(k).getSoldierLevel(0));
-      }
-    }*/
-
     DoAction d = new DoAction(worldMap, playersActions, food, allianceHelper);
     // First do the upgrade actions, then move and attack actions, then add 1 to all territory.
+    d.checkAllianceBreak(attackList);
     d.doUpgradeAction(upgradeList);
     d.doMoveAction(moveList);
     d.doAttackAction(attackList);
