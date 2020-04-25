@@ -17,8 +17,10 @@ public class DoActionTest {
   private Territory territoryD;
   private Territory territoryE;
   private Territory territoryF;
+  private AllianceHelper ah;
 
   public DoActionTest() {
+    ah = new AllianceHelper();
     resource = new HashMap<>();
     resource.put(0, 100);
     resource.put(1, 100);
@@ -93,7 +95,7 @@ public class DoActionTest {
     resource.put(2, 100);
     resource.put(3, 100);
     HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
-    DoAction actor = new DoAction(myworld, myactionMap, resource);
+    DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
     actor.doUpgradeAction(upgradeList);
 
     myworld = actor.getNewWorld();
@@ -144,7 +146,7 @@ public class DoActionTest {
     resource.put(1, 100);
     resource.put(2, 100);
     resource.put(3, 100);
-    DoAction actor = new DoAction(myworld, myactionMap, resource);
+    DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
     actor.doMoveAction(moveList);
     actor.doAttackAction(attackList);
     myworld = actor.getNewWorld();
@@ -193,7 +195,7 @@ public class DoActionTest {
     myactionMap.put(0, actionList);
     myactionMap.put(1, actionList2);
 
-    DoAction actor = new DoAction(myworld, myactionMap, resource);
+    DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
     ArrayList<Action> allActionList = new ArrayList<>();
     allActionList.add(action2);
     allActionList.add(action);
@@ -250,7 +252,7 @@ public class DoActionTest {
     myactionMap.put(0, actionList);
     myactionMap.put(1, actionList2);
 
-    DoAction actor = new DoAction(myworld, myactionMap, resource);
+    DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
     ArrayList<Action> allActionList = new ArrayList<>();
     allActionList.add(action2);
     allActionList.add(action);
@@ -290,7 +292,7 @@ public class DoActionTest {
     HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
     myactionMap.put(0, actionList);
 
-    DoAction actor = new DoAction(myworld, myactionMap, resource);
+    DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
     actor.doMoveAction(actionList);
     myworld = actor.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 0);
@@ -313,7 +315,7 @@ public class DoActionTest {
     HashMap<Integer, ArrayList<Action>> myactionMap2 = new HashMap<>();
     myactionMap2.put(1, actionList2);
 
-    DoAction actor2 = new DoAction(myworld, myactionMap2, resource);
+    DoAction actor2 = new DoAction(myworld, myactionMap2, resource, ah);
     actor2.doMoveAction(actionList2);
     myworld = actor2.getNewWorld();
     assertEquals(myworld.get(0).get(0).getSoldierLevel(0), 0);
@@ -360,7 +362,7 @@ public class DoActionTest {
     allAction.add(action);
     allAction.add(action2);
     // allAction.add(action2);
-    DoAction actor = new DoAction(myworld, myactionMap, resource);
+    DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
     actor.doAttackAction(allAction);
 
     myworld = actor.getNewWorld();
@@ -408,7 +410,7 @@ public class DoActionTest {
     HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
     myactionMap.put(0, actionList);
 
-    DoAction actor = new DoAction(myworld, myactionMap, resource);
+    DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
     actor.doAttackAction(actionList);
 
     myworld = actor.getNewWorld();
@@ -435,7 +437,7 @@ public class DoActionTest {
     HashMap<Integer, ArrayList<Action>> myactionMap = new HashMap<>();
     myactionMap.put(0, actionList);
 
-    DoAction actor = new DoAction(myworld, myactionMap, resource);
+    DoAction actor = new DoAction(myworld, myactionMap, resource, ah);
 
     actor.doPlusOne();
     for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {

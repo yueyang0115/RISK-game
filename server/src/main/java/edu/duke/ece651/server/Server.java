@@ -61,7 +61,7 @@ public class Server {
 
   public void startGame() {
     ActionHelper actionh = new ActionHelper(playerNum[0], territoryMap);
-    AllianceHelper allianceh = new AllianceHelper(playerNum[0]);
+    AllianceHelper allianceh = new AllianceHelper();
     for (PlayerHandler cur : list) {
       cur.addActionHelper(actionh);
       cur.addAllianceHelper(allianceh);
@@ -75,7 +75,7 @@ public class Server {
       }
       System.out.println(
           "[DEBUG] Before execute actions:" + new MaptoJson(territoryMap).getJSON().toString());
-      actionh.executeActions(food);
+      actionh.executeActions(food, allianceh);
       allianceh.executeCurRound();
       System.out.println(
           "[DEBUG] After execute actions:" + new MaptoJson(territoryMap).getJSON().toString());

@@ -12,7 +12,7 @@ public class AllianceHelper {
     private Set<Integer> noNewID;
     private Set<Integer> breakID;
 
-    public AllianceHelper(int playerNum) {
+    public AllianceHelper() {
         this.curRoundAlliance = new ArrayList<>();
         this.allAlliances = new HashSet<>();
         this.allianceMap = new HashMap<>();
@@ -50,11 +50,16 @@ public class AllianceHelper {
     }
 
     public boolean territoryisAllianced(String territoryname, int id) {
+        if(allianceMap.get(territoryname)==null){
+            return false;
+        }
         return allianceMap.get(territoryname).contains(id);
     }
+
     public void addAlliance(String territoryname, int owner){
         allianceMap.get(territoryname).add(owner);
     }
+
     public boolean playerisAllianced(int id1, int id2){
         Set<Integer> newSet = new HashSet<>();
         newSet.add(id1);

@@ -13,9 +13,10 @@ public class DoAction {
   private ArrayList<Action> mymoveList;
   private HashMap<Integer, Integer> myResource;
   private HashMap<Integer, Integer> rawResource;
+  private AllianceHelper myAllianceHelper;
 
   public DoAction(HashMap<Integer, ArrayList<Territory>> world,
-      HashMap<Integer, ArrayList<Action>> actionsMap, HashMap<Integer, Integer> resource) {
+      HashMap<Integer, ArrayList<Action>> actionsMap, HashMap<Integer, Integer> resource, AllianceHelper ah) {
     init();
     myworld = world;
     myActionMap = actionsMap;
@@ -23,6 +24,7 @@ public class DoAction {
     tempWorldStr = myformatter.MapCompose(myworld).toString();
     myResource = resource;
     copyMap(rawResource, resource);
+    myAllianceHelper = ah;
   }
 
   public DoAction(HashMap<Integer, ArrayList<Territory>> world) {
@@ -37,6 +39,127 @@ public class DoAction {
     mymoveList = new ArrayList<>();
     myResource = new HashMap<>();
     rawResource = new HashMap<>();
+  }
+
+  //go through attacklist, check if attack alliance, break alliance, return soldiers
+  public void checkAllianceBreak(ArrayList<Action> attackList){
+    for(int i=0; i< attackList.size(); i++){
+      Action action = attackList.get(i);
+      Territory srcTerritory = action.getSrc();
+      Territory dstTerritory = action.getDst();
+      boolean isAllianced = ownerisAllianced(srcTerritory,dstTerritory,myAllianceHelper);
+      //if break alliance, return soldiers
+      if(isAllianced){
+        System.out.println("[DEBUG] find attack alliance");
+        int ID_1 = Character.getNumericValue(srcTerritory.getOwner().charAt(srcTerritory.getOwner().length() - 1));
+        int ID_2 = Character.getNumericValue(dstTerritory.getOwner().charAt(dstTerritory.getOwner().length() - 1));
+        System.out.println("[DEBUG] break alliance with player_" + ID_1 + " and player_"+ ID_2);
+        breakAlliance(srcTerritory, ID_1, ID_2);
+        attackList.remove(i);
+        myAllianceHelper.breakAlliance(ID_1,ID_2);
+      }
+    }
+  }
+
+  //go through territories in worldmap, find those have alliance soldiers, return soldiers
+  private void breakAlliance(Territory fromTerritory, int ID_1, int ID_2){
+    for (HashMap.Entry<Integer, ArrayList<Territory>> entry : myworld.entrySet()) {
+      ArrayList<Territory> territories = entry.getValue();
+      int owner = entry.getKey();
+      for(Territory srcTerritory : territories){
+        String srcTerritoryName = srcTerritory.getTerritoryName();
+        if(owner == ID_1 && myAllianceHelper.territoryisAllianced(srcTerritoryName, ID_2)){
+          System.out.println("[DEBUG] player_" + ID_2 + "'s soldiers in territory " + srcTerritoryName + " should be returned");
+          returnSoldiers(srcTerritory, ID_2);
+        }
+        else if(owner == ID_2 && myAllianceHelper.territoryisAllianced(srcTerritoryName, ID_1)){
+          System.out.println("[DEBUG] player_" + ID_1 + "'s soldiers in territory " + srcTerritoryName + " should be returned");
+          returnSoldiers(srcTerritory, ID_1);
+        }
+        else{
+          continue;
+        }
+      }
+    }
+    tempWorldStr = myformatter.MapCompose(myworld).toString();
+  }
+
+  //return allianceID's soldiers in srcTerritory
+  private void returnSoldiers(Territory srcTerritory, int allianceID){
+    HashMap<Integer, Integer> returnedSoldiers = splitSoldiers(srcTerritory);
+    Territory dstTerritory = findNearest(srcTerritory, allianceID); //find the dstTerritory to return soldiers
+    if(dstTerritory != null){ //return allianceID soldiers from srcTerritory to dstTerritory
+      HashMap<Integer, Integer> combinedSoldiers = dstTerritory.getSoldiers();
+      combineSoldier(combinedSoldiers, returnedSoldiers);
+      dstTerritory.setSoldiers(combinedSoldiers);
+    }
+    else{ //no path found, soldiers unchanged
+      HashMap<Integer, Integer> combinedSoldiers = srcTerritory.getSoldiers();
+      combineSoldier(combinedSoldiers, returnedSoldiers);
+      srcTerritory.setSoldiers(combinedSoldiers);
+    }
+  }
+
+  // get splitted soldiers, soldier reduced in srcTerritory
+  private HashMap<Integer, Integer> splitSoldiers(Territory srcTerritory){
+    HashMap<Integer, Integer> returnedSoldiers = new HashMap<>();
+    HashMap<Integer, Integer> srcSoldiers = srcTerritory.getSoldiers();
+    for (HashMap.Entry<Integer, Integer> entry : srcSoldiers.entrySet()) {
+      int level = entry.getKey();
+      int num = entry.getValue();
+      System.out.println("[DEBUG] split " + num + " soldiers in level_" + level);
+      int numReturned = num / 2;
+      srcSoldiers.replace(level, num - numReturned);
+      returnedSoldiers.put(level, numReturned);
+    }
+    return returnedSoldiers;
+  }
+
+  //find the dstTerritory to return allianceID's soldiers in srcTerritory
+  private Territory findNearest(Territory srcTerritory, int allianceID) {
+    String allianceName = "player_" + allianceID;
+    HashSet<Territory> visitedSet = new HashSet<>();
+    Queue<Territory> queue = new LinkedList<Territory>();
+    queue.add(srcTerritory);
+    System.out.println("[DEBUG] init queue, add Territory " + srcTerritory.getTerritoryName());
+    visitedSet.add(srcTerritory);
+
+    while (!queue.isEmpty()) {
+      Territory curr = queue.poll();
+      if (curr.getOwner().equals(allianceName)) {
+        System.out.println("[DEBUG] find returned dstTerritory " + curr.getTerritoryName());
+        return curr;
+      }
+      ArrayList<String> neighborList = curr.getNeighbor();
+      for (int i = 0; i < neighborList.size(); i++) {
+        String tempName = neighborList.get(i);
+        Territory Neighbor = findTerritory(myworld, tempName);
+        if (!visitedSet.contains(Neighbor)) {
+          if (Neighbor.getOwner().equals(allianceName)) {
+            System.out.println("[DEBUG] check " + curr.getTerritoryName() + "'s neighbor, find returned dstTerritory " + Neighbor.getTerritoryName());
+            return Neighbor;
+          }
+          boolean isAllianced = ownerisAllianced(srcTerritory, Neighbor, myAllianceHelper);
+          if (Neighbor.getOwner().equals(srcTerritory.getOwner()) || isAllianced) {
+            queue.add(Neighbor);
+             System.out.println("[DEBUG] check " + curr.getTerritoryName()
+                + "'s neighbor, put its neighbor " + Neighbor.getTerritoryName() + " in queue");
+          }
+          visitedSet.add(Neighbor);
+        }
+      }
+      printQueue(queue);
+    }
+    System.out.println("[DEBUG] not find dstTerritory");
+    return null;
+  }
+
+  private void printQueue(Queue<Territory> queue) {
+    System.out.print("[DEBUG] Queue contains: ");
+    for (Territory item : queue) {
+      System.out.print(item.getTerritoryName() + ",");
+    }
+    System.out.print("\n");
   }
 
   // do upgrade action
@@ -79,7 +202,7 @@ public class DoAction {
       }
 
       // check if action is valid
-      ServerChecker mychecker = new ServerChecker(myworld);
+      ServerChecker mychecker = new ServerChecker(myworld, myAllianceHelper);
       ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
       boolean isValid = mychecker.Check(action) && rschecker.CheckResource(action);
       if (!isValid) {
@@ -119,6 +242,14 @@ public class DoAction {
           + ", original_src_level  has " + srcTerritory.getSoldierLevel(soldierLevel)
           + ", original_ dst_level has " + dstTerritory.getSoldierLevel(soldierLevel));
 
+      //if src dst are alliance, ah.addAlliance(dstName, Moveaction.owner), record where has two player's soldier
+      if(ownerisAllianced(srcTerritory,dstTerritory,myAllianceHelper)){
+        System.out.println("[DEBUG] in domove, find dst is alliance");
+        String srcOwner = srcTerritory.getOwner();
+        int srcID = Character.getNumericValue(srcOwner.charAt(srcOwner.length() - 1));
+        myAllianceHelper.addAlliance(dstTerritory.getTerritoryName(),srcID);
+      }
+
       srcTerritory.setSoldierLevel(
           soldierLevel, srcTerritory.getSoldierLevel(soldierLevel) - numReduce);
       System.out.println("[DEBUG] after move, srcTerritory's name is "
@@ -133,8 +264,30 @@ public class DoAction {
     }
   }
 
+  //check whether two territory owners are allianced
+  private boolean ownerisAllianced(Territory territory_1, Territory territory_2, AllianceHelper ah){
+    String owner_1 = territory_1.getOwner();
+    String owner_2 = territory_2.getOwner();
+    return isAllianced(owner_1, owner_2, ah);
+  }
+
+  //check whether two action owners are allianced
+  private boolean actionisAllianced(Action action_1, Action action_2, AllianceHelper ah){
+    String owner_1 = action_1.getOwner();
+    String owner_2 = action_2.getOwner();
+    return isAllianced(owner_1, owner_2, ah);
+  }
+
+  //check whether two owner name is allianced
+  private boolean isAllianced(String owner_1, String owner_2, AllianceHelper ah){
+    int ID_1 = Character.getNumericValue(owner_1.charAt(owner_1.length() - 1));
+    int ID_2 = Character.getNumericValue(owner_2.charAt(owner_2.length() - 1));
+    boolean isAllianced = ah.playerisAllianced(ID_1, ID_2);
+    return isAllianced;
+  }
+
   //for attack action. remove the soldiers involved in this action out of territory
-  private void removeHelper(Action action) {
+  private void removeSoldier(Action action) {
     HashMap<Integer, Integer> movedSoldierMap = action.getSoldiers();
     for (HashMap.Entry<Integer, Integer> entry : movedSoldierMap.entrySet()) {
       int soldierLevel = entry.getKey();
@@ -194,7 +347,7 @@ public class DoAction {
       }
 
       // based on moveActions result, check if attackaction is valid
-      ServerChecker mychecker = new ServerChecker(myworld);
+      ServerChecker mychecker = new ServerChecker(myworld, myAllianceHelper);
       ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
       boolean isValid = mychecker.Check(action) && rschecker.CheckResource(action);
       if (!isValid) {
@@ -209,7 +362,7 @@ public class DoAction {
       }
       // if valid, remove soldiers from attackTerritory
       rschecker.reduceCost(myResource, action);
-      removeHelper(action);
+      removeSoldier(action);
     }
 
     // reset map back to after upgrade performed status, do move actions first
@@ -217,26 +370,91 @@ public class DoAction {
     copyMap(myResource, rawResource); // reset resource
     doMoveAction(mymoveList);
 
-    // move soldiers out of srcTerritory
+    // perform attack actions for all
+    // step1: first move soldiers out of srcTerritory and reduceCost
     for (int k = 0; k < attackList.size(); k++) {
       Action action = attackList.get(k);
       if (invalidPlayer.contains(action.getOwner())) {
-        System.out.println("[DEBUG] attack action invalid");
+        //System.out.println("[DEBUG] attack action invalid");
         continue;
       }
-      removeHelper(action);
+      removeSoldier(action);
+      ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
+      rschecker.reduceCost(myResource, action);
     }
 
-    // perform attack actions
+    //step 2: combine action from same player and has same dst
     for (int i = 0; i < attackList.size(); i++) {
       Action action = attackList.get(i);
       if (invalidPlayer.contains(action.getOwner())) {
-        System.out.println("[DEBUG] attack action invalid");
+        //System.out.println("[DEBUG] attack action invalid");
         continue;
       }
-      ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
-      rschecker.reduceCost(myResource, action);
-      attackHelper(action);
+      for(int j = i + 1; j< attackList.size(); j++){
+        Action nextAction = attackList.get(j);
+        boolean sameOwner = nextAction.getOwner().equals(action.getOwner());
+        boolean sameDst = nextAction.getDst().getTerritoryName().equals(action.getDst().getTerritoryName());
+        if( sameOwner && sameDst){
+          System.out.println("[DEBUG] in doattack, find player attack same territory with differnet src");
+          HashMap<Integer, Integer> toSoldiers = action.getSoldiers();
+          HashMap<Integer, Integer> fromSoldiers = nextAction.getSoldiers();
+          combineSoldier(toSoldiers,fromSoldiers);
+          action.setSoldiers(toSoldiers);
+          attackList.remove(j);
+        }
+      }
+    }
+
+    //step3: perform real attack action
+    for (int i = 0; i < attackList.size(); i++) {
+      Action action = attackList.get(i);
+      if (invalidPlayer.contains(action.getOwner())) {
+        //System.out.println("[DEBUG] attack action invalid");
+        continue;
+      }
+
+      //find if alliance attack same territory, combine
+      boolean alliance_flag = false;
+      Action allianceAction = new Action();
+      String weakOwner = "";  //owner with less soldiers
+      for(int j = i + 1; j< attackList.size(); j++){
+        allianceAction = attackList.get(j);
+        String updatedOwner = action.getOwner();
+        boolean ownerAllianced = actionisAllianced(action, allianceAction, myAllianceHelper);
+        boolean sameDst = allianceAction.getDst().getTerritoryName().equals(action.getDst().getTerritoryName());
+        if( ownerAllianced && sameDst){
+          System.out.println("[DEBUG] in doattack, find alliace attack same territory");
+          alliance_flag = true;
+
+          //change combined action owner to the owner which hold more soldiers
+          int numNormal = countSoldier(action.getSoldiers());
+          int numAlliance = countSoldier(allianceAction.getSoldiers());
+          if(numAlliance > numNormal){
+            System.out.println("numAlliance > numNormal");
+            updatedOwner = allianceAction.getOwner();
+            weakOwner = action.getOwner();
+            action.setOwner(updatedOwner);  //change action to alliance
+            action.setSrc(allianceAction.getSrc());
+          }
+
+          System.out.println("updatedOwner is " + updatedOwner);
+          System.out.println("weakOwner is " + weakOwner);
+          HashMap<Integer, Integer> toSoldiers = action.getSoldiers();
+          HashMap<Integer, Integer> fromSoldiers = allianceAction.getSoldiers();
+          combineSoldier(toSoldiers,fromSoldiers);
+          action.setSoldiers(toSoldiers);  //combine soldiers
+          attackList.remove(j);
+          break;
+        }
+      }
+      boolean win = attackHelper(action);
+
+      //if win, ah.addAlliance(name, weakowner), record alliance soldier in attacked territory
+      if(win && alliance_flag){
+        System.out.println("[DEBUG] in doattack, allianced soldier win");
+        int id = Character.getNumericValue(weakOwner.charAt(weakOwner.length() - 1));
+        myAllianceHelper.addAlliance(action.getDst().getTerritoryName(),id);
+      }
       System.out.println(
           "+++++++++++++++++ [After] Current Attack Action Number Level 0 ++++++++++++++ \n"
           + action.getSoldierLevel(0));
@@ -244,8 +462,24 @@ public class DoAction {
     invalidPlayer.clear();
   }
 
-  // do atatckAction once
-  private void attackHelper(Action action) {
+  private void combineSoldier(HashMap<Integer, Integer> toSoldiers, HashMap<Integer, Integer> fromSoldiers){
+      System.out.println("[DEBUG] combine the soldiers in two actions");
+      for (HashMap.Entry<Integer, Integer> entry : toSoldiers.entrySet()) {
+        int soldierLevel = entry.getKey();
+        int numTo = toSoldiers.get(soldierLevel);
+        int numFrom = fromSoldiers.get(soldierLevel);
+        System.out.println("[DEBUG] add " +  numFrom
+                + " level_" + soldierLevel + " soldier to original " + numTo +" soldier");
+        toSoldiers.replace(
+                soldierLevel, numTo + numFrom);
+//        System.out.println("[DEBUG] after add, toAction get  "
+//                + (numTo+numFrom) + " soldier in level_" + soldierLevel);
+      }
+  }
+
+  // do atatckAction once, if win, return true
+  private boolean attackHelper(Action action) {
+    boolean win;
     System.out.println("[DEBUG] attack action valid");
     HashMap<Integer, Integer> attackSoldierMap = action.getSoldiers();
     Territory attackTerritory = findTerritory(myworld, action.getSrc().getTerritoryName());
@@ -297,9 +531,11 @@ public class DoAction {
     if (countSoldier(defenceSoldierMap) == 0) {
       System.out.println("[DEBUG] attack success");
       changeOwner(defenceTerritory, attackTerritory, attackSoldierMap);
+      win = true;
     } else { // numAttack = 0
       System.out.println("[DEBUG] defence success");
       defenceTerritory.setSoldiers(defenceSoldierMap);
+      win = false;
     }
 
     // DEBUG
@@ -330,6 +566,7 @@ public class DoAction {
 
     MaptoJson myMaptoJson = new MaptoJson(myworld);
     System.out.println("[DEBUG] after attack, new worldmap is " + myMaptoJson.getJSON());
+    return win;
   }
 
   //count the total number of soldiers in soldieraMap

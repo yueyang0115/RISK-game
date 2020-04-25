@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane prefHeight="683.0" prefWidth="949.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.player.MoveOrAttack">
+   <children>
+      <ImageView fx:id="Photo" fitHeight="123.0" fitWidth="114.0" layoutX="71.0" layoutY="381.0" pickOnBounds="true" preserveRatio="true" />
+      <Pane layoutX="58.0" layoutY="67.0" prefHeight="322.0" prefWidth="442.0">
+         <children>
+            <Button fx:id="ButtonI" layoutX="221.0" layoutY="194.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="106.0" style="-fx-shape: &quot;M 350 450 C 500 400 550 425 700 400 Q 650 250 700 100 L 350 100 Q 300 250 350 450&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="I">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonK" layoutX="158.0" layoutY="227.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="106.0" style="-fx-shape: &quot;M 350 350 C 500 350 550 450 700 400 Q 800 300 700 150 C 450 200 500 200 350 200 Q 300 250 350 350 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="K">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonJ" layoutX="156.0" layoutY="203.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="94.0" style="-fx-shape: &quot;M 350 400 Q 500 450 700 400 Q 800 300 800 200 C 450 200 500 200 350 200 Q 300 250 350 400&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="J">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonF" layoutX="223.0" layoutY="91.0" mnemonicParsing="false" prefHeight="112.0" prefWidth="118.0" style="-fx-shape: &quot;M 350 350 C 450 350 450 350 550 350 Q 600 200 600 100 Q 450 0 350 100 Q 350 200 350 350 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="F">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonC" layoutX="168.0" layoutY="112.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="83.0" style="-fx-shape: &quot;M 350 300 C 425 300 475 300 550 300 Q 650 200 600 50 L 350 50 Q 350 200 350 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="C">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonE" layoutX="270.0" layoutY="19.0" mnemonicParsing="false" prefHeight="119.0" prefWidth="132.0" style="-fx-shape: &quot;M 400 200 Q 450 300 550 300 Q 650 300 750 250 Q 750 0 450 50 Q 450 100 400 200 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="E">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonD" layoutX="162.0" layoutY="19.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="149.0" style="-fx-shape: &quot;M 350 300 C 425 300 475 300 600 300 Q 650 200 600 100 Q 450 50 350 150 Q 350 200 350 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="D">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonB" layoutX="62.0" layoutY="123.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="106.0" style="-fx-shape: &quot;M 400 300 Q 450 300 600 300 L 600 100 L 400 100 Q 350 200 400 300 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="B">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonA" layoutX="77.0" layoutY="48.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="106.0" style="-fx-shape: &quot;M 400 150 Q 450 400 350 400 Q 200 400 50 400 Q 50 200 250 200 Q 350 200 400 150 &quot;; -fx-background-color: lightpink; -fx-border-color: black;" text="A">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonL" layoutX="17.0" layoutY="203.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="177.0" style="-fx-shape: &quot;M 350 450 C 450 500 450 450 550 450 Q 500 300 600 200 C 450 200 500 200 350 200 C 400 300 200 350 350 450 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="L">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonG" layoutX="309.0" layoutY="119.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="110.0" style="-fx-shape: &quot;M 350 350 C 450 350 450 350 600 350 Q 650 250 600 150 Q 500 150 350 200 Q 350 200 350 350 &quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="G">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonH" layoutX="299.0" layoutY="203.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="123.0" style="-fx-shape: &quot;M 550 350 Q 600 400 700 400 Q 800 250 750 100 L 550 100 Q 500 200 550 350&quot;; -fx-background-color: lightskyblue; -fx-border-color: black;" text="H">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Label layoutX="28.0" layoutY="16.0" prefHeight="37.0" prefWidth="342.0" text="Battle! Digital Monster" textFill="MIDNIGHTBLUE" underline="true">
+         <font>
+            <Font name="Arial Bold" size="30.0" />
+         </font>
+      </Label>
+      <Button fx:id="OKButton" layoutX="757.0" layoutY="601.0" mnemonicParsing="false" onAction="#OKBtn" prefHeight="43.0" prefWidth="98.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="OK">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="PromptColor" layoutX="205.0" layoutY="406.0" text="Your territories is in Yellow Color " textFill="MIDNIGHTBLUE">
+         <font>
+            <Font name="Arial Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="DstTerr" layoutX="388.0" layoutY="517.0" prefHeight="27.0" prefWidth="133.0" />
+      <ComboBox fx:id="SourceTerr" layoutX="225.0" layoutY="517.0" onAction="#InitSoldiers" prefHeight="27.0" prefWidth="119.0" />
+      <Label layoutX="36.0" layoutY="515.0" prefHeight="30.0" prefWidth="178.0" text="Choose Territories">
+         <font>
+            <Font name="Avenir Medium" size="20.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="Level6" layoutX="452.0" layoutY="616.0" prefHeight="27.0" prefWidth="100.0" promptText="Level 6" />
+      <ComboBox fx:id="Level5" layoutX="338.0" layoutY="616.0" prefHeight="27.0" prefWidth="96.0" promptText="Level 5" />
+      <ComboBox fx:id="Level4" layoutX="222.0" layoutY="616.0" prefHeight="27.0" prefWidth="98.0" promptText="Level 4" />
+      <ComboBox fx:id="Level3" layoutX="567.0" layoutY="570.0" prefHeight="27.0" prefWidth="97.0" promptText="Level 3" />
+      <ComboBox fx:id="Level2" layoutX="451.0" layoutY="570.0" prefHeight="27.0" prefWidth="102.0" promptText="Level 2" />
+      <ComboBox fx:id="Level1" layoutX="339.0" layoutY="571.0" prefHeight="27.0" prefWidth="96.0" promptText="Level 1" />
+      <ComboBox fx:id="Level0" layoutX="225.0" layoutY="570.0" prefHeight="27.0" prefWidth="96.0" promptText="Level 0" />
+      <Label layoutX="37.0" layoutY="568.0" prefHeight="30.0" prefWidth="158.0" text="Choose Soldiers">
+         <font>
+            <Font name="Avenir Medium" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="AllianceInfo" layoutX="790.0" layoutY="87.0" prefHeight="28.0" prefWidth="149.0" text="Label" textFill="#bf3c3c">
+         <font>
+            <Font name="Chalkduster" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="580.0" layoutY="89.0" prefHeight="23.0" prefWidth="275.0" text="Alliance Information" textFill="#b94b3d">
+         <font>
+            <Font name="Chalkduster" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="Tech" layoutX="809.0" layoutY="48.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="#bf3c3c">
+         <font>
+            <Font name="Chalkduster" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="Food" layoutX="756.0" layoutY="18.0" prefHeight="27.0" prefWidth="79.0" text="Label" textFill="#bc3838">
+         <font>
+            <Font name="Chalkduster" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="581.0" layoutY="50.0" text="Technology Resources" textFill="#b94b3d">
+         <font>
+            <Font name="Chalkduster" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="580.0" layoutY="17.0" prefHeight="28.0" prefWidth="153.0" text="Food Resources" textFill="#ba4a30">
+         <font>
+            <Font name="Chalkduster" size="16.0" />
+         </font>
+      </Label>
+      <TreeView fx:id="DetailActions" layoutX="577.0" layoutY="177.0" prefHeight="275.0" prefWidth="334.0" />
+      <Label fx:id="EnteredPrompt" layoutX="582.0" layoutY="126.0" prefHeight="44.0" prefWidth="323.0" text="Entered Actions" textFill="MIDNIGHTBLUE">
+         <font>
+            <Font name="Arial Bold Italic" size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="PromptAction" layoutX="208.0" layoutY="455.0" prefHeight="23.0" prefWidth="357.0" text="please choose Move action details">
+         <font>
+            <Font name="Arial Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="Detail" layoutX="564.0" layoutY="467.0" prefHeight="84.0" prefWidth="361.0" textFill="#dd0404">
+         <font>
+            <Font name="Chalkboard Bold" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

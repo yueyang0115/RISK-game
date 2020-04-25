@@ -6,11 +6,14 @@ import java.util.*;
 public class ServerChecker {
   private HashMap<Integer, ArrayList<Territory>> world;
   private Action action;
+  private AllianceHelper allianceHelper;
 
-  public ServerChecker(HashMap<Integer, ArrayList<Territory>> myworld) {
+  public ServerChecker(HashMap<Integer, ArrayList<Territory>> myworld, AllianceHelper myah) {
     world = new HashMap<>();
     world = myworld;
     action = new Action();
+    allianceHelper = new AllianceHelper();
+    allianceHelper = myah;
   }
 
   public boolean Check(Action myaction) {
@@ -40,10 +43,17 @@ public class ServerChecker {
     String srcOwner = action.getSrc().getOwner();
     String dstOwner = action.getDst().getOwner();
     String actionOwner = action.getOwner();
+    int srcID = Character.getNumericValue(srcOwner.charAt(srcOwner.length() - 1));
+    int dstID = Character.getNumericValue(dstOwner.charAt(dstOwner.length() - 1));
+    boolean isalliance = allianceHelper.playerisAllianced(srcID,dstID);
+
     if (action.getType().equals("Move")) {
-      return srcOwner.equals(dstOwner) && actionOwner.equals(srcOwner);
+      //dst can be alliance
+      //System.out.println("[DEBUG] move action's src and dst isalliance  = "+ isalliance);
+      return (srcOwner.equals(dstOwner) || isalliance) && actionOwner.equals(srcOwner);
     } else {
-      return (!srcOwner.equals(dstOwner)) && actionOwner.equals(srcOwner);
+      //src and dst cannot be alliance, not check here, check and break in doaction
+      return (!srcOwner.equals(dstOwner)) && (!isalliance) && actionOwner.equals(srcOwner);
     }
   }
 
@@ -101,7 +111,15 @@ public class ServerChecker {
             //    Neighbor.getTerritoryName());
             return true;
           }
-          if (Neighbor.getOwner().equals(srcTerritory.getOwner())) {
+
+          //path neighbor can be alliance
+          String srcOwner = srcTerritory.getOwner();
+          int srcID = Character.getNumericValue(srcOwner.charAt(srcOwner.length() - 1));
+          String neighborOwner = Neighbor.getOwner();
+          int neighborID = Character.getNumericValue(neighborOwner.charAt(neighborOwner.length() - 1));
+          boolean isAllianced = allianceHelper.playerisAllianced(srcID, neighborID);
+          //System.out.println("[DEBUG] Neighbor owner player_"+ neighborID+" and action owner player_"+srcID+" is allianed: "+isAllianced);
+          if (Neighbor.getOwner().equals(srcOwner) || isAllianced) {
             stack.push(Neighbor);
             // System.out.println("[DEBUG] check " + curr.getTerritoryName()
             //    + "'s neighbor, put its neighbor " + Neighbor.getTerritoryName() + " in stack");
@@ -109,7 +127,7 @@ public class ServerChecker {
           visitedSet.add(Neighbor);
         }
       }
-      printStack(stack);
+      //printStack(stack);
     }
     // System.out.println("[DEBUG] not find dstTerritory");
     return false;
