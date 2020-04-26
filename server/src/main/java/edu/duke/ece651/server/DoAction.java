@@ -8,6 +8,7 @@ public class DoAction {
   private HashMap<Integer, ArrayList<Territory>> myworld;
   private String tempWorldStr;
   private HashMap<Integer, ArrayList<Action>> myActionMap;
+  private String tempActionMapStr;
   private HashSet<String> invalidPlayer;
   private MyFormatter myformatter;
   private ArrayList<Action> mymoveList;
@@ -22,6 +23,7 @@ public class DoAction {
     myActionMap = actionsMap;
     myformatter = new MyFormatter(myworld.size());
     tempWorldStr = myformatter.MapCompose(myworld).toString();
+    tempActionMapStr = myformatter.AllActionCompose(myActionMap).toString();
     myResource = resource;
     copyMap(rawResource, resource);
     myAllianceHelper = ah;
@@ -310,6 +312,8 @@ public class DoAction {
       // System.out.println(
       //    "[DEBUG] before remove invalid player, actionMap.size is " + myActionMap.size());
       myActionMap.remove(playerID);
+      //only above remove action can change ActionMap, store new ActionMap
+      tempActionMapStr = myformatter.AllActionCompose(myActionMap).toString();
       // System.out.println(
       //   "[DEBUG] after remove invalid player, actionMap.size is " + myActionMap.size());
     }
@@ -429,7 +433,7 @@ public class DoAction {
           //change combined action owner to the owner which hold more soldiers
           int numNormal = countSoldier(action.getSoldiers());
           int numAlliance = countSoldier(allianceAction.getSoldiers());
-          if(numAlliance > numNormal){
+          if(numAlliance >= numNormal){
             System.out.println("numAlliance > numNormal");
             updatedOwner = allianceAction.getOwner();
             weakOwner = action.getOwner();
@@ -670,6 +674,11 @@ public class DoAction {
   //return worldMap with territory details changed
   public HashMap<Integer, ArrayList<Territory>> getNewWorld() {
     return this.myworld;
+  }
+
+  public HashMap<Integer, ArrayList<Action>> getNewActionMap(){
+    myformatter.AllActionParse(myActionMap,tempActionMapStr);
+    return myActionMap;
   }
 
   //return resourceMap that contains all players food resource which has been added with the newly produced food
