@@ -139,6 +139,14 @@ public class MoveOrAttack {
             Src.add(OwnTerr.get(i).getTerritoryName());
             MoveDst.add(OwnTerr.get(i).getTerritoryName());
         }
+
+        int MyAllyID = this.CurrPlayer.getMyAlly();
+        ArrayList<Territory> MyAllyTerr = this.TerrMap.get(MyAllyID);
+        if(MyAllyID != -1){
+            for(int i = 0; i < MyAllyTerr.size(); i++){
+                MoveDst.add(MyAllyTerr.get(i).getTerritoryName());
+            }
+        }
         ObservableList<String> SourceList = FXCollections.observableArrayList(Src);
         this.SourceTerr.setPromptText("Source");
         this.SourceTerr.setItems(SourceList);
