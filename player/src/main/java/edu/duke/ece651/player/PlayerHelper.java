@@ -34,7 +34,7 @@ public class PlayerHelper {
         this.AllAction = new HashMap<>();
         this.UpgradeAction = new ArrayList<>();
         this.AllianceAction = new Alliance();
-        this.communicator = new Communicator("127.0.0.1", 1234);
+        this.communicator = new Communicator("vcm-12475.vm.duke.edu", 1234);
         this.playerNum = 0;
         this.TechResource = 200;
         Ask = false;

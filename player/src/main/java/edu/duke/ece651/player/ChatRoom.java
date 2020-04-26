@@ -64,7 +64,7 @@ public class ChatRoom {
         }
         else{
             msg.setStyle("-fx-background-color: darkseagreen;" + "-fx-background-radius: 5, 4;");
-            Other.getChildren().addAll(msg, Photo);
+            Other.getChildren().addAll(Photo, msg);
             Other.setAlignment(Pos.CENTER_LEFT);
         }
         content.getItems().add(Other);
@@ -75,7 +75,7 @@ public class ChatRoom {
         Window = W;
         name = color;
         chatHelper = new ChatHelper();
-        communicator = new Communicator("127.0.0.1", 4321); //Different port number just for chat
+        communicator = new Communicator("vcm-12475.vm.duke.edu", 4321); //Different port number just for chat
         this.CurrPlayer = CurrentPlayer;
     }
     public void initialize(){
