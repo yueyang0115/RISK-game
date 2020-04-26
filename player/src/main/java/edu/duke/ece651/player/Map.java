@@ -171,12 +171,14 @@ public class Map{
         String Validation = this.CurrPlayer.ReceiveActionRes();
         System.out.println("Validation " + Validation);
         String AllianceResult = this.CurrPlayer.receiveString();
+        System.out.println("[DEBUG] player received allianceRes is: "  + AllianceResult);
 
         if(AllianceResult.contains("Successfully")){
             int AllyID = this.CurrPlayer.getAllianceAction().getAlly();
             this.CurrPlayer.setMyAlly(AllyID);
         }
         else if(AllianceResult.contains("broken")){
+            System.out.println("[DEBUG] alliance is broken");
             this.CurrPlayer.setMyAlly(-1);
         }
 

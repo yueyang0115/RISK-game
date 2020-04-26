@@ -60,12 +60,12 @@ public class ChatRoom {
         if(Mine){
             msg.setStyle("-fx-background-color: lightskyblue;" + "-fx-background-radius: 5, 4;");
             Other.getChildren().addAll(Photo, msg);
-            Other.setAlignment(Pos.CENTER_LEFT);
+            Other.setAlignment(Pos.CENTER_RIGHT);
         }
         else{
             msg.setStyle("-fx-background-color: darkseagreen;" + "-fx-background-radius: 5, 4;");
             Other.getChildren().addAll(msg, Photo);
-            Other.setAlignment(Pos.CENTER_RIGHT);
+            Other.setAlignment(Pos.CENTER_LEFT);
         }
         content.getItems().add(Other);
     }

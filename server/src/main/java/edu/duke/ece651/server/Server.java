@@ -102,6 +102,7 @@ public class Server {
           cur.sendPlayer(cur.checkAction(), false);
           //Send alliance checkResult
           String allianceRes = allianceh.getAllianceResult(j);
+          System.out.println("[DEBUG] send allianceRes is " + allianceRes);
           cur.sendPlayer(allianceRes, false);
           //Send actions to player
           cur.sendPlayer(actionstr, false);
@@ -121,6 +122,7 @@ public class Server {
           if (!status.get(k).equals("OUTBUTWATCH")) {
             //Send alliance checkResult
             String allianceRes = allianceh.getAllianceResult(k);
+            System.out.println("[DEBUG] send allianceRes is " + allianceRes);
             cur.sendPlayer(allianceRes, false);
           }
           //Send actions to player
@@ -134,6 +136,7 @@ public class Server {
             cur.sendPlayer(cur.checkAction(), false);
             //Send alliance checkResult
             String allianceRes = allianceh.getAllianceResult(k);
+            System.out.println("[DEBUG] send allianceRes is " + allianceRes);
             cur.sendPlayer(allianceRes, false);
           }
           if (justLose != k) {

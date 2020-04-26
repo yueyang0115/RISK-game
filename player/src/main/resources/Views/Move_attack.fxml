@@ -114,32 +114,32 @@
             <Font name="Avenir Medium" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="AllianceInfo" layoutX="790.0" layoutY="87.0" prefHeight="28.0" prefWidth="149.0" text="Label" textFill="#bf3c3c">
+      <Label fx:id="AllianceInfo" layoutX="754.0" layoutY="87.0" prefHeight="28.0" prefWidth="175.0" text="Label" textFill="#bf3c3c">
          <font>
             <Font name="Chalkduster" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="580.0" layoutY="89.0" prefHeight="23.0" prefWidth="275.0" text="Alliance Information" textFill="#b94b3d">
+      <Label layoutX="544.0" layoutY="89.0" prefHeight="18.0" prefWidth="244.0" text="Alliance Information" textFill="#b94b3d">
          <font>
             <Font name="Chalkduster" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="Tech" layoutX="809.0" layoutY="48.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="#bf3c3c">
+      <Label fx:id="Tech" layoutX="773.0" layoutY="48.0" prefHeight="28.0" prefWidth="79.0" text="Label" textFill="#bf3c3c">
          <font>
             <Font name="Chalkduster" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="Food" layoutX="756.0" layoutY="18.0" prefHeight="27.0" prefWidth="79.0" text="Label" textFill="#bc3838">
+      <Label fx:id="Food" layoutX="720.0" layoutY="18.0" prefHeight="27.0" prefWidth="79.0" text="Label" textFill="#bc3838">
          <font>
             <Font name="Chalkduster" size="19.0" />
          </font>
       </Label>
-      <Label layoutX="581.0" layoutY="50.0" text="Technology Resources" textFill="#b94b3d">
+      <Label layoutX="545.0" layoutY="50.0" text="Technology Resources" textFill="#b94b3d">
          <font>
             <Font name="Chalkduster" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="580.0" layoutY="17.0" prefHeight="28.0" prefWidth="153.0" text="Food Resources" textFill="#ba4a30">
+      <Label layoutX="544.0" layoutY="17.0" prefHeight="28.0" prefWidth="153.0" text="Food Resources" textFill="#ba4a30">
          <font>
             <Font name="Chalkduster" size="16.0" />
          </font>

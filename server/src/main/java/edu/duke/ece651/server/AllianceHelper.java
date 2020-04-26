@@ -100,14 +100,26 @@ public class AllianceHelper {
     }
 
     public String getAllianceResult(int id) {
+        System.out.println("[DEBUG] in getAllianceResult, breakID has");
+        for(int value : breakID){
+            System.out.print(value+" ");
+        }
+        System.out.println("[DEBUG] in getAllianceResult, successID has");
+        for(int value : successID){
+            System.out.print(value+" ");
+        }
+        System.out.println("[DEBUG] in getAllianceResult, noNewID has");
+        for(int value : noNewID){
+            System.out.print(value+" ");
+        }
         if (successID.contains(id)) {
             return "Successfully formed alliance!";
         }
-        else if (noNewID.contains(id)) {
-            return "No new alliance in this round.";
-        }
         else if (breakID.contains(id)) {
             return "Your alliance is broken!";
+        }
+        else if (noNewID.contains(id)) {
+            return "No new alliance in this round.";
         }
         return "Failed to form alliance!";
     }
