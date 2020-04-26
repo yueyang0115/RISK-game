@@ -69,6 +69,7 @@ public class ActionHelper {
     d.doPlusOne();
     food = d.getNewResource();
     worldMap = d.getNewWorld();
+    playersActions = d.getNewActionMap();
     MyFormatter formatter = new MyFormatter(playerNum);
     actionsStr = formatter.AllActionCompose(playersActions).toString();
 
