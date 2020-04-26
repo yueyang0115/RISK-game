@@ -39,7 +39,7 @@ public class ServerChecker {
 
   // check if action's owner and scrTerritory's and dstTerritory is legal
   private boolean checkOwner() {
-    // System.out.println("[DEBUG] checkTerritory succeed");
+    System.out.println("[DEBUG] checkTerritory succeed");
     String srcOwner = action.getSrc().getOwner();
     String dstOwner = action.getDst().getOwner();
     String actionOwner = action.getOwner();
@@ -59,7 +59,7 @@ public class ServerChecker {
 
   // check if srcTerritory can provide action enough soldier
   private boolean checkNum() {
-    // System.out.println("[DEBUG] checkOwner succeed");
+    System.out.println("[DEBUG] checkOwner succeed");
     // Territory srcTerritory = action.getSrc();
     DoAction myDoAction = new DoAction(world);
     Territory srcTerritory = myDoAction.findTerritory(world, action.getSrc().getTerritoryName());
@@ -79,7 +79,7 @@ public class ServerChecker {
 
   // check if there is a valid path from srcTerritory to dstTerritory
   private boolean checkNeighbor() {
-    // System.out.println("[DEBUG] checkNum succeed");
+    System.out.println("[DEBUG] checkNum succeed");
     HashSet<Territory> visitedSet = new HashSet<>();
     // Territory dstTerritory = action.getDst();
     // Territory srcTerritory = action.getSrc();

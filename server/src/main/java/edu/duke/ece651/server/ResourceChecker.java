@@ -7,14 +7,17 @@ public class ResourceChecker {
   private HashMap<Integer, Integer> myresource;
   private HashMap<Integer, ArrayList<Territory>> myworld;
   private DoAction myDoAction;
+  private AllianceHelper allianceHelper;
 
   public ResourceChecker(
-      HashMap<Integer, Integer> resource, HashMap<Integer, ArrayList<Territory>> world) {
+      HashMap<Integer, Integer> resource, HashMap<Integer, ArrayList<Territory>> world, AllianceHelper myah) {
     myresource = new HashMap<>();
     myresource = resource;
     myworld = new HashMap<>();
     myworld = world;
     myDoAction = new DoAction(myworld);
+    allianceHelper = new AllianceHelper();
+    allianceHelper = myah;
   }
 
   //check if player hold enough food resource to do this action
@@ -87,7 +90,15 @@ public class ResourceChecker {
       for (int i = 0; i < neighborList.size(); i++) {
         String neighborName = neighborList.get(i);
         Territory neighborTerritory = myDoAction.findTerritory(myworld, neighborName);
-        if (neighborTerritory.getOwner().equals(srcTerritory.getOwner())) {
+
+        //path neighbor can be alliance
+        String srcOwner = srcTerritory.getOwner();
+        int srcID = Character.getNumericValue(srcOwner.charAt(srcOwner.length() - 1));
+        String neighborOwner = neighborTerritory.getOwner();
+        int neighborID = Character.getNumericValue(neighborOwner.charAt(neighborOwner.length() - 1));
+        boolean isAllianced = allianceHelper.playerisAllianced(srcID, neighborID);
+
+        if (neighborOwner.equals(srcOwner) || isAllianced) {
           // System.out.println("[DEBUG] find " + currName + "'s neighbor " + neighborName);
           if (!settled.contains(neighborName)) {
             int edgeSize = sizegetter.getTerritorySize(neighborName);

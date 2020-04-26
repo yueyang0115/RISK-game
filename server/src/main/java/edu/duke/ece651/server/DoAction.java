@@ -205,7 +205,7 @@ public class DoAction {
 
       // check if action is valid
       ServerChecker mychecker = new ServerChecker(myworld, myAllianceHelper);
-      ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
+      ResourceChecker rschecker = new ResourceChecker(myResource, myworld, myAllianceHelper);
       boolean isValid = mychecker.Check(action) && rschecker.CheckResource(action);
       if (!isValid) {
         System.out.println("[DEBUG] move action invalid");
@@ -352,7 +352,7 @@ public class DoAction {
 
       // based on moveActions result, check if attackaction is valid
       ServerChecker mychecker = new ServerChecker(myworld, myAllianceHelper);
-      ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
+      ResourceChecker rschecker = new ResourceChecker(myResource, myworld, myAllianceHelper);
       boolean isValid = mychecker.Check(action) && rschecker.CheckResource(action);
       if (!isValid) {
         System.out.println("[DEBUG] attack action invalid");
@@ -383,7 +383,7 @@ public class DoAction {
         continue;
       }
       removeSoldier(action);
-      ResourceChecker rschecker = new ResourceChecker(myResource, myworld);
+      ResourceChecker rschecker = new ResourceChecker(myResource, myworld, myAllianceHelper);
       rschecker.reduceCost(myResource, action);
     }
 
@@ -439,6 +439,9 @@ public class DoAction {
             weakOwner = action.getOwner();
             action.setOwner(updatedOwner);  //change action to alliance
             action.setSrc(allianceAction.getSrc());
+          }
+          else{
+            weakOwner = allianceAction.getOwner();
           }
 
           System.out.println("updatedOwner is " + updatedOwner);
