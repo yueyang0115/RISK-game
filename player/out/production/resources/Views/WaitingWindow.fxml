@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="278.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <Label layoutX="72.0" layoutY="54.0" prefHeight="91.0" prefWidth="238.0" text="Clicked Done. " textAlignment="CENTER" textFill="#7fc33b">
+         <font>
+            <Font name="Chalkduster" size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="72.0" layoutY="139.0" prefHeight="80.0" prefWidth="339.0" text="Waiting for other players!" textFill="#65b048">
+         <font>
+            <Font name="Chalkduster" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

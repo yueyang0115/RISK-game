@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="472.0" prefWidth="674.0" style="-fx-border-color: lightskyblue; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.player.SelectNumber">
+   <children>
+      <Label layoutX="140.0" layoutY="114.0" text="Please choose the player number:" textFill="#0d0000">
+         <font>
+            <Font name="Oriya MN" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="OKBtn" layoutX="311.0" layoutY="372.0" mnemonicParsing="false" onAction="#OKNumber" style="-fx-background-color: lightskyblue; -fx-border-color: black;" text="OK">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="231.0" layoutY="47.0" text="You're the first player!">
+         <font>
+            <Font name="Songti TC Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="164.0" prefHeight="23.0" prefWidth="297.0" text="Player Photo Profile: ">
+         <font>
+            <Font name="PingFang SC Semibold" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="player0" fitHeight="115.0" fitWidth="91.0" layoutX="84.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Player_Photo/player0.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player1" fitHeight="115.0" fitWidth="79.0" layoutX="200.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Player_Photo/player1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player2" fitHeight="115.0" fitWidth="91.0" layoutX="299.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Player_Photo/player2_lock.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player3" fitHeight="115.0" fitWidth="91.0" layoutX="408.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Player_Photo/player3_lock.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player4" fitHeight="115.0" fitWidth="91.0" layoutX="527.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Player_Photo/player4_lock.png" />
+         </image>
+      </ImageView>
+      <ComboBox fx:id="PlayerNumber" layoutX="493.0" layoutY="113.0" onAction="#DisplayPhoto" prefHeight="27.0" prefWidth="81.0" />
+   </children>
+</AnchorPane>
