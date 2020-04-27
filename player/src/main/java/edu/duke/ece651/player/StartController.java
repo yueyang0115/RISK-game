@@ -20,9 +20,6 @@ public class StartController {
         this.Window = Window;
         System.out.println("[DEBUG] Inside Start Controller Constructor");
     }
-    public Button getStartButton(){
-        return  this.Start;
-    }
     @FXML
     public void StartGame() throws IOException {
         if(CurrPlayer.getID() == 0){

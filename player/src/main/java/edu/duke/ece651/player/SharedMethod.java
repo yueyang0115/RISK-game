@@ -29,6 +29,7 @@ public class SharedMethod {
         for(int i = 0; i < ButtonMap.size(); i++){
             String SearchBase = "A";
             int curr = SearchBase.charAt(0) + i;
+
             StringBuilder Search = new StringBuilder();
             Search.append((char)curr);
             Button CurrentBtn = ButtonMap.get(Search.toString());
