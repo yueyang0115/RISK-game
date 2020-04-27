@@ -19,4 +19,27 @@ public class AllianceHelperTest {
         assertEquals(isallianced,false);
     }
 
+    @Test
+    public void test_oneRound() {
+        //Success
+        Alliance a1 = new Alliance();
+        a1.setOwner(0);
+        a1.setOwner(1);
+        Alliance a2 = new Alliance();
+        a1.setOwner(1);
+        a1.setOwner(0);
+        ah.addCurrentRoundAlliance(a1);
+        ah.addCurrentRoundAlliance(a2);
+        //Fail
+        Alliance a3 = new Alliance();
+        a1.setOwner(2);
+        a1.setOwner(3);
+        ah.addCurrentRoundAlliance(a3);
+        ah.executeCurRound();
+        String s1 = ah.getAllianceResult(0);
+        String s2 = ah.getAllianceResult(1);
+        String s3 = ah.getAllianceResult(2);
+        String s4 = ah.getAllianceResult(3);
+        ah.resetCurRound();
+    }
 }
