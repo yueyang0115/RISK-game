@@ -11,15 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Show {
-    //------------- Evolution 2 --------------//
-    public static void ShowLabel(Territory CurrentClicked, Label Detail){
-        String ShowLabel = ComposeString(CurrentClicked);
-        Detail.setText(ShowLabel);
-        Detail.setFont(new Font("Arial", 20));
-    }
-
-
-
     public static Territory FindTerritory(HashMap<Integer, ArrayList<Territory>> World, String TerritoryName) {
         //get the territory name and find the territory in the territory map and return it
         Territory ans = new Territory();

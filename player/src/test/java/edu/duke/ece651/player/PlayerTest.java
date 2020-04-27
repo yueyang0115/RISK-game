@@ -1,17 +1,15 @@
 package edu.duke.ece651.player;
-import edu.duke.ece651.shared.MyFormatter;
-import edu.duke.ece651.shared.Territory;
+import edu.duke.ece651.shared.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import java.io.IOException;
@@ -39,6 +37,7 @@ public class PlayerTest extends ApplicationTest{
 
     private TreeView<String> Detail;
     private HashMap<Integer, ArrayList<Territory>> TerrMap;
+    private ImageView Figure;
 
 
     @Override
@@ -62,13 +61,16 @@ public class PlayerTest extends ApplicationTest{
         ButtonK = new Button();
         ButtonL = new Button();
         InitButtonMap();
-        TreeView<String> Detail = new TreeView<>();
+        this.Detail = new TreeView<>();
+        this.Figure = new ImageView();
+        InitActionList();
     }
     @Test
     public void Test_Button() throws IOException {
         Test_InitTerritory();
         SharedMethod.InitTerritoryDetail(this.ButtonMap, this.TerrMap);
     }
+
     private void Test_InitTerritory(){
         TerrMap = new HashMap<>();
         String TestMapStr = "{'player_0':[ {'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'C'},{'neighbor_2':'D'}], 'territoryName':'A'},{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'L'}], 'territoryName':'B'},{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'B'},{'neighbor_2':'L'},{'neighbor_3':'J'},{'neighbor_4':'F'},{'neighbor_5':'D'}], 'territoryName':'C'},{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'A'},{'neighbor_1':'C'},{'neighbor_2':'F'}, {'neighbor_3':'E'}], 'territoryName':'D'},{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'D'},{'neighbor_1':'F'}, {'neighbor_2':'G'}], 'territoryName':'E'},{'owner':'player_0', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'D'},{'neighbor_1':'C'},{'neighbor_2':'J'},{'neighbor_3':'I'},{'neighbor_4':'G'},{'neighbor_5':'E'}], 'territoryName':'F'}], 'player_1':[ {'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'E'},{'neighbor_1':'F'},{'neighbor_2':'I'},{'neighbor_3':'H'}], 'territoryName':'G'}, {'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'G'},{'neighbor_1':'I'}], 'territoryName':'H'}, {'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'F'},{'neighbor_1':'J'},{'neighbor_2':'K'},{'neighbor_3':'H'},{'neighbor_4':'G'}], 'territoryName':'I'}, {'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'C'},{'neighbor_1':'L'},{'neighbor_2':'K'},{'neighbor_3':'I'},{'neighbor_4':'F'}], 'territoryName':'J'},{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'I'},{'neighbor_1':'J'},{'neighbor_2':'L'}], 'territoryName':'K'},{'owner':'player_1', 'soldiers':[{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor':[{'neighbor_0':'B'},{'neighbor_1':'C'},{'neighbor_2':'J'},{'neighbor_3':'K'}], 'territoryName':'L'}] }";
@@ -76,6 +78,48 @@ public class PlayerTest extends ApplicationTest{
         Change.MapParse(TerrMap, TestMapStr);
     }
 
+    @Test
+    public void Test_ImageView(){
+        SharedMethod.InitFigure(this.player, this.Figure);
+    }
+
+    @Test
+    public void Test_InitAction(){
+        SharedMethod.InitActionDetail(this.player, this.Detail);
+    }
+
+    private void InitActionList(){
+        MyFormatter Converter = new MyFormatter(2);
+        String InputMoveAction =
+                "{'Move': [{'src':{'owner': 'aaa', 'soldiers': [{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor': [{'neighbor_0': 'aaa_neigh1'}, {'neighbor_1': 'aaa_neigh2'}], 'territoryName': 'aaaTerr1'}, 'dst': {'owner': 'aaa', 'soldiers': [{'level_0':'4'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor': [{'neighbor_0': 'aaa_neigh3'}, {'neighbor_1': 'aaa_neigh4'}], 'territoryName': 'aaaTerr2'}, 'soldiers': [{'level_0':'12'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}],'owner': 'aaa'}, {'src': {'owner': 'bbb', 'soldiers': [{'level_0':'5'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor': [{'neighbor_0': 'bbb_neigh1'}, {'neighbor_1': 'bbb_neigh2'}], 'territoryName': 'bbbTerr1'}, 'dst':{'owner': 'bbb', 'soldiers': [{'level_0':'6'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor': [{'neighbor_0': 'bbb_neigh3'}, {'neighbor_1': 'bbb_neigh4'}], 'territoryName': 'bbbTerr2'}, 'soldiers': [{'level_0':'20'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'owner': 'bbb'}]}";
+        ArrayList<Action> MoveActionArray = new ArrayList<>();
+        Converter.ActionParse(MoveActionArray, InputMoveAction);
+        for(Action current: MoveActionArray){
+            this.player.setMoveAction(current);
+        }
+
+        String InputAttackAction =
+                "{'Attack': [{'src':{'owner': 'aaa', 'soldiers': [{'level_0':'3'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor': [{'neighbor_0': 'aaa_neigh1'}, {'neighbor_1': 'aaa_neigh2'}], 'territoryName': 'aaaTerr1'}, 'dst': {'owner': 'aaa', 'soldiers': [{'level_0':'4'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor': [{'neighbor_0': 'aaa_neigh3'}, {'neighbor_1': 'aaa_neigh4'}], 'territoryName': 'aaaTerr2'}, 'soldiers': [{'level_0':'12'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}],'owner': 'aaa'}, {'src': {'owner': 'bbb', 'soldiers': [{'level_0':'5'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor': [{'neighbor_0': 'bbb_neigh1'}, {'neighbor_1': 'bbb_neigh2'}], 'territoryName': 'bbbTerr1'}, 'dst':{'owner': 'bbb', 'soldiers': [{'level_0':'6'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'neighbor': [{'neighbor_0': 'bbb_neigh3'}, {'neighbor_1': 'bbb_neigh4'}], 'territoryName': 'bbbTerr2'}, 'soldiers': [{'level_0':'20'},{'level_1':'0'},{'level_2':'0'},{'level_3':'0'},{'level_4':'0'},{'level_5':'0'},{'level_6':'0'}], 'owner': 'bbb'}]}";
+        ArrayList<Action> AttackActionArray = new ArrayList<>();
+        Converter.ActionParse(AttackActionArray, InputAttackAction);
+        for(Action current: AttackActionArray){
+            this.player.setAttackAction(current);
+        }
+
+        String InputUpgradeAction = "{'Upgrade':[{'territoryName':'A','owner':'player_0','number':3,'prevLevel':0,'nextLevel':2},{'territoryName':'B','owner':'player_1','number':6,'prevLevel':2,'nextLevel':5}]}";
+        ArrayList<Upgrade> UpgradeActionArray = new ArrayList<>();
+        Converter.UpgradeParse(UpgradeActionArray, InputUpgradeAction);
+        for(Upgrade current: UpgradeActionArray){
+            this.player.setUpgradeAction(current);
+        }
+
+        Alliance alliance = new Alliance();
+        alliance.setOwner(this.player.getID());
+        alliance.setAlly(2);
+        assert (2 ==  alliance.getAlly());
+        assert (0 == alliance.getOwner());
+        this.player.setAlliance(alliance);
+    }
 
     private void InitButtonMap(){
         ButtonMap = new HashMap<>();
