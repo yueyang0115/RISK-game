@@ -4,9 +4,14 @@ import edu.duke.ece651.shared.Territory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import java.io.IOException;
@@ -44,11 +49,6 @@ public class PlayerTest extends ApplicationTest{
         player.setID(0);
         TestStart = new Player();
         Window = stage;
-
-
-    }
-    @Test
-    public void Test_Button() throws IOException {
         ButtonA = new Button();
         ButtonB = new Button();
         ButtonC = new Button();
@@ -63,6 +63,9 @@ public class PlayerTest extends ApplicationTest{
         ButtonL = new Button();
         InitButtonMap();
         TreeView<String> Detail = new TreeView<>();
+    }
+    @Test
+    public void Test_Button() throws IOException {
         Test_InitTerritory();
         SharedMethod.InitTerritoryDetail(this.ButtonMap, this.TerrMap);
     }
