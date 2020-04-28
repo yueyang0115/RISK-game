@@ -86,7 +86,7 @@ public class UpTo {
     }
 
     //Called by InitLevelTo, create an ArrayList to add in the ObservableList
-    private ArrayList<Integer> SetRange(int RangeBegin, int RangeEnd){
+    public ArrayList<Integer> SetRange(int RangeBegin, int RangeEnd){
         ArrayList<Integer> starts = new ArrayList<>();
         for (int i = RangeBegin; i <= RangeEnd; i++) {
                 starts.add(i);

@@ -209,13 +209,6 @@ public class Map{
         }
     }
 
-    /*
-    private void ShowWaitingWindow(Stage Waiting) throws IOException {
-        FXMLLoader loaderStart = new FXMLLoader(getClass().getResource("/Views/WaitingWindow.fxml"));
-        Scene scene = new Scene(loaderStart.load());
-        Waiting.setScene(scene);
-        Waiting.show();
-    }*/
 
     public void showChat() throws IOException {
         ColorID cid = new ColorID();

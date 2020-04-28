@@ -62,6 +62,7 @@ public class PlayerTest {
     player.setPlayerNum(3);
     player.setTechResource(100);
     assert(100 == player.getTechResource());
+    assert (3 == player.getPlayerNum());
 
   }
 

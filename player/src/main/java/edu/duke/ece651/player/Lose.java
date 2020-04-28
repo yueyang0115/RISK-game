@@ -81,6 +81,8 @@ public class Lose{
         //here we could use the functions in ShowView->ShowWatchView
         ShowView.ShowWatchView(this.CurrPlayer, this.Window);
     }
+
+    @FXML
     public void LoseNotWatch() throws IOException {
         //send N to server to not watch
         this.CurrPlayer.sendString("N");

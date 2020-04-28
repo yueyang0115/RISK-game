@@ -42,7 +42,6 @@ public class Territory implements Comparable<Territory> {
   public void setSoldierLevel(int level, int num) {
     soldiers.put(level, num);
   }
-  public void setSoldiers() {}
   public ArrayList<String> getNeighbor() {
     return neighbor;
   }

@@ -9,6 +9,7 @@ public class ColorIDTest {
   public void test_ColorID() {
     ColorID c = new ColorID();
     System.out.println(c.getPlayerColor(0));
+    System.out.println(c.getPlayerID("Green"));
   }
 
 }

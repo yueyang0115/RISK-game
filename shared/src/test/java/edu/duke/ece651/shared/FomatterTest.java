@@ -75,5 +75,13 @@ public class FomatterTest {
     System.out.println("\n================== Parse All Action ===============");
     HashMap<Integer, ArrayList<Action>> ParsedAction = new HashMap<>();
     AllAct.AllActionParse(ParsedAction, All.toString());
+
+
+    ArrayList<Upgrade> UpgradeAction = new ArrayList<>();
+    String UpgradeInput = "{'Upgrade':[{'territoryName':'A','owner':'player_0','number':3,'prevLevel':0,'nextLevel':2},{'territoryName':'B','owner':'player_1','number':6,'prevLevel':2,'nextLevel':5}]}";
+    Map.UpgradeParse(UpgradeAction, UpgradeInput);
+
+    Map.UpgradeCompose(UpgradeAction);
+
   }
 }

@@ -24,6 +24,7 @@ public class UpgradetoJsonTest {
         UpgradeList.add(upgrade_B);
 
         UpgradetoJson myUpgradetoJson = new UpgradetoJson(UpgradeList);
+        System.out.println("******* UPGRADE OUTPUT **************");
         System.out.println(myUpgradetoJson.getJSON());
     }
 }
